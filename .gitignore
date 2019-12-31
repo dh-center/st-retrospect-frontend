@@ -1,10 +1,6 @@
 .DS_Store
 node_modules
-.env
-.env.dev
-frontend/dist
-package-lock.json
-credentials.json
+/dist
 
 # local env files
 .env.local
@@ -22,4 +18,4 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
-*.sw*
+*.sw?
