@@ -4,10 +4,10 @@ module.exports = {
     node: true
   },
   extends: [
+    'codex',
     'plugin:vue/essential',
     'eslint:recommended',
-    '@vue/typescript',
-    'codex'
+    '@vue/typescript'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
