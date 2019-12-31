@@ -1,0 +1,8 @@
+{
+  "name": "st-retrospect-frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/dh-center/st-retrospect-frontend.git",
+  "author": "dh-center",
+  "license": "Unlicense"
+}
