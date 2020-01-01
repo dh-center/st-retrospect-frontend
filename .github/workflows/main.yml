@@ -14,6 +14,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-18.04
-    if: ${{ endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod') }}
+    if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
     steps:
       - run: echo 'It works!'
