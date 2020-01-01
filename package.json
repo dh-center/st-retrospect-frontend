@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "repository": "https://github.com/dh-center/st-retrospect-frontend.git",
-  "author": "dh-center",
+  "author": "DH Center <dh@itmo.ru>",
   "license": "Unlicense",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -17,20 +17,20 @@
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.3.0",
     "vue-router": "^3.1.3",
-    "vuex": "^3.1.2"
-  },
-  "devDependencies": {
+    "vuex": "^3.1.2",
+    "@vue/cli-service": "^4.1.2",
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
     "@vue/cli-plugin-typescript": "^4.1.0",
-    "@vue/cli-service": "^4.1.0",
     "@vue/eslint-config-typescript": "^4.0.0",
     "eslint": "^6.7.2",
     "eslint-config-codex": "github:codex-team/eslint-config",
     "eslint-plugin-vue": "^5.0.0",
-    "lint-staged": "^9.5.0",
     "typescript": "~3.5.3",
     "vue-template-compiler": "^2.6.10"
+  },
+  "devDependencies": {
+    "lint-staged": "^9.5.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
