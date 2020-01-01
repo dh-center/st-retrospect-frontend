@@ -1,0 +1,19 @@
+name: Build and deploy
+
+on: [push]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build the Docker image
+        run: docker build . -t st-retrospect-frontend
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-18.04
+    if: ${{ endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod') }}
+    steps:
+      - run: echo 'It works!'
