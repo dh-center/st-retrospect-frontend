@@ -3,7 +3,6 @@ name: Build and deploy
 on: [push]
 
 env:
-  PROJECT_NAME: st-retrospect-frontend
   DOCKER_IMAGE_NAME: dhcenter/st-retrospect-frontend
 
 jobs:
@@ -15,7 +14,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Build the Docker image
-        run: docker build . -t $PROJECT_NAME
+        run: docker build . -t $DOCKER_IMAGE_NAME
 
 
       - name: Extract branch name
@@ -25,15 +24,15 @@ jobs:
         if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
         run: |
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker tag $PROJECT_NAME $DOCKER_IMAGE_NAME:$BRANCH_NAME
+          docker tag $DOCKER_IMAGE_NAME $DOCKER_IMAGE_NAME:$BRANCH_NAME
           docker push $DOCKER_IMAGE_NAME:$BRANCH_NAME
           docker logout
 
-  #      - name: Deploy stage
-  #          uses: garygrossgarten/github-action-ssh@v0.3.0
-  #          with:
-  #            command: cd ~/st-retrospect/${BRANCH_NAME}/frontend && ./deploy.sh
-  #            host: ${{ secrets.SERVER_HOST }}
-  #            username: root
-  #            privateKey: ${{ secrets.PRIVATE_KEY }}
+      - name: Deploy stage
+          uses: garygrossgarten/github-action-ssh@v0.3.0
+          with:
+            command: cd ~/st-retrospect/${BRANCH_NAME}/frontend && ./deploy.sh
+            host: ${{ secrets.SERVER_HOST }}
+            username: root
+            privateKey: ${{ secrets.PRIVATE_KEY }}
 
