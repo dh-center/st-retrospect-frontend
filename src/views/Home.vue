@@ -43,7 +43,6 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     padding: 50px 60px;
-    position: relative;
 
     &__top {
       display: flex;
@@ -62,7 +61,6 @@ export default {
   }
 
   .about-link {
-    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     text-decoration: none;
     color: #ffffff;
@@ -84,7 +82,6 @@ export default {
     margin-bottom: 50px;
 
     &__input {
-      font-family: 'Roboto', sans-serif;
       font-size: 18px;
       width: 720px;
       height: 70px;
@@ -115,7 +112,6 @@ export default {
 
   .how-to-link {
     display: inline-block;
-    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     text-decoration: none;
     color: #ffffff;

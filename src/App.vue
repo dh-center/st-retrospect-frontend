@@ -27,5 +27,6 @@ export default class App extends Vue {}
   flex-direction: column;
   width: 100%;
   overflow: hidden;
+  font-family: 'Roboto', sans-serif;
 }
 </style>

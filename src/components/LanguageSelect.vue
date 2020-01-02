@@ -13,7 +13,6 @@ export default {
 
 <style>
   .language-select {
-    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     text-transform: uppercase;
     color: #ffffff;
