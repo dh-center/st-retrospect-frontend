@@ -9,8 +9,8 @@
         Познай Санкт-Петербург глазами великих людей
       </h1>
       <div class="home__search-container">
-        <input type="text" class="search-container__input" placeholder="Где гулял Пушкин...">
-        <a class="search-container__button">
+        <input type="text" class="search__input" placeholder="Где гулял Пушкин...">
+        <a class="search__button">
           Хочу знать
           <svg width="30" height="15" viewBox="0 0 30 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.0001 0.999996L28.666 7.5L22.0001 14" stroke="black"></path> <line y1="7.5" x2="28.7147" y2="7.5" stroke="black"></line></svg>
         </a>
@@ -85,7 +85,7 @@ export default class HomeView extends Vue {
       display: flex;
       margin-bottom: 50px;
 
-      .search-container__input {
+      .search__input {
         font-size: 18px;
         width: 720px;
         height: 70px;
@@ -95,7 +95,7 @@ export default class HomeView extends Vue {
         border: none;
       }
 
-      .search-container__button {
+      .search__button {
         display: flex;
         align-items: center;
         justify-content: center;
