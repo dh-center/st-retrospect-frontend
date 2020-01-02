@@ -9,10 +9,16 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home
+  },
+  {
+    path: '/map',
+    name: 'map',
+    component: () => import(/* webpackChunkName: "mapView" */ '../views/Map.vue')
   }
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 });
 

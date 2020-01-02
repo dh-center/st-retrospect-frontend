@@ -4,7 +4,7 @@ on: [push]
 
 env:
   DOCKER_IMAGE_NAME: dhcenter/st-retrospect-frontend
-
+  ENV_FILE: ${{ secrets.ENV_FILE }}
 jobs:
 
   build_and_deploy:
@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
+
+      - name: Create .env file
+        run: echo $ENV_FILE > .env
 
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
