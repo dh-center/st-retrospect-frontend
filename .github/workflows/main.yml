@@ -16,6 +16,8 @@ jobs:
       - name: Create .env file
         run: echo ${{ secrets.ENV_FILE }} > .env
 
+      - run: cat .env
+
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
 
