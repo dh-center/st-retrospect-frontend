@@ -11,9 +11,6 @@ RUN yarn install
 # Build project
 COPY . .
 
-
-RUN cat .env
-
 RUN yarn build
 
 # production environment
