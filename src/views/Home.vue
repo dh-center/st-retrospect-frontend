@@ -21,17 +21,22 @@
   </div>
 </template>
 
-<script>
-import SiteLogo from '@/components/SiteLogo';
-import LanguageSelect from '@/components/LanguageSelect';
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import SiteLogo from '@/components/SiteLogo.vue';
+import LanguageSelect from '@/components/LanguageSelect.vue';
 
-export default {
-  name: 'home',
+@Component({
   components: {
     SiteLogo,
     LanguageSelect
   }
-};
+})
+/**
+ * View for home page
+ */
+export default class HomeView extends Vue {
+}
 </script>
 
 <style>

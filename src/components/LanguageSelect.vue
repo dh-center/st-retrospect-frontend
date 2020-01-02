@@ -5,10 +5,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'LanguageSelect'
-};
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component
+/**
+ * Component for language selecting
+ */
+export default class LanguageSelect extends Vue {}
 </script>
 
 <style>

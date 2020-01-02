@@ -2,10 +2,14 @@
   <a href="/" class="site-logo">St.Retrospect</a>
 </template>
 
-<script>
-export default {
-  name: 'SiteLogo'
-};
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component
+/**
+ * Component of site logo
+ */
+export default class SiteLogo extends Vue {}
 </script>
 
 <style>
