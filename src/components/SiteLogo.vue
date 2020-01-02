@@ -1,5 +1,5 @@
 <template>
-  <a href="/" class="site-logo">St.Retrospect</a>
+  <router-link to="/" class="site-logo">St.Retrospect</router-link>
 </template>
 
 <script lang="ts">
