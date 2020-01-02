@@ -8,6 +8,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
 
+console.log(process.env);
 mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN;
 
 @Component

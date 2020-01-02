@@ -19,6 +19,7 @@ jobs:
       - run: cat .env
 
       - run: wc -c .env
+      - run: ls -la
 
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
