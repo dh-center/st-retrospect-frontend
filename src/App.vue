@@ -19,7 +19,6 @@ export default class App extends Vue {}
 </script>
 
 <style src="./styles/base.css"/>
-<style src="./styles/fonts.css"/>
 
 <style>
 #app {
