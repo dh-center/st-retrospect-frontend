@@ -11,10 +11,8 @@ body {
   box-sizing: border-box;
   min-height: 100%;
   overflow: hidden;
-  margin: 0px;
+  margin: 0;
   font-size: 15px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 *, *:before, *:after {
@@ -56,4 +54,22 @@ pre {
   display: table;
   clear: both;
   content: "";
+}
+
+.button {
+  &--search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-family: 'Oranienbaum', serif;
+    font-size: 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    background-color: #f6c23d;
+
+    svg {
+      margin-left: 20px;
+    }
+   }
 }

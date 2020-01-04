@@ -1,5 +1,10 @@
 <template>
-  <router-link to="/" class="site-logo">St.Retrospect</router-link>
+  <router-link
+    to="/"
+    class="site-logo"
+  >
+    St.Retrospect
+  </router-link>
 </template>
 
 <script lang="ts">
