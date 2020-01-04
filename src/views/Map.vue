@@ -41,13 +41,15 @@ export default class MapView extends Vue {
 }
 </script>
 
-<style src="mapbox-gl/dist/mapbox-gl.css"/>
+<style src="mapbox-gl/dist/mapbox-gl.css">
+</style>
 
 <style>
   #mapContainer {
     position: absolute;
     top: 0;
     bottom: 0;
+
     width: 100%;
   }
 </style>

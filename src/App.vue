@@ -14,7 +14,8 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class App extends Vue {}
 </script>
 
-<style src="./styles/base.css"/>
+<style src="./styles/base.css">
+</style>
 
 <style>
 #app {
@@ -22,6 +23,7 @@ export default class App extends Vue {}
   flex-direction: column;
   width: 100%;
   overflow: hidden;
+
   font-family: 'Roboto', sans-serif;
 }
 </style>

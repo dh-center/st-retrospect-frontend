@@ -31,24 +31,27 @@ export default class SearchLine extends Vue {
 
   &__label {
     position: absolute;
+
+    color: #7c7c7c;
     font-size: 8px;
     line-height: 9px;
     letter-spacing: .2em;
     text-transform: uppercase;
-    color: #7c7c7c;
   }
 
   &__input {
     width: 100%;
-    font-size: 16px;
-    line-height: 19px;
     height: 50px;
     padding-right: 20px;
+
     color: #fff;
+    font-size: 16px;
+    line-height: 19px;
+
+    background-color: transparent;
     border: none;
     border-bottom: 1px solid #fff;
     outline: none;
-    background-color: transparent;
   }
 }
 </style>

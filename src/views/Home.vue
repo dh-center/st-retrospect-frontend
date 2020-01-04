@@ -69,43 +69,49 @@ export default class HomeView extends Vue {
 <style>
   .home {
     position: relative;
+
     width: 100%;
     height: 100vh;
-    background-image: url("../assets/images/background.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
     padding: 50px 60px;
+
+    background-image: url("../assets/images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 
     &__top {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
     }
 
     &__main {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+
       padding: 0 30px;
+
       text-align: center;
+
+      transform: translate(-50%, -50%);
     }
 
     &__about-link {
+      color: #ffffff;
       font-size: 16px;
       text-decoration: none;
-      color: #ffffff;
     }
 
     &__title {
-      font-family: 'Oranienbaum', serif;
-      font-size: 64px;
-      line-height: 72px;
       width: 100%;
-      text-align: center;
+      margin: 0 0 80px;
+
       color: #ffffff;
       font-weight: 400;
-      margin: 0 0 80px;
+      font-size: 64px;
+      font-family: 'Oranienbaum', serif;
+      line-height: 72px;
+      text-align: center;
     }
 
     &__search-container {
@@ -113,11 +119,13 @@ export default class HomeView extends Vue {
       margin-bottom: 50px;
 
       .search__input {
-        font-size: 18px;
         width: 720px;
         height: 70px;
         padding: 0 30px;
+
         color: #000000;
+        font-size: 18px;
+
         background-color: #ffffff;
         border: none;
       }
@@ -130,12 +138,14 @@ export default class HomeView extends Vue {
 
     &__how-to-link {
       display: inline-block;
+      margin-bottom: 40px;
+
+      color: #ffffff;
       font-size: 16px;
       text-decoration: none;
-      color: #ffffff;
-      border-bottom: 1px solid #f6c23d;
       text-shadow: 0 0 4px rgba(0, 0, 0, .5);
-      margin-bottom: 40px;
+
+      border-bottom: 1px solid #f6c23d;
     }
   }
 </style>
