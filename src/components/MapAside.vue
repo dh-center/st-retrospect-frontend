@@ -8,6 +8,10 @@
       <SearchLine class="map-aside__search-line" />
       <button class="button button--search map-aside__search-button">
         Найти
+        <svg
+          v-svg
+          symbol="arrow-right"
+        />
       </button>
     </div>
   </aside>
@@ -67,6 +71,15 @@ export default class MapAside extends Vue {}
   &__search-button {
     min-width: 117px;
     height: 50px;
+
+    font-size: 18px;
+
+    text-transform: none;
+
+    svg {
+      width: 20px;
+      height: 10px;
+    }
   }
 }
 </style>

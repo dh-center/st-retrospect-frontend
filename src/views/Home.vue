@@ -23,20 +23,9 @@
         >
           Хочу знать
           <svg
-            width="30"
-            height="15"
-            viewBox="0 0 30 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ><path
-            d="M22.0001 0.999996L28.666 7.5L22.0001 14"
-            stroke="black"
-          /> <line
-            y1="7.5"
-            x2="28.7147"
-            y2="7.5"
-            stroke="black"
-          /></svg>
+            v-svg
+            symbol="arrow-right"
+          />
         </router-link>
       </div>
       <a
@@ -133,6 +122,11 @@ export default class HomeView extends Vue {
       .search__button {
         width: 210px;
         height: 70px;
+
+        svg {
+          width: 30px;
+          height: 15px;
+        }
       }
     }
 

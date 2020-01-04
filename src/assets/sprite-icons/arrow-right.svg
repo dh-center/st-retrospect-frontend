@@ -1,0 +1,18 @@
+<svg
+  width="30"
+  height="15"
+  viewBox="0 0 30 15"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22.0001 0.999996L28.666 7.5L22.0001 14"
+    stroke="black"
+    fill="none"
+  />
+  <line
+    y1="7.5"
+    x2="28.7147"
+    y2="7.5"
+    stroke="black"
+  />
+</svg>

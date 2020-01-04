@@ -9,7 +9,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lint:css": "stylelint \"src/**/*{.css,.vue}\" --fix"
+    "lint:css": "stylelint \"src/**/*{.css,.vue}\" --fix",
+    "svg": "svg-sprite-generate -d src/assets/sprite-icons -o src/assets/sprite.svg"
   },
   "dependencies": {
     "@types/mapbox-gl": "^1.6.1",
@@ -34,12 +35,14 @@
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.3.0",
     "vue-router": "^3.1.3",
+    "vue-svg-sprite": "^1.4.0",
     "vue-template-compiler": "^2.6.10",
     "vue-unique-id": "^2.0.0",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "lint-staged": "^9.5.0"
+    "lint-staged": "^9.5.0",
+    "svg-sprite-generator": "^0.0.7"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
