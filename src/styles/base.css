@@ -66,10 +66,13 @@ pre {
     padding: 0;
 
     font-size: 20px;
+
     font-family: 'Oranienbaum', serif;
+    line-height: 50px;
     text-transform: uppercase;
 
     background-color: #f6c23d;
+    border: none;
     cursor: pointer;
 
     svg {
