@@ -4,7 +4,7 @@
       <SiteLogo class="map-aside__logo" />
       <LanguageSelect
         class="map-aside__language-select"
-        is-gray-default="true"
+        is-gray-default
       />
     </div>
     <div class="map-aside__search-form">
