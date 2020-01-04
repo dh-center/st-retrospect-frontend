@@ -5,7 +5,7 @@ module.exports = {
   },
   extends: [
     'codex',
-    'plugin:vue/essential',
+    'plugin:vue/recommended',
     'eslint:recommended',
     '@vue/typescript'
   ],

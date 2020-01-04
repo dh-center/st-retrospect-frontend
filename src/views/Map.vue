@@ -1,16 +1,22 @@
 <template>
   <div>
-    <div id="mapContainer"></div>
+    <div id="mapContainer" />
+    <MapAside />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
+import MapAside from '@/components/MapAside.vue';
 
 mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN;
 
-@Component
+@Component({
+  components: {
+    MapAside
+  }
+})
 /**
  * View for showing city map
  */

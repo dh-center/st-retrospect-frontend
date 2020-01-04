@@ -1,22 +1,49 @@
 <template>
   <div class="home">
     <div class="home__top">
-      <SiteLogo/>
-      <a href="#" class="home__about-link">О проекте</a>
+      <SiteLogo />
+      <a
+        href="#"
+        class="home__about-link"
+      >О проекте</a>
     </div>
     <main class="home__main">
       <h1 class="home__title">
         Познай Санкт-Петербург глазами великих людей
       </h1>
       <div class="home__search-container">
-        <input type="text" class="search__input" placeholder="Где гулял Пушкин...">
-        <a class="search__button">
+        <input
+          type="text"
+          class="search__input"
+          placeholder="Где гулял Пушкин..."
+        >
+        <router-link
+          class="button button--search search__button"
+          :to="{ name: 'map' }"
+        >
           Хочу знать
-          <svg width="30" height="15" viewBox="0 0 30 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.0001 0.999996L28.666 7.5L22.0001 14" stroke="black"></path> <line y1="7.5" x2="28.7147" y2="7.5" stroke="black"></line></svg>
-        </a>
+          <svg
+            width="30"
+            height="15"
+            viewBox="0 0 30 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          ><path
+            d="M22.0001 0.999996L28.666 7.5L22.0001 14"
+            stroke="black"
+          /> <line
+            y1="7.5"
+            x2="28.7147"
+            y2="7.5"
+            stroke="black"
+          /></svg>
+        </router-link>
       </div>
-      <a href="#" class="home__how-to-link">Как пользоваться картой?</a>
-      <LanguageSelect/>
+      <a
+        href="#"
+        class="home__how-to-link"
+      >Как пользоваться картой?</a>
+      <LanguageSelect />
     </main>
   </div>
 </template>
@@ -96,21 +123,8 @@ export default class HomeView extends Vue {
       }
 
       .search__button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         width: 210px;
         height: 70px;
-        padding: 0;
-        font-family: 'Oranienbaum', serif;
-        font-size: 20px;
-        cursor: pointer;
-        text-transform: uppercase;
-        background-color: #f6c23d;
-
-        svg {
-          margin-left: 20px;
-        }
       }
     }
 
