@@ -2,7 +2,10 @@
   <aside class="map-aside">
     <div class="map-aside__header-top">
       <SiteLogo class="map-aside__logo" />
-      <LanguageSelect class="map-aside__language-select" />
+      <LanguageSelect
+        class="map-aside__language-select"
+        is-gray-default="true"
+      />
     </div>
     <div class="map-aside__search-form">
       <SearchLine class="map-aside__search-line" />
