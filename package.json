@@ -50,7 +50,7 @@
       "git add"
     ],
     "*.{css,vue}": [
-      "lint:css",
+      "stylelint \"src/**/*{.css,.vue}\" --fix",
       "git add"
     ]
   }
