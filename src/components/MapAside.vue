@@ -34,18 +34,20 @@ export default class MapAside extends Vue {}
 
 <style>
 .map-aside {
-  padding: 10px 30px;
   position: absolute;
   top: 0;
   left: 0;
+
   width: 450px;
   height: 100%;
+  padding: 10px 30px;
+
   background-color: #2d2d2d;
 
   &__header-top {
-    justify-content: space-between;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
   }
 

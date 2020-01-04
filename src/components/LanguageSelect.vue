@@ -23,15 +23,16 @@ export default class LanguageSelect extends Vue {}
 
 <style>
   .language-select {
-    font-size: 10px;
-    text-transform: uppercase;
     color: #fff;
+    font-size: 10px;
     letter-spacing: 0.2em;
+    text-transform: uppercase;
     text-shadow: 0 0 4px rgba(0, 0, 0, .5);
 
     &__link {
-      text-decoration: none;
       margin-left: 5px;
+
+      text-decoration: none;
 
       &--active {
         color: #f6c23d;
