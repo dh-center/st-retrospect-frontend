@@ -2,10 +2,7 @@
   <aside class="map-aside">
     <div class="map-aside__header-top">
       <SiteLogo class="map-aside__logo" />
-      <LanguageSelect
-        class="map-aside__language-select"
-        is-gray-default
-      />
+      <LanguageSelect class="map-aside__language-select" />
     </div>
     <div class="map-aside__search-form">
       <SearchLine class="map-aside__search-line" />
@@ -50,6 +47,10 @@ export default class MapAside extends Vue {}
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+  }
+
+  &__language-select {
+    color: #7c7c7c;
   }
 
   &__search-form {

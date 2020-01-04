@@ -7,24 +7,18 @@
     <a
       href="#"
       class="language-select__link"
-      :class="{ 'language-select__link--gray': isGrayDefault }"
     >EN</a>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 /**
  * Component for language selecting
  */
-export default class LanguageSelect extends Vue {
-  /**
-   * If true gray color will be applied as default color for item
-   */
-  @Prop(Boolean) private readonly isGrayDefault!: boolean;
-}
+export default class LanguageSelect extends Vue {}
 </script>
 
 <style>
@@ -41,10 +35,6 @@ export default class LanguageSelect extends Vue {
 
       &--active {
         color: #f6c23d;
-      }
-
-      &--gray {
-        color: #7c7c7c;
       }
     }
   }
