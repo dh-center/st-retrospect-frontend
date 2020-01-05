@@ -38,13 +38,14 @@ export default class LocationInfo extends Vue {
 <style>
   .location-info {
     display: flex;
-    overflow: hidden;
 
     &__main {
       position: relative;
 
       width: 100%;
+
       padding: 15px 10px 0;
+      overflow: hidden;
 
       &::before {
         position: absolute;

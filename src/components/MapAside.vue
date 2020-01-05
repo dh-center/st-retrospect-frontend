@@ -59,8 +59,12 @@ export default class MapAside extends Vue {
   top: 0;
   left: 0;
 
+  display: flex;
+  flex-direction: column;
+
   width: 450px;
   height: 100%;
+  overflow: hidden;
 
   background-color: #2d2d2d;
 
