@@ -1,8 +1,9 @@
 <template>
   <div class="location-info">
-    <div class="location-info__image">
-      <img :src="location.mainPhotoLink">
-    </div>
+    <div
+      class="location-info__image"
+      :style="{ 'background-image': `url('${location.mainPhotoLink}')` }"
+    />
     <div class="location-info__main">
       <h3 class="location-info__name">
         {{ location.name.ru }}
@@ -40,6 +41,11 @@ export default class LocationInfo extends Vue {
     overflow: hidden;
 
     &__main {
+      position: relative;
+
+      width: 100%;
+      margin: 10px 10px 0;
+
       &::before {
         position: absolute;
         bottom: 0;
@@ -58,7 +64,7 @@ export default class LocationInfo extends Vue {
 
     &__name {
       width: 100%;
-      margin-bottom: 5px;
+      margin: 0 0 5px;
       overflow: hidden;
 
       color: #2d2d2d;
@@ -70,11 +76,10 @@ export default class LocationInfo extends Vue {
     }
 
     &__image {
-      height: 100%;
+      min-width: 30%;
 
-      img {
-        height: 100%;
-      }
+      background-position: center;
+      background-size: cover;
     }
 
     &__wrapper {
