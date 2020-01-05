@@ -1,0 +1,14 @@
+:root {
+  --font-sans-serif-main: {
+    font-family: 'Roboto', sans-serif;
+  };
+
+  --font-sans-serif-light: {
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+  };
+
+  --font-serif-main: {
+    font-family: 'Oranienbaum', serif;
+  };
+}

@@ -21,14 +21,15 @@
     "@vue/cli-service": "^4.1.2",
     "@vue/eslint-config-typescript": "^5.0.1",
     "core-js": "^3.4.4",
+    "cssnano": "^4.1.10",
     "eslint": "^6.7.2",
     "eslint-config-codex": "github:codex-team/eslint-config",
     "eslint-plugin-vue": "^6.1.2",
     "mapbox-gl": "^1.6.1",
+    "postcss-apply": "^0.12.0",
+    "postcss-import": "^12.0.1",
     "postcss-nested": "^4.2.1",
-    "stylelint": "^12.0.1",
-    "stylelint-config-rational-order": "^0.1.2",
-    "stylelint-config-recommended": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
     "typescript": "~3.7.4",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
@@ -38,14 +39,17 @@
     "vue-svg-sprite": "^1.4.0",
     "vue-template-compiler": "^2.6.10",
     "vue-unique-id": "^2.0.0",
-    "vuex": "^3.1.2"
-  },
-  "devDependencies": {
+    "vuex": "^3.1.2",
     "@kazupon/vue-i18n-loader": "^0.3.0",
     "@types/webpack": "^4.4.0",
+    "vue-cli-plugin-i18n": "^0.6.0"
+  },
+  "devDependencies": {
     "lint-staged": "^9.5.0",
     "svg-sprite-generator": "^0.0.7",
-    "vue-cli-plugin-i18n": "^0.6.0"
+    "stylelint": "^12.0.1",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-recommended": "^3.0.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

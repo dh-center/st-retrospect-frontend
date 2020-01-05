@@ -18,10 +18,12 @@ export default class SiteLogo extends Vue {}
 </script>
 
 <style>
+  @import '../styles/custom-properties.css';
+
   .site-logo {
+    @apply --font-serif-main;
     color: #ffffff;
     font-size: 28px;
-    font-family: 'Oranienbaum', serif;
     text-decoration: none;
   }
 </style>

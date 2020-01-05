@@ -40,6 +40,8 @@ export default class LocationInfo extends Vue {
 </script>
 
 <style>
+  @import '../styles/custom-properties.css';
+
   .location-info {
     display: flex;
 
@@ -71,6 +73,7 @@ export default class LocationInfo extends Vue {
     }
 
     &__name {
+      @apply --font-serif-main;
       width: 100%;
       margin: 0 0 5px;
       overflow: hidden;
@@ -78,7 +81,6 @@ export default class LocationInfo extends Vue {
       color: #2d2d2d;
       font-weight: normal;
       font-size: 18px;
-      font-family: 'Oranienbaum', serif;
       line-height: 21px;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -99,7 +101,6 @@ export default class LocationInfo extends Vue {
       color: #7c7c7c;
       font-weight: 300;
       font-size: 12px;
-      font-family: 'Roboto', sans-serif;
       line-height: 20px;
 
       &::after {
@@ -117,12 +118,11 @@ export default class LocationInfo extends Vue {
     }
 
     &__address {
+      @apply --font-sans-serif-light;
       overflow: hidden;
 
       color: #000;
-      font-weight: 300;
       font-size: 12px;
-      font-family: 'Roboto', sans-serif;
       line-height: 20px;
       white-space: nowrap;
       text-overflow: ellipsis;

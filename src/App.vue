@@ -18,12 +18,15 @@ export default class App extends Vue {}
 </style>
 
 <style>
+
+@import './styles/custom-properties.css';
+
 #app {
+  @apply --font-sans-serif-main;
+
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-
-  font-family: 'Roboto', sans-serif;
 }
 </style>
