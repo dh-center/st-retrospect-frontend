@@ -22,8 +22,20 @@ function loadLocaleMessages(): LocaleMessages {
   return messages;
 }
 
+/**
+ * Detect interface language from navigator
+ * @return {String}
+ */
+function detectLanguage(): string | undefined {
+  const languages = navigator.languages;
+  const language = languages.find(sl =>
+    ['en', 'ru'].find(l => (sl.split(new RegExp(l, 'gi')).length - 1 > 0 ? l : null)));
+
+  return language;
+}
+
 export default new VueI18n({
-  locale: process.env.VUE_APP_I18N_LOCALE || 'en',
+  locale: detectLanguage() || 'en',
   fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
   messages: loadLocaleMessages()
 });

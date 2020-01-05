@@ -3,8 +3,8 @@ import Vuex from 'vuex';
 
 import app from './modules/app';
 
-import createPersistedState from 'vuex-persistedstate';
 import { AppModuleState } from '@/store/modules/app';
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 

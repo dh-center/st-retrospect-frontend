@@ -6,12 +6,22 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import i18n from '@/i18n';
 
-@Component
+@Component({
+  created() {
+    console.log(this.$store.state.app.interfaceLanguage);
+    if (this.$store.state.app.interfaceLanguage && this.$store.state.app.interfaceLanguage !== i18n.locale) {
+      i18n.locale = this.$store.state.app.interfaceLanguage;
+    }
+  }
+})
 /**
  * Class of application view
  */
-export default class App extends Vue {}
+export default class App extends Vue {
+
+}
 </script>
 
 <style src="./styles/base.css">
