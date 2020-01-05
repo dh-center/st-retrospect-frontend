@@ -27,10 +27,14 @@ import Location from '@/types/location';
 
 @Component
 /**
- * Aside bar of Map View
+ * Displays short location info (image, name, address, building type)
+ * Used in Aside bar
  */
 export default class LocationInfo extends Vue {
   @Prop({ type: Object, required: true })
+  /**
+   * Location to display
+   */
   private location!: Location;
 }
 </script>

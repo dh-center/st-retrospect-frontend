@@ -49,6 +49,9 @@ import locations from './locations';
  * Aside bar of Map View
  */
 export default class MapAside extends Vue {
+  /**
+   * Locations list to display
+   */
   private locationsList: Location[] = locations;
 }
 </script>

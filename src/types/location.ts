@@ -1,14 +1,28 @@
 /**
- * location
+ * Represents location info
  */
 interface Location {
+  /**
+   * Location id
+   */
   id: string;
-  name: MultStr;
+
+  /**
+   * Location name
+   */
+  name: MultilingualString;
+
+  /**
+   * Main location image
+   */
   mainPhotoLink: string;
 }
 
 export default Location;
 
-export interface MultStr {
-  [key: string]: string | null
+/**
+ * Object storing strings in different languages
+ */
+export interface MultilingualString {
+  [key: string]: string;
 }
