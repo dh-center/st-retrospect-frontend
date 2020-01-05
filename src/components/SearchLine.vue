@@ -3,7 +3,7 @@
     <label
       class="search-line__label"
       :for="$id('input')"
-    >Поиск</label>
+    >{{ $t('search') }}</label>
     <input
       :id="$id('input')"
       class="search-line__input"
@@ -24,6 +24,17 @@ export default class SearchLine extends Vue {
 
 }
 </script>
+
+<i18n>
+{
+  "en": {
+    "search": "Search"
+  },
+  "ru": {
+    "search": "Поиск"
+  }
+}
+</i18n>
 
 <style>
 .search-line {

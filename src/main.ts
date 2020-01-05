@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import UniqueId from 'vue-unique-id';
 import SvgSprite from 'vue-svg-sprite';
+import i18n from './i18n';
 
 Vue.use(UniqueId);
 Vue.use(SvgSprite, {
@@ -15,5 +16,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app');

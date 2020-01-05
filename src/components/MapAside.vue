@@ -1,40 +1,71 @@
 <template>
   <aside class="map-aside">
-    <div class="map-aside__header-top">
-      <SiteLogo class="map-aside__logo" />
-      <LanguageSelect class="map-aside__language-select" />
-    </div>
-    <div class="map-aside__search-form">
-      <SearchLine class="map-aside__search-line" />
-      <button class="button button--search map-aside__search-button">
-        Найти
-        <svg
-          v-svg
-          symbol="arrow-right"
-        />
-      </button>
+    <header class="map-aside__header">
+      <div class="map-aside__header-top">
+        <SiteLogo class="map-aside__logo" />
+        <LanguageSelect class="map-aside__language-select" />
+      </div>
+      <div class="map-aside__search-form">
+        <SearchLine class="map-aside__search-line" />
+        <button class="button button--search map-aside__search-button">
+          {{ $t('search-button') }}
+          <svg
+            v-svg
+            symbol="arrow-right"
+          />
+        </button>
+      </div>
+    </header>
+    <div class="map-aside__content">
+      <LocationInfo
+        v-for="location in locationsList"
+        :key="location.ids"
+        class="map-aside__location-info"
+        :location="location"
+      />
     </div>
   </aside>
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import SearchLine from '@/components/SearchLine.vue';
+import LocationInfo from '@/components/LocationInfo.vue';
+// eslint-disable-next-line no-unused-vars
+import Location from '@/types/location';
+import locations from './locations';
 
 @Component({
   components: {
     SiteLogo,
     LanguageSelect,
-    SearchLine
+    SearchLine,
+    LocationInfo
   }
 })
 /**
  * Aside bar of Map View
  */
-export default class MapAside extends Vue {}
+export default class MapAside extends Vue {
+  /**
+   * Locations list to display
+   */
+  private locationsList: Location[] = locations;
+}
 </script>
+
+<i18n>
+{
+  "en": {
+    "search-button": "Search"
+  },
+  "ru": {
+    "search-button": "Найти"
+  }
+}
+</i18n>
 
 <style>
 .map-aside {
@@ -42,11 +73,18 @@ export default class MapAside extends Vue {}
   top: 0;
   left: 0;
 
+  display: flex;
+  flex-direction: column;
+
   width: 450px;
   height: 100%;
-  padding: 10px 30px;
+  overflow: hidden;
 
   background-color: #2d2d2d;
+
+  &__header {
+    padding: 10px 30px;
+  }
 
   &__header-top {
     display: flex;
@@ -80,6 +118,19 @@ export default class MapAside extends Vue {}
       width: 20px;
       height: 10px;
     }
+  }
+
+  &__content {
+    width: 100%;
+    overflow: auto;
+
+    background-color: #fff;
+  }
+
+  &__location-info {
+    height: 90px;
+
+    cursor: pointer;
   }
 }
 </style>

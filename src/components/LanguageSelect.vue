@@ -1,13 +1,13 @@
 <template>
   <div class="language-select">
-    <a
-      href="#"
+    <span
       class="language-select__link language-select__link--active"
-    >RU</a>
-    <a
-      href="#"
+      @click="$root.$i18n.locale = 'ru'"
+    >RU</span>
+    <span
       class="language-select__link"
-    >EN</a>
+      @click="$root.$i18n.locale = 'en'"
+    >EN</span>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default class LanguageSelect extends Vue {}
     &__link {
       margin-left: 5px;
 
-      text-decoration: none;
+      cursor: pointer;
 
       &--active {
         color: #f6c23d;
