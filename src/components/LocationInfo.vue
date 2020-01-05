@@ -44,19 +44,22 @@ export default class LocationInfo extends Vue {
       position: relative;
 
       width: 100%;
-      margin: 10px 10px 0;
+      padding: 15px 10px 0;
 
       &::before {
         position: absolute;
+        right: 15px;
         bottom: 0;
-        left: 0;
+        left: 15px;
 
-        width: 100%;
         height: 1px;
 
         background-color: rgba(0, 0, 0, .2);
 
-        transition: all ease .5s;
+        transition-timing-function: ease;
+
+        transition-duration: .5s;
+        transition-property: right, left;
 
         content: '';
       }
@@ -68,6 +71,7 @@ export default class LocationInfo extends Vue {
       overflow: hidden;
 
       color: #2d2d2d;
+      font-weight: normal;
       font-size: 18px;
       font-family: 'Oranienbaum', serif;
       line-height: 21px;
@@ -117,6 +121,15 @@ export default class LocationInfo extends Vue {
       line-height: 20px;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+
+    &:hover {
+      background-color: #f0f0f0;
+
+      .location-info__main::before {
+        right: 0;
+        left: 0;
+      }
     }
   }
 </style>

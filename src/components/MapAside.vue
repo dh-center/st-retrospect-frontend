@@ -104,12 +104,15 @@ export default class MapAside extends Vue {
 
   &__content {
     width: 100%;
+    overflow: auto;
 
     background-color: #fff;
   }
 
   &__location-info {
     height: 90px;
+
+    cursor: pointer;
   }
 }
 </style>
