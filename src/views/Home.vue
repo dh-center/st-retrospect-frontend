@@ -5,23 +5,23 @@
       <a
         href="#"
         class="home__about-link"
-      >О проекте</a>
+      >{{ $t('about-project') }}</a>
     </div>
     <main class="home__main">
       <h1 class="home__title">
-        Познай Санкт-Петербург глазами великих людей
+        {{ $t('title') }}
       </h1>
       <div class="home__search-container">
         <input
           type="text"
           class="search__input"
-          placeholder="Где гулял Пушкин..."
+          :placeholder="$t('search-placeholder')"
         >
         <router-link
           class="button button--search search__button"
           :to="{ name: 'map' }"
         >
-          Хочу знать
+          {{ $t('want-to-know') }}
           <svg
             v-svg
             symbol="arrow-right"
@@ -31,7 +31,7 @@
       <a
         href="#"
         class="home__how-to-link"
-      >Как пользоваться картой?</a>
+      >{{ $t('how-to') }}</a>
       <LanguageSelect />
     </main>
   </div>
@@ -54,6 +54,25 @@ import LanguageSelect from '@/components/LanguageSelect.vue';
 export default class HomeView extends Vue {
 }
 </script>
+
+<i18n>
+{
+  "en": {
+    "about-project": "About Project",
+    "how-to": "How to use map?",
+    "want-to-know": "I want to know",
+    "title": "Get to know St. Petersburg through the eyes of great people",
+    "search-placeholder": "Where Pushkin walked..."
+  },
+  "ru": {
+    "about-project": "О проекте",
+    "how-to": "Как пользоваться картой?",
+    "want-to-know": "Хочу знать",
+    "title": "Познай Санкт-Петербург глазами великих людей",
+    "search-placeholder": "Где гулял Пушкин..."
+  }
+}
+</i18n>
 
 <style>
   .home {
