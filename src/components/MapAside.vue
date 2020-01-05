@@ -8,7 +8,7 @@
       <div class="map-aside__search-form">
         <SearchLine class="map-aside__search-line" />
         <button class="button button--search map-aside__search-button">
-          Найти
+          {{ $t('search-button') }}
           <svg
             v-svg
             symbol="arrow-right"
@@ -55,6 +55,17 @@ export default class MapAside extends Vue {
   private locationsList: Location[] = locations;
 }
 </script>
+
+<i18n>
+{
+  "en": {
+    "search-button": "Search"
+  },
+  "ru": {
+    "search-button": "Найти"
+  }
+}
+</i18n>
 
 <style>
 .map-aside {

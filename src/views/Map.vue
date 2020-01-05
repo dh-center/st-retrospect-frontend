@@ -10,7 +10,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
 import MapAside from '@/components/MapAside.vue';
 
-mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN;
+mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
 
 @Component({
   components: {

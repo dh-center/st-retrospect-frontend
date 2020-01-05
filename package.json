@@ -2,13 +2,12 @@
   "name": "st-retrospect-frontend",
   "version": "1.0.0",
   "private": true,
-  "repository": "https://github.com/dh-center/st-retrospect-frontend.git",
   "author": "DH Center <dh@itmo.ru>",
-  "license": "Unlicense",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
     "lint:css": "stylelint \"src/**/*{.css,.vue}\" --fix",
     "svg": "svg-sprite-generate -d src/assets/sprite-icons -o src/assets/sprite.svg"
   },
@@ -33,6 +32,7 @@
     "typescript": "~3.7.4",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
+    "vue-i18n": "^8.15.3",
     "vue-property-decorator": "^8.3.0",
     "vue-router": "^3.1.3",
     "vue-svg-sprite": "^1.4.0",
@@ -41,12 +41,16 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@kazupon/vue-i18n-loader": "^0.3.0",
+    "@types/webpack": "^4.4.0",
     "lint-staged": "^9.5.0",
-    "svg-sprite-generator": "^0.0.7"
+    "svg-sprite-generator": "^0.0.7",
+    "vue-cli-plugin-i18n": "^0.6.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
+  "license": "Unlicense",
   "lint-staged": {
     "*.{js,vue,ts}": [
       "vue-cli-service lint",
@@ -56,5 +60,6 @@
       "stylelint \"src/**/*{.css,.vue}\" --fix",
       "git add"
     ]
-  }
+  },
+  "repository": "https://github.com/dh-center/st-retrospect-frontend.git"
 }
