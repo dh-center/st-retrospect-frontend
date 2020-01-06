@@ -10,7 +10,6 @@ import i18n from '@/i18n';
 
 @Component({
   created() {
-    console.log(this.$store.state.app.interfaceLanguage);
     if (this.$store.state.app.interfaceLanguage && this.$store.state.app.interfaceLanguage !== i18n.locale) {
       i18n.locale = this.$store.state.app.interfaceLanguage;
     }
