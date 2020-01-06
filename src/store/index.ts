@@ -11,7 +11,7 @@ Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
 export interface RootState {
-  app: AppModuleState
+  [key: string]: undefined;
 }
 
 export default new Vuex.Store({
