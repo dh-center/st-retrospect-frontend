@@ -4,11 +4,17 @@ module.exports = {
     'stylelint-config-rational-order'
   ],
   rules: {
-    'plugin/rational-order': [true, {
-      'empty-line-between-groups': true
-    } ],
     'selector-type-no-unknown': [true, {
       ignoreTypes: [ /\^/ ]
+    } ],
+    'order/order': [
+      'at-rules',
+      'declarations',
+      'custom-properties',
+      'rules'
+    ],
+    'plugin/rational-order': [true, {
+      'empty-line-between-groups': true
     } ]
   }
 };
