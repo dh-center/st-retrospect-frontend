@@ -1,3 +1,5 @@
+@import './custom-properties.css';
+
 /**
  * Base site styles
  */
@@ -60,6 +62,8 @@ pre {
 
 .button {
   &--search {
+    @apply --font-serif-main;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,7 +71,6 @@ pre {
 
     font-size: 20px;
 
-    font-family: 'Oranienbaum', serif;
     line-height: 50px;
     text-transform: uppercase;
 

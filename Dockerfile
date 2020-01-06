@@ -11,7 +11,7 @@ RUN yarn install
 # Build project
 COPY . .
 
-RUN yarn build
+RUN yarn build --prod
 
 # production environment
 FROM nginx:1.17.3-alpine

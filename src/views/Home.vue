@@ -75,6 +75,8 @@ export default class HomeView extends Vue {
 </i18n>
 
 <style>
+  @import '../styles/custom-properties.css';
+
   .home {
     position: relative;
 
@@ -111,13 +113,14 @@ export default class HomeView extends Vue {
     }
 
     &__title {
+      @apply --font-serif-main;
+
       width: 100%;
       margin: 0 0 80px;
 
       color: #ffffff;
       font-weight: 400;
       font-size: 64px;
-      font-family: 'Oranienbaum', serif;
       line-height: 72px;
       text-align: center;
     }
