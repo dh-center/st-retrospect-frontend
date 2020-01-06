@@ -28,10 +28,12 @@ function loadLocaleMessages(): LocaleMessages {
  */
 function detectLanguage(): string | undefined {
   const languages = navigator.languages;
-  const language = languages.find(sl =>
-    ['en', 'ru'].find(l => (sl.split(new RegExp(l, 'gi')).length - 1 > 0 ? l : null)));
 
-  return language;
+  if (languages.findIndex(lang => /en/i.test(lang)) - languages.findIndex(lang => /ru/i.test(lang)) > 0) {
+    return 'ru';
+  } else {
+    return 'en';
+  }
 }
 
 export default new VueI18n({
