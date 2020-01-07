@@ -10,14 +10,7 @@ const mutationTypes = {
 };
 
 /**
- * Module state
- * @typedef {object} AppModuleState
- * @property {string} interfaceLanguage - language in which user interface will be displayed
- */
-
-/**
  * Creates module state
- * @return {AppModuleState}
  */
 function initialState(): AppModuleState {
   return {
