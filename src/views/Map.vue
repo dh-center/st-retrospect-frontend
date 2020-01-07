@@ -5,16 +5,19 @@
         v-if="map"
         :map="map"
         :lng-lat="[30.28617, 59.93944]"
+        location-type="actor-home"
       />
       <MapMarker
         v-if="map"
         :map="map"
         :lng-lat="[30.29617, 59.93944]"
+        location-type="theater"
       />
       <MapMarker
         v-if="map"
         :map="map"
         :lng-lat="[30.27617, 59.93944]"
+        location-type="study"
       />
     </div>
     <MapAside />
