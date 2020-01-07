@@ -1,5 +1,4 @@
 import { CHANGE_INTERFACE_LANG } from './actionTypes';
-import i18n from '@/i18n';
 import { Module } from 'vuex';
 import { RootState } from '@/store';
 

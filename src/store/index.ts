@@ -3,13 +3,15 @@ import Vuex from 'vuex';
 
 import app from './modules/app';
 
-import { AppModuleState } from '@/store/modules/app';
 import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== 'production';
 
+/**
+ * Interface of store root state
+ */
 export interface RootState {
   [key: string]: undefined;
 }
