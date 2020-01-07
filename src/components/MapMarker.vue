@@ -5,7 +5,7 @@
   >
     <svg
       v-svg
-      :symbol="markerSvgName"
+      :symbol="locationType"
     />
     <div
       :id="$id('marker-popup')"
@@ -84,10 +84,10 @@ export default class MapMarker extends Vue {
     private lngLat!: [number, number];
 
     /**
-     * Point svg name
+     * Type of location
      */
     @Prop({ type: String, required: true })
-    private markerSvgName!: string;
+    private locationType!: string;
 
     /**
      * Vue mounted hook
