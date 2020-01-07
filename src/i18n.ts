@@ -27,11 +27,21 @@ function loadLocaleMessages(): LocaleMessages {
  */
 function detectLanguage(): string {
   const languages = navigator.languages;
+  const englishPriority = languages.findIndex(lang => /en/i.test(lang));
+  const russianPriority = languages.findIndex(lang => /ru/i.test(lang));
 
-  if (languages.findIndex(lang => /en/i.test(lang)) - languages.findIndex(lang => /ru/i.test(lang)) > 0) {
+  if (russianPriority === -1) {
+    return 'en';
+  } else if (englishPriority === -1) {
     return 'ru';
   } else {
-    return 'en';
+    const distanceBetweenRussianAndEnglish = englishPriority - russianPriority;
+
+    if (distanceBetweenRussianAndEnglish > 0) {
+      return 'ru';
+    } else {
+      return 'en';
+    }
   }
 }
 
