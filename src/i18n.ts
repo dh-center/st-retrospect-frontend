@@ -32,16 +32,17 @@ function detectLanguage(): string {
 
   if (russianPriority === -1) {
     return 'en';
-  } else if (englishPriority === -1) {
+  }
+  if (englishPriority === -1) {
+    return 'ru';
+  }
+
+  const distanceBetweenRussianAndEnglish = englishPriority - russianPriority;
+
+  if (distanceBetweenRussianAndEnglish > 0) {
     return 'ru';
   } else {
-    const distanceBetweenRussianAndEnglish = englishPriority - russianPriority;
-
-    if (distanceBetweenRussianAndEnglish > 0) {
-      return 'ru';
-    } else {
-      return 'en';
-    }
+    return 'en';
   }
 }
 
