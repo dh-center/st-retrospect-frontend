@@ -8,7 +8,7 @@
       :symbol="locationType"
     />
     <div
-      :id="$id('marker-popup')"
+      :id="popupElementId"
       class="popup"
     >
       <h3 class="popup__title">
@@ -69,7 +69,12 @@ export default class MapMarker extends Vue {
     /**
      * Unique ID of marker point HTML element
      */
-    private markerElementId: string = this.$id('marker-point');
+    private markerElementId: string = this.$id('marker');
+
+    /**
+     * Unique ID of popup HTML element
+     */
+    private popupElementId: string = this.$id('popup');
 
     /**
      * MapboxGL map for adding marker
@@ -99,7 +104,7 @@ export default class MapMarker extends Vue {
         offset: 25,
         maxWidth: '300px'
       })
-        .setDOMContent(document.getElementById(this.$id('marker-popup')) as HTMLElement)
+        .setDOMContent(document.getElementById(this.popupElementId) as HTMLElement)
         .addTo(this.map);
       this.marker = new mapboxgl.Marker({
         element: document.getElementById(this.markerElementId) as HTMLElement
