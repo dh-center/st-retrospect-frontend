@@ -22,7 +22,7 @@ const mutationTypes = {
  */
 function initialState(): AppModuleState {
   return {
-    interfaceLanguage: i18n.locale
+    interfaceLanguage: null
   };
 }
 
@@ -33,7 +33,7 @@ export interface AppModuleState {
   /**
    * Language of interface
    */
-  interfaceLanguage: string
+  interfaceLanguage: string | null
 }
 
 const module: Module<AppModuleState, RootState> = {

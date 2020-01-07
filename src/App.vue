@@ -6,20 +6,25 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import i18n from '@/i18n';
+import { CHANGE_INTERFACE_LANG } from '@/store/modules/app/actionTypes';
 
-@Component({
-  created() {
-    if (this.$store.state.app.interfaceLanguage && this.$store.state.app.interfaceLanguage !== i18n.locale) {
-      i18n.locale = this.$store.state.app.interfaceLanguage;
-    }
-  }
-})
+@Component
 /**
  * Class of application view
  */
 export default class App extends Vue {
-
+  /**
+   * Vue created hook
+   * Get interface language from store and set to i18n module
+   * If store is empty, add interface language to it from i18n module
+   */
+  created() {
+    if (this.$store.state.app.interfaceLanguage && this.$store.state.app.interfaceLanguage !== this.$i18n.locale) {
+      this.$i18n.locale = this.$store.state.app.interfaceLanguage;
+    } else if (!this.$store.state.app.interfaceLanguage) {
+      this.$store.dispatch(CHANGE_INTERFACE_LANG, this.$i18n.locale);
+    }
+  }
 }
 </script>
 
