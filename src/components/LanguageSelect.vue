@@ -1,24 +1,36 @@
 <template>
   <div class="language-select">
     <span
-      class="language-select__link language-select__link--active"
-      @click="$root.$i18n.locale = 'ru'"
+      class="language-select__link"
+      :class="{'language-select__link--active': (this.$store.state.app.interfaceLanguage === 'ru')}"
+      @click="changeInterfaceLanguage('ru')"
     >RU</span>
     <span
       class="language-select__link"
-      @click="$root.$i18n.locale = 'en'"
+      :class="{'language-select__link--active': (this.$store.state.app.interfaceLanguage === 'en')}"
+      @click="changeInterfaceLanguage('en')"
     >EN</span>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { CHANGE_INTERFACE_LANG } from '@/store/modules/app/actionTypes';
 
 @Component
 /**
  * Component for language selecting
  */
-export default class LanguageSelect extends Vue {}
+export default class LanguageSelect extends Vue {
+  /**
+   * Change interface language and save it to storage
+   * @param {String} lang - new interface language
+   */
+  private changeInterfaceLanguage(lang: string): void {
+    this.$store.dispatch(CHANGE_INTERFACE_LANG, lang);
+    this.$i18n.locale = lang;
+  }
+}
 </script>
 
 <style>

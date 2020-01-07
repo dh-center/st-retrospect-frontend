@@ -22,8 +22,32 @@ function loadLocaleMessages(): LocaleMessages {
   return messages;
 }
 
+/**
+ * Detect interface language from navigator
+ */
+function detectLanguage(): string {
+  const languages = navigator.languages;
+  const englishPriority = languages.findIndex(lang => /en/i.test(lang));
+  const russianPriority = languages.findIndex(lang => /ru/i.test(lang));
+
+  if (russianPriority === -1) {
+    return 'en';
+  }
+  if (englishPriority === -1) {
+    return 'ru';
+  }
+
+  const distanceBetweenRussianAndEnglish = englishPriority - russianPriority;
+
+  if (distanceBetweenRussianAndEnglish > 0) {
+    return 'ru';
+  } else {
+    return 'en';
+  }
+}
+
 export default new VueI18n({
-  locale: process.env.VUE_APP_I18N_LOCALE || 'en',
-  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
+  locale: detectLanguage(),
+  fallbackLocale: 'en',
   messages: loadLocaleMessages()
 });
