@@ -33,9 +33,9 @@ import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import SearchLine from '@/components/SearchLine.vue';
 import LocationInfo from '@/components/LocationInfo.vue';
+import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
-import locations from './locations';
 
 @Component({
   components: {
@@ -52,7 +52,8 @@ export default class MapAside extends Vue {
   /**
    * Locations list to display
    */
-  private locationsList: Location[] = locations;
+  @State(state => state.app.searchResult)
+  private locationsList!: Location[];
 }
 </script>
 
