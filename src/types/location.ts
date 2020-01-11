@@ -15,7 +15,17 @@ interface Location {
   /**
    * Main location image
    */
-  mainPhotoLink: string;
+  mainPhotoLink?: string;
+
+  /**
+   * Location's latitude on map
+   */
+  latitude?: number;
+
+  /**
+   * Location's longitude on map
+   */
+  longitude?: number;
 }
 
 export default Location;

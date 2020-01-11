@@ -53,7 +53,7 @@ export default class MapAside extends Vue {
    * Locations list to display
    */
   @State(state => state.app.searchResult)
-  private locationsList!: Location[];
+  private locationsList!: Location[] | null;
 }
 </script>
 
