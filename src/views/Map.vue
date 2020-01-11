@@ -1,24 +1,15 @@
 <template>
   <div>
     <div id="mapContainer">
-      <MapMarker
-        v-if="map"
-        :map="map"
-        :lng-lat="[30.28617, 59.93944]"
-        location-type="actor-home"
-      />
-      <MapMarker
-        v-if="map"
-        :map="map"
-        :lng-lat="[30.29617, 59.93944]"
-        location-type="theater"
-      />
-      <MapMarker
-        v-if="map"
-        :map="map"
-        :lng-lat="[30.27617, 59.93944]"
-        location-type="study"
-      />
+      <div v-if="map">
+        <MapMarker
+          v-for="location in filteredLocationsList"
+          :key="location.id"
+          :map="map"
+          :lng-lat="[location.longitude, location.latitude]"
+          location-type="actor-home"
+        />
+      </div>
     </div>
     <MapAside />
   </div>
@@ -29,6 +20,9 @@ import { Component, Vue } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
 import MapAside from '@/components/MapAside.vue';
 import MapMarker from '@/components/MapMarker.vue';
+import { State } from 'vuex-class';
+// eslint-disable-next-line no-unused-vars
+import Location from '@/types/location';
 
 mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
 
@@ -46,6 +40,19 @@ export default class MapView extends Vue {
    * MapboxGL map instance
    */
   private map?: mapboxgl.Map | null = null;
+
+  /**
+   * Locations list to display
+   */
+  @State(state => state.app.searchResult)
+  private locationsList!: Location[] | null;
+
+  /**
+   * Returns only locations with non-empty latitude and longitude fields
+   */
+  get filteredLocationsList() {
+    return this.locationsList?.filter(location => location.latitude && location.longitude);
+  }
 
   /**
    * Vue mounted hook

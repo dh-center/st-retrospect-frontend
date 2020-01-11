@@ -1,6 +1,8 @@
 import { CHANGE_INTERFACE_LANG } from './actionTypes';
 import { Module } from 'vuex';
 import { RootState } from '@/store';
+import Location from '@/types/location';
+import locationsList from '@/store/modules/app/locations';
 
 /**
  * Enum of mutation types for this module
@@ -14,7 +16,8 @@ const mutationTypes = {
  */
 function initialState(): AppModuleState {
   return {
-    interfaceLanguage: null
+    interfaceLanguage: null,
+    searchResult: locationsList
   };
 }
 
@@ -25,7 +28,12 @@ export interface AppModuleState {
   /**
    * Language of interface
    */
-  interfaceLanguage: string | null
+  interfaceLanguage: string | null;
+
+  /**
+   * List with results from search to display it on map and aside bar
+   */
+  searchResult: Location[] | null;
 }
 
 const module: Module<AppModuleState, RootState> = {
