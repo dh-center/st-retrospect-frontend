@@ -5,7 +5,9 @@ import store from './store';
 import UniqueId from 'vue-unique-id';
 import SvgSprite from 'vue-svg-sprite';
 import i18n from './i18n';
+import VModal from 'vue-js-modal';
 
+Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 Vue.use(UniqueId);
 Vue.use(SvgSprite, {
   url: require('./assets/sprite.svg')

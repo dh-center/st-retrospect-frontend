@@ -28,10 +28,12 @@
           />
         </router-link>
       </div>
-      <a
-        href="#"
+      <button
         class="home__how-to-link"
-      >{{ $t('how-to') }}</a>
+        @click="openHowToUseModal()"
+      >
+        {{ $t('how-to') }}
+      </button>
       <LanguageSelect />
     </main>
   </div>
@@ -41,6 +43,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
+import HowToUsePopup from '@/components/modals/HowToUse.vue';
 
 @Component({
   components: {
@@ -52,6 +55,14 @@ import LanguageSelect from '@/components/LanguageSelect.vue';
  * View for home page
  */
 export default class HomeView extends Vue {
+  /**
+   * Opens "How to Use" popup
+   */
+  private openHowToUseModal() {
+    this.$modal.show(HowToUsePopup, {}, {
+      height: 400
+    });
+  }
 }
 </script>
 
@@ -161,7 +172,11 @@ export default class HomeView extends Vue {
       text-decoration: none;
       text-shadow: 0 0 4px rgba(0, 0, 0, .5);
 
+      background: none;
+      border:none;
+
       border-bottom: 1px solid #f6c23d;
+      cursor: pointer;
     }
   }
 </style>
