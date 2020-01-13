@@ -48,8 +48,7 @@ import HowToUsePopup from '@/components/modals/HowToUse.vue';
 @Component({
   components: {
     SiteLogo,
-    LanguageSelect,
-    HowToUsePopup
+    LanguageSelect
   }
 })
 /**
