@@ -61,3 +61,35 @@ import { Vue, Component } from 'vue-property-decorator';
 export default class HowToUsePopup extends Vue {
 }
 </script>
+
+<style>
+  @import "../../styles/custom-properties.css";
+
+  .how-to-use-popup {
+    @apply --font-sans-serif-light;
+    @apply --custom-scroll;
+    height: 100%;
+    padding: 30px;
+    overflow: auto;
+
+    font-size: 14px;
+    line-height: 24px;
+
+    &__title {
+      @apply --font-serif-main;
+      margin: 0 0 20px;
+      padding: 0;
+
+      color: #2d2d2d;
+      font-size: 24px;
+    }
+
+    &__list {
+      margin-top: 50px;
+    }
+
+    ul, li {
+      list-style-type: disc;
+    }
+  }
+</style>

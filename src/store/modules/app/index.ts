@@ -2,7 +2,7 @@ import { CHANGE_INTERFACE_LANG } from './actionTypes';
 import { Module } from 'vuex';
 import { RootState } from '@/store';
 import Location from '@/types/location';
-import locationsList from '@/store/modules/app/locations';
+import locationsList from './locations';
 
 /**
  * Enum of mutation types for this module

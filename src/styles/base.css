@@ -83,3 +83,7 @@ pre {
     }
    }
 }
+
+.v--modal-overlay {
+  background: rgba(0, 0, 0, 0.78) !important;
+}

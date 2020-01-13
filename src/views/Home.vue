@@ -60,28 +60,9 @@ export default class HomeView extends Vue {
    * Opens "How to Use" popup
    */
   private openHowToUseModal() {
-    console.dir(HowToUsePopup);
-    this.$modal.show(HowToUsePopup);
-
-  /*
-   *   this.$modal.show({
-   *     template: `
-   *   <div>
-   *     <h1>This is created inline</h1>
-   *     <p>{{ text }}</p>
-   *   </div>
-   * `,
-   *     props: [ 'text' ]
-   *   }, {
-   *     text: 'This text is passed as a property'
-   *   }, {
-   *     height: 'auto'
-   *   }, {
-   *     'before-close': () => {
-   *       console.log('this will be called before the modal closes');
-   *     }
-   *   });
-   */
+    this.$modal.show(HowToUsePopup, {}, {
+      height: 400
+    });
   }
 }
 </script>
@@ -192,7 +173,11 @@ export default class HomeView extends Vue {
       text-decoration: none;
       text-shadow: 0 0 4px rgba(0, 0, 0, .5);
 
+      background: none;
+      border:none;
+
       border-bottom: 1px solid #f6c23d;
+      cursor: pointer;
     }
   }
 </style>
