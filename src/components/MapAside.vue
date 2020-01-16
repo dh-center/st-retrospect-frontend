@@ -17,11 +17,14 @@
       </div>
     </header>
     <div class="map-aside__content">
-      <LocationInfo
-        v-for="location in locationsList"
-        :key="location.ids"
-        class="map-aside__location-info"
-        :location="location"
+      <!--      <LocationInfo-->
+      <!--        v-for="location in locationsList"-->
+      <!--        :key="location.ids"-->
+      <!--        class="map-aside__location-info"-->
+      <!--        :location="location"-->
+      <!--      />-->
+      <LocationCard
+        :location="locationsList[0]"
       />
     </div>
   </aside>
@@ -33,12 +36,14 @@ import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import SearchLine from '@/components/SearchLine.vue';
 import LocationInfo from '@/components/LocationInfo.vue';
+import LocationCard from '@/components/LocationCard.vue';
 import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
 
 @Component({
   components: {
+    LocationCard,
     SiteLogo,
     LanguageSelect,
     SearchLine,
@@ -69,6 +74,8 @@ export default class MapAside extends Vue {
 </i18n>
 
 <style>
+@import '../styles/custom-properties.css';
+
 .map-aside {
   position: absolute;
   top: 0;
@@ -122,6 +129,7 @@ export default class MapAside extends Vue {
   }
 
   &__content {
+    @apply --custom-scroll;
     width: 100%;
     overflow: auto;
 
