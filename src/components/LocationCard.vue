@@ -5,13 +5,13 @@
       :src="location.mainPhotoLink"
     >
     <div class="location-card__main">
-      <div class="location-card__wrap--border">
+      <div class="location-card__wrap--bordered">
         <div class="persons">
           <div class="persons__title-block">
-            <div class="persons__title-text--oranienbaum">
+            <div class="persons__title-text persons__title-text--serif">
               Здесь были
             </div>
-            <div class="persons__title-text--roboto">
+            <div class="persons__title-text">
               личности
             </div>
           </div>
@@ -31,7 +31,7 @@
           Биржевой переулок 1
         </div>
       </div>
-      <div class="location-card__wrap--border">
+      <div class="location-card__wrap--bordered">
         <div class="info-block">
           <div class="info-block__title">
             Строительство
@@ -103,7 +103,7 @@ export default class LocationCard extends Vue {
           margin-right: 20px;
         }
 
-        &__title-text--oranienbaum {
+        &__title-text--serif {
           @apply --font-serif-main;
 
           margin-bottom: 5px;
@@ -113,8 +113,7 @@ export default class LocationCard extends Vue {
           font-size: 20px;
         }
 
-        &__title-text--roboto {
-          @apply --font-sans-serif-main;
+        &__title-text {
           color: #2d2d2d;
           font-size: 10px;
           line-height: 9px;
@@ -151,7 +150,7 @@ export default class LocationCard extends Vue {
       font-size: 14px;
     }
 
-    &__wrap--border {
+    &__wrap--bordered {
       @apply --clearfix;
       margin-bottom: 15px;
       padding-bottom: 15px;
@@ -171,8 +170,6 @@ export default class LocationCard extends Vue {
       }
 
       &__title {
-        @apply --font-sans-serif-main;
-
         margin-bottom: 8px;
 
         font-size: 8px;
