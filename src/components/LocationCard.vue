@@ -9,10 +9,10 @@
         <div class="persons">
           <div class="persons__title-block">
             <div class="persons__title-text persons__title-text--serif">
-              Здесь были
+              {{ $t('persons-title[0]') }}
             </div>
             <div class="persons__title-text">
-              личности
+              {{ $t('persons-title[1]') }}
             </div>
           </div>
           <div class="persons__list">
@@ -34,7 +34,7 @@
       <div class="location-card__wrap--bordered">
         <div class="info-block">
           <div class="info-block__title">
-            Строительство
+            {{ $t('build-time') }}
           </div>
           <div class="info-block__content">
             1834-01-01
@@ -42,7 +42,7 @@
         </div>
         <div class="info-block">
           <div class="info-block__title">
-            Архитектор
+            {{ $t('architect') }}
           </div>
           <div class="info-block__content">
             Боссе Г. А. Маас И. П.
@@ -51,11 +51,13 @@
       </div>
       <div class="photos">
         <div class="photos__title">
-          Фотографии
+          {{ $t('photos') }}
         </div>
       </div>
       <div class="location-card__links">
-        <a href="wikipedia.org">Ссылка на источник</a>
+        <a href="wikipedia.org">
+          {{ $t('source-link') }}
+        </a>
       </div>
     </div>
   </div>
@@ -78,6 +80,31 @@ export default class LocationCard extends Vue {
   private location!: Location;
 }
 </script>
+
+<i18n>
+{
+  "ru": {
+    "persons-title": [
+      "Здесь были",
+      "личности"
+    ],
+    "build-time": "Строительство",
+    "architect": "Архитектор",
+    "photos": "Фотографии",
+    "source-link": "Ссылка на источник"
+  },
+  "en": {
+    "persons-title": [
+      "Were here",
+      "persons"
+    ],
+    "build-time": "Construction",
+    "architect": "Architect",
+    "photos": "Photos",
+    "source-link": "Source link"
+  }
+}
+</i18n>
 
 <style>
   @import '../styles/custom-properties.css';
@@ -103,6 +130,14 @@ export default class LocationCard extends Vue {
           margin-right: 20px;
         }
 
+        &__title-text {
+          color: #2d2d2d;
+          font-size: 10px;
+          line-height: 9px;
+          letter-spacing: .2em;
+          text-transform: uppercase;
+        }
+
         &__title-text--serif {
           @apply --font-serif-main;
 
@@ -110,15 +145,9 @@ export default class LocationCard extends Vue {
 
           color: #2d2d2d;
 
-          font-size: 20px;
-        }
-
-        &__title-text {
-          color: #2d2d2d;
-          font-size: 10px;
-          line-height: 9px;
-          letter-spacing: .2em;
-          text-transform: uppercase;
+          font-size: 18px;
+          line-height: inherit;
+          letter-spacing: normal;
         }
 
         &__item {
