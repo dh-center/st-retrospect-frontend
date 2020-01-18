@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <PhotosAside />
+      <Gallery />
       <div class="location-card__links">
         <a href="wikipedia.org">
           {{ $t('source-link') }}
@@ -63,11 +63,11 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
-import PhotosAside from '@/components/PhotosAside.vue';
+import Gallery from '@/components/Gallery.vue';
 
 @Component({
   components: {
-    PhotosAside
+    Gallery
   }
 })
 /**

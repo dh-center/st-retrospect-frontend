@@ -13,7 +13,7 @@ import { Vue, Component } from 'vue-property-decorator';
 /**
  * Component for photos block in aside bar
  */
-export default class PhotosAside extends Vue {
+export default class Gallery extends Vue {
 }
 </script>
 
