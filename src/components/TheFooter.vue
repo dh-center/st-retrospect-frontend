@@ -1,8 +1,8 @@
 <template>
   <footer class="footer">
     <div class="footer__buttons">
-      <button>О проекте</button>
-      <button>Как пользоваться картой</button>
+      <button>{{ $t('about') }}</button>
+      <button>{{ $t('how-to-use') }}</button>
     </div>
     <a
       href="https://www.ifmo.ru/"
@@ -27,6 +27,19 @@ export default class TheFooter extends Vue {
 
 }
 </script>
+
+<i18n>
+{
+  "en": {
+    "about": "About project",
+    "how-to-use": "How to use map"
+  },
+  "ru": {
+    "about": "О проекте",
+    "how-to-use": "Как пользоваться картой"
+  }
+}
+</i18n>
 
 <style>
   @import '../styles/custom-properties.css';
