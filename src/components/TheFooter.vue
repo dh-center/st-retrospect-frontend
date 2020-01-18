@@ -1,8 +1,12 @@
 <template>
   <footer class="footer">
     <div class="footer__buttons">
-      <button>{{ $t('about') }}</button>
-      <button>{{ $t('how-to-use') }}</button>
+      <button @click="openAboutProjectPopup">
+        {{ $t('about') }}
+      </button>
+      <button @click="openHowToUseModal">
+        {{ $t('how-to-use') }}
+      </button>
     </div>
     <a
       href="https://www.ifmo.ru/"
@@ -19,13 +23,31 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import HowToUsePopup from '@/components/modals/HowToUse.vue';
+import AboutProjectPopup from '@/components/modals/AboutProject.vue';
 
 @Component
 /**
  * Footer for Map Aside
  */
 export default class TheFooter extends Vue {
+  /**
+   * Opens "How to Use" popup
+   */
+  private openHowToUseModal() {
+    this.$modal.show(HowToUsePopup, {}, {
+      height: 400
+    });
+  }
 
+  /**
+   * Opens "About project" popup
+   */
+  private openAboutProjectPopup() {
+    this.$modal.show(AboutProjectPopup, {}, {
+      height: 400
+    });
+  }
 }
 </script>
 
@@ -63,6 +85,7 @@ export default class TheFooter extends Vue {
       background: none;
       border: none;
       outline: none;
+      cursor: pointer;
     }
 
     &__itmo-logo {
