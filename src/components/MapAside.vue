@@ -25,6 +25,7 @@
       <!--      />-->
       <PersonCard />
     </div>
+    <TheFooter />
   </aside>
 </template>
 
@@ -34,6 +35,7 @@ import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import SearchLine from '@/components/SearchLine.vue';
 import LocationInfo from '@/components/LocationInfo.vue';
+import TheFooter from '@/components/TheFooter.vue';
 import LocationCard from '@/components/LocationCard.vue';
 import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
@@ -47,7 +49,8 @@ import PersonCard from '@/components/PersonCard.vue';
     SiteLogo,
     LanguageSelect,
     SearchLine,
-    LocationInfo
+    LocationInfo,
+    TheFooter
   }
 })
 /**

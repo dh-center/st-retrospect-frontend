@@ -1,9 +1,9 @@
 <template>
   <div class="location-card">
-    <img
+    <div
       class="location-card__image"
-      :src="location.mainPhotoLink"
-    >
+      :style="{ 'background-image': `url('${location.mainPhotoLink}')` }"
+    />
     <div class="location-card__main">
       <div class="location-card__wrap--bordered">
         <div class="persons">
@@ -114,8 +114,11 @@ export default class LocationCard extends Vue {
 
     &__image {
       width: 100%;
-      height: auto;
+      height: 250px;
       margin-bottom: 20px;
+
+      background-position: center;
+      background-size: cover;
     }
 
     &__main {

@@ -63,7 +63,8 @@ export default class MapView extends Vue {
       container: 'mapContainer',
       style: 'mapbox://styles/dandriver/ck0epf0pe0qh51cr3ecw3v65y',
       center: [30.28617, 59.93944],
-      zoom: 12
+      zoom: 12,
+      logoPosition: 'top-right'
     });
   }
 }
