@@ -2,10 +2,12 @@
   <div class="home">
     <div class="home__top">
       <SiteLogo />
-      <a
-        href="#"
+      <button
         class="home__about-link"
-      >{{ $t('about-project') }}</a>
+        @click="openAboutProjectPopup"
+      >
+        {{ $t('about-project') }}
+      </button>
     </div>
     <main class="home__main">
       <h1 class="home__title">
@@ -30,7 +32,7 @@
       </div>
       <button
         class="home__how-to-link"
-        @click="openHowToUseModal()"
+        @click="openHowToUseModal"
       >
         {{ $t('how-to') }}
       </button>
@@ -44,6 +46,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import HowToUsePopup from '@/components/modals/HowToUse.vue';
+import AboutProjectPopup from '@/components/modals/AboutProject.vue';
 
 @Component({
   components: {
@@ -60,6 +63,15 @@ export default class HomeView extends Vue {
    */
   private openHowToUseModal() {
     this.$modal.show(HowToUsePopup, {}, {
+      height: 400
+    });
+  }
+
+  /**
+   * Opens "About project" popup
+   */
+  private openAboutProjectPopup() {
+    this.$modal.show(AboutProjectPopup, {}, {
       height: 400
     });
   }
@@ -120,7 +132,9 @@ export default class HomeView extends Vue {
     &__about-link {
       color: #ffffff;
       font-size: 16px;
-      text-decoration: none;
+
+      background: none;
+      border: none;
     }
 
     &__title {
