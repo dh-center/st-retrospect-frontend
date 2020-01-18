@@ -49,11 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="photos">
-        <div class="photos__title">
-          {{ $t('photos') }}
-        </div>
-      </div>
+      <PhotosAside />
       <div class="location-card__links">
         <a href="wikipedia.org">
           {{ $t('source-link') }}
@@ -67,8 +63,13 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
+import PhotosAside from '@/components/PhotosAside.vue';
 
-@Component
+@Component({
+  components: {
+    PhotosAside
+  }
+})
 /**
  * Component for location card
  */
@@ -90,7 +91,6 @@ export default class LocationCard extends Vue {
     ],
     "build-time": "Строительство",
     "architect": "Архитектор",
-    "photos": "Фотографии",
     "source-link": "Ссылка на источник"
   },
   "en": {
@@ -100,7 +100,6 @@ export default class LocationCard extends Vue {
     ],
     "build-time": "Construction",
     "architect": "Architect",
-    "photos": "Photos",
     "source-link": "Source link"
   }
 }
@@ -214,19 +213,6 @@ export default class LocationCard extends Vue {
       &__content {
         @apply --font-sans-serif-light;
         font-size: 14px;
-      }
-    }
-
-    .photos {
-      min-height: 150px;
-      margin-bottom: 15px;
-
-      &__title {
-        @apply --font-serif-main;
-        margin-bottom: 20px;
-
-        color: #2d2d2d;
-        font-size: 20px;
       }
     }
 
