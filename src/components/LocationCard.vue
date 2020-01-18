@@ -145,9 +145,10 @@ export default class LocationCard extends Vue {
 
           color: #2d2d2d;
 
-          font-size: 18px;
+          font-size: 20px;
           line-height: inherit;
           letter-spacing: normal;
+          text-transform: none;
         }
 
         &__item {
