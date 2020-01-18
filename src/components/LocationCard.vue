@@ -49,11 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="photos">
-        <div class="photos__title">
-          {{ $t('photos') }}
-        </div>
-      </div>
+      <Gallery />
       <div class="location-card__links">
         <a href="wikipedia.org">
           {{ $t('source-link') }}
@@ -67,8 +63,13 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
+import Gallery from '@/components/Gallery.vue';
 
-@Component
+@Component({
+  components: {
+    Gallery
+  }
+})
 /**
  * Component for location card
  */
@@ -90,7 +91,6 @@ export default class LocationCard extends Vue {
     ],
     "build-time": "Строительство",
     "architect": "Архитектор",
-    "photos": "Фотографии",
     "source-link": "Ссылка на источник"
   },
   "en": {
@@ -100,148 +100,63 @@ export default class LocationCard extends Vue {
     ],
     "build-time": "Construction",
     "architect": "Architect",
-    "photos": "Photos",
     "source-link": "Source link"
   }
 }
 </i18n>
 
+<style src="../styles/cards.css"></style>
+
 <style>
   @import '../styles/custom-properties.css';
 
   .location-card {
-    width: 100%;
+    .persons {
+      @apply --clearfix;
 
-    &__image {
-      width: 100%;
-      height: 250px;
-      margin-bottom: 20px;
-
-      background-position: center;
-      background-size: cover;
-    }
-
-    &__main {
-      padding: 0 30px;
-
-      .persons {
-        @apply --clearfix;
-
-        &__title-block {
-          float: left;
-          width: 95px;
-          margin-right: 20px;
-        }
-
-        &__title-text {
-          color: #2d2d2d;
-          font-size: 10px;
-          line-height: 9px;
-          letter-spacing: .2em;
-          text-transform: uppercase;
-        }
-
-        &__title-text--serif {
-          @apply --font-serif-main;
-
-          margin-bottom: 5px;
-
-          color: #2d2d2d;
-
-          font-size: 20px;
-          line-height: inherit;
-          letter-spacing: normal;
-          text-transform: none;
-        }
-
-        &__item {
-          margin-right: 8px;
-        }
-
-        &__photo {
-          width: 45px;
-          height: 45px;
-
-          border-radius: 50%;
-        }
+      &__title-block {
+       float: left;
+       width: 95px;
+       margin-right: 20px;
       }
-    }
 
-    &__title {
-      @apply --font-serif-main;
-      margin-bottom: 10px;
+      &__title-text {
+       color: #2d2d2d;
+       font-size: 10px;
+       line-height: 9px;
+       letter-spacing: .2em;
+       text-transform: uppercase;
+      }
 
-      color: #2d2d2d;
-      font-weight: 400;
-      font-size: 24px;
-      line-height: 28px;
+      &__title-text--serif {
+        @apply --font-serif-main;
+
+        margin-bottom: 5px;
+
+        color: #2d2d2d;
+
+        font-size: 20px;
+        line-height: inherit;
+        letter-spacing: normal;
+        text-transform: none;
+      }
+
+      &__item {
+        margin-right: 8px;
+      }
+
+      &__photo {
+        width: 45px;
+        height: 45px;
+
+        border-radius: 50%;
+      }
     }
 
     &__address {
       @apply --font-sans-serif-light;
 
       font-size: 14px;
-    }
-
-    &__wrap--bordered {
-      @apply --clearfix;
-      margin-bottom: 15px;
-      padding-bottom: 15px;
-
-      border-bottom: 1px solid rgba(0, 0, 0, .2);
-    }
-
-    .info-block {
-      float: left;
-      margin-right: 20px;
-      padding-right: 20px;
-
-      border-right: 1px solid rgba(0, 0, 0, .2);
-
-      &:last-child {
-        border-right: none;
-      }
-
-      &__title {
-        margin-bottom: 8px;
-
-        font-size: 8px;
-        line-height: 9px;
-        letter-spacing: .2em;
-        text-transform: uppercase;
-      }
-
-      &__content {
-        @apply --font-sans-serif-light;
-        font-size: 14px;
-      }
-    }
-
-    .photos {
-      min-height: 150px;
-      margin-bottom: 15px;
-
-      &__title {
-        @apply --font-serif-main;
-        margin-bottom: 20px;
-
-        color: #2d2d2d;
-        font-size: 20px;
-      }
-    }
-
-    &__links {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      margin-bottom: 20px;
-
-      a {
-        @apply --font-sans-serif-light;
-        font-size: 10px;
-        letter-spacing: .02em;
-        text-transform: uppercase;
-      }
     }
   }
 </style>

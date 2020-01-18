@@ -23,9 +23,7 @@
       <!--        class="map-aside__location-info"-->
       <!--        :location="location"-->
       <!--      />-->
-      <LocationCard
-        :location="locationsList[0]"
-      />
+      <PersonCard />
     </div>
     <TheFooter />
   </aside>
@@ -42,9 +40,11 @@ import LocationCard from '@/components/LocationCard.vue';
 import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
+import PersonCard from '@/components/PersonCard.vue';
 
 @Component({
   components: {
+    PersonCard,
     LocationCard,
     SiteLogo,
     LanguageSelect,
