@@ -6,6 +6,7 @@
     </div>
     <a
       href="https://www.ifmo.ru/"
+      target="_blank"
       class="footer__itmo-logo"
     >
       <svg
@@ -16,7 +17,7 @@
   </footer>
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
