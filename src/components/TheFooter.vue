@@ -34,7 +34,7 @@ export default class TheFooter extends Vue {
   .footer {
     display: flex;
     align-items: center;
-    padding: 5px 30px;
+    padding: 10px 30px;
 
     background-color: #fff;
     border-top: 1px solid rgba(0, 0, 0, .2);
@@ -45,10 +45,10 @@ export default class TheFooter extends Vue {
 
       color: #7c7c7c;
       font-size: 12px;
-      line-height: 22px;
 
       background: none;
       border: none;
+      outline: none;
     }
 
     &__itmo-logo {
