@@ -61,8 +61,8 @@ export default class PersonCard extends Vue {
 <i18n>
 {
   "ru": {
-    "years": "Строительство",
-    "profession": "Архитектор",
+    "years": "Годы жизни",
+    "profession": "Деятельность",
     "photos": "Фотографии",
     "source-link": "Ссылка на источник"
   },
