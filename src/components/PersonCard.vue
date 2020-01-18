@@ -1,11 +1,9 @@
 <template>
   <div class="person-card">
-    <div class="person-card__image-wrap">
-      <img
-        src="../assets/images/person-125-main.jpeg"
-        class="person-card__image"
-      >
-    </div>
+    <div
+      class="person-card__image"
+      :style="{'background-image': `url(${require('../assets/images/person-125-main.jpeg')}`}"
+    />
     <div class="person-card__main">
       <div class="person-card__wrap--bordered">
         <h2 class="person-card__title">
@@ -74,95 +72,18 @@ export default class PersonCard extends Vue {
 }
 </i18n>
 
+<style src="../styles/cards.css"></style>
+
 <style>
   @import "../styles/custom-properties.css";
 
   .person-card {
-    width: 100%;
-
-    &__image {
-      width: 100%;
-
-      &-wrap {
-        width: 100%;
-        height: 215px;
-        margin-bottom: 20px;
-        overflow: hidden;
-      }
-    }
-
-    &__main {
-      padding: 0 30px;
-    }
-
-    &__wrap--bordered {
-      @apply --clearfix;
-      margin-bottom: 15px;
-      padding-bottom: 15px;
-
-      border-bottom: 1px solid rgba(0, 0, 0, .2);
-    }
-
-    &__title {
-      @apply --font-serif-main;
-      margin-bottom: 10px;
-
-      color: #2d2d2d;
-      font-weight: 400;
-      font-size: 24px;
-      line-height: 28px;
-    }
-
-    .info-block {
-      float: left;
-      margin-right: 20px;
-      padding-right: 20px;
-
-      border-right: 1px solid rgba(0, 0, 0, .2);
-
-      &__wrap {
-        @apply --clearfix;
-      }
-
-      &:last-child {
-        border-right: none;
-      }
-
-      &__title {
-        margin-bottom: 8px;
-
-        font-size: 8px;
-        line-height: 9px;
-        letter-spacing: .2em;
-        text-transform: uppercase;
-      }
-
-      &__content {
-        @apply --font-sans-serif-light;
-        font-size: 14px;
-      }
-    }
-
     &__text {
       @apply --font-sans-serif-light;
       margin-bottom: 30px;
 
       font-size: 14px;
       line-height: 170%;
-    }
-
-    &__links {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      margin-bottom: 20px;
-
-      a {
-        @apply --font-sans-serif-light;
-        font-size: 10px;
-        letter-spacing: .02em;
-        text-transform: uppercase;
-      }
     }
   }
 </style>
