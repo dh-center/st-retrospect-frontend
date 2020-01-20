@@ -13,8 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - name: Create .env file
-        run: echo $ENV_FILE > .env
+      - name: Decrypt large secret
+        run: ./.github/scripts/decrypt_secret.sh
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Test printing your secret (Remove this step in production)
+        run: mv $HOME/secrets/.env ./.env
 
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
