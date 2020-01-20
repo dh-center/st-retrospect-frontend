@@ -13,6 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
+      - run: pwd
       - run: ls -la
       - run: ls -la .github
       - run: ls -la .github/scripts
