@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
+      - run: ls -la
+      - run: ls -la .github
+      - run: ls -la .github/scripts
+
       - name: Decrypt large secret
         run: .github/scripts/decrypt_secret.sh
         env:
