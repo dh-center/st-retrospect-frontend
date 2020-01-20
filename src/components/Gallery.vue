@@ -36,6 +36,9 @@ import { LightGallery } from 'vue-light-gallery';
  * Component for photos block in aside bar
  */
 export default class Gallery extends Vue {
+  /**
+   * Temporal variable for images in gallery
+   */
   images = [
     require('../assets/images/person-125-main.jpeg'),
     require('../assets/images/person-125-main.jpeg'),
@@ -53,6 +56,9 @@ export default class Gallery extends Vue {
     require('../assets/images/person-125-main.jpeg')
   ];
 
+  /**
+   * Current image index in full view
+   */
   currentImageIndex: number | null = null;
 }
 </script>
