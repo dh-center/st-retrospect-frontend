@@ -13,18 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - run: pwd
-      - run: ls -la
-      - run: ls -la .github
-      - run: ls -la .github/scripts
-
-      - name: Decrypt large secret
+      - name: Decrypt .env file
         run: .github/scripts/decrypt_secret.sh
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-
-      - name: Move decrypted .env file to the project root
-        run: mv $HOME/secrets/.env ./.env
 
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
