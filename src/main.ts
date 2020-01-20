@@ -16,7 +16,7 @@ Vue.use(SvgSprite, {
 });
 
 Sentry.init({
-  dsn: 'https://20d5225f0be642899c1a75c49114305e@sentry.io/1888402',
+  dsn: process.env.SENTRY_DSN,
   integrations: [ new Integrations.Vue({ Vue, attachProps: true }) ]
 });
 
@@ -29,4 +29,4 @@ new Vue({
   render: h => h(App)
 }).$mount('#app');
 
-throw new Error('kek');
+throw new Error('lol');
