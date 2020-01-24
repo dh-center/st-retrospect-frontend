@@ -7,7 +7,10 @@
       </div>
       <div class="map-aside__search-form">
         <SearchLine class="map-aside__search-line" />
-        <button class="button button--search map-aside__search-button">
+        <button
+          class="button button--search map-aside__search-button"
+          @click="findLocations"
+        >
           {{ $t('search-button') }}
           <svg
             v-svg

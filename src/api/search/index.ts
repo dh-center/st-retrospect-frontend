@@ -1,5 +1,6 @@
 import { QUERY_FIND_LOCATIONS } from './queries';
 import * as api from '../index';
+import Location from '@/types/location';
 
 /**
  * Find locations by query and return information about them
