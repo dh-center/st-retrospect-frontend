@@ -40,7 +40,7 @@ import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
 import PersonCard from '@/components/PersonCard.vue';
-import * as searchApi from '../../api/search';
+import * as searchApi from '@/api/search';
 
 @Component({
   components: {
