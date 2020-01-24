@@ -3,7 +3,7 @@
  */
 // language=GraphQL
 export const QUERY_FIND_LOCATIONS = `
-  query findLocations($searchString: string!) {
+  query findLocations($searchString: String!) {
     search(searchString: $searchString) {
       id,
       name,

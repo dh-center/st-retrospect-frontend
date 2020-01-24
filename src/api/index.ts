@@ -15,12 +15,10 @@ export async function call(
   request: string,
   variables?: any
 ): Promise<any> {
-  const promise = axios.post(API_ENDPOINT, {
+  const response = await axios.post(API_ENDPOINT, {
     query: request,
     variables
   });
-
-  const response = (await Promise.all([ promise ]))[1];
 
   if (response.data.errors) {
     throw response.data.errors[0];

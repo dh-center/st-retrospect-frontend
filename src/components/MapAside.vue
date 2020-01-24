@@ -44,6 +44,7 @@ import { State } from 'vuex-class';
 import Location from '@/types/location';
 import PersonCard from '@/components/PersonCard.vue';
 import * as searchApi from '@/api/search';
+import { SAVE_SEARCH_RESULTS } from '@/store/modules/app/actionTypes';
 
 @Component({
   components: {
@@ -70,7 +71,7 @@ export default class MapAside extends Vue {
    * Find locations by query in search line
    */
   private async findLocations(): Promise<void> {
-    this.locationsList = await searchApi.findLocations('Пушкин');
+    await this.$store.dispatch(SAVE_SEARCH_RESULTS, await searchApi.findLocations('Пушкин'));
   }
 }
 </script>

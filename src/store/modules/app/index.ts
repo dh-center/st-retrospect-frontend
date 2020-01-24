@@ -1,14 +1,14 @@
-import { CHANGE_INTERFACE_LANG } from './actionTypes';
+import { CHANGE_INTERFACE_LANG, SAVE_SEARCH_RESULTS } from './actionTypes';
 import { Module } from 'vuex';
 import { RootState } from '@/store';
 import Location from '@/types/location';
-import locationsList from './locations';
 
 /**
  * Enum of mutation types for this module
  */
 const mutationTypes = {
-  SET_INTERFACE_LANG: 'SET_INTERFACE_LANG' // Set language in which user interface will be displayed
+  SET_INTERFACE_LANG: 'SET_INTERFACE_LANG', // Set language in which user interface will be displayed
+  SET_SEARCH_RESULTS: 'SET_SEARCH_RESULTS' // Set new search results
 };
 
 /**
@@ -17,7 +17,7 @@ const mutationTypes = {
 function initialState(): AppModuleState {
   return {
     interfaceLanguage: null,
-    searchResult: locationsList
+    searchResult: null
   };
 }
 
@@ -46,6 +46,14 @@ const module: Module<AppModuleState, RootState> = {
      */
     [mutationTypes.SET_INTERFACE_LANG](state: AppModuleState, lang: string) {
       state.interfaceLanguage = lang;
+    },
+    /**
+     * Set new search results
+     * @param {AppModuleState} state - vuex module state
+     * @param {Location[]} searchResults - results to save
+     */
+    [mutationTypes.SET_SEARCH_RESULTS](state: AppModuleState, searchResults: Location[]) {
+      state.searchResult = searchResults;
     }
   },
   actions: {
@@ -56,6 +64,15 @@ const module: Module<AppModuleState, RootState> = {
      */
     [CHANGE_INTERFACE_LANG]({ commit }, lang: string): void {
       commit(mutationTypes.SET_INTERFACE_LANG, lang);
+    },
+    /**
+     * Set new search results
+     * @param {AppModuleState} state - vuex module state
+     * @param {Location[]} searchResults - results to save
+     */
+    [SAVE_SEARCH_RESULTS]({ commit }, searchResults: Location[]): void {
+      console.log(searchResults);
+      commit(mutationTypes.SET_SEARCH_RESULTS, searchResults);
     }
   }
 };

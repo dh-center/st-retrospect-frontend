@@ -8,5 +8,5 @@ import Location from '@/types/location';
  * @return {Promise<Location[]>}
  */
 export async function findLocations(searchString: string): Promise<Location[]> {
-  return (await api.call(QUERY_FIND_LOCATIONS, searchString)).findLocations;
+  return (await api.call(QUERY_FIND_LOCATIONS, { searchString })).findLocations;
 }
