@@ -4,6 +4,6 @@
 export const CHANGE_INTERFACE_LANG = 'CHANGE_INTERFACE_LANG';
 
 /**
- * Save new search results
+ * Search for locations with user input
  */
-export const SAVE_SEARCH_RESULTS = 'SAVE_SEARCH_RESULTS';
+export const SEARCH_FOR_LOCATIONS = 'SEARCH_FOR_LOCATIONS';

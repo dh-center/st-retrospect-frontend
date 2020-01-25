@@ -1,7 +1,9 @@
-import { CHANGE_INTERFACE_LANG, SAVE_SEARCH_RESULTS } from './actionTypes';
+import { CHANGE_INTERFACE_LANG, SEARCH_FOR_LOCATIONS } from './actionTypes';
 import { Module } from 'vuex';
+import Vue from 'vue';
 import { RootState } from '@/store';
 import Location from '@/types/location';
+import * as searchApi from '@/api/search';
 
 /**
  * Enum of mutation types for this module
@@ -53,26 +55,28 @@ const module: Module<AppModuleState, RootState> = {
      * @param {Location[]} searchResults - results to save
      */
     [mutationTypes.SET_SEARCH_RESULTS](state: AppModuleState, searchResults: Location[]) {
-      state.searchResult = searchResults;
+      Vue.set(state, 'searchResult', searchResults);
     }
   },
   actions: {
     /**
      * Set another language for user interface
      * @param {function} commit - standard vuex commit function
-     * @param {String} lang - language to set
+     * @param {string} lang - language to set
      */
     [CHANGE_INTERFACE_LANG]({ commit }, lang: string): void {
       commit(mutationTypes.SET_INTERFACE_LANG, lang);
     },
+
     /**
-     * Set new search results
-     * @param {AppModuleState} state - vuex module state
-     * @param {Location[]} searchResults - results to save
+     * Search for locations with user input
+     * @param {function} commit - standard vuex commit function
+     * @param {string} searchString - string with user input for searching
      */
-    [SAVE_SEARCH_RESULTS]({ commit }, searchResults: Location[]): void {
-      console.log(searchResults);
-      commit(mutationTypes.SET_SEARCH_RESULTS, searchResults);
+    async [SEARCH_FOR_LOCATIONS]({ commit }, searchString): Promise<void> {
+      const locations = await searchApi.findLocations(searchString);
+
+      commit(mutationTypes.SET_SEARCH_RESULTS, locations);
     }
   }
 };
