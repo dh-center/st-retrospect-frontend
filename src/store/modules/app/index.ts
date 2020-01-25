@@ -1,4 +1,4 @@
-import { CHANGE_INTERFACE_LANG, SEARCH_FOR_LOCATIONS } from './actionTypes';
+import { CHANGE_INTERFACE_LANG, SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from './actionTypes';
 import { Module } from 'vuex';
 import Vue from 'vue';
 import { RootState } from '@/store';
@@ -11,7 +11,8 @@ import locationsList from './locations';
  */
 const mutationTypes = {
   SET_INTERFACE_LANG: 'SET_INTERFACE_LANG', // Set language in which user interface will be displayed
-  SET_SEARCH_RESULTS: 'SET_SEARCH_RESULTS' // Set new search results
+  SET_SEARCH_RESULTS: 'SET_SEARCH_RESULTS', // Set new search results
+  SET_LAST_SEARCH_QUERY: 'SET_LAST_SEARCH_QUERY' // Set new search query
 };
 
 /**
@@ -20,7 +21,8 @@ const mutationTypes = {
 function initialState(): AppModuleState {
   return {
     interfaceLanguage: null,
-    searchResult: locationsList
+    searchResult: locationsList,
+    lastSearchQuery: ''
   };
 }
 
@@ -37,6 +39,11 @@ export interface AppModuleState {
    * List with results from search to display it on map and aside bar
    */
   searchResult: Location[] | null;
+
+  /**
+   * Last search query of user
+   */
+  lastSearchQuery: string;
 }
 
 const module: Module<AppModuleState, RootState> = {
@@ -50,6 +57,7 @@ const module: Module<AppModuleState, RootState> = {
     [mutationTypes.SET_INTERFACE_LANG](state: AppModuleState, lang: string) {
       state.interfaceLanguage = lang;
     },
+
     /**
      * Set new search results
      * @param {AppModuleState} state - vuex module state
@@ -57,6 +65,15 @@ const module: Module<AppModuleState, RootState> = {
      */
     [mutationTypes.SET_SEARCH_RESULTS](state: AppModuleState, searchResults: Location[]) {
       Vue.set(state, 'searchResult', searchResults);
+    },
+
+    /**
+     * Set new search results
+     * @param {AppModuleState} state - vuex module state
+     * @param newSearchQuery - new user's search query
+     */
+    [mutationTypes.SET_LAST_SEARCH_QUERY](state: AppModuleState, newSearchQuery: string) {
+      state.lastSearchQuery = newSearchQuery;
     }
   },
   actions: {
@@ -75,9 +92,19 @@ const module: Module<AppModuleState, RootState> = {
      * @param {string} searchString - string with user input for searching
      */
     async [SEARCH_FOR_LOCATIONS]({ commit }, searchString): Promise<void> {
+      console.log(searchString);
       const locations = await searchApi.findLocations(searchString);
 
       commit(mutationTypes.SET_SEARCH_RESULTS, locations);
+    },
+
+    /**
+     * Search for locations with user input
+     * @param {function} commit - standard vuex commit function
+     * @param newSearchQuery - new user's search query
+     */
+    async [UPDATE_LAST_SEARCH_QUERY]({ commit }, newSearchQuery): Promise<void> {
+      commit(mutationTypes.SET_LAST_SEARCH_QUERY, newSearchQuery);
     }
   }
 };
