@@ -92,7 +92,6 @@ const module: Module<AppModuleState, RootState> = {
      * @param {string} searchString - string with user input for searching
      */
     async [SEARCH_FOR_LOCATIONS]({ commit }, searchString): Promise<void> {
-      console.log(searchString);
       const locations = await searchApi.findLocations(searchString);
 
       commit(mutationTypes.SET_SEARCH_RESULTS, locations);
