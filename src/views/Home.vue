@@ -13,23 +13,27 @@
       <h1 class="home__title">
         {{ $t('title') }}
       </h1>
-      <div class="home__search-container">
+      <form
+        class="home__search-container"
+        @submit.prevent="search"
+      >
         <input
+          v-model="searchString"
           type="text"
           class="search__input"
           :placeholder="$t('search-placeholder')"
         >
-        <router-link
+        <button
+          type="submit"
           class="button button--search search__button"
-          :to="{ name: 'map' }"
         >
           {{ $t('want-to-know') }}
           <svg
             v-svg
             symbol="arrow-right"
           />
-        </router-link>
-      </div>
+        </button>
+      </form>
       <button
         class="home__how-to-link"
         @click="openHowToUseModal"
@@ -47,6 +51,7 @@ import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import HowToUsePopup from '@/components/modals/HowToUse.vue';
 import AboutProjectPopup from '@/components/modals/AboutProject.vue';
+import { SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
 
 @Component({
   components: {
@@ -58,6 +63,23 @@ import AboutProjectPopup from '@/components/modals/AboutProject.vue';
  * View for home page
  */
 export default class HomeView extends Vue {
+  /**
+   * Search string for finding locations
+   */
+  private searchString: string = this.$store.state.app.lastSearchQuery || '';
+
+  /**
+   * Search data with user input
+   */
+  private search() {
+    this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
+    this.$store.dispatch(SEARCH_FOR_LOCATIONS, this.searchString);
+
+    this.$router.push({
+      name: 'map'
+    });
+  }
+
   /**
    * Opens "How to Use" popup
    */

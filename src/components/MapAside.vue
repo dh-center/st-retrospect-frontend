@@ -5,14 +5,17 @@
         <SiteLogo class="map-aside__logo" />
         <LanguageSelect class="map-aside__language-select" />
       </div>
-      <div class="map-aside__search-form">
+      <form
+        class="map-aside__search-form"
+        @submit.prevent="findLocations"
+      >
         <SearchLine
           v-model="searchString"
           class="map-aside__search-line"
         />
         <button
           class="button button--search map-aside__search-button"
-          @click="findLocations"
+          type="submit"
         >
           {{ $t('search-button') }}
           <svg
@@ -20,15 +23,24 @@
             symbol="arrow-right"
           />
         </button>
-      </div>
+      </form>
     </header>
-    <div class="map-aside__content">
+    <div
+      v-if="locationsList && locationsList.length"
+      class="map-aside__content"
+    >
       <LocationInfo
         v-for="location in locationsList"
         :key="location.ids"
         class="map-aside__location-info"
         :location="location"
       />
+    </div>
+    <div
+      v-else
+      class="map-aside__not-found-message"
+    >
+      {{ $t('not-found') }}
     </div>
     <TheFooter />
   </aside>
@@ -46,7 +58,7 @@ import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
 import PersonCard from '@/components/PersonCard.vue';
-import { SEARCH_FOR_LOCATIONS } from '@/store/modules/app/actionTypes';
+import { SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
 
 @Component({
   components: {
@@ -72,13 +84,24 @@ export default class MapAside extends Vue {
   /**
    * Search string for finding locations
    */
-  private searchString: string = '';
+  private searchString: string = this.$store.state.app.lastSearchQuery || '';
 
   /**
    * Find locations by query in search line
    */
   private async findLocations(): Promise<void> {
-    await this.$store.dispatch(SEARCH_FOR_LOCATIONS, this.searchString);
+    if (this.searchString) {
+      this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
+      await this.$store.dispatch(SEARCH_FOR_LOCATIONS, this.searchString);
+    }
+  }
+
+  /**
+   * Vue lifecycle hook
+   * Using to fetch info from API
+   */
+  created() {
+    this.findLocations();
   }
 }
 </script>
@@ -86,10 +109,12 @@ export default class MapAside extends Vue {
 <i18n>
 {
   "en": {
-    "search-button": "Search"
+    "search-button": "Search",
+    "not-found": "Sorry, no results were found for your request"
   },
   "ru": {
-    "search-button": "Найти"
+    "search-button": "Найти",
+    "not-found": "Извините, по вашему запросу ничего не найдено"
   }
 }
 </i18n>
@@ -152,7 +177,17 @@ export default class MapAside extends Vue {
   &__content {
     @apply --custom-scroll;
     width: 100%;
+    height: 100%;
     overflow: auto;
+
+    background-color: #fff;
+  }
+
+  &__not-found-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 
     background-color: #fff;
   }
