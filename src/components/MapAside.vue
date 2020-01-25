@@ -25,23 +25,7 @@
         </button>
       </form>
     </header>
-    <div
-      v-if="locationsList && locationsList.length"
-      class="map-aside__content"
-    >
-      <LocationInfo
-        v-for="location in locationsList"
-        :key="location.ids"
-        class="map-aside__location-info"
-        :location="location"
-      />
-    </div>
-    <div
-      v-else
-      class="map-aside__not-found-message"
-    >
-      {{ $t('not-found') }}
-    </div>
+    <router-view />
     <TheFooter />
   </aside>
 </template>
@@ -54,9 +38,6 @@ import SearchLine from '@/components/SearchLine.vue';
 import LocationInfo from '@/components/LocationInfo.vue';
 import TheFooter from '@/components/TheFooter.vue';
 import LocationCard from '@/components/LocationCard.vue';
-import { State } from 'vuex-class';
-// eslint-disable-next-line no-unused-vars
-import Location from '@/types/location';
 import PersonCard from '@/components/PersonCard.vue';
 import { SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
 
@@ -75,12 +56,6 @@ import { SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/
  * Aside bar of Map View
  */
 export default class MapAside extends Vue {
-  /**
-   * Locations list to display
-   */
-  @State(state => state.app.searchResult)
-  private locationsList!: Location[] | null;
-
   /**
    * Search string for finding locations
    */
@@ -109,12 +84,10 @@ export default class MapAside extends Vue {
 <i18n>
 {
   "en": {
-    "search-button": "Search",
-    "not-found": "Sorry, no results were found for your request"
+    "search-button": "Search"
   },
   "ru": {
-    "search-button": "Найти",
-    "not-found": "Извините, по вашему запросу ничего не найдено"
+    "search-button": "Найти"
   }
 }
 </i18n>
@@ -172,30 +145,6 @@ export default class MapAside extends Vue {
       width: 20px;
       height: 10px;
     }
-  }
-
-  &__content {
-    @apply --custom-scroll;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-
-    background-color: #fff;
-  }
-
-  &__not-found-message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-
-    background-color: #fff;
-  }
-
-  &__location-info {
-    height: 90px;
-
-    cursor: pointer;
   }
 }
 </style>
