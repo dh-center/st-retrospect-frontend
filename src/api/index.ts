@@ -13,7 +13,7 @@ const API_ENDPOINT: string = process.env.VUE_APP_API_ENDPOINT;
  */
 export async function call(
   request: string,
-  variables?: any
+  variables?: object
 ): Promise<any> {
   const response = await axios.post(API_ENDPOINT, {
     query: request,
