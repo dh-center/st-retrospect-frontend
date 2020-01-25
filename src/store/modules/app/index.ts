@@ -4,7 +4,6 @@ import Vue from 'vue';
 import { RootState } from '@/store';
 import Location from '@/types/location';
 import * as searchApi from '@/api/search';
-import locationsList from './locations';
 
 /**
  * Enum of mutation types for this module
@@ -21,7 +20,7 @@ const mutationTypes = {
 function initialState(): AppModuleState {
   return {
     interfaceLanguage: null,
-    searchResult: locationsList,
+    searchResult: [],
     lastSearchQuery: ''
   };
 }

@@ -5,9 +5,11 @@
 export const QUERY_FIND_LOCATIONS = `
   query findLocations($searchString: String!) {
     search(searchString: $searchString) {
-      id,
-      name,
+      id
+      name
       mainPhotoLink
+      latitude: coordinateX
+      longitude: coordinateY
     }
   }
 `;
