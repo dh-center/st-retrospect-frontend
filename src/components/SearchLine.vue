@@ -6,14 +6,16 @@
     >{{ $t('search') }}</label>
     <input
       :id="$id('input')"
+      :value="value"
       class="search-line__input"
       type="text"
+      @input="$emit('input', $event.target.value)"
     >
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 /**
@@ -21,7 +23,14 @@ import { Component, Vue } from 'vue-property-decorator';
  * Used in Aside bar of the Map view
  */
 export default class SearchLine extends Vue {
-
+  @Prop({
+    type: String,
+    default: ''
+  })
+  /**
+   * Value of the search line for binding
+   */
+  private value!: string;
 }
 </script>
 

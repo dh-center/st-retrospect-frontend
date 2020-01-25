@@ -6,7 +6,10 @@
         <LanguageSelect class="map-aside__language-select" />
       </div>
       <div class="map-aside__search-form">
-        <SearchLine class="map-aside__search-line" />
+        <SearchLine
+          v-model="searchString"
+          class="map-aside__search-line"
+        />
         <button
           class="button button--search map-aside__search-button"
           @click="findLocations"
@@ -43,8 +46,7 @@ import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
 import PersonCard from '@/components/PersonCard.vue';
-import * as searchApi from '@/api/search';
-import { SAVE_SEARCH_RESULTS } from '@/store/modules/app/actionTypes';
+import { SEARCH_FOR_LOCATIONS } from '@/store/modules/app/actionTypes';
 
 @Component({
   components: {
@@ -68,10 +70,15 @@ export default class MapAside extends Vue {
   private locationsList!: Location[] | null;
 
   /**
+   * Search string for finding locations
+   */
+  private searchString: string = '';
+
+  /**
    * Find locations by query in search line
    */
   private async findLocations(): Promise<void> {
-    await this.$store.dispatch(SAVE_SEARCH_RESULTS, await searchApi.findLocations('Пушкин'));
+    await this.$store.dispatch(SEARCH_FOR_LOCATIONS, this.searchString);
   }
 }
 </script>
