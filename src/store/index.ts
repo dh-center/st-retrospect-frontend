@@ -20,6 +20,10 @@ export default new Vuex.Store({
   modules: {
     app
   },
-  plugins: [ createPersistedState() ],
+  plugins: [ createPersistedState(
+    {
+      paths: [ 'app.interfaceLanguage' ]
+    }
+  ) ],
   strict: debug
 });

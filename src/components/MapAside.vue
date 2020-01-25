@@ -6,8 +6,14 @@
         <LanguageSelect class="map-aside__language-select" />
       </div>
       <div class="map-aside__search-form">
-        <SearchLine class="map-aside__search-line" />
-        <button class="button button--search map-aside__search-button">
+        <SearchLine
+          v-model="searchString"
+          class="map-aside__search-line"
+        />
+        <button
+          class="button button--search map-aside__search-button"
+          @click="findLocations"
+        >
           {{ $t('search-button') }}
           <svg
             v-svg
@@ -17,13 +23,12 @@
       </div>
     </header>
     <div class="map-aside__content">
-      <!--      <LocationInfo-->
-      <!--        v-for="location in locationsList"-->
-      <!--        :key="location.ids"-->
-      <!--        class="map-aside__location-info"-->
-      <!--        :location="location"-->
-      <!--      />-->
-      <PersonCard />
+      <LocationInfo
+        v-for="location in locationsList"
+        :key="location.ids"
+        class="map-aside__location-info"
+        :location="location"
+      />
     </div>
     <TheFooter />
   </aside>
@@ -41,6 +46,7 @@ import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
 import PersonCard from '@/components/PersonCard.vue';
+import { SEARCH_FOR_LOCATIONS } from '@/store/modules/app/actionTypes';
 
 @Component({
   components: {
@@ -62,6 +68,18 @@ export default class MapAside extends Vue {
    */
   @State(state => state.app.searchResult)
   private locationsList!: Location[] | null;
+
+  /**
+   * Search string for finding locations
+   */
+  private searchString: string = '';
+
+  /**
+   * Find locations by query in search line
+   */
+  private async findLocations(): Promise<void> {
+    await this.$store.dispatch(SEARCH_FOR_LOCATIONS, this.searchString);
+  }
 }
 </script>
 
