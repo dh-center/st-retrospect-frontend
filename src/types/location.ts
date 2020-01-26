@@ -26,6 +26,16 @@ interface Location {
    * Location's longitude on map
    */
   longitude?: number;
+
+  /**
+   * Location's construction date
+   */
+  constructionDate?: string;
+
+  /**
+   * Location's demolition date
+   */
+  demolitionDate?: string;
 }
 
 export default Location;
