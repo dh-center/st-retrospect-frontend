@@ -92,10 +92,10 @@ export default class LocationCard extends Vue {
   private locationId!: string;
 
   /**
-   * sefsefs
-   * @param to
-   * @param from
-   * @param next
+   * Router hook for fetch data from API
+   * @param to - new location
+   * @param from - old location
+   * @param next - callback
    */
   beforeRouteEnter(to: Route, from: Route, next: Function): void {
     searchApi.findLocation(to.params.id).then(location => {
@@ -104,7 +104,7 @@ export default class LocationCard extends Vue {
   }
 
   /**
-   * sfwf
+   * Location's build time to display
    */
   get buildTime() {
     if (!this.location) {
@@ -115,7 +115,7 @@ export default class LocationCard extends Vue {
   }
 
   /**
-   * ssfsf
+   * Returns CSS code for displaying location image
    */
   get mainImageStyle() {
     if (this.location) {
