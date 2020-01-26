@@ -1,8 +1,11 @@
 <template>
-  <div class="location-card">
+  <div
+    v-if="location"
+    class="location-card"
+  >
     <div
       class="location-card__image"
-      :style="{ 'background-image': `url('${location.mainPhotoLink}')` }"
+      :style="mainImageStyle"
     />
     <div class="location-card__main">
       <div class="location-card__wrap--bordered">
@@ -37,7 +40,7 @@
             {{ $t('build-time') }}
           </div>
           <div class="info-block__content">
-            1834-01-01
+            {{ buildTime }}
           </div>
         </div>
         <div class="info-block">
@@ -64,6 +67,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
 import Gallery from '@/components/Gallery.vue';
+import * as searchApi from '@/api/search';
+// eslint-disable-next-line no-unused-vars
+import { RawLocation, Route } from 'vue-router';
 
 @Component({
   components: {
@@ -74,11 +80,49 @@ import Gallery from '@/components/Gallery.vue';
  * Component for location card
  */
 export default class LocationCard extends Vue {
-  @Prop({ type: Object, required: true })
   /**
    * Location to display
    */
-  private location!: Location;
+  private location: Location | null = null;
+
+  @Prop({ type: String, required: true })
+  /**
+   * Location id to display
+   */
+  private locationId!: string;
+
+  /**
+   * sefsefs
+   * @param to
+   * @param from
+   * @param next
+   */
+  beforeRouteEnter(to: Route, from: Route, next: Function): void {
+    searchApi.findLocation(to.params.id).then(location => {
+      next((vm: LocationCard) => (vm.location = location));
+    });
+  }
+
+  /**
+   * sfwf
+   */
+  get buildTime() {
+    if (!this.location) {
+      return '';
+    }
+
+    return '';
+  }
+
+  /**
+   * ssfsf
+   */
+  get mainImageStyle() {
+    if (this.location) {
+      return { 'background-image': `url('${this.location.mainPhotoLink}')` };
+    }
+    return {};
+  }
 }
 </script>
 

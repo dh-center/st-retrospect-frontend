@@ -13,17 +13,18 @@ const routes: RouteConfig[] = [
   },
   {
     path: '/map',
-    name: 'map',
     component: () => import(/* webpackChunkName: "mapView" */ '../views/Map.vue'),
     children: [
       {
         path: '',
+        name: 'map',
         component: () => import(/* webpackChunkName: "mapView" */ '../components/LocationsList.vue')
       },
       {
-        path: '/location/:id',
+        path: 'location/:id',
         name: 'locationInfo',
-        component: () => import(/* webpackChunkName: "mapView" */ '../components/LocationCard.vue')
+        component: () => import(/* webpackChunkName: "mapView" */ '../components/LocationCard.vue'),
+        props: (route) => ({ locationId: route.params.id })
       }
     ]
   }
