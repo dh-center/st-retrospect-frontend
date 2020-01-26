@@ -25,7 +25,7 @@
         </button>
       </form>
     </header>
-    <router-view />
+    <router-view class="map-aside__content" />
     <TheFooter />
   </aside>
 </template>
@@ -145,6 +145,15 @@ export default class MapAside extends Vue {
       width: 20px;
       height: 10px;
     }
+  }
+
+  &__content {
+    @apply --custom-scroll;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    background-color: #fff;
   }
 }
 </style>

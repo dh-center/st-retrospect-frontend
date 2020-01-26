@@ -10,7 +10,7 @@
         :key="location.id"
         class="locations-list__location-info"
         :location="location"
-        @click="showLocationInfo(location.id)"
+        @click.native="showLocationInfo(location.id)"
       />
     </div>
     <div
@@ -73,13 +73,6 @@ export default class LocationsList extends Vue {
   @import '../styles/custom-properties.css';
 
   .locations-list {
-    @apply --custom-scroll;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-
-    background-color: #fff;
-
     &__location-info {
       height: 90px;
 
