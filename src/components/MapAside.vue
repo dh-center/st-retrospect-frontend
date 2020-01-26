@@ -24,6 +24,13 @@
           />
         </button>
       </form>
+      <router-link
+        v-if="$route.name !== 'map'"
+        class="map-aside__back-link"
+        :to="{name: 'map'}"
+      >
+        Назад к результатам поиска
+      </router-link>
     </header>
     <router-view class="map-aside__content" />
     <TheFooter />
@@ -65,6 +72,12 @@ export default class MapAside extends Vue {
    * Find locations by query in search line
    */
   private async findLocations(): Promise<void> {
+    if (this.$route.name !== 'map') {
+      await this.$router.push({
+        name: 'map'
+      });
+    }
+
     if (this.searchString) {
       this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
       await this.$store.dispatch(SEARCH_FOR_LOCATIONS, this.searchString);
@@ -126,6 +139,7 @@ export default class MapAside extends Vue {
 
   &__search-form {
     display: flex;
+    margin-bottom: 10px;
   }
 
   &__search-line {
@@ -145,6 +159,14 @@ export default class MapAside extends Vue {
       width: 20px;
       height: 10px;
     }
+  }
+
+  &__back-link {
+    width: 100%;
+
+    color: #fff;
+    font-size: 12px;
+    line-height: 14px;
   }
 
   &__content {

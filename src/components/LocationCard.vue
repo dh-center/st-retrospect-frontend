@@ -69,7 +69,7 @@ import Location from '@/types/location';
 import Gallery from '@/components/Gallery.vue';
 import * as searchApi from '@/api/search';
 // eslint-disable-next-line no-unused-vars
-import { RawLocation, Route } from 'vue-router';
+import { Route } from 'vue-router';
 
 @Component({
   components: {
