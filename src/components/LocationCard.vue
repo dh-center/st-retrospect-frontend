@@ -111,7 +111,7 @@ export default class LocationCard extends Vue {
       return '';
     }
 
-    return '';
+    return `${this.location.constructionDate || '??'} — ${this.location.demolitionDate || '??'}`;
   }
 
   /**
@@ -121,6 +121,7 @@ export default class LocationCard extends Vue {
     if (this.location) {
       return { 'background-image': `url('${this.location.mainPhotoLink}')` };
     }
+
     return {};
   }
 }
