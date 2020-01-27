@@ -29,7 +29,7 @@
         class="map-aside__back-link"
         :to="{name: 'map'}"
       >
-        Назад к результатам поиска
+        {{ $t('back') }}
       </router-link>
     </header>
     <router-view class="map-aside__content" />
@@ -97,10 +97,12 @@ export default class MapAside extends Vue {
 <i18n>
 {
   "en": {
-    "search-button": "Search"
+    "search-button": "Search",
+    "back": "Back to the search results"
   },
   "ru": {
-    "search-button": "Найти"
+    "search-button": "Найти",
+    "back": "Назад к результатам поиска"
   }
 }
 </i18n>

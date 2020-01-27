@@ -40,7 +40,7 @@
             {{ $t('build-time') }}
           </div>
           <div class="info-block__content">
-            {{ buildTime }}
+            {{ location.constructionDate || '??' }}
           </div>
         </div>
         <div class="info-block">
@@ -101,17 +101,6 @@ export default class LocationCard extends Vue {
     searchApi.findLocation(to.params.id).then(location => {
       next((vm: LocationCard) => (vm.location = location));
     });
-  }
-
-  /**
-   * Location's build time to display
-   */
-  get buildTime() {
-    if (!this.location) {
-      return '';
-    }
-
-    return `${this.location.constructionDate || '??'} — ${this.location.demolitionDate || '??'}`;
   }
 
   /**
