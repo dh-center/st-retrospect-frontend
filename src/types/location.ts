@@ -36,6 +36,11 @@ interface Location {
    * Location's demolition date
    */
   demolitionDate?: string;
+
+  /**
+   * Location's description
+   */
+  description?: MultilingualString;
 }
 
 export default Location;
