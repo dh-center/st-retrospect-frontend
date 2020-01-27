@@ -72,12 +72,6 @@ export default class MapAside extends Vue {
    * Find locations by query in search line
    */
   private async findLocations(): Promise<void> {
-    if (this.$route.name !== 'map') {
-      await this.$router.push({
-        name: 'map'
-      });
-    }
-
     if (this.searchString) {
       this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
       await this.$store.dispatch(SEARCH_FOR_LOCATIONS, this.searchString);
