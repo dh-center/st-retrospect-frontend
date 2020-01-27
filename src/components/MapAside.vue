@@ -24,24 +24,15 @@
           />
         </button>
       </form>
+      <router-link
+        v-if="$route.name !== 'map'"
+        class="map-aside__back-link"
+        :to="{name: 'map'}"
+      >
+        {{ $t('back') }}
+      </router-link>
     </header>
-    <div
-      v-if="locationsList && locationsList.length"
-      class="map-aside__content"
-    >
-      <LocationInfo
-        v-for="location in locationsList"
-        :key="location.ids"
-        class="map-aside__location-info"
-        :location="location"
-      />
-    </div>
-    <div
-      v-else
-      class="map-aside__not-found-message"
-    >
-      {{ $t('not-found') }}
-    </div>
+    <router-view class="map-aside__content" />
     <TheFooter />
   </aside>
 </template>
@@ -54,9 +45,6 @@ import SearchLine from '@/components/SearchLine.vue';
 import LocationInfo from '@/components/LocationInfo.vue';
 import TheFooter from '@/components/TheFooter.vue';
 import LocationCard from '@/components/LocationCard.vue';
-import { State } from 'vuex-class';
-// eslint-disable-next-line no-unused-vars
-import Location from '@/types/location';
 import PersonCard from '@/components/PersonCard.vue';
 import { SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
 
@@ -75,12 +63,6 @@ import { SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/
  * Aside bar of Map View
  */
 export default class MapAside extends Vue {
-  /**
-   * Locations list to display
-   */
-  @State(state => state.app.searchResult)
-  private locationsList!: Location[] | null;
-
   /**
    * Search string for finding locations
    */
@@ -110,11 +92,11 @@ export default class MapAside extends Vue {
 {
   "en": {
     "search-button": "Search",
-    "not-found": "Sorry, no results were found for your request"
+    "back": "Back to the search results"
   },
   "ru": {
     "search-button": "Найти",
-    "not-found": "Извините, по вашему запросу ничего не найдено"
+    "back": "Назад к результатам поиска"
   }
 }
 </i18n>
@@ -153,6 +135,7 @@ export default class MapAside extends Vue {
 
   &__search-form {
     display: flex;
+    margin-bottom: 10px;
   }
 
   &__search-line {
@@ -174,6 +157,14 @@ export default class MapAside extends Vue {
     }
   }
 
+  &__back-link {
+    width: 100%;
+
+    color: #fff;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
   &__content {
     @apply --custom-scroll;
     width: 100%;
@@ -181,21 +172,6 @@ export default class MapAside extends Vue {
     overflow: auto;
 
     background-color: #fff;
-  }
-
-  &__not-found-message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-
-    background-color: #fff;
-  }
-
-  &__location-info {
-    height: 90px;
-
-    cursor: pointer;
   }
 }
 </style>
