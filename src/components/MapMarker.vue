@@ -9,6 +9,7 @@
     />
     <MapPopup
       :id="popupElementId"
+      :location="location"
     />
   </div>
 </template>
@@ -17,6 +18,8 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
 import MapPopup from '@/components/MapPopup.vue';
+// eslint-disable-next-line no-unused-vars
+import Location from '@/types/location';
 
 @Component({
   components: {
@@ -27,63 +30,63 @@ import MapPopup from '@/components/MapPopup.vue';
  * Component of marker on map
  */
 export default class MapMarker extends Vue {
-    /**
-     * MapboxGL marker instance
-     */
-    private marker?: mapboxgl.Marker;
+  /**
+   * MapboxGL marker instance
+   */
+  private marker?: mapboxgl.Marker;
 
-    /**
-     * MapboxGL popup instance
-     */
-    private popup?: mapboxgl.Popup;
+  /**
+   * MapboxGL popup instance
+   */
+  private popup?: mapboxgl.Popup;
 
-    /**
-     * Unique ID of marker point HTML element
-     */
-    private markerElementId: string = this.$id('marker');
+  /**
+   * Unique ID of marker point HTML element
+   */
+  private markerElementId: string = this.$id('marker');
 
-    /**
-     * Unique ID of popup HTML element
-     */
-    private popupElementId: string = this.$id('popup');
+  /**
+   * Unique ID of popup HTML element
+   */
+  private popupElementId: string = this.$id('popup');
 
-    /**
-     * MapboxGL map for adding marker
-     */
-    @Prop({ type: mapboxgl.Map, required: true })
-    private map!: mapboxgl.Map;
+  /**
+   * MapboxGL map for adding marker
+   */
+  @Prop({ type: mapboxgl.Map, required: true })
+  private map!: mapboxgl.Map;
 
-    /**
-     * Coordinates of marker
-     */
-    @Prop({ type: Array, required: true })
-    private lngLat!: [number, number];
+  /**
+   * Location object for marker
+   */
+  @Prop({ type: Object, required: true })
+  private location!: Location;
 
-    /**
-     * Type of location
-     */
-    @Prop({ type: String, required: true })
-    private locationType!: string;
+  /**
+   * Type of location
+   */
+  @Prop({ type: String, required: true })
+  private locationType!: string;
 
-    /**
-     * Vue mounted hook
-     * Setups marker for displaying
-     */
-    mounted() {
-      this.popup = new mapboxgl.Popup({
-        anchor: 'bottom',
-        offset: 25,
-        maxWidth: '300px'
-      })
-        .setDOMContent(document.getElementById(this.popupElementId) as HTMLElement)
-        .addTo(this.map);
-      this.marker = new mapboxgl.Marker({
-        element: document.getElementById(this.markerElementId) as HTMLElement
-      })
-        .setLngLat(this.lngLat)
-        .setPopup(this.popup)
-        .addTo(this.map);
-    }
+  /**
+   * Vue mounted hook
+   * Setups marker for displaying
+   */
+  mounted() {
+    this.popup = new mapboxgl.Popup({
+      anchor: 'bottom',
+      offset: 25,
+      maxWidth: '300px'
+    })
+      .setDOMContent(document.getElementById(this.popupElementId) as HTMLElement)
+      .addTo(this.map);
+    this.marker = new mapboxgl.Marker({
+      element: document.getElementById(this.markerElementId) as HTMLElement
+    })
+      .setLngLat([this.location.longitude as number, this.location.latitude as number])
+      .setPopup(this.popup)
+      .addTo(this.map);
+  }
 }
 </script>
 

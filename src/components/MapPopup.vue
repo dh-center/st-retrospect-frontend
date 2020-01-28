@@ -3,7 +3,7 @@
     class="popup"
   >
     <h3 class="popup__title">
-      Доходный дом купцов Елисеевых
+      {{ location.name.ru }}
     </h3>
     <p class="popup__location-type">
       доходный дом
@@ -38,13 +38,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+// eslint-disable-next-line no-unused-vars
+import Location from '@/types/location';
 
 @Component
 /**
  * Component of popup on map
  */
-export default class MapPopup extends Vue {}
+export default class MapPopup extends Vue {
+  /**
+   * Location object for popup
+   */
+  @Prop({ type: Object, required: true })
+  private location!: Location;
+}
 </script>
 
 <style>
