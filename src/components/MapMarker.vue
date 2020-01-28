@@ -78,14 +78,37 @@ export default class MapMarker extends Vue {
       offset: 25,
       maxWidth: '300px'
     })
-      .setDOMContent(document.getElementById(this.popupElementId) as HTMLElement)
-      .addTo(this.map);
+      .setDOMContent(document.getElementById(this.popupElementId) as HTMLElement);
     this.marker = new mapboxgl.Marker({
       element: document.getElementById(this.markerElementId) as HTMLElement
     })
       .setLngLat([this.location.longitude as number, this.location.latitude as number])
       .setPopup(this.popup)
       .addTo(this.map);
+
+    this.popup.on('open', () => this.showLocationInfo());
+    this.popup.on('close', () => this.returnToSearchResults());
+  }
+
+  /**
+   * Shows information about location in aside bar
+   */
+  private showLocationInfo() {
+    this.$router.push({
+      name: 'locationInfo',
+      params: {
+        id: this.location.id
+      }
+    });
+  }
+
+  /**
+   * Return to search results when popup is close
+   */
+  private returnToSearchResults() {
+    this.$router.push({
+      name: 'map'
+    });
   }
 }
 </script>
