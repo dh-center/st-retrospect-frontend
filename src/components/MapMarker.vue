@@ -87,6 +87,17 @@ export default class MapMarker extends Vue {
       .setLngLat([this.location.longitude as number, this.location.latitude as number])
       .setPopup(this.popup)
       .addTo(this.map);
+
+    this.popup.on('open', () => {
+      if (this.$router.currentRoute.name === 'map' || (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id !== this.location.id)) {
+        this.showLocationInfo();
+      }
+    });
+    this.popup.on('close', () => {
+      if (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id === this.location.id) {
+        this.returnToSearchResults();
+      }
+    });
   }
 
   /**
