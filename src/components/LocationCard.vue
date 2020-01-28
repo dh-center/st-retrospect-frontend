@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
 import Gallery from '@/components/Gallery.vue';
@@ -84,12 +84,6 @@ export default class LocationCard extends Vue {
    * Location to display
    */
   private location: Location | null = null;
-
-  @Prop({ type: String, required: true })
-  /**
-   * Location id to display
-   */
-  private locationId!: string;
 
   /**
    * Router hook for fetch data from API
