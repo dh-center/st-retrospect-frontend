@@ -15,11 +15,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
 import MapPopup from '@/components/MapPopup.vue';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
+// eslint-disable-next-line no-unused-vars
+import { Route } from 'vue-router';
 
 @Component({
   components: {
@@ -85,9 +87,6 @@ export default class MapMarker extends Vue {
       .setLngLat([this.location.longitude as number, this.location.latitude as number])
       .setPopup(this.popup)
       .addTo(this.map);
-
-    this.popup.on('open', () => this.showLocationInfo());
-    this.popup.on('close', () => this.returnToSearchResults());
   }
 
   /**
@@ -109,6 +108,20 @@ export default class MapMarker extends Vue {
     this.$router.push({
       name: 'map'
     });
+  }
+
+  /**
+   * Change route handler
+   * @param to - new location
+   * @param from - old location
+   */
+  @Watch('$route')
+  private onRouteChange(to:Route, from:Route) {
+    if (to.params.id && this.popup && to.params.id === this.location.id) {
+      this.popup.addTo(this.map);
+    } else if (this.popup && this.popup.isOpen()) {
+      this.popup.remove();
+    }
   }
 }
 </script>
