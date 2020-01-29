@@ -6,7 +6,7 @@
           v-for="location in filteredLocationsList"
           :key="location.id"
           :map="map"
-          :lng-lat="[location.longitude, location.latitude]"
+          :location="location"
           location-type="actor-home"
         />
       </div>

@@ -9,14 +9,19 @@
     />
     <MapPopup
       :id="popupElementId"
+      :location="location"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
 import MapPopup from '@/components/MapPopup.vue';
+// eslint-disable-next-line no-unused-vars
+import Location from '@/types/location';
+// eslint-disable-next-line no-unused-vars
+import { Route } from 'vue-router';
 
 @Component({
   components: {
@@ -27,63 +32,125 @@ import MapPopup from '@/components/MapPopup.vue';
  * Component of marker on map
  */
 export default class MapMarker extends Vue {
-    /**
-     * MapboxGL marker instance
-     */
-    private marker?: mapboxgl.Marker;
+  /**
+   * Unique ID of marker point HTML element
+   */
+  private markerElementId: string = this.$id('marker');
+
+  /**
+   * Unique ID of popup HTML element
+   */
+  private popupElementId: string = this.$id('popup');
+
+  /**
+   * MapboxGL marker instance
+   */
+  private marker?: mapboxgl.Marker;
+
+  /**
+   * MapboxGL popup instance
+   */
+  private popup: mapboxgl.Popup = new mapboxgl.Popup({
+    anchor: 'bottom',
+    offset: 25,
+    maxWidth: '300px'
+  });
+
+  /**
+   * MapboxGL map for adding marker
+   */
+  @Prop({ type: mapboxgl.Map, required: true })
+  private map!: mapboxgl.Map;
+
+  /**
+   * Location object for marker
+   */
+  @Prop({ type: Object, required: true })
+  private location!: Location;
+
+  /**
+   * Type of location
+   */
+  @Prop({ type: String, required: true })
+  private locationType!: string;
+
+  /**
+   * Vue mounted hook
+   * Setups marker for displaying
+   */
+  mounted() {
+    this.popup.setDOMContent(document.getElementById(this.popupElementId) as HTMLElement);
+    this.marker = new mapboxgl.Marker({
+      element: document.getElementById(this.markerElementId) as HTMLElement
+    })
+      .setLngLat([this.location.longitude as number, this.location.latitude as number])
+      .setPopup(this.popup)
+      .addTo(this.map);
 
     /**
-     * MapboxGL popup instance
+     * Event handler for opening popup
      */
-    private popup?: mapboxgl.Popup;
-
+    this.popup.on('open', () => {
+      /**
+       * Show info about location:
+       * If open location popup when current route is '/map/';
+       * If open location popup when old location popup was opened (current route is '/location/:id'.
+       */
+      if (this.$router.currentRoute.name === 'map' || (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id !== this.location.id)) {
+        this.showLocationInfo();
+      }
+    });
     /**
-     * Unique ID of marker point HTML element
+     * Event handler for closing popup
      */
-    private markerElementId: string = this.$id('marker');
+    this.popup.on('close', () => {
+      /**
+       * Return to search results:
+       * If close location popup and doesn't open new location popup.
+       */
+      if (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id === this.location.id) {
+        this.returnToSearchResults();
+      }
+    });
+  }
 
-    /**
-     * Unique ID of popup HTML element
-     */
-    private popupElementId: string = this.$id('popup');
+  /**
+   * Shows information about location in aside bar
+   */
+  private showLocationInfo() {
+    this.$router.push({
+      name: 'locationInfo',
+      params: {
+        id: this.location.id
+      }
+    });
+  }
 
-    /**
-     * MapboxGL map for adding marker
-     */
-    @Prop({ type: mapboxgl.Map, required: true })
-    private map!: mapboxgl.Map;
+  /**
+   * Return to search results when popup is close
+   */
+  private returnToSearchResults() {
+    this.$router.push({
+      name: 'map'
+    });
+  }
 
-    /**
-     * Coordinates of marker
-     */
-    @Prop({ type: Array, required: true })
-    private lngLat!: [number, number];
-
-    /**
-     * Type of location
-     */
-    @Prop({ type: String, required: true })
-    private locationType!: string;
-
-    /**
-     * Vue mounted hook
-     * Setups marker for displaying
-     */
-    mounted() {
-      this.popup = new mapboxgl.Popup({
-        anchor: 'bottom',
-        offset: 25,
-        maxWidth: '300px'
-      })
-        .setDOMContent(document.getElementById(this.popupElementId) as HTMLElement)
-        .addTo(this.map);
-      this.marker = new mapboxgl.Marker({
-        element: document.getElementById(this.markerElementId) as HTMLElement
-      })
-        .setLngLat(this.lngLat)
-        .setPopup(this.popup)
-        .addTo(this.map);
+  /**
+   * Change route handler
+   * @param to - new location
+   * @param from - old location
+   */
+  @Watch('$route')
+  private onRouteChange(to:Route, from:Route): void {
+    if (to.name !== 'locationInfo') {
+      return;
     }
+    if (to.params.id === this.location.id) {
+      this.popup.addTo(this.map);
+    } else if (this.popup.isOpen()) {
+      this.popup.remove();
+    }
+  }
 }
 </script>
 
