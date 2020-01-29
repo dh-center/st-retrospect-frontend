@@ -143,8 +143,14 @@ export default class MapMarker extends Vue {
    */
   @Watch('$route')
   private onRouteChange(to:Route, from:Route) {
+    /**
+     * Open location popup if new route with this location id is
+     */
     if (to.params.id && this.popup && to.params.id === this.location.id) {
       this.popup.addTo(this.map);
+      /**
+       * Else close popup if it is open and route was changed
+       */
     } else if (this.popup && this.popup.isOpen()) {
       this.popup.remove();
     }
