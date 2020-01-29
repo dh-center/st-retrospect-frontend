@@ -33,16 +33,6 @@ import { Route } from 'vue-router';
  */
 export default class MapMarker extends Vue {
   /**
-   * MapboxGL marker instance
-   */
-  private marker?: mapboxgl.Marker;
-
-  /**
-   * MapboxGL popup instance
-   */
-  private popup?: mapboxgl.Popup;
-
-  /**
    * Unique ID of marker point HTML element
    */
   private markerElementId: string = this.$id('marker');
@@ -51,6 +41,22 @@ export default class MapMarker extends Vue {
    * Unique ID of popup HTML element
    */
   private popupElementId: string = this.$id('popup');
+
+  /**
+   * MapboxGL marker instance
+   */
+  private marker: mapboxgl.Marker = new mapboxgl.Marker({
+    element: document.getElementById(this.markerElementId) as HTMLElement
+  });
+
+  /**
+   * MapboxGL popup instance
+   */
+  private popup: mapboxgl.Popup = new mapboxgl.Popup({
+    anchor: 'bottom',
+    offset: 25,
+    maxWidth: '300px'
+  });
 
   /**
    * MapboxGL map for adding marker
@@ -75,16 +81,8 @@ export default class MapMarker extends Vue {
    * Setups marker for displaying
    */
   mounted() {
-    this.popup = new mapboxgl.Popup({
-      anchor: 'bottom',
-      offset: 25,
-      maxWidth: '300px'
-    })
-      .setDOMContent(document.getElementById(this.popupElementId) as HTMLElement);
-    this.marker = new mapboxgl.Marker({
-      element: document.getElementById(this.markerElementId) as HTMLElement
-    })
-      .setLngLat([this.location.longitude as number, this.location.latitude as number])
+    this.popup.setDOMContent(document.getElementById(this.popupElementId) as HTMLElement);
+    this.marker.setLngLat([this.location.longitude as number, this.location.latitude as number])
       .setPopup(this.popup)
       .addTo(this.map);
 
@@ -142,16 +140,13 @@ export default class MapMarker extends Vue {
    * @param from - old location
    */
   @Watch('$route')
-  private onRouteChange(to:Route, from:Route) {
-    /**
-     * Open location popup if new route with this location id is
-     */
-    if (to.params.id && this.popup && to.params.id === this.location.id) {
+  private onRouteChange(to:Route, from:Route): void {
+    if (to.name !== 'locationInfo') {
+      return;
+    }
+    if (to.params.id === this.location.id) {
       this.popup.addTo(this.map);
-      /**
-       * Else close popup if it is open and route was changed
-       */
-    } else if (this.popup && this.popup.isOpen()) {
+    } else if (this.popup.isOpen()) {
       this.popup.remove();
     }
   }
