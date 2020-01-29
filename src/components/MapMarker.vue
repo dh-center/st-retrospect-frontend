@@ -45,9 +45,7 @@ export default class MapMarker extends Vue {
   /**
    * MapboxGL marker instance
    */
-  private marker: mapboxgl.Marker = new mapboxgl.Marker({
-    element: document.getElementById(this.markerElementId) as HTMLElement
-  });
+  private marker?: mapboxgl.Marker;
 
   /**
    * MapboxGL popup instance
@@ -82,7 +80,10 @@ export default class MapMarker extends Vue {
    */
   mounted() {
     this.popup.setDOMContent(document.getElementById(this.popupElementId) as HTMLElement);
-    this.marker.setLngLat([this.location.longitude as number, this.location.latitude as number])
+    this.marker = new mapboxgl.Marker({
+      element: document.getElementById(this.markerElementId) as HTMLElement
+    })
+      .setLngLat([this.location.longitude as number, this.location.latitude as number])
       .setPopup(this.popup)
       .addTo(this.map);
 
