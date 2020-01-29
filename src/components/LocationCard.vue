@@ -86,7 +86,7 @@ export default class LocationCard extends Vue {
   private location: Location | null = null;
 
   /**
-   * Router hook for fetch data from API
+   * Router enter hook for fetch data from API
    * @param to - new location
    * @param from - old location
    * @param next - callback
@@ -95,6 +95,19 @@ export default class LocationCard extends Vue {
     searchApi.findLocation(to.params.id).then(location => {
       next((vm: LocationCard) => (vm.location = location));
     });
+  }
+
+  /**
+   * Router update hook for fetch data from API
+   * @param to - new location
+   * @param from - old location
+   * @param next - callback
+   */
+  beforeRouteUpdate(to: Route, from: Route, next: Function): void {
+    searchApi.findLocation(to.params.id).then(location => {
+      this.location = location;
+    });
+    next();
   }
 
   /**
