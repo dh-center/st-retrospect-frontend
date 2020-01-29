@@ -88,12 +88,27 @@ export default class MapMarker extends Vue {
       .setPopup(this.popup)
       .addTo(this.map);
 
+    /**
+     * Event handler for opening popup
+     */
     this.popup.on('open', () => {
+      /**
+       * Show info about location:
+       * If open location popup when current route is '/map/';
+       * If open location popup when old location popup was opened (current route is '/location/:id'.
+       */
       if (this.$router.currentRoute.name === 'map' || (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id !== this.location.id)) {
         this.showLocationInfo();
       }
     });
+    /**
+     * Event handler for closing popup
+     */
     this.popup.on('close', () => {
+      /**
+       * Return to search results:
+       * If close location popup and doesn't open new location popup.
+       */
       if (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id === this.location.id) {
         this.returnToSearchResults();
       }
