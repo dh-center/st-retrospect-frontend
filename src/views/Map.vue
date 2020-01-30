@@ -16,13 +16,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
 import MapAside from '@/components/MapAside.vue';
 import MapMarker from '@/components/MapMarker.vue';
 import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
+import * as locationsApi from '@/api/locations';
 
 mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
 
@@ -66,6 +67,40 @@ export default class MapView extends Vue {
       zoom: 12,
       logoPosition: 'top-right'
     });
+  }
+
+  /**
+   * Move map to location or to center of St.Petersburg by route changes
+   */
+  @Watch('$route')
+  private async onRouteChange(): Promise<void> {
+    if (!this.map) {
+      return;
+    }
+    if (this.$router.currentRoute.name === 'locationInfo') {
+      const currentLocationId = this.$router.currentRoute.params.id || null;
+
+      if (!currentLocationId) {
+        return;
+      }
+      const locationCoordinates = await locationsApi.getLocationCoordinates(currentLocationId);
+
+      if (locationCoordinates && locationCoordinates.longitude && locationCoordinates.latitude) {
+        this.map.flyTo({
+          center: [
+            locationCoordinates.longitude,
+            locationCoordinates.latitude + 0.002
+          ],
+          zoom: 14
+        });
+      }
+    }
+    if (this.$router.currentRoute.name === 'map') {
+      this.map.flyTo({
+        center: [30.28617, 59.93944],
+        zoom: 12
+      });
+    }
   }
 }
 </script>
