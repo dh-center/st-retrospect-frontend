@@ -23,7 +23,6 @@ import MapMarker from '@/components/MapMarker.vue';
 import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
-import * as locationsApi from '@/api/locations';
 
 mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
 
@@ -83,13 +82,13 @@ export default class MapView extends Vue {
       if (!currentLocationId) {
         return;
       }
-      const locationCoordinates = await locationsApi.getLocationCoordinates(currentLocationId);
+      const currentLocation = this.locationsList?.find(location => location.id === currentLocationId);
 
-      if (locationCoordinates && locationCoordinates.longitude && locationCoordinates.latitude) {
+      if (currentLocation && currentLocation.longitude && currentLocation.latitude) {
         this.map.flyTo({
           center: [
-            locationCoordinates.longitude,
-            locationCoordinates.latitude + 0.002
+            currentLocation.longitude,
+            currentLocation.latitude + 0.002
           ],
           zoom: 14
         });
