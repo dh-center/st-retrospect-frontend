@@ -143,6 +143,9 @@ export default class MapMarker extends Vue {
   @Watch('$route')
   private onRouteChange(to:Route, from:Route): void {
     if (to.name !== 'locationInfo') {
+      if (this.popup.isOpen()) {
+        this.popup.remove();
+      }
       return;
     }
     if (to.params.id === this.location.id) {

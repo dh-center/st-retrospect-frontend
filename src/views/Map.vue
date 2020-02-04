@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
 import MapAside from '@/components/MapAside.vue';
 import MapMarker from '@/components/MapMarker.vue';
@@ -66,6 +66,40 @@ export default class MapView extends Vue {
       zoom: 12,
       logoPosition: 'top-right'
     });
+  }
+
+  /**
+   * Move map to location or to center of St.Petersburg by route changes
+   */
+  @Watch('$route')
+  private async onRouteChange(): Promise<void> {
+    if (!this.map) {
+      return;
+    }
+    if (this.$router.currentRoute.name === 'locationInfo') {
+      const currentLocationId = this.$router.currentRoute.params.id || null;
+
+      if (!currentLocationId) {
+        return;
+      }
+      const currentLocation = this.locationsList?.find(location => location.id === currentLocationId);
+
+      if (currentLocation && currentLocation.longitude && currentLocation.latitude) {
+        this.map.flyTo({
+          center: [
+            currentLocation.longitude,
+            currentLocation.latitude + 0.002
+          ],
+          zoom: 14
+        });
+      }
+    }
+    if (this.$router.currentRoute.name === 'map') {
+      this.map.flyTo({
+        center: [30.28617, 59.93944],
+        zoom: 12
+      });
+    }
   }
 }
 </script>
