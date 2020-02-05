@@ -4,9 +4,9 @@
 export const CHANGE_INTERFACE_LANG = 'CHANGE_INTERFACE_LANG';
 
 /**
- * Search for locations with user input
+ * Search for relations with user input
  */
-export const SEARCH_FOR_LOCATIONS = 'SEARCH_FOR_LOCATIONS';
+export const SEARCH_FOR_RELATIONS = 'SEARCH_FOR_RELATIONS';
 
 /**
  * Updates last search query with new user search query

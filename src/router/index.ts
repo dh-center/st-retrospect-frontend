@@ -18,7 +18,7 @@ const routes: RouteConfig[] = [
       {
         path: '',
         name: 'map',
-        component: () => import(/* webpackChunkName: "mapView" */ '../components/LocationsList.vue')
+        component: () => import(/* webpackChunkName: "mapView" */ '../components/RelationsList.vue')
       },
       {
         path: 'location/:id',

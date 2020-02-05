@@ -1,8 +1,8 @@
-import { CHANGE_INTERFACE_LANG, SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from './actionTypes';
+import { CHANGE_INTERFACE_LANG, SEARCH_FOR_RELATIONS, UPDATE_LAST_SEARCH_QUERY } from './actionTypes';
 import { Module } from 'vuex';
 import Vue from 'vue';
 import { RootState } from '@/store';
-import Location from '@/types/location';
+import Relation from '@/types/relation';
 import * as searchApi from '@/api/search';
 
 /**
@@ -37,7 +37,7 @@ export interface AppModuleState {
   /**
    * List with results from search to display it on map and aside bar
    */
-  searchResult: Location[] | null;
+  searchResult: Relation[] | null;
 
   /**
    * Last search query of user
@@ -62,7 +62,7 @@ const module: Module<AppModuleState, RootState> = {
      * @param {AppModuleState} state - vuex module state
      * @param {Location[]} searchResults - results to save
      */
-    [mutationTypes.SET_SEARCH_RESULTS](state: AppModuleState, searchResults: Location[]) {
+    [mutationTypes.SET_SEARCH_RESULTS](state: AppModuleState, searchResults: Relation[]) {
       Vue.set(state, 'searchResult', searchResults);
     },
 
@@ -86,14 +86,14 @@ const module: Module<AppModuleState, RootState> = {
     },
 
     /**
-     * Search for locations with user input
+     * Search for relations with user input
      * @param {function} commit - standard vuex commit function
      * @param {string} searchString - string with user input for searching
      */
-    async [SEARCH_FOR_LOCATIONS]({ commit }, searchString): Promise<void> {
-      const locations = await searchApi.findLocations(searchString);
+    async [SEARCH_FOR_RELATIONS]({ commit }, searchString): Promise<void> {
+      const relations = await searchApi.findRelations(searchString);
 
-      commit(mutationTypes.SET_SEARCH_RESULTS, locations);
+      commit(mutationTypes.SET_SEARCH_RESULTS, relations);
     },
 
     /**

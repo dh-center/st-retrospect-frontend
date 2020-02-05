@@ -51,7 +51,7 @@ import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import HowToUsePopup from '@/components/modals/HowToUse.vue';
 import AboutProjectPopup from '@/components/modals/AboutProject.vue';
-import { SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
+import { SEARCH_FOR_RELATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
 
 @Component({
   components: {
@@ -73,7 +73,7 @@ export default class HomeView extends Vue {
    */
   private search() {
     this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
-    this.$store.dispatch(SEARCH_FOR_LOCATIONS, this.searchString);
+    this.$store.dispatch(SEARCH_FOR_RELATIONS, this.searchString);
 
     this.$router.push({
       name: 'map'

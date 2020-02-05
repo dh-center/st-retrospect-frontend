@@ -3,10 +3,10 @@
     <div id="mapContainer">
       <div v-if="map">
         <MapMarker
-          v-for="location in filteredLocationsList"
-          :key="location.id"
+          v-for="relation in filteredLocationsList"
+          :key="relation.id"
           :map="map"
-          :location="location"
+          :relation="relation"
           location-type="actor-home"
         />
       </div>
@@ -22,7 +22,7 @@ import MapAside from '@/components/MapAside.vue';
 import MapMarker from '@/components/MapMarker.vue';
 import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
-import Location from '@/types/location';
+import Relation from '@/types/relation';
 
 mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
 
@@ -45,13 +45,13 @@ export default class MapView extends Vue {
    * Locations list to display
    */
   @State(state => state.app.searchResult)
-  private locationsList!: Location[] | null;
+  private relationsList!: Relation[] | null;
 
   /**
-   * Returns only locations with non-empty latitude and longitude fields
+   * Returns only relations with non-empty latitude and longitude fields
    */
   get filteredLocationsList() {
-    return this.locationsList?.filter(location => location.latitude && location.longitude);
+    return this.relationsList?.filter(relation => relation.location.latitude && relation.location.longitude);
   }
 
   /**
@@ -82,13 +82,13 @@ export default class MapView extends Vue {
       if (!currentLocationId) {
         return;
       }
-      const currentLocation = this.locationsList?.find(location => location.id === currentLocationId);
+      const currentRelation = this.relationsList?.find(relation => relation.location.id === currentLocationId);
 
-      if (currentLocation && currentLocation.longitude && currentLocation.latitude) {
+      if (currentRelation && currentRelation.location.longitude && currentRelation.location.latitude) {
         this.map.flyTo({
           center: [
-            currentLocation.longitude,
-            currentLocation.latitude + 0.002
+            currentRelation.location.longitude,
+            currentRelation.location.latitude + 0.002
           ],
           zoom: 14
         });

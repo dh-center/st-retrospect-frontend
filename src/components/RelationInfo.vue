@@ -1,18 +1,18 @@
 <template>
-  <div class="location-info">
+  <div class="relation-info">
     <div
-      class="location-info__image"
-      :style="{ 'background-image': `url('${location.mainPhotoLink}')` }"
+      class="relation-info__image"
+      :style="{ 'background-image': `url('${relation.location.mainPhotoLink}')` }"
     />
-    <div class="location-info__main">
-      <h3 class="location-info__name">
-        {{ location.name.ru }}
+    <div class="relation-info__main">
+      <h3 class="relation-info__name">
+        {{ relation.location.name.ru }}
       </h3>
-      <div class="location-info__wrapper">
-        <div class="location-info__building-type">
+      <div class="relation-info__wrapper">
+        <div class="relation-info__building-type">
           доходный дом
         </div>
-        <div class="location-info__address">
+        <div class="relation-info__address">
           Биржевой переулок 1
         </div>
       </div>
@@ -23,26 +23,26 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
-import Location from '@/types/location';
+import Relation from '@/types/relation';
 
 @Component
 /**
- * Displays short location info (image, name, address, building type)
+ * Displays short relation info (image, name, address, building type)
  * Used in Aside bar
  */
-export default class LocationInfo extends Vue {
+export default class RelationInfo extends Vue {
   @Prop({ type: Object, required: true })
   /**
-   * Location to display
+   * Relation to display
    */
-  private location!: Location;
+  private relation!: Relation;
 }
 </script>
 
 <style>
   @import '../styles/custom-properties.css';
 
-  .location-info {
+  .relation-info {
     display: flex;
 
     &__main {
@@ -131,7 +131,7 @@ export default class LocationInfo extends Vue {
     &:hover {
       background-color: #f0f0f0;
 
-      .location-info__main::before {
+      .relation-info__main::before {
         right: 0;
         left: 0;
       }
