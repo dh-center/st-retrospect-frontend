@@ -7,7 +7,7 @@
       </div>
       <form
         class="map-aside__search-form"
-        @submit.prevent="findLocations"
+        @submit.prevent="findRelations"
       >
         <SearchLine
           v-model="searchString"
@@ -42,11 +42,11 @@ import { Component, Vue } from 'vue-property-decorator';
 import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import SearchLine from '@/components/SearchLine.vue';
-import LocationInfo from '@/components/LocationInfo.vue';
+import RelationInfo from '@/components/RelationInfo.vue';
 import TheFooter from '@/components/TheFooter.vue';
 import LocationCard from '@/components/LocationCard.vue';
 import PersonCard from '@/components/PersonCard.vue';
-import { SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
+import { SEARCH_FOR_RELATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
 
 @Component({
   components: {
@@ -55,7 +55,7 @@ import { SEARCH_FOR_LOCATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/
     SiteLogo,
     LanguageSelect,
     SearchLine,
-    LocationInfo,
+    RelationInfo,
     TheFooter
   }
 })
@@ -71,10 +71,10 @@ export default class MapAside extends Vue {
   /**
    * Find locations by query in search line
    */
-  private async findLocations(): Promise<void> {
+  private async findRelations(): Promise<void> {
     if (this.searchString) {
       this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
-      await this.$store.dispatch(SEARCH_FOR_LOCATIONS, this.searchString);
+      await this.$store.dispatch(SEARCH_FOR_RELATIONS, this.searchString);
     }
   }
 
@@ -83,7 +83,7 @@ export default class MapAside extends Vue {
    * Using to fetch info from API
    */
   created() {
-    this.findLocations();
+    this.findRelations();
   }
 }
 </script>

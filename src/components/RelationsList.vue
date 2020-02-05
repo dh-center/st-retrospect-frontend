@@ -1,21 +1,21 @@
 <template>
   <div
-    class="locations-list"
+    class="relations-list"
   >
     <div
-      v-if="locationsList && locationsList.length"
+      v-if="relationsList && relationsList.length"
     >
-      <LocationInfo
-        v-for="location in locationsList"
-        :key="location.id"
-        class="locations-list__location-info"
-        :location="location"
-        @click.native="showLocationInfo(location.id)"
+      <RelationInfo
+        v-for="relation in relationsList"
+        :key="relation.id"
+        class="relations-list__relation-info"
+        :relation="relation"
+        @click.native="showLocationInfo(relation.location.id)"
       />
     </div>
     <div
       v-else
-      class="locations-list__not-found-message"
+      class="relations-list__not-found-message"
     >
       {{ $t('not-found') }}
     </div>
@@ -25,24 +25,24 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
+import RelationInfo from '@/components/RelationInfo.vue';
 // eslint-disable-next-line no-unused-vars
-import Location from '../types/location';
-import LocationInfo from '@/components/LocationInfo.vue';
+import Relation from '@/types/relation';
 
 @Component({
   components: {
-    LocationInfo
+    RelationInfo
   }
 })
 /**
- * Locations list for displaying in Aside bar
+ * Relations list for displaying in Aside bar
  */
-export default class LocationsList extends Vue {
+export default class RelationsList extends Vue {
   /**
-   * Locations list to display
+   * Relations list to display
    */
   @State(state => state.app.searchResult)
-  private locationsList!: Location[] | null;
+  private relationsList!: Relation[] | null;
 
   /**
    * Shows information about location in aside bar
@@ -72,8 +72,8 @@ export default class LocationsList extends Vue {
 <style>
   @import '../styles/custom-properties.css';
 
-  .locations-list {
-    &__location-info {
+  .relations-list {
+    &__relation-info {
       height: 90px;
 
       cursor: pointer;
