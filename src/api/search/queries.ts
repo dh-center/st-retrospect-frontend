@@ -1,15 +1,18 @@
 /**
- * Query for searching locations by search query
+ * Query for searching relations by search query
  */
 // language=GraphQL
-export const QUERY_FIND_LOCATIONS = `
+export const QUERY_FIND_RELATIONS = `
   query findLocations($searchString: String!) {
     search(searchString: $searchString) {
-      id
-      name
-      mainPhotoLink
-      latitude: coordinateX
-      longitude: coordinateY
+      location {
+        id
+        name
+        mainPhotoLink
+        latitude: coordinateX
+        longitude: coordinateY
+      }
+      quote
     }
   }
 `;
