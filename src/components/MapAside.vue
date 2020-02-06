@@ -77,11 +77,13 @@ export default class MapAside extends Vue {
     if (this.searchString) {
       await this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
       await this.$store.dispatch(SEARCH_FOR_RELATIONS, this.searchString);
-      await this.$router.replace({
-        params: {
-          searchString: this.searchString
-        }
-      });
+      if (this.$router.currentRoute.params.searchString !== this.searchString) {
+        await this.$router.replace({
+          params: {
+            searchString: this.searchString
+          }
+        });
+      }
     }
   }
 
