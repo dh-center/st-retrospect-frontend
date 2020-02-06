@@ -27,7 +27,9 @@
       <router-link
         v-if="$route.name !== 'map'"
         class="map-aside__back-link"
-        :to="{name: 'map'}"
+        :to="{
+          name: 'map'
+        }"
       >
         {{ $t('back') }}
       </router-link>
@@ -73,8 +75,13 @@ export default class MapAside extends Vue {
    */
   private async findRelations(): Promise<void> {
     if (this.searchString) {
-      this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
+      await this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
       await this.$store.dispatch(SEARCH_FOR_RELATIONS, this.searchString);
+      await this.$router.replace({
+        params: {
+          searchString: this.searchString
+        }
+      });
     }
   }
 
@@ -82,7 +89,11 @@ export default class MapAside extends Vue {
    * Vue lifecycle hook
    * Using to fetch info from API
    */
-  created() {
+  async created() {
+    if (this.$router.currentRoute.params.searchString !== this.$store.state.app.lastSearchQuery) {
+      await this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.$router.currentRoute.params.searchString);
+      this.searchString = this.$router.currentRoute.params.searchString;
+    }
     this.findRelations();
   }
 }

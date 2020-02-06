@@ -76,7 +76,10 @@ export default class HomeView extends Vue {
     this.$store.dispatch(SEARCH_FOR_RELATIONS, this.searchString);
 
     this.$router.push({
-      name: 'map'
+      name: 'map',
+      params: {
+        searchString: this.searchString
+      }
     });
   }
 

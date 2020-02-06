@@ -12,7 +12,7 @@ const routes: RouteConfig[] = [
     component: Home
   },
   {
-    path: '/map',
+    path: '/search/:searchString',
     component: () => import(/* webpackChunkName: "mapView" */ '../views/Map.vue'),
     children: [
       {
