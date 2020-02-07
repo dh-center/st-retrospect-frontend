@@ -37,11 +37,13 @@ export default class MapPopup extends Vue {
    * Get location address in one string
    */
   get locationAddress(): string {
-    if (this.relation.location.addresses && this.relation.location.addresses.length) {
-      return `${this.relation.location.addresses[0].street?.ru} ` +
-        `${this.relation.location.addresses[0].build?.ru} ` +
-        `${this.relation.location.addresses[0].homeNumber} ` +
-        `${this.relation.location.addresses[0].housing}`.replace(/\s{2,}/g, ' ');
+    const locationAddresses = this.relation.location.addresses;
+
+    if (locationAddresses && locationAddresses.length) {
+      return `${locationAddresses[0].street?.ru} ` +
+        `${locationAddresses[0].build?.ru} ` +
+        `${locationAddresses[0].homeNumber} ` +
+        `${locationAddresses[0].housing}`.replace(/\s{2,}/g, ' ');
     }
     return '';
   }
