@@ -1,5 +1,6 @@
 import Location from '@/types/location';
 import { MultilingualString } from '@/types/multilingualString';
+import Person from '@/types/person';
 
 /**
  * Represents relation info
@@ -14,6 +15,11 @@ interface Relation {
    * Location in relation
    */
   location: Location;
+
+  /**
+   * Person in relation
+   */
+  person: Person
 
   /**
    * Relation's quote
