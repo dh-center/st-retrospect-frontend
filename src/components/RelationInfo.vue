@@ -13,7 +13,7 @@
           доходный дом
         </div>
         <div class="relation-info__address">
-          Биржевой переулок 1
+          {{ locationAddress }}
         </div>
       </div>
     </div>
@@ -36,6 +36,16 @@ export default class RelationInfo extends Vue {
    * Relation to display
    */
   private relation!: Relation;
+
+  /**
+   * Get location address in one string
+   */
+  get locationAddress(): string {
+    return `${this.relation.location.addresses[0].street?.ru} ` +
+      `${this.relation.location.addresses[0].build?.ru} ` +
+      `${this.relation.location.addresses[0].homeNumber} ` +
+      `${this.relation.location.addresses[0].housing}`.replace(/\s{2,}/g, ' ');
+  }
 }
 </script>
 

@@ -31,7 +31,7 @@
           {{ location.name.ru }}
         </h2>
         <div class="location-card__address">
-          Биржевой переулок 1
+          {{ locationAddress }}
         </div>
       </div>
       <div class="location-card__wrap--bordered">
@@ -119,6 +119,16 @@ export default class LocationCard extends Vue {
     }
 
     return {};
+  }
+
+  /**
+   * Get location address in one string
+   */
+  get locationAddress(): string {
+    return `${this.location?.addresses[0].street?.ru} ` +
+      `${this.location?.addresses[0].build?.ru} ` +
+      `${this.location?.addresses[0].homeNumber} ` +
+      `${this.location?.addresses[0].housing}`.replace(/\s{2,}/g, ' ');
   }
 }
 </script>
