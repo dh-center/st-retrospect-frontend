@@ -1,3 +1,5 @@
+import { MultilingualString } from '@/types/multilingualString';
+
 /**
  * Represents address info
  */
@@ -34,10 +36,3 @@ interface Address {
 }
 
 export default Address;
-
-/**
- * Object storing strings in different languages
- */
-export interface MultilingualString {
-  [key: string]: string | null;
-}

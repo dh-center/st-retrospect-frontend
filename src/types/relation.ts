@@ -1,4 +1,5 @@
 import Location from '@/types/location';
+import { MultilingualString } from '@/types/multilingualString';
 
 /**
  * Represents relation info
@@ -21,10 +22,3 @@ interface Relation {
 }
 
 export default Relation;
-
-/**
- * Object storing strings in different languages
- */
-export interface MultilingualString {
-  [key: string]: string | null;
-}
