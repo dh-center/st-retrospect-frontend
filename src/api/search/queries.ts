@@ -11,6 +11,12 @@ export const QUERY_FIND_RELATIONS = `
         mainPhotoLink
         latitude: coordinateX
         longitude: coordinateY
+        addresses {
+          street
+          build
+          homeNumber
+          housing
+        }
         locationTypes {
           name
         }
@@ -33,6 +39,12 @@ query location($locationId: ID!) {
     description
     demolitionDate
     constructionDate
+    addresses {
+      street
+      build
+      homeNumber
+      housing
+    }
     locationTypes {
       name
     }
