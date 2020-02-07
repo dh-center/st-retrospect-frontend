@@ -1,6 +1,10 @@
+import Address from '@/types/address';
+import LocationType from '@/types/locationType';
+
 /**
  * Represents location info
  */
+
 interface Location {
   /**
    * Location id
@@ -41,6 +45,16 @@ interface Location {
    * Location's description
    */
   description?: MultilingualString;
+
+  /**
+   * Array of addresses of location
+   */
+  addresses?: [Address];
+
+  /**
+   * Array of location's types
+   */
+  locationTypes?: [LocationType];
 }
 
 export default Location;
