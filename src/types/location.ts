@@ -1,3 +1,5 @@
+import Address from '@/types/address';
+
 /**
  * Represents location info
  */
@@ -41,6 +43,11 @@ interface Location {
    * Location's description
    */
   description?: MultilingualString;
+
+  /**
+   * Array of addresses of location
+   */
+  addresses: [Address];
 }
 
 export default Location;
