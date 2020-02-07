@@ -47,7 +47,7 @@ interface Location {
   /**
    * Array of addresses of location
    */
-  addresses: [Address];
+  addresses?: [Address];
 }
 
 export default Location;

@@ -125,10 +125,13 @@ export default class LocationCard extends Vue {
    * Get location address in one string
    */
   get locationAddress(): string {
-    return `${this.location?.addresses[0].street?.ru} ` +
-      `${this.location?.addresses[0].build?.ru} ` +
-      `${this.location?.addresses[0].homeNumber} ` +
-      `${this.location?.addresses[0].housing}`.replace(/\s{2,}/g, ' ');
+    if (this.location?.addresses && this.location?.addresses.length) {
+      return `${this.location?.addresses[0].street?.ru} ` +
+        `${this.location?.addresses[0].build?.ru} ` +
+        `${this.location?.addresses[0].homeNumber} ` +
+        `${this.location?.addresses[0].housing}`.replace(/\s{2,}/g, ' ');
+    }
+    return '';
   }
 }
 </script>

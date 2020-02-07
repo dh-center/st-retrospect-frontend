@@ -41,10 +41,13 @@ export default class RelationInfo extends Vue {
    * Get location address in one string
    */
   get locationAddress(): string {
-    return `${this.relation.location.addresses[0].street?.ru} ` +
-      `${this.relation.location.addresses[0].build?.ru} ` +
-      `${this.relation.location.addresses[0].homeNumber} ` +
-      `${this.relation.location.addresses[0].housing}`.replace(/\s{2,}/g, ' ');
+    if (this.relation.location.addresses && this.relation.location.addresses.length) {
+      return `${this.relation.location.addresses[0].street?.ru} ` +
+        `${this.relation.location.addresses[0].build?.ru} ` +
+        `${this.relation.location.addresses[0].homeNumber} ` +
+        `${this.relation.location.addresses[0].housing}`.replace(/\s{2,}/g, ' ');
+    }
+    return '';
   }
 }
 </script>
