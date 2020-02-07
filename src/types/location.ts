@@ -1,5 +1,6 @@
 import Address from '@/types/address';
 import LocationType from '@/types/locationType';
+import { MultilingualString } from '@/types/multilingualString';
 
 /**
  * Represents location info
@@ -58,10 +59,3 @@ interface Location {
 }
 
 export default Location;
-
-/**
- * Object storing strings in different languages
- */
-export interface MultilingualString {
-  [key: string]: string | null;
-}

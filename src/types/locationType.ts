@@ -1,3 +1,5 @@
+import { MultilingualString } from '@/types/multilingualString';
+
 /**
  * Represents location type info
  */
@@ -14,10 +16,3 @@ interface LocationType {
 }
 
 export default LocationType;
-
-/**
- * Object storing strings in different languages
- */
-export interface MultilingualString {
-  [key: string]: string | null;
-}
