@@ -10,7 +10,7 @@
       </h3>
       <div class="relation-info__wrapper">
         <div class="relation-info__building-type">
-          доходный дом
+          {{ relation.location.locationTypes[0].name.ru }}
         </div>
         <div class="relation-info__address">
           Биржевой переулок 1
