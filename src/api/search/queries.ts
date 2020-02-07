@@ -17,6 +17,9 @@ export const QUERY_FIND_RELATIONS = `
           homeNumber
           housing
         }
+        locationTypes {
+          name
+        }
       }
       quote
     }
@@ -41,6 +44,9 @@ query location($locationId: ID!) {
       build
       homeNumber
       housing
+    }
+    locationTypes {
+      name
     }
   }
 }

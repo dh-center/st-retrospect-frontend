@@ -6,7 +6,7 @@
       {{ relation.location.name.ru }}
     </h3>
     <p class="popup__location-type">
-      доходный дом
+      {{ relation.location.locationTypes[0].name.ru }}
     </p>
     <p class="popup__address">
       {{ locationAddress }}
