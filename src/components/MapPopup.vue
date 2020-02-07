@@ -9,7 +9,7 @@
       доходный дом
     </p>
     <p class="popup__address">
-      Биржевой переулок 1
+      {{ locationAddress }}
     </p>
     <p class="popup__quote">
       {{ relation.quote.ru }}
@@ -32,6 +32,21 @@ export default class MapPopup extends Vue {
    */
   @Prop({ type: Object, required: true })
   private relation!: Relation;
+
+  /**
+   * Get location address in one string
+   */
+  get locationAddress(): string {
+    const locationAddresses = this.relation.location.addresses;
+
+    if (locationAddresses && locationAddresses.length) {
+      return `${locationAddresses[0].street?.ru} ` +
+        `${locationAddresses[0].build?.ru} ` +
+        `${locationAddresses[0].homeNumber} ` +
+        `${locationAddresses[0].housing}`.replace(/\s{2,}/g, ' ');
+    }
+    return '';
+  }
 }
 </script>
 
