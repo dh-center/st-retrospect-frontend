@@ -1,6 +1,7 @@
 import Address from '@/types/address';
 import LocationType from '@/types/locationType';
 import { MultilingualString } from '@/types/multilingualString';
+import Relation from '@/types/relation';
 
 /**
  * Represents location info
@@ -56,6 +57,11 @@ interface Location {
    * Array of location's types
    */
   locationTypes?: [LocationType];
+
+  /**
+   * Array of location relations
+   */
+  relations?: [Relation];
 }
 
 export default Location;

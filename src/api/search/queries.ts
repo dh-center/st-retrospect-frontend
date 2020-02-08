@@ -48,6 +48,15 @@ query location($locationId: ID!) {
     locationTypes {
       name
     }
+    relations {
+      person {
+        id
+        lastName
+        firstName
+        patronymic
+        mainPhotoLink
+      }
+    }
   }
 }
 `;

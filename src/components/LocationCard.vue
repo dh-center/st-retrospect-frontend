@@ -18,12 +18,22 @@
               {{ $t('persons-title[1]') }}
             </div>
           </div>
-          <div class="persons__list">
-            <div class="persons__item">
-              <img
+          <div
+            v-if="personsInLocation"
+            class="persons__list"
+          >
+            <div
+              v-for="person in personsInLocation"
+              :key="person.id"
+              class="persons__item"
+            >
+              <div
                 class="persons__photo"
-                src="../assets/images/default-person.jpeg"
-              >
+                :style="personMainPhotoStyle(person.mainPhotoLink)"
+              />
+              <div class="persons__name">
+                {{ abbreviatedPersonName(person.lastName.ru, person.firstName.ru, person.patronymic.ru) }}
+              </div>
             </div>
           </div>
         </div>
@@ -66,10 +76,14 @@
 import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import Location from '@/types/location';
+// eslint-disable-next-line no-unused-vars
+import Person from '@/types/person';
 import Gallery from '@/components/Gallery.vue';
 import * as searchApi from '@/api/search';
 // eslint-disable-next-line no-unused-vars
 import { Route } from 'vue-router';
+// eslint-disable-next-line no-unused-vars
+import Relation from '@/types/relation';
 
 @Component({
   components: {
@@ -135,6 +149,60 @@ export default class LocationCard extends Vue {
     }
     return '';
   }
+
+  /**
+   * Return abbreviated person fullname (Pushkin A.S.)
+   * @param lastName - person's lastname
+   * @param firstName - person's firstname
+   * @param patronymic - person's patronymic
+   */
+  private abbreviatedPersonName(lastName: string, firstName: string, patronymic: string): string {
+    const abbreviatedFirstName = firstName ? firstName[0].toUpperCase() + '.' : '';
+    const abbreviatedPatronymic = patronymic ? patronymic[0].toUpperCase() + '.' : '';
+
+    return `${lastName} ${abbreviatedFirstName} ${abbreviatedPatronymic}`.replace(/\s{2,}/g, ' ');
+  }
+
+  /**
+   * Return array of persons from location
+   */
+  get personsInLocation(): Person[] | null {
+    if (!this.location) {
+      return null;
+    }
+    const relations = this.location.relations;
+
+    if (!relations) {
+      return null;
+    }
+    let persons = relations.reduce((result: Person[], relation: Relation) => {
+      if (relation.person) {
+        result.push(relation.person);
+      }
+      return result;
+    }, []);
+
+    /**
+     * Remove duplicated objects
+     */
+    persons = persons.filter((person, index, self) => {
+      return index === self.findIndex((p) => {
+        return p.id === person.id;
+      });
+    });
+    return persons;
+  }
+
+  /**
+   * Returns CSS code for displaying person photo
+   */
+  private personMainPhotoStyle(personMainPhoto: string): object {
+    if (personMainPhoto) {
+      return { 'background-image': `url('${personMainPhoto}')` };
+    }
+
+    return {};
+  }
 }
 </script>
 
@@ -197,15 +265,48 @@ export default class LocationCard extends Vue {
         text-transform: none;
       }
 
+      &__list {
+        @apply --custom-scroll;
+        display: flex;
+        overflow: scroll;
+      }
+
       &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 40px;
         margin-right: 8px;
       }
 
       &__photo {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 3px;
+
+        background-color: #f0f0f0;
+
+        background-position: center;
+        background-size: cover;
 
         border-radius: 50%;
+      }
+
+      &__name {
+        @apply --font-sans-serif-main;
+        color: #2D2D2D;
+        font-size: 12px;
+        white-space: nowrap;
+
+        visibility: hidden
+      }
+
+      &__item:hover {
+        cursor: pointer;
+
+        .persons__name {
+          visibility: visible
+        }
       }
     }
 
