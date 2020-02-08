@@ -27,10 +27,10 @@
               :key="person.id"
               class="persons__item"
             >
-              <img
+              <div
                 class="persons__photo"
-                src="../assets/images/default-person.jpeg"
-              >
+                :style="personMainPhotoStyle(person.mainPhotoLink)"
+              />
               <div class="persons__name">
                 {{ abbreviatedPersonName(person.lastName.ru, person.firstName.ru, person.patronymic.ru) }}
               </div>
@@ -192,6 +192,17 @@ export default class LocationCard extends Vue {
     });
     return persons;
   }
+
+  /**
+   * Returns CSS code for displaying person photo
+   */
+  private personMainPhotoStyle(personMainPhoto: string): object {
+    if (personMainPhoto) {
+      return { 'background-image': `url('${personMainPhoto}')` };
+    }
+
+    return {};
+  }
 }
 </script>
 
@@ -273,11 +284,16 @@ export default class LocationCard extends Vue {
         height: 40px;
         margin-bottom: 3px;
 
+        background-color: #f0f0f0;
+
+        background-position: center;
+        background-size: cover;
+
         border-radius: 50%;
       }
 
       &__name {
-        @apply --font-sans-serif-main
+        @apply --font-sans-serif-main;
         color: #2D2D2D;
         font-size: 12px;
         white-space: nowrap;

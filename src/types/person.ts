@@ -23,6 +23,11 @@ interface Person {
    * Person's patronymic
    */
   patronymic: MultilingualString;
+
+  /**
+   * Person's main photo
+   */
+  mainPhotoLink: string;
 }
 
 export default Person;

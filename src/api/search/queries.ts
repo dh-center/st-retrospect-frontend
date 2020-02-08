@@ -54,6 +54,7 @@ query location($locationId: ID!) {
         lastName
         firstName
         patronymic
+        mainPhotoLink
       }
     }
   }
