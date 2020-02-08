@@ -18,7 +18,10 @@
               {{ $t('persons-title[1]') }}
             </div>
           </div>
-          <div class="persons__list">
+          <div
+            v-if="personsInLocation"
+            class="persons__list"
+          >
             <div
               v-for="person in personsInLocation"
               :key="person.id"
@@ -79,6 +82,8 @@ import Gallery from '@/components/Gallery.vue';
 import * as searchApi from '@/api/search';
 // eslint-disable-next-line no-unused-vars
 import { Route } from 'vue-router';
+// eslint-disable-next-line no-unused-vars
+import Relation from '@/types/relation';
 
 @Component({
   components: {
@@ -162,12 +167,19 @@ export default class LocationCard extends Vue {
    * Return array of persons from location
    */
   get personsInLocation(): Person[] | null {
-    const relations = this.location?.relations;
+    if (this.location) {
+      const relations = this.location.relations;
 
-    if (relations) {
-      const persons = relations.map(relation => relation.person);
+      if (relations) {
+        const persons = relations.reduce((result: Person[], relation: Relation) => {
+          if (relation.person) {
+            result.push(relation.person);
+          }
+          return result;
+        }, []);
 
-      return persons;
+        return persons;
+      }
     }
     return null;
   }
