@@ -167,29 +167,30 @@ export default class LocationCard extends Vue {
    * Return array of persons from location
    */
   get personsInLocation(): Person[] | null {
-    if (this.location) {
-      const relations = this.location.relations;
-
-      if (relations) {
-        let persons = relations.reduce((result: Person[], relation: Relation) => {
-          if (relation.person) {
-            result.push(relation.person);
-          }
-          return result;
-        }, []);
-
-        /**
-         * Remove duplicated objects
-         */
-        persons = persons.filter((person, index, self) => {
-          return index === self.findIndex((p) => {
-            return p.id === person.id;
-          });
-        });
-        return persons;
-      }
+    if (!this.location) {
+      return null;
     }
-    return null;
+    const relations = this.location.relations;
+
+    if (!relations) {
+      return null;
+    }
+    let persons = relations.reduce((result: Person[], relation: Relation) => {
+      if (relation.person) {
+        result.push(relation.person);
+      }
+      return result;
+    }, []);
+
+    /**
+     * Remove duplicated objects
+     */
+    persons = persons.filter((person, index, self) => {
+      return index === self.findIndex((p) => {
+        return p.id === person.id;
+      });
+    });
+    return persons;
   }
 }
 </script>
