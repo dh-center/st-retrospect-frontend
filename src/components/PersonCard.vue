@@ -5,12 +5,12 @@
   >
     <div
       class="person-card__image"
-      :style="{'background-image': `url(${require('../assets/images/person-125-main.jpeg')}`}"
+      :style="mainImageStyle"
     />
     <div class="person-card__main">
       <div class="person-card__wrap--bordered">
         <h2 class="person-card__title">
-          {{ person.lastName.ru }}
+          {{ personFcs }}
         </h2>
         <div class="info-block__wrap">
           <div class="info-block">
@@ -18,21 +18,26 @@
               {{ $t('years') }}
             </div>
             <div class="info-block__content">
-              1834-01-01
+              {{ person.birthDate || '??' }} &ndash; {{ person.deathDate || '??' }}
             </div>
           </div>
           <div class="info-block">
             <div class="info-block__title">
               {{ $t('profession') }}
             </div>
-            <div class="info-block__content">
-              Дирижёр, педагог
+            <div
+              class="info-block__content"
+            >
+              {{ person.profession ? person.profession.ru : '&mdash;' }}
             </div>
           </div>
         </div>
       </div>
-      <div class="person-card__text">
-        Начал заниматься музыкой в раннем детстве. В 1942 году в возрасте шести лет он был эвакуирован из блокадного Ленинграда. С 1944 по 1953 годы Чернушенко учился в хоровом училище при Ленинградской государственной академической капелле .Вернувшись в Ленинград в 1962 году, организовал любительский Ленинградский камерный хор во Дворце культуры пищевой промышленности и руководил этим коллективом в течение 17 лет. Он вновь стал учиться в Ленинградской консерватории и в 1967 году закончил её уже как дирижёр оперно-симфонического оркестра.С 1971 по 1974 год — второй дирижёр Ленинградского государственного академического Малого театра оперы и балета.В эти же годы активно занимался педагогической деятельностью — в консерватории (профессор с 1987), Хоровом училище имени М. И. Глинки, Музыкальном училище им. М. П. Мусоргского. Работал дирижёром Симфонического оркестра Карельского радио и телевидения, выступал в качестве дирижёра симфонических и камерных концертов, ставил ряд спектаклей в Оперной студии при Ленинградской консерватории.
+      <div
+        v-if="person.description"
+        class="person-card__text"
+      >
+        {{ person.description.ru }}
       </div>
       <Gallery />
       <div class="person-card__links">
@@ -91,6 +96,27 @@ export default class PersonCard extends Vue {
     });
     next();
   }
+
+  /**
+   * Returns CSS code for displaying person image
+   */
+  get mainImageStyle() {
+    if (this.person) {
+      return { 'background-image': `url('${this.person.mainPhotoLink}')` };
+    }
+
+    return {};
+  }
+
+  /**
+   * Return person FCs
+   */
+  get personFcs(): string {
+    if (!this.person) {
+      return '';
+    }
+    return `${this.person.lastName.ru} ${this.person.firstName.ru} ${this.person.patronymic.ru}`.replace(/\s{2,}/g, ' ');
+  }
 }
 </script>
 
@@ -121,6 +147,10 @@ export default class PersonCard extends Vue {
 
       font-size: 14px;
       line-height: 170%;
+    }
+
+    &__image {
+      background-position: center -40px;
     }
   }
 </style>
