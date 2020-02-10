@@ -10,7 +10,7 @@
     <div class="person-card__main">
       <div class="person-card__wrap--bordered">
         <h2 class="person-card__title">
-          {{ personFcs }}
+          {{ personFullName }}
         </h2>
         <div class="info-block__wrap">
           <div class="info-block">
@@ -109,9 +109,9 @@ export default class PersonCard extends Vue {
   }
 
   /**
-   * Return person FCs
+   * Return person full name
    */
-  get personFcs(): string {
+  get personFullName(): string {
     if (!this.person) {
       return '';
     }
