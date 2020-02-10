@@ -115,7 +115,7 @@ export default class PersonCard extends Vue {
     if (!this.person) {
       return '';
     }
-    return `${this.person.lastName.ru} ${this.person.firstName.ru} ${this.person.patronymic.ru}`.replace(/\s{2,}/g, ' ');
+    return `${this.person.lastName.ru} ${this.person.firstName.ru} ${this.person.patronymic.ru}`;
   }
 }
 </script>
