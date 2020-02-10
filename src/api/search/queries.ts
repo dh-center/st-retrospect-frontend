@@ -72,6 +72,11 @@ query person($personId: ID!) {
     lastName
     firstName
     patronymic
+    mainPhotoLink
+    description
+    profession
+    birthDate
+    deathDate
   }
 }
 `;
