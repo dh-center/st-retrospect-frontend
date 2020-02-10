@@ -1,5 +1,8 @@
 <template>
-  <div class="person-card">
+  <div
+    v-if="person"
+    class="person-card"
+  >
     <div
       class="person-card__image"
       :style="{'background-image': `url(${require('../assets/images/person-125-main.jpeg')}`}"
@@ -7,7 +10,7 @@
     <div class="person-card__main">
       <div class="person-card__wrap--bordered">
         <h2 class="person-card__title">
-          Пётр Ильич Чайковский
+          {{ person.lastName.ru }}
         </h2>
         <div class="info-block__wrap">
           <div class="info-block">
@@ -44,6 +47,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Gallery from '@/components/Gallery.vue';
+// eslint-disable-next-line no-unused-vars
+import Person from '@/types/person';
+// eslint-disable-next-line no-unused-vars
+import { Route } from 'vue-router';
+import * as searchApi from '@/api/search';
 
 @Component({
   components: {
@@ -54,6 +62,35 @@ import Gallery from '@/components/Gallery.vue';
  * Component for person card
  */
 export default class PersonCard extends Vue {
+  /**
+   * Person to display
+   */
+  private person: Person | null = null;
+
+  /**
+   * Router enter hook for fetch data from API
+   * @param to - new location
+   * @param from - old location
+   * @param next - callback
+   */
+  beforeRouteEnter(to: Route, from: Route, next: Function): void {
+    searchApi.findPerson(to.params.id).then(person => {
+      next((vm: PersonCard) => (vm.person = person));
+    });
+  }
+
+  /**
+   * Router update hook for fetch data from API
+   * @param to - new location
+   * @param from - old location
+   * @param next - callback
+   */
+  beforeRouteUpdate(to: Route, from: Route, next: Function): void {
+    searchApi.findPerson(to.params.id).then(person => {
+      this.person = person;
+    });
+    next();
+  }
 }
 </script>
 
