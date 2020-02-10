@@ -24,6 +24,11 @@ const routes: RouteConfig[] = [
         path: 'location/:id',
         name: 'locationInfo',
         component: () => import(/* webpackChunkName: "mapView" */ '../components/LocationCard.vue')
+      },
+      {
+        path: 'person/:id',
+        name: 'personInfo',
+        component: () => import(/* webpackChunkName: "mapView" */ '../components/PersonCard.vue')
       }
     ]
   }
