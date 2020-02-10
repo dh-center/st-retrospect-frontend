@@ -60,3 +60,23 @@ query location($locationId: ID!) {
   }
 }
 `;
+
+/**
+ * Query for searching person by it's ID
+ */
+// language=GraphQL
+export const QUERY_FIND_PERSON = `
+query person($personId: ID!) {
+  person(id: $personId) {
+    id
+    lastName
+    firstName
+    patronymic
+    mainPhotoLink
+    description
+    profession
+    birthDate
+    deathDate
+  }
+}
+`;

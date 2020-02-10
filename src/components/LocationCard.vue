@@ -22,10 +22,11 @@
             v-if="personsInLocation"
             class="persons__list"
           >
-            <div
+            <router-link
               v-for="person in personsInLocation"
               :key="person.id"
               class="persons__item"
+              :to="{ name: 'personInfo', params: { id: person.id } }"
             >
               <div
                 class="persons__photo"
@@ -34,7 +35,7 @@
               <div class="persons__name">
                 {{ abbreviatedPersonName(person.lastName.ru, person.firstName.ru, person.patronymic.ru) }}
               </div>
-            </div>
+            </router-link>
           </div>
         </div>
         <h2 class="location-card__title">
