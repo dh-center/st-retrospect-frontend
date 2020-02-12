@@ -36,6 +36,7 @@ query location($locationId: ID!) {
     id
     name
     mainPhotoLink
+    photoLinks
     description
     demolitionDate
     constructionDate
@@ -73,6 +74,7 @@ query person($personId: ID!) {
     firstName
     patronymic
     mainPhotoLink
+    photoLinks
     description
     profession
     birthDate

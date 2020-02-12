@@ -16,12 +16,17 @@ interface Location {
   /**
    * Location name
    */
-  name: MultilingualString;
+  name: string;
 
   /**
    * Main location image
    */
   mainPhotoLink?: string;
+
+  /**
+   * Location photos
+   */
+  photoLinks?: [string];
 
   /**
    * Location's latitude on map
@@ -46,7 +51,7 @@ interface Location {
   /**
    * Location's description
    */
-  description?: MultilingualString;
+  description?: string;
 
   /**
    * Array of addresses of location

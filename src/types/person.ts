@@ -12,17 +12,17 @@ interface Person {
   /**
    * Person's lastname
    */
-  lastName: MultilingualString;
+  lastName: string;
 
   /**
    * Person's firstname
    */
-  firstName: MultilingualString;
+  firstName: string;
 
   /**
    * Person's patronymic
    */
-  patronymic: MultilingualString;
+  patronymic: string;
 
   /**
    * Person's main photo
@@ -32,12 +32,12 @@ interface Person {
   /**
    * Person's description
    */
-  description: MultilingualString;
+  description: string;
 
   /**
    * Person's profession
    */
-  profession: MultilingualString;
+  profession: string;
 
   /**
    * Person's birth date
@@ -48,6 +48,11 @@ interface Person {
    * Person's death date
    */
   deathDate: string;
+
+  /**
+   * Person's photos
+   */
+  photoLinks?: [string];
 }
 
 export default Person;
