@@ -1,5 +1,3 @@
-import { MultilingualString } from '@/types/multilingualString';
-
 /**
  * Represents location type info
  */
@@ -12,7 +10,7 @@ interface LocationType {
   /**
    * Location type name
    */
-  name: MultilingualString;
+  name: string;
 }
 
 export default LocationType;

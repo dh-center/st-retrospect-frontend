@@ -33,13 +33,13 @@
                 :style="personMainPhotoStyle(person.mainPhotoLink)"
               />
               <div class="persons__name">
-                {{ abbreviatedPersonName(person.lastName.ru, person.firstName.ru, person.patronymic.ru) }}
+                {{ abbreviatedPersonName(person.lastName, person.firstName, person.patronymic) }}
               </div>
             </router-link>
           </div>
         </div>
         <h2 class="location-card__title">
-          {{ location.name.ru }}
+          {{ location.name }}
         </h2>
         <div class="location-card__address">
           {{ locationAddress }}
@@ -63,7 +63,10 @@
           </div>
         </div>
       </div>
-      <Gallery />
+      <Gallery
+        v-if="location.photoLinks && location.photoLinks.length"
+        :images="location.photoLinks"
+      />
       <div class="location-card__links">
         <a href="wikipedia.org">
           {{ $t('source-link') }}
@@ -143,8 +146,8 @@ export default class LocationCard extends Vue {
     const locationAddresses = this.location?.addresses;
 
     if (locationAddresses && locationAddresses.length) {
-      return `${locationAddresses[0].street?.ru} ` +
-        `${locationAddresses[0].build?.ru} ` +
+      return `${locationAddresses[0].street} ` +
+        `${locationAddresses[0].build} ` +
         `${locationAddresses[0].homeNumber} ` +
         `${locationAddresses[0].housing}`.replace(/\s{2,}/g, ' ');
     }

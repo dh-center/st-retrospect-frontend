@@ -1,5 +1,3 @@
-import { MultilingualString } from '@/types/multilingualString';
-
 /**
  * Represents address info
  */
@@ -12,12 +10,12 @@ interface Address {
   /**
    * Street on which the location is located
    */
-  street?: MultilingualString;
+  street?: string;
 
   /**
    * Build name
    */
-  build?: MultilingualString;
+  build?: string;
 
   /**
    * House number on the street
