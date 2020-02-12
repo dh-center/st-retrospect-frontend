@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '@/store/index.ts';
 
 /**
  * Endpoint for api calls
@@ -18,6 +19,11 @@ export async function call(
   const response = await axios.post(API_ENDPOINT, {
     query: request,
     variables
+  },
+  {
+    headers: {
+      'accept-language': store.state.app.interfaceLanguage
+    }
   });
 
   if (response.data.errors) {
