@@ -3,16 +3,16 @@
     class="popup"
   >
     <h3 class="popup__title">
-      {{ relation.location.name.ru }}
+      {{ relation.location.name }}
     </h3>
     <p class="popup__location-type">
-      {{ relation.location.locationTypes[0].name.ru }}
+      {{ relation.location.locationTypes[0].name }}
     </p>
     <p class="popup__address">
       {{ locationAddress }}
     </p>
     <p class="popup__quote">
-      {{ relation.quote.ru }}
+      {{ relation.quote }}
     </p>
   </div>
 </template>
@@ -40,8 +40,8 @@ export default class MapPopup extends Vue {
     const locationAddresses = this.relation.location.addresses;
 
     if (locationAddresses && locationAddresses.length) {
-      return `${locationAddresses[0].street?.ru} ` +
-        `${locationAddresses[0].build?.ru} ` +
+      return `${locationAddresses[0].street} ` +
+        `${locationAddresses[0].build} ` +
         `${locationAddresses[0].homeNumber} ` +
         `${locationAddresses[0].housing}`.replace(/\s{2,}/g, ' ');
     }

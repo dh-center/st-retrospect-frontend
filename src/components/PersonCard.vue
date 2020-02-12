@@ -28,7 +28,7 @@
             <div
               class="info-block__content"
             >
-              {{ person.profession ? person.profession.ru : '&mdash;' }}
+              {{ person.profession ? person.profession : '&mdash;' }}
             </div>
           </div>
         </div>
@@ -37,9 +37,12 @@
         v-if="person.description"
         class="person-card__text"
       >
-        {{ person.description.ru }}
+        {{ person.description }}
       </div>
-      <Gallery />
+      <Gallery
+        v-if="person.photoLinks && person.photoLinks.length"
+        :images="person.photoLinks"
+      />
       <div class="person-card__links">
         <a href="wikipedia.org">
           {{ $t('source-link') }}
@@ -115,7 +118,7 @@ export default class PersonCard extends Vue {
     if (!this.person) {
       return '';
     }
-    return `${this.person.lastName.ru} ${this.person.firstName.ru} ${this.person.patronymic.ru}`;
+    return `${this.person.lastName} ${this.person.firstName} ${this.person.patronymic}`;
   }
 }
 </script>

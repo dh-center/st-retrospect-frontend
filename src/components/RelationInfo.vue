@@ -6,11 +6,11 @@
     />
     <div class="relation-info__main">
       <h3 class="relation-info__name">
-        {{ relation.location.name.ru }}
+        {{ relation.location.name }}
       </h3>
       <div class="relation-info__wrapper">
         <div class="relation-info__building-type">
-          {{ relation.location.locationTypes[0].name.ru }}
+          {{ relation.location.locationTypes[0].name }}
         </div>
         <div class="relation-info__address">
           {{ locationAddress }}
@@ -44,8 +44,8 @@ export default class RelationInfo extends Vue {
     const locationAddresses = this.relation.location.addresses;
 
     if (locationAddresses && locationAddresses.length) {
-      return `${locationAddresses[0].street?.ru} ` +
-        `${locationAddresses[0].build?.ru} ` +
+      return `${locationAddresses[0].street} ` +
+        `${locationAddresses[0].build} ` +
         `${locationAddresses[0].homeNumber} ` +
         `${locationAddresses[0].housing}`.replace(/\s{2,}/g, ' ');
     }

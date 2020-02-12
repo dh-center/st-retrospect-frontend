@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { LightGallery } from 'vue-light-gallery';
 
 @Component({
@@ -36,25 +36,11 @@ import { LightGallery } from 'vue-light-gallery';
  * Component for photos block in aside bar
  */
 export default class Gallery extends Vue {
+  @Prop({ type: Array, required: true })
   /**
    * Temporal variable for images in gallery
    */
-  images = [
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg'),
-    require('../assets/images/person-125-main.jpeg')
-  ];
+  private images!: [string];
 
   /**
    * Current image index in full view
