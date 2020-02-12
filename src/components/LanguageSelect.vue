@@ -29,7 +29,7 @@ export default class LanguageSelect extends Vue {
   private changeInterfaceLanguage(lang: string): void {
     this.$store.dispatch(CHANGE_INTERFACE_LANG, lang);
     this.$i18n.locale = lang;
-    this.$router.go(0);
+    window.location.reload();
   }
 }
 </script>
