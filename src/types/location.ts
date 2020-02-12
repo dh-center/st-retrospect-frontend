@@ -1,6 +1,5 @@
 import Address from '@/types/address';
 import LocationType from '@/types/locationType';
-import { MultilingualString } from '@/types/multilingualString';
 import Relation from '@/types/relation';
 
 /**
@@ -26,7 +25,7 @@ interface Location {
   /**
    * Location photos
    */
-  photoLinks?: [string];
+  photoLinks?: string[];
 
   /**
    * Location's latitude on map
@@ -56,17 +55,17 @@ interface Location {
   /**
    * Array of addresses of location
    */
-  addresses?: [Address];
+  addresses?: Address[];
 
   /**
    * Array of location's types
    */
-  locationTypes?: [LocationType];
+  locationTypes?: LocationType[];
 
   /**
    * Array of location relations
    */
-  relations?: [Relation];
+  relations?: Relation[];
 }
 
 export default Location;

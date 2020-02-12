@@ -1,5 +1,4 @@
 import Location from '@/types/location';
-import { MultilingualString } from '@/types/multilingualString';
 import Person from '@/types/person';
 
 /**
@@ -24,7 +23,7 @@ interface Relation {
   /**
    * Relation's quote
    */
-  quote: MultilingualString;
+  quote: string;
 }
 
 export default Relation;

@@ -1,5 +1,3 @@
-import { MultilingualString } from '@/types/multilingualString';
-
 /**
  * Represents person info
  */
@@ -52,7 +50,7 @@ interface Person {
   /**
    * Person's photos
    */
-  photoLinks?: [string];
+  photoLinks?: string[];
 }
 
 export default Person;
