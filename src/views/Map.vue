@@ -51,7 +51,7 @@ export default class MapView extends Vue {
    * Returns only relations with non-empty latitude and longitude fields
    */
   get filteredLocationsList() {
-    return this.relationsList?.filter(relation => relation.location.latitude && relation.location.longitude);
+    return this.relationsList?.filter(relation => relation.locationInstance.location.latitude && relation.locationInstance.location.longitude);
   }
 
   /**
@@ -77,18 +77,18 @@ export default class MapView extends Vue {
       return;
     }
     if (this.$router.currentRoute.name === 'locationInfo') {
-      const currentLocationId = this.$router.currentRoute.params.id || null;
+      const currentLocationInstanceId = this.$router.currentRoute.params.id || null;
 
-      if (!currentLocationId) {
+      if (!currentLocationInstanceId) {
         return;
       }
-      const currentRelation = this.relationsList?.find(relation => relation.location.id === currentLocationId);
+      const currentRelation = this.relationsList?.find(relation => relation.locationInstance.id === currentLocationInstanceId);
 
-      if (currentRelation && currentRelation.location.longitude && currentRelation.location.latitude) {
+      if (currentRelation && currentRelation.locationInstance.location.longitude && currentRelation.locationInstance.location.latitude) {
         this.map.flyTo({
           center: [
-            currentRelation.location.longitude,
-            currentRelation.location.latitude + 0.002
+            currentRelation.locationInstance.location.longitude,
+            currentRelation.locationInstance.location.latitude + 0.002
           ],
           zoom: 14
         });

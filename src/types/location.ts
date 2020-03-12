@@ -1,71 +1,31 @@
 import Address from '@/types/address';
-import LocationType from '@/types/locationType';
-import Relation from '@/types/relation';
-
-/**
- * Represents location info
- */
+import LocationInstance from '@/types/locationInstance';
 
 interface Location {
   /**
-   * Location id
+   * Id of location
    */
   id: string;
 
   /**
-   * Location name
+   * Latitude of location
    */
-  name: string;
+  latitude: number;
 
   /**
-   * Main location image
+   * Longitude of location
    */
-  mainPhotoLink?: string;
-
-  /**
-   * Location photos
-   */
-  photoLinks?: string[];
-
-  /**
-   * Location's latitude on map
-   */
-  latitude?: number;
-
-  /**
-   * Location's longitude on map
-   */
-  longitude?: number;
-
-  /**
-   * Location's construction date
-   */
-  constructionDate?: string;
-
-  /**
-   * Location's demolition date
-   */
-  demolitionDate?: string;
-
-  /**
-   * Location's description
-   */
-  description?: string;
+  longitude: number;
 
   /**
    * Array of addresses of location
    */
-  addresses?: Address[];
+  addresses: Address[];
 
   /**
-   * Array of location's types
+   * Possible location representations
    */
-  locationTypes?: LocationType[];
-
-  /**
-   * Array of location relations
-   */
-  relations?: Relation[];
+  instances: LocationInstance[];
 }
 
 export default Location;

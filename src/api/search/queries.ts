@@ -5,17 +5,19 @@
 export const QUERY_FIND_RELATIONS = `
   query findLocations($searchString: String!) {
     search(searchString: $searchString) {
-      location {
+      locationInstance {
         id
         name
         mainPhotoLink
-        latitude: coordinateX
-        longitude: coordinateY
-        addresses {
-          street
-          build
-          homeNumber
-          housing
+        location {
+          latitude: coordinateX
+          longitude: coordinateY
+          addresses {
+            street
+            build
+            homeNumber
+            housing
+          }
         }
         locationTypes {
           name

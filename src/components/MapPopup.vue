@@ -3,10 +3,10 @@
     class="popup"
   >
     <h3 class="popup__title">
-      {{ relation.location.name }}
+      {{ relation.locationInstance.name }}
     </h3>
     <p class="popup__location-type">
-      {{ relation.location.locationTypes[0].name }}
+      {{ relation.locationInstance.locationTypes[0].name }}
     </p>
     <p class="popup__address">
       {{ locationAddress }}
@@ -28,7 +28,7 @@ import Relation from '@/types/relation';
  */
 export default class MapPopup extends Vue {
   /**
-   * Location object for popup
+   * LocationInstance object for popup
    */
   @Prop({ type: Object, required: true })
   private relation!: Relation;
@@ -37,7 +37,7 @@ export default class MapPopup extends Vue {
    * Get location address in one string
    */
   get locationAddress(): string {
-    const locationAddresses = this.relation.location.addresses;
+    const locationAddresses = this.relation.locationInstance.location.addresses;
 
     if (locationAddresses && locationAddresses.length) {
       return `${locationAddresses[0].street} ` +

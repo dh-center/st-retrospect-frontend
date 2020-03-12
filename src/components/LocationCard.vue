@@ -79,7 +79,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
-import Location from '@/types/location';
+import LocationInstance from '@/types/locationInstance';
 // eslint-disable-next-line no-unused-vars
 import Person from '@/types/person';
 import Gallery from '@/components/Gallery.vue';
@@ -99,9 +99,9 @@ import Relation from '@/types/relation';
  */
 export default class LocationCard extends Vue {
   /**
-   * Location to display
+   * LocationInstance to display
    */
-  private location: Location | null = null;
+  private location: LocationInstance | null = null;
 
   /**
    * Router enter hook for fetch data from API
