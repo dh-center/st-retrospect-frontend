@@ -96,7 +96,7 @@ export default class MapMarker extends Vue {
        * If open location popup when current route is '/map/';
        * If open location popup when old location popup was opened (current route is '/location/:id'.
        */
-      if (this.$router.currentRoute.name === 'map' || (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id !== this.relation.location.id)) {
+      if (this.$router.currentRoute.name === 'map' || (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id !== this.relation.locationInstance.id)) {
         this.showLocationInfo();
       }
     });

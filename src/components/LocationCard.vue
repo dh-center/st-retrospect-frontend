@@ -101,7 +101,7 @@ export default class LocationCard extends Vue {
   /**
    * LocationInstance to display
    */
-  private location: LocationInstance | null = null;
+  private locationInstance: LocationInstance | null = null;
 
   /**
    * Router enter hook for fetch data from API
@@ -111,7 +111,7 @@ export default class LocationCard extends Vue {
    */
   beforeRouteEnter(to: Route, from: Route, next: Function): void {
     searchApi.findLocation(to.params.id).then(location => {
-      next((vm: LocationCard) => (vm.location = location));
+      next((vm: LocationCard) => (vm.locationInstance = location));
     });
   }
 
@@ -123,7 +123,7 @@ export default class LocationCard extends Vue {
    */
   beforeRouteUpdate(to: Route, from: Route, next: Function): void {
     searchApi.findLocation(to.params.id).then(location => {
-      this.location = location;
+      this.locationInstance = location;
     });
     next();
   }
@@ -132,8 +132,8 @@ export default class LocationCard extends Vue {
    * Returns CSS code for displaying location image
    */
   get mainImageStyle() {
-    if (this.location) {
-      return { 'background-image': `url('${this.location.mainPhotoLink}')` };
+    if (this.locationInstance) {
+      return { 'background-image': `url('${this.locationInstance.mainPhotoLink}')` };
     }
 
     return {};
@@ -143,7 +143,7 @@ export default class LocationCard extends Vue {
    * Get location address in one string
    */
   get locationAddress(): string {
-    const locationAddresses = this.location?.addresses;
+    const locationAddresses = this.locationInstance?.location.addresses;
 
     if (locationAddresses && locationAddresses.length) {
       return `${locationAddresses[0].street} ` +
@@ -171,10 +171,10 @@ export default class LocationCard extends Vue {
    * Return array of persons from location
    */
   get personsInLocation(): Person[] | null {
-    if (!this.location) {
+    if (!this.locationInstance) {
       return null;
     }
-    const relations = this.location.relations;
+    const relations = this.locationInstance.relations;
 
     if (!relations) {
       return null;
