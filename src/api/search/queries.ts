@@ -29,12 +29,12 @@ export const QUERY_FIND_RELATIONS = `
 `;
 
 /**
- * Query for searching location by it's ID
+ * Query for searching location instance by it's ID
  */
 // language=GraphQL
-export const QUERY_FIND_LOCATION = `
-query location($locationId: ID!) {
-  location(id: $locationId) {
+export const QUERY_FIND_LOCATION_INSTANCE = `
+query locationInstance($locationInstanceId: ID!) {
+  locationInstance(id: $locationInstanceId) {
     id
     name
     mainPhotoLink
@@ -42,11 +42,13 @@ query location($locationId: ID!) {
     description
     demolitionDate
     constructionDate
-    addresses {
-      street
-      build
-      homeNumber
-      housing
+    location {
+      addresses {
+        street
+        build
+        homeNumber
+        housing
+      }
     }
     locationTypes {
       name
@@ -59,6 +61,11 @@ query location($locationId: ID!) {
         patronymic
         mainPhotoLink
       }
+    }
+    architects {
+      lastName
+      firstName
+      patronymic
     }
   }
 }

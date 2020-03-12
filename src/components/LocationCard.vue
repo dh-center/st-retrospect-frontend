@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="location"
+    v-if="locationInstance"
     class="location-card"
   >
     <div
@@ -39,33 +39,35 @@
           </div>
         </div>
         <h2 class="location-card__title">
-          {{ location.name }}
+          {{ locationInstance.name }}
         </h2>
         <div class="location-card__address">
           {{ locationAddress }}
         </div>
       </div>
       <div class="location-card__wrap--bordered">
-        <div class="info-block">
-          <div class="info-block__title">
-            {{ $t('build-time') }}
+        <div class="info-block__wrap">
+          <div class="info-block">
+            <div class="info-block__title">
+              {{ $t('build-time') }}
+            </div>
+            <div class="info-block__content">
+              {{ locationInstance.constructionDate || '??' }}
+            </div>
           </div>
-          <div class="info-block__content">
-            {{ location.constructionDate || '??' }}
-          </div>
-        </div>
-        <div class="info-block">
-          <div class="info-block__title">
-            {{ $t('architect') }}
-          </div>
-          <div class="info-block__content">
-            Боссе Г. А. Маас И. П.
+          <div class="info-block">
+            <div class="info-block__title">
+              {{ $t('architect') }}
+            </div>
+            <div class="info-block__content">
+              {{ architects }}
+            </div>
           </div>
         </div>
       </div>
       <Gallery
-        v-if="location.photoLinks && location.photoLinks.length"
-        :images="location.photoLinks"
+        v-if="locationInstance.photoLinks && locationInstance.photoLinks.length"
+        :images="locationInstance.photoLinks"
       />
       <div class="location-card__links">
         <a href="wikipedia.org">
@@ -110,8 +112,8 @@ export default class LocationCard extends Vue {
    * @param next - callback
    */
   beforeRouteEnter(to: Route, from: Route, next: Function): void {
-    searchApi.findLocation(to.params.id).then(location => {
-      next((vm: LocationCard) => (vm.locationInstance = location));
+    searchApi.findLocationInstance(to.params.id).then(locationInstance => {
+      next((vm: LocationCard) => (vm.locationInstance = locationInstance));
     });
   }
 
@@ -122,8 +124,8 @@ export default class LocationCard extends Vue {
    * @param next - callback
    */
   beforeRouteUpdate(to: Route, from: Route, next: Function): void {
-    searchApi.findLocation(to.params.id).then(location => {
-      this.locationInstance = location;
+    searchApi.findLocationInstance(to.params.id).then(locationInstance => {
+      this.locationInstance = locationInstance;
     });
     next();
   }
@@ -165,6 +167,18 @@ export default class LocationCard extends Vue {
     const abbreviatedPatronymic = patronymic ? patronymic[0].toUpperCase() + '.' : '';
 
     return `${lastName} ${abbreviatedFirstName} ${abbreviatedPatronymic}`.replace(/\s{2,}/g, ' ');
+  }
+
+  /**
+   * Return string with all architects
+   */
+  get architects(): string {
+    if (!this.locationInstance?.architects || !this.locationInstance?.architects.length) {
+      return '—';
+    }
+    const architects = this.locationInstance.architects.map(architect => this.abbreviatedPersonName(architect.lastName, architect.firstName, architect.patronymic));
+
+    return architects.join(', ');
   }
 
   /**

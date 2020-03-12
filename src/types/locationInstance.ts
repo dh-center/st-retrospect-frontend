@@ -2,6 +2,7 @@ import Address from '@/types/address';
 import LocationType from '@/types/locationType';
 import Relation from '@/types/relation';
 import Location from '@/types/location';
+import Person from '@/types/person';
 
 /**
  * Represents location info
@@ -57,6 +58,11 @@ interface LocationInstance {
    * Array of location relations
    */
   relations?: Relation[];
+
+  /**
+   * Array of architects for location
+   */
+  architects?: Person[];
 }
 
 export default LocationInstance;

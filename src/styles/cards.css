@@ -37,6 +37,7 @@
 
   .info-block {
     float: left;
+    max-width: 50%;
     margin-right: 20px;
     padding-right: 20px;
 
@@ -60,8 +61,12 @@
     }
 
     &__content {
+      @apply --custom-scroll;
       @apply --font-sans-serif-light;
+      overflow-x: scroll;
+
       font-size: 14px;
+      white-space:nowrap;
     }
   }
 
