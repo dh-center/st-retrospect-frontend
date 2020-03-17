@@ -1,4 +1,4 @@
-import Location from '@/types/location';
+import LocationInstance from '@/types/locationInstance';
 import Person from '@/types/person';
 
 /**
@@ -11,9 +11,9 @@ interface Relation {
   id: string;
 
   /**
-   * Location in relation
+   * LocationInstance in relation
    */
-  location: Location;
+  locationInstance: LocationInstance;
 
   /**
    * Person in relation

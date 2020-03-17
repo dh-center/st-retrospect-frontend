@@ -91,7 +91,9 @@ const module: Module<AppModuleState, RootState> = {
      * @param {string} searchString - string with user input for searching
      */
     async [SEARCH_FOR_RELATIONS]({ commit }, searchString): Promise<void> {
-      const relations = await searchApi.findRelations(searchString);
+      let relations = await searchApi.findRelations(searchString);
+
+      relations = relations.filter(relation => relation.locationInstance);
 
       commit(mutationTypes.SET_SEARCH_RESULTS, relations);
     },

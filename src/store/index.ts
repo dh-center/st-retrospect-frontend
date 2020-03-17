@@ -13,7 +13,7 @@ const debug = process.env.NODE_ENV !== 'production';
  * Interface of store root state
  */
 export interface RootState {
-  [key: string]: undefined;
+  [key: string]: any;
 }
 
 export default new Vuex.Store({

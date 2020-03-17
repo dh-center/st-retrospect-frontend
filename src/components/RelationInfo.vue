@@ -2,15 +2,15 @@
   <div class="relation-info">
     <div
       class="relation-info__image"
-      :style="{ 'background-image': `url('${relation.location.mainPhotoLink}')` }"
+      :style="{ 'background-image': `url('${relation.locationInstance.mainPhotoLink}')` }"
     />
     <div class="relation-info__main">
       <h3 class="relation-info__name">
-        {{ relation.location.name }}
+        {{ relation.locationInstance.name }}
       </h3>
       <div class="relation-info__wrapper">
         <div class="relation-info__building-type">
-          {{ relation.location.locationTypes[0].name }}
+          {{ relation.locationInstance.locationTypes[0].name }}
         </div>
         <div class="relation-info__address">
           {{ locationAddress }}
@@ -41,7 +41,7 @@ export default class RelationInfo extends Vue {
    * Get location address in one string
    */
   get locationAddress(): string {
-    const locationAddresses = this.relation.location.addresses;
+    const locationAddresses = this.relation.locationInstance.location.addresses;
 
     if (locationAddresses && locationAddresses.length) {
       return `${locationAddresses[0].street} ` +

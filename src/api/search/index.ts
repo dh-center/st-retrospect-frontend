@@ -1,22 +1,23 @@
-import { QUERY_FIND_LOCATION, QUERY_FIND_RELATIONS, QUERY_FIND_PERSON } from './queries';
+import { QUERY_FIND_LOCATION_INSTANCE, QUERY_FIND_RELATIONS, QUERY_FIND_PERSON } from './queries';
 import * as api from '../index';
-import Location from '@/types/location';
+import LocationInstance from '@/types/locationInstance';
 import Person from '@/types/person';
+import Relation from '@/types/relation';
 
 /**
  * Find locations by query and return information about them
  * @param searchString - query for searching
  */
-export async function findRelations(searchString: string): Promise<Location[]> {
+export async function findRelations(searchString: string): Promise<Relation[]> {
   return (await api.call(QUERY_FIND_RELATIONS, { searchString })).search;
 }
 
 /**
  * Find location by it's ID
- * @param locationId - location id to search
+ * @param locationInstanceId - location instance id to search
  */
-export async function findLocation(locationId: string): Promise<Location | null> {
-  return (await api.call(QUERY_FIND_LOCATION, { locationId })).location;
+export async function findLocationInstance(locationInstanceId: string): Promise<LocationInstance | null> {
+  return (await api.call(QUERY_FIND_LOCATION_INSTANCE, { locationInstanceId: locationInstanceId })).locationInstance;
 }
 
 /**

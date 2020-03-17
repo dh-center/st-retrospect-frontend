@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="location"
+    v-if="locationInstance"
     class="location-card"
   >
     <div
@@ -39,33 +39,35 @@
           </div>
         </div>
         <h2 class="location-card__title">
-          {{ location.name }}
+          {{ locationInstance.name }}
         </h2>
         <div class="location-card__address">
           {{ locationAddress }}
         </div>
       </div>
       <div class="location-card__wrap--bordered">
-        <div class="info-block">
-          <div class="info-block__title">
-            {{ $t('build-time') }}
+        <div class="info-block__wrap">
+          <div class="info-block">
+            <div class="info-block__title">
+              {{ $t('build-time') }}
+            </div>
+            <div class="info-block__content">
+              {{ locationInstance.constructionDate || '??' }}
+            </div>
           </div>
-          <div class="info-block__content">
-            {{ location.constructionDate || '??' }}
-          </div>
-        </div>
-        <div class="info-block">
-          <div class="info-block__title">
-            {{ $t('architect') }}
-          </div>
-          <div class="info-block__content">
-            Боссе Г. А. Маас И. П.
+          <div class="info-block">
+            <div class="info-block__title">
+              {{ $t('architect') }}
+            </div>
+            <div class="info-block__content">
+              {{ architects }}
+            </div>
           </div>
         </div>
       </div>
       <Gallery
-        v-if="location.photoLinks && location.photoLinks.length"
-        :images="location.photoLinks"
+        v-if="locationInstance.photoLinks && locationInstance.photoLinks.length"
+        :images="locationInstance.photoLinks"
       />
       <div class="location-card__links">
         <a href="wikipedia.org">
@@ -79,7 +81,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
-import Location from '@/types/location';
+import LocationInstance from '@/types/locationInstance';
 // eslint-disable-next-line no-unused-vars
 import Person from '@/types/person';
 import Gallery from '@/components/Gallery.vue';
@@ -99,9 +101,9 @@ import Relation from '@/types/relation';
  */
 export default class LocationCard extends Vue {
   /**
-   * Location to display
+   * LocationInstance to display
    */
-  private location: Location | null = null;
+  private locationInstance: LocationInstance | null = null;
 
   /**
    * Router enter hook for fetch data from API
@@ -110,8 +112,8 @@ export default class LocationCard extends Vue {
    * @param next - callback
    */
   beforeRouteEnter(to: Route, from: Route, next: Function): void {
-    searchApi.findLocation(to.params.id).then(location => {
-      next((vm: LocationCard) => (vm.location = location));
+    searchApi.findLocationInstance(to.params.id).then(locationInstance => {
+      next((vm: LocationCard) => (vm.locationInstance = locationInstance));
     });
   }
 
@@ -122,8 +124,8 @@ export default class LocationCard extends Vue {
    * @param next - callback
    */
   beforeRouteUpdate(to: Route, from: Route, next: Function): void {
-    searchApi.findLocation(to.params.id).then(location => {
-      this.location = location;
+    searchApi.findLocationInstance(to.params.id).then(locationInstance => {
+      this.locationInstance = locationInstance;
     });
     next();
   }
@@ -132,8 +134,8 @@ export default class LocationCard extends Vue {
    * Returns CSS code for displaying location image
    */
   get mainImageStyle() {
-    if (this.location) {
-      return { 'background-image': `url('${this.location.mainPhotoLink}')` };
+    if (this.locationInstance) {
+      return { 'background-image': `url('${this.locationInstance.mainPhotoLink}')` };
     }
 
     return {};
@@ -143,7 +145,7 @@ export default class LocationCard extends Vue {
    * Get location address in one string
    */
   get locationAddress(): string {
-    const locationAddresses = this.location?.addresses;
+    const locationAddresses = this.locationInstance?.location.addresses;
 
     if (locationAddresses && locationAddresses.length) {
       return `${locationAddresses[0].street} ` +
@@ -168,13 +170,25 @@ export default class LocationCard extends Vue {
   }
 
   /**
+   * Return string with all architects
+   */
+  get architects(): string {
+    if (!this.locationInstance?.architects || !this.locationInstance?.architects.length) {
+      return '—';
+    }
+    const architects = this.locationInstance.architects.map(architect => this.abbreviatedPersonName(architect.lastName, architect.firstName, architect.patronymic));
+
+    return architects.join(', ');
+  }
+
+  /**
    * Return array of persons from location
    */
   get personsInLocation(): Person[] | null {
-    if (!this.location) {
+    if (!this.locationInstance) {
       return null;
     }
-    const relations = this.location.relations;
+    const relations = this.locationInstance.relations;
 
     if (!relations) {
       return null;

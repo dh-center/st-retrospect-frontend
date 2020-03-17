@@ -10,7 +10,7 @@
         :key="relation.id"
         class="relations-list__relation-info"
         :relation="relation"
-        @click.native="showLocationInfo(relation.location.id)"
+        @click.native="showLocationInstanceInfo(relation.locationInstance.id)"
       />
     </div>
     <div
@@ -45,13 +45,13 @@ export default class RelationsList extends Vue {
   private relationsList!: Relation[] | null;
 
   /**
-   * Shows information about location in aside bar
+   * Shows information about location instance in aside bar
    */
-  private showLocationInfo(locationId: string) {
+  private showLocationInstanceInfo(locationInstanceId: string) {
     this.$router.push({
       name: 'locationInfo',
       params: {
-        id: locationId
+        id: locationInstanceId
       }
     });
   }

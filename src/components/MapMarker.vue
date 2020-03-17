@@ -83,7 +83,7 @@ export default class MapMarker extends Vue {
     this.marker = new mapboxgl.Marker({
       element: document.getElementById(this.markerElementId) as HTMLElement
     })
-      .setLngLat([this.relation.location.longitude as number, this.relation.location.latitude as number])
+      .setLngLat([this.relation.locationInstance.location.longitude as number, this.relation.locationInstance.location.latitude as number])
       .setPopup(this.popup)
       .addTo(this.map);
 
@@ -96,7 +96,7 @@ export default class MapMarker extends Vue {
        * If open location popup when current route is '/map/';
        * If open location popup when old location popup was opened (current route is '/location/:id'.
        */
-      if (this.$router.currentRoute.name === 'map' || (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id !== this.relation.location.id)) {
+      if (this.$router.currentRoute.name === 'map' || (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id !== this.relation.locationInstance.id)) {
         this.showLocationInfo();
       }
     });
@@ -108,7 +108,7 @@ export default class MapMarker extends Vue {
        * Return to search results:
        * If close location popup and doesn't open new location popup.
        */
-      if (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id === this.relation.location.id) {
+      if (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id === this.relation.locationInstance.id) {
         this.returnToSearchResults();
       }
     });
@@ -121,7 +121,7 @@ export default class MapMarker extends Vue {
     this.$router.push({
       name: 'locationInfo',
       params: {
-        id: this.relation.location.id
+        id: this.relation.locationInstance.id
       }
     });
   }
@@ -148,7 +148,7 @@ export default class MapMarker extends Vue {
       }
       return;
     }
-    if (to.params.id === this.relation.location.id) {
+    if (to.params.id === this.relation.locationInstance.id) {
       this.popup.addTo(this.map);
     } else if (this.popup.isOpen()) {
       this.popup.remove();
