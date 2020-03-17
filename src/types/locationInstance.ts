@@ -1,4 +1,3 @@
-import Address from '@/types/address';
 import LocationType from '@/types/locationType';
 import Relation from '@/types/relation';
 import Location from '@/types/location';
@@ -7,7 +6,6 @@ import Person from '@/types/person';
 /**
  * Represents location info
  */
-
 interface LocationInstance {
   /**
    * LocationInstance id

@@ -1,6 +1,9 @@
 import Address from '@/types/address';
 import LocationInstance from '@/types/locationInstance';
 
+/**
+ * Represents location info
+ */
 interface Location {
   /**
    * Id of location

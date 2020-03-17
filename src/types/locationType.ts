@@ -3,12 +3,12 @@
  */
 interface LocationType {
   /**
-   * LocationInstance type id
+   * Location type id
    */
   id: string;
 
   /**
-   * LocationInstance type name
+   * Location type name
    */
   name: string;
 }
