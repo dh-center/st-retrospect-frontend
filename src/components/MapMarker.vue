@@ -156,20 +156,3 @@ export default class MapMarker extends Vue {
   }
 }
 </script>
-
-<style>
-  .marker {
-    width: 30px;
-    height: 40px;
-
-    cursor: pointer;
-
-    svg {
-      position: relative;
-      top: -20px;
-
-      width: 30px;
-      height: 40px;
-    }
-  }
-</style>
