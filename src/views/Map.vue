@@ -9,6 +9,7 @@
       logo-position="top-right"
       class="map"
     >
+      <MglNavigationControl />
       <MglRelationCard
         v-for="(relation, relationKey) in filteredLocationsList"
         :key="relationKey"
@@ -21,8 +22,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-// eslint-disable-next-line no-unused-vars
-import { MglMap, MglMarker, MglPopup } from 'vue-mapbox';
+import { MglMap, MglNavigationControl } from 'vue-mapbox';
 import MglRelationCard from '@/components/MglRelationCard.vue';
 import MapAside from '@/components/MapAside.vue';
 import { State } from 'vuex-class';
@@ -33,7 +33,8 @@ import Relation from '@/types/relation';
   components: {
     MapAside,
     MglMap,
-    MglRelationCard
+    MglRelationCard,
+    MglNavigationControl
   }
 })
 /**
