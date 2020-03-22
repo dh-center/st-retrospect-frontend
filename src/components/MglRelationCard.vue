@@ -70,6 +70,16 @@ export default class MglRelationCard extends Vue {
    */
   @Watch('$route')
   private onRouteChange(to: Route, from: Route): void {
+    /**
+     * Don't close popup if open person info
+     */
+    if (to.name === 'personInfo') {
+      return;
+    }
+
+    /**
+     * Close popup if it isn't locationInfo route and popup's opened
+     */
     if (to.name !== 'locationInfo') {
       if (this.isPopupOpen) {
         this.$refs.marker.marker.togglePopup();
@@ -77,6 +87,11 @@ export default class MglRelationCard extends Vue {
       }
       return;
     }
+
+    /**
+     * Show popup if it isn't opened and new route is locationInfo
+     * Close popup if new route is locationInfo, but id isn't this relation
+     */
     if (to.params.id === this.relation.locationInstance.id) {
       if (!this.isPopupOpen) {
         this.$refs.marker.marker.togglePopup();
