@@ -6,11 +6,13 @@
     <svg
       slot="marker"
       v-svg
-      :symbol="'museum'"
+      symbol="museum"
       class="mapboxgl-marker__icon"
     />
     <MglRelationPopup
       :relation="relation"
+      @open="onPopupOpen"
+      @close="onPopupClose"
     />
   </MglMarker>
 </template>
@@ -35,6 +37,13 @@ import { Route } from 'vue-router';
  * Represents marker and popup
  */
 export default class MglRelationCard extends Vue {
+  /**
+   * Types for $refs
+   */
+  $refs!: {
+      marker: any
+  };
+
   /**
    * Relation object for marker
    */
@@ -64,19 +73,69 @@ export default class MglRelationCard extends Vue {
     if (to.name !== 'locationInfo') {
       if (this.isPopupOpen) {
         this.$refs.marker.marker.togglePopup();
-        this.isPopupOpen = !this.isPopupOpen;
+        this.isPopupOpen = false;
       }
       return;
     }
     if (to.params.id === this.relation.locationInstance.id) {
       if (!this.isPopupOpen) {
         this.$refs.marker.marker.togglePopup();
-        this.isPopupOpen = !this.isPopupOpen;
+        this.isPopupOpen = true;
       }
     } else if (this.isPopupOpen) {
       this.$refs.marker.marker.togglePopup();
-      this.isPopupOpen = !this.isPopupOpen;
+      this.isPopupOpen = false;
     }
+  }
+
+  /**
+   * Event handler for popup opening
+   */
+  private onPopupOpen(): void {
+    this.isPopupOpen = true;
+    /**
+     * Show info about location:
+     * If open location popup when current route is '/map/';
+     * If open location popup when old location popup was opened (current route is '/location/:id'.
+     */
+    if (this.$router.currentRoute.name === 'map' || (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id !== this.relation.locationInstance.id)) {
+      this.showLocationInfo();
+    }
+  }
+
+  /**
+   * Event handler for popup closing
+   */
+  private onPopupClose(): void {
+    this.isPopupOpen = false;
+    /**
+     * Return to search results:
+     * If close location popup and doesn't open new location popup.
+     */
+    if (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id === this.relation.locationInstance.id) {
+      this.returnToSearchResults();
+    }
+  }
+
+  /**
+   * Shows information about location in aside bar
+   */
+  private showLocationInfo() {
+    this.$router.push({
+      name: 'locationInfo',
+      params: {
+        id: this.relation.locationInstance.id
+      }
+    });
+  }
+
+  /**
+   * Return to search results when popup is close
+   */
+  private returnToSearchResults() {
+    this.$router.push({
+      name: 'map'
+    });
   }
 }
 </script>

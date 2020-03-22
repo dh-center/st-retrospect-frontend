@@ -41,6 +41,13 @@ import Relation from '@/types/relation';
  */
 export default class MapView extends Vue {
   /**
+   * Types for $refs
+   */
+  $refs!: {
+    map: any
+  };
+
+  /**
    * Locations list to display
    */
   @State(state => state.app.searchResult)
