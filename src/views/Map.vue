@@ -8,6 +8,7 @@
       :zoom="12"
       logo-position="top-right"
       class="map"
+      @load="onMapLoad"
     >
       <MglNavigationControl />
       <MglRelationCard
@@ -21,13 +22,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import { MglMap, MglNavigationControl } from 'vue-mapbox';
 import MglRelationCard from '@/components/MglRelationCard.vue';
 import MapAside from '@/components/MapAside.vue';
 import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Relation from '@/types/relation';
+// eslint-disable-next-line no-unused-vars
+import { Route } from 'vue-router';
 
 @Component({
   components: {
@@ -47,6 +50,11 @@ export default class MapView extends Vue {
   $refs!: {
     map: any
   };
+
+  /**
+   * Is map loaded
+   */
+  private isMapLoaded: boolean = false;
 
   /**
    * Locations list to display
@@ -76,13 +84,10 @@ export default class MapView extends Vue {
   }
 
   /**
-   * Move map to location or to center of St.Petersburg by route changes
+   * Move to point when map is loaded
    */
-  @Watch('$route')
-  private async onRouteChange(): Promise<void> {
-    if (!this.$refs.map) {
-      return;
-    }
+  private onMapLoad(): void {
+    this.isMapLoaded = true;
     if (this.$router.currentRoute.name === 'locationInfo') {
       const currentLocationInstanceId = this.$router.currentRoute.params.id || null;
 
@@ -101,12 +106,38 @@ export default class MapView extends Vue {
         });
       }
     }
-    if (this.$router.currentRoute.name === 'map') {
+  }
+
+  /**
+   * Move map to location or to center of St.Petersburg by route changes
+   */
+  beforeRouteUpdate(to: Route, from: Route, next: Function): void {
+    if (!this.isMapLoaded) return;
+    if (to.name === 'locationInfo') {
+      const currentLocationInstanceId = to.params.id || null;
+
+      if (!currentLocationInstanceId) {
+        return;
+      }
+      const currentRelation = this.relationsList?.find(relation => relation.locationInstance.id === currentLocationInstanceId);
+
+      if (currentRelation && currentRelation.locationInstance.location.longitude && currentRelation.locationInstance.location.latitude) {
+        this.$refs.map.map.flyTo({
+          center: [
+            currentRelation.locationInstance.location.longitude,
+            currentRelation.locationInstance.location.latitude + 0.002
+          ],
+          zoom: 14
+        });
+      }
+    }
+    if (to.name === 'map') {
       this.$refs.map.map.flyTo({
         center: [30.28617, 59.93944],
         zoom: 12
       });
     }
+    next();
   }
 }
 </script>
