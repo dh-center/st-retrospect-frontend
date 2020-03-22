@@ -2,6 +2,8 @@
   <MglPopup
     anchor="bottom"
     :offset="25"
+    @open="onPopupOpen"
+    @close="onPopupClose"
   >
     <div class="popup">
       <h3 class="popup__title">
@@ -54,6 +56,54 @@ export default class MglRelationPopup extends Vue {
         `${locationAddresses[0].housing}`.replace(/\s{2,}/g, ' ');
     }
     return '';
+  }
+
+  /**
+   * Event handler for opening popup
+   */
+  private onPopupOpen(): void {
+    /**
+     * Show info about location:
+     * If open location popup when current route is '/map/';
+     * If open location popup when old location popup was opened (current route is '/location/:id'.
+     */
+    if (this.$router.currentRoute.name === 'map' || (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id !== this.relation.locationInstance.id)) {
+      this.showLocationInfo();
+    }
+  }
+
+  /**
+   * Event handler for closing popup
+   */
+  private onPopupClose(): void {
+    /**
+     * Return to search results:
+     * If close location popup and doesn't open new location popup.
+     */
+    if (this.$router.currentRoute.name === 'locationInfo' && this.$router.currentRoute.params.id === this.relation.locationInstance.id) {
+      this.returnToSearchResults();
+    }
+  }
+
+  /**
+   * Shows information about location in aside bar
+   */
+  private showLocationInfo() {
+    this.$router.push({
+      name: 'locationInfo',
+      params: {
+        id: this.relation.locationInstance.id
+      }
+    });
+  }
+
+  /**
+   * Return to search results when popup is close
+   */
+  private returnToSearchResults() {
+    this.$router.push({
+      name: 'map'
+    });
   }
 }
 </script>

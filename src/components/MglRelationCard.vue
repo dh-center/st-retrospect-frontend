@@ -1,5 +1,6 @@
 <template>
   <MglMarker
+    ref="marker"
     :coordinates="relationCoordinates(relation)"
   >
     <svg
@@ -15,11 +16,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import Relation from '@/types/relation';
 import { MglMarker } from 'vue-mapbox';
 import MglRelationPopup from '@/components/MglRelationPopup.vue';
+// eslint-disable-next-line no-unused-vars
+import { Route } from 'vue-router';
 
 @Component({
   components: {
@@ -39,11 +42,41 @@ export default class MglRelationCard extends Vue {
   private relation!: Relation;
 
   /**
+   * Is popup open or close (default: closed)
+   */
+  private isPopupOpen: boolean = false;
+
+  /**
    * Return array of coordinates
    */
   private relationCoordinates(relation: Relation): [number, number] {
     return [relation.locationInstance.location.longitude,
       relation.locationInstance.location.latitude];
+  }
+
+  /**
+   * Change route handler
+   * @param to - new location
+   * @param from - old location
+   */
+  @Watch('$route')
+  private onRouteChange(to: Route, from: Route): void {
+    if (to.name !== 'locationInfo') {
+      if (this.isPopupOpen) {
+        this.$refs.marker.marker.togglePopup();
+        this.isPopupOpen = !this.isPopupOpen;
+      }
+      return;
+    }
+    if (to.params.id === this.relation.locationInstance.id) {
+      if (!this.isPopupOpen) {
+        this.$refs.marker.marker.togglePopup();
+        this.isPopupOpen = !this.isPopupOpen;
+      }
+    } else if (this.isPopupOpen) {
+      this.$refs.marker.marker.togglePopup();
+      this.isPopupOpen = !this.isPopupOpen;
+    }
   }
 }
 </script>
