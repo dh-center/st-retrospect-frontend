@@ -7,18 +7,11 @@
       :zoom="12"
       class="map"
     >
-      <MglMarker
-        v-for="(relation, relationKey) in relationsList"
+      <MglRelationCard
+        v-for="(relation, relationKey) in filteredLocationsList"
         :key="relationKey"
-        :coordinates="relationCoordiantes(relation)"
-      >
-        <svg
-          slot="marker"
-          v-svg
-          :symbol="'museum'"
-          class="mapboxgl-marker__icon"
-        />
-      </MglMarker>
+        :relation="relation"
+      />
     </MglMap>
     <MapAside />
   </div>
@@ -28,6 +21,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import { MglMap, MglMarker, MglPopup } from 'vue-mapbox';
+import MglRelationCard from '@/components/MglRelationCard.vue';
 import MapAside from '@/components/MapAside.vue';
 import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
@@ -37,8 +31,7 @@ import Relation from '@/types/relation';
   components: {
     MapAside,
     MglMap,
-    MglMarker,
-    MglPopup
+    MglRelationCard
   }
 })
 /**
@@ -70,14 +63,6 @@ export default class MapView extends Vue {
    */
   get mapStyle(): string {
     return 'mapbox://styles/dandriver/ck0epf0pe0qh51cr3ecw3v65y';
-  }
-
-  /**
-   * Return array of coordinates
-   */
-  private relationCoordiantes(relation: Relation): [number, number] {
-    return [relation.locationInstance.location.longitude,
-      relation.locationInstance.location.latitude];
   }
 
   // /**
@@ -116,9 +101,6 @@ export default class MapView extends Vue {
 }
 </script>
 
-<style src="mapbox-gl/dist/mapbox-gl.css">
-</style>
-
 <style>
   .map {
     position: absolute;
@@ -126,21 +108,5 @@ export default class MapView extends Vue {
     bottom: 0;
 
     width: 100%;
-  }
-
-  .mapboxgl-marker {
-    position: absolute;
-
-    top: -20px;
-
-    width: 30px;
-    height: 40px;
-
-    cursor: pointer;
-
-    &__icon {
-      width: 30px;
-      height: 40px;
-    }
   }
 </style>
