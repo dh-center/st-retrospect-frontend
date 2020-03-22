@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import mapboxgl from 'mapbox-gl';
-import MapPopup from '@/components/MapPopup.vue';
+import MapPopup from '@/components/MglRelationPopup.vue';
 // eslint-disable-next-line no-unused-vars
 import Relation from '@/types/relation';
 // eslint-disable-next-line no-unused-vars

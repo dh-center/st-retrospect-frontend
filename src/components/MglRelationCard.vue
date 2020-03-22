@@ -8,6 +8,9 @@
       :symbol="'museum'"
       class="mapboxgl-marker__icon"
     />
+    <MglRelationPopup
+      :relation="relation"
+    />
   </MglMarker>
 </template>
 
@@ -16,9 +19,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import Relation from '@/types/relation';
 import { MglMarker } from 'vue-mapbox';
+import MglRelationPopup from '@/components/MglRelationPopup.vue';
 
 @Component({
   components: {
+    MglRelationPopup,
     MglMarker
   }
 })
