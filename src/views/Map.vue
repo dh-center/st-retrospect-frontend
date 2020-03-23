@@ -80,7 +80,7 @@ export default class MapView extends Vue {
   }
 
   /**
-   * Verify relation
+   * Validate relation
    * Relation has longitude and latitude
    */
   private isRelationHasCoordinates(relation: Relation): boolean {
