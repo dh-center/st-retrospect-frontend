@@ -57,6 +57,16 @@ export default class MapView extends Vue {
   private isMapLoaded: boolean = false;
 
   /**
+   * Access token for mapbox
+   */
+  private accessToken: string = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
+
+  /**
+   * Mapbox style
+   */
+  private mapStyle: string = 'mapbox://styles/dandriver/ck0epf0pe0qh51cr3ecw3v65y';
+
+  /**
    * Locations list to display
    */
   @State(state => state.app.searchResult)
@@ -67,20 +77,6 @@ export default class MapView extends Vue {
    */
   get filteredLocationsList() {
     return this.relationsList?.filter(relation => relation.locationInstance.location.latitude && relation.locationInstance.location.longitude);
-  }
-
-  /**
-   * Return access token for mapbox
-   */
-  get accessToken(): string {
-    return process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
-  }
-
-  /**
-   * Return map style
-   */
-  get mapStyle(): string {
-    return 'mapbox://styles/dandriver/ck0epf0pe0qh51cr3ecw3v65y';
   }
 
   /**
