@@ -80,6 +80,14 @@ export default class MapView extends Vue {
   }
 
   /**
+   * Verify relation
+   * Relation has longitude and latitude
+   */
+  private isRelationHasCoordinates(relation: Relation): boolean {
+    return !!(relation.locationInstance.location.longitude && relation.locationInstance.location.latitude);
+  }
+
+  /**
    * Move to point when map is loaded
    */
   private onMapLoad(): void {
@@ -92,7 +100,7 @@ export default class MapView extends Vue {
       }
       const currentRelation = this.relationsList?.find(relation => relation.locationInstance.id === currentLocationInstanceId);
 
-      if (currentRelation && currentRelation.locationInstance.location.longitude && currentRelation.locationInstance.location.latitude) {
+      if (currentRelation && this.isRelationHasCoordinates(currentRelation)) {
         this.$refs.map.map.flyTo({
           center: [
             currentRelation.locationInstance.location.longitude,
@@ -117,7 +125,7 @@ export default class MapView extends Vue {
       }
       const currentRelation = this.relationsList?.find(relation => relation.locationInstance.id === currentLocationInstanceId);
 
-      if (currentRelation && currentRelation.locationInstance.location.longitude && currentRelation.locationInstance.location.latitude) {
+      if (currentRelation && this.isRelationHasCoordinates(currentRelation)) {
         this.$refs.map.map.flyTo({
           center: [
             currentRelation.locationInstance.location.longitude,
