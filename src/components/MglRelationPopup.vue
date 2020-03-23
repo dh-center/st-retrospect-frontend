@@ -1,34 +1,44 @@
 <template>
-  <div
-    class="popup"
+  <MglPopup
+    anchor="bottom"
+    :offset="25"
+    @open="$emit('open')"
+    @close="$emit('close')"
   >
-    <h3 class="popup__title">
-      {{ relation.locationInstance.name }}
-    </h3>
-    <p class="popup__location-type">
-      {{ relation.locationInstance.locationTypes[0].name }}
-    </p>
-    <p class="popup__address">
-      {{ locationAddress }}
-    </p>
-    <p class="popup__quote">
-      {{ relation.quote }}
-    </p>
-  </div>
+    <div class="popup">
+      <h3 class="popup__title">
+        {{ relation.locationInstance.name }}
+      </h3>
+      <p class="popup__location-type">
+        {{ relation.locationInstance.locationTypes[0].name }}
+      </p>
+      <p class="popup__address">
+        {{ locationAddress }}
+      </p>
+      <p class="popup__quote">
+        {{ relation.quote }}
+      </p>
+    </div>
+  </MglPopup>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line no-unused-vars
 import Relation from '@/types/relation';
+import { MglPopup } from 'vue-mapbox';
 
-@Component
+@Component({
+  components: {
+    MglPopup
+  }
+})
 /**
  * Component of popup on map
  */
-export default class MapPopup extends Vue {
+export default class MglRelationPopup extends Vue {
   /**
-   * LocationInstance object for popup
+   * Relation object for popup
    */
   @Prop({ type: Object, required: true })
   private relation!: Relation;
@@ -53,9 +63,11 @@ export default class MapPopup extends Vue {
 <style>
   @import '../styles/custom-properties.css';
 
+  .mapboxgl-popup {
+    max-width: 300px !important;
+  }
+
   .popup {
-    min-width: 200px;
-    max-width: 300px;
     padding: 0px 15px;
 
     &__title {
