@@ -5,25 +5,37 @@
         <SiteLogo class="map-aside__logo" />
         <LanguageSelect class="map-aside__language-select" />
       </div>
-      <div class="map-aside__search-form">
-        <SearchLine class="map-aside__search-line" />
-        <button class="button button--search map-aside__search-button">
+      <form
+        class="map-aside__search-form"
+        @submit.prevent="findRelations"
+      >
+        <SearchLine
+          v-model="searchString"
+          class="map-aside__search-line"
+        />
+        <button
+          class="button button--search map-aside__search-button"
+          type="submit"
+        >
           {{ $t('search-button') }}
           <svg
             v-svg
             symbol="arrow-right"
           />
         </button>
-      </div>
+      </form>
+      <router-link
+        v-if="$route.name !== 'map'"
+        class="map-aside__back-link"
+        :to="{
+          name: 'map'
+        }"
+      >
+        {{ $t('back') }}
+      </router-link>
     </header>
-    <div class="map-aside__content">
-      <LocationInfo
-        v-for="location in locationsList"
-        :key="location.ids"
-        class="map-aside__location-info"
-        :location="location"
-      />
-    </div>
+    <router-view class="map-aside__content" />
+    <TheFooter />
   </aside>
 </template>
 
@@ -32,17 +44,21 @@ import { Component, Vue } from 'vue-property-decorator';
 import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import SearchLine from '@/components/SearchLine.vue';
-import LocationInfo from '@/components/LocationInfo.vue';
-// eslint-disable-next-line no-unused-vars
-import Location from '@/types/location';
-import locations from './locations';
+import RelationInfo from '@/components/RelationInfo.vue';
+import TheFooter from '@/components/TheFooter.vue';
+import LocationCard from '@/components/LocationCard.vue';
+import PersonCard from '@/components/PersonCard.vue';
+import { SEARCH_FOR_RELATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
 
 @Component({
   components: {
+    PersonCard,
+    LocationCard,
     SiteLogo,
     LanguageSelect,
     SearchLine,
-    LocationInfo
+    RelationInfo,
+    TheFooter
   }
 })
 /**
@@ -50,24 +66,66 @@ import locations from './locations';
  */
 export default class MapAside extends Vue {
   /**
-   * Locations list to display
+   * Search string for finding locations
    */
-  private locationsList: Location[] = locations;
+  private searchString: string = this.$store.state.app.lastSearchQuery || '';
+
+  /**
+   * Find locations by query in search line
+   */
+  private async findRelations(): Promise<void> {
+    if (this.searchString) {
+      await this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
+      await this.$store.dispatch(SEARCH_FOR_RELATIONS, this.searchString);
+      if (this.$router.currentRoute.name === 'map') {
+        if (this.$router.currentRoute.params.searchString !== this.searchString) {
+          await this.$router.replace({
+            params: {
+              searchString: this.searchString
+            }
+          });
+        }
+      } else {
+        await this.$router.push({
+          name: 'map',
+          params: {
+            searchString: this.searchString
+          }
+        });
+      }
+    }
+  }
+
+  /**
+   * Vue lifecycle hook
+   * Using to fetch info from API
+   */
+  async created() {
+    if (this.$router.currentRoute.params.searchString !== this.$store.state.app.lastSearchQuery) {
+      await this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.$router.currentRoute.params.searchString);
+      this.searchString = this.$router.currentRoute.params.searchString;
+    }
+    this.findRelations();
+  }
 }
 </script>
 
 <i18n>
 {
   "en": {
-    "search-button": "Search"
+    "search-button": "Search",
+    "back": "Back to the search results"
   },
   "ru": {
-    "search-button": "Найти"
+    "search-button": "Найти",
+    "back": "Назад к результатам поиска"
   }
 }
 </i18n>
 
 <style>
+@import '../styles/custom-properties.css';
+
 .map-aside {
   position: absolute;
   top: 0;
@@ -99,6 +157,7 @@ export default class MapAside extends Vue {
 
   &__search-form {
     display: flex;
+    margin-bottom: 10px;
   }
 
   &__search-line {
@@ -120,17 +179,21 @@ export default class MapAside extends Vue {
     }
   }
 
-  &__content {
+  &__back-link {
     width: 100%;
+
+    color: #fff;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  &__content {
+    @apply --custom-scroll;
+    width: 100%;
+    height: 100%;
     overflow: auto;
 
     background-color: #fff;
-  }
-
-  &__location-info {
-    height: 90px;
-
-    cursor: pointer;
   }
 }
 </style>

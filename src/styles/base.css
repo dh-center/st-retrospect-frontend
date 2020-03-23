@@ -50,16 +50,6 @@ pre {
   margin: 0;
 }
 
-/**
- * Clearfix for float elements
- */
-.clearfix::after {
-  display: table;
-  clear: both;
-
-  content: "";
-}
-
 .button {
   &--search {
     @apply --font-serif-main;
@@ -82,4 +72,8 @@ pre {
       margin-left: 20px;
     }
    }
+}
+
+.v--modal-overlay {
+  background: rgba(0, 0, 0, 0.78) !important;
 }

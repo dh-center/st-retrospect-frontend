@@ -2,36 +2,44 @@
   <div class="home">
     <div class="home__top">
       <SiteLogo />
-      <a
-        href="#"
+      <button
         class="home__about-link"
-      >{{ $t('about-project') }}</a>
+        @click="openAboutProjectPopup"
+      >
+        {{ $t('about-project') }}
+      </button>
     </div>
     <main class="home__main">
       <h1 class="home__title">
         {{ $t('title') }}
       </h1>
-      <div class="home__search-container">
+      <form
+        class="home__search-container"
+        @submit.prevent="search"
+      >
         <input
+          v-model="searchString"
           type="text"
           class="search__input"
           :placeholder="$t('search-placeholder')"
         >
-        <router-link
+        <button
+          type="submit"
           class="button button--search search__button"
-          :to="{ name: 'map' }"
         >
           {{ $t('want-to-know') }}
           <svg
             v-svg
             symbol="arrow-right"
           />
-        </router-link>
-      </div>
-      <a
-        href="#"
+        </button>
+      </form>
+      <button
         class="home__how-to-link"
-      >{{ $t('how-to') }}</a>
+        @click="openHowToUseModal"
+      >
+        {{ $t('how-to') }}
+      </button>
       <LanguageSelect />
     </main>
   </div>
@@ -41,6 +49,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
+import HowToUsePopup from '@/components/modals/HowToUse.vue';
+import AboutProjectPopup from '@/components/modals/AboutProject.vue';
+import { SEARCH_FOR_RELATIONS, UPDATE_LAST_SEARCH_QUERY } from '@/store/modules/app/actionTypes';
 
 @Component({
   components: {
@@ -52,6 +63,43 @@ import LanguageSelect from '@/components/LanguageSelect.vue';
  * View for home page
  */
 export default class HomeView extends Vue {
+  /**
+   * Search string for finding locations
+   */
+  private searchString: string = this.$store.state.app.lastSearchQuery || '';
+
+  /**
+   * Search data with user input
+   */
+  private search() {
+    this.$store.dispatch(UPDATE_LAST_SEARCH_QUERY, this.searchString);
+    this.$store.dispatch(SEARCH_FOR_RELATIONS, this.searchString);
+
+    this.$router.push({
+      name: 'map',
+      params: {
+        searchString: this.searchString
+      }
+    });
+  }
+
+  /**
+   * Opens "How to Use" popup
+   */
+  private openHowToUseModal() {
+    this.$modal.show(HowToUsePopup, {}, {
+      height: 400
+    });
+  }
+
+  /**
+   * Opens "About project" popup
+   */
+  private openAboutProjectPopup() {
+    this.$modal.show(AboutProjectPopup, {}, {
+      height: 400
+    });
+  }
 }
 </script>
 
@@ -109,7 +157,9 @@ export default class HomeView extends Vue {
     &__about-link {
       color: #ffffff;
       font-size: 16px;
-      text-decoration: none;
+
+      background: none;
+      border: none;
     }
 
     &__title {
@@ -161,7 +211,11 @@ export default class HomeView extends Vue {
       text-decoration: none;
       text-shadow: 0 0 4px rgba(0, 0, 0, .5);
 
+      background: none;
+      border:none;
+
       border-bottom: 1px solid #f6c23d;
+      cursor: pointer;
     }
   }
 </style>

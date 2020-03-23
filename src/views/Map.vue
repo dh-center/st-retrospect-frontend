@@ -1,38 +1,43 @@
 <template>
   <div>
-    <div id="mapContainer">
-      <MapMarker
-        v-if="map"
-        :map="map"
-        :lng-lat="[30.28617, 59.93944]"
+    <MglMap
+      ref="map"
+      :access-token="accessToken"
+      :map-style.sync="mapStyle"
+      :center="[30.28617, 59.93944]"
+      :zoom="12"
+      logo-position="top-right"
+      class="map"
+      @load="onMapLoad"
+    >
+      <MglNavigationControl />
+      <MglRelationCard
+        v-for="(relation, relationKey) in filteredLocationsList"
+        :key="relationKey"
+        :relation="relation"
       />
-      <MapMarker
-        v-if="map"
-        :map="map"
-        :lng-lat="[30.29617, 59.93944]"
-      />
-      <MapMarker
-        v-if="map"
-        :map="map"
-        :lng-lat="[30.27617, 59.93944]"
-      />
-    </div>
+    </MglMap>
     <MapAside />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import mapboxgl from 'mapbox-gl';
+import { MglMap, MglNavigationControl } from 'vue-mapbox';
+import MglRelationCard from '@/components/MglRelationCard.vue';
 import MapAside from '@/components/MapAside.vue';
-import MapMarker from '@/components/MapMarker.vue';
-
-mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
+import { State } from 'vuex-class';
+// eslint-disable-next-line no-unused-vars
+import Relation from '@/types/relation';
+// eslint-disable-next-line no-unused-vars
+import { Route } from 'vue-router';
 
 @Component({
   components: {
     MapAside,
-    MapMarker
+    MglMap,
+    MglRelationCard,
+    MglNavigationControl
   }
 })
 /**
@@ -40,30 +45,109 @@ mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
  */
 export default class MapView extends Vue {
   /**
-   * MapboxGL map instance
+   * Types for $refs
    */
-  private map?: mapboxgl.Map | null = null;
+  $refs!: {
+    map: any
+  };
 
   /**
-   * Vue mounted hook
-   * Setups Map for displaying
+   * Is map loaded
    */
-  mounted() {
-    this.map = new mapboxgl.Map({
-      container: 'mapContainer',
-      style: 'mapbox://styles/dandriver/ck0epf0pe0qh51cr3ecw3v65y',
-      center: [30.28617, 59.93944],
-      zoom: 12
-    });
+  private isMapLoaded: boolean = false;
+
+  /**
+   * Access token for mapbox
+   */
+  private accessToken: string = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN as string;
+
+  /**
+   * Mapbox style
+   */
+  private mapStyle: string = 'mapbox://styles/dandriver/ck0epf0pe0qh51cr3ecw3v65y';
+
+  /**
+   * Locations list to display
+   */
+  @State(state => state.app.searchResult)
+  private relationsList!: Relation[] | null;
+
+  /**
+   * Returns only relations with non-empty latitude and longitude fields
+   */
+  get filteredLocationsList() {
+    return this.relationsList?.filter(relation => relation.locationInstance.location.latitude && relation.locationInstance.location.longitude);
+  }
+
+  /**
+   * Validate relation
+   * Relation has longitude and latitude
+   */
+  private isRelationHasCoordinates(relation: Relation): boolean {
+    return !!(relation.locationInstance.location.longitude && relation.locationInstance.location.latitude);
+  }
+
+  /**
+   * Move to point when map is loaded
+   */
+  private onMapLoad(): void {
+    this.isMapLoaded = true;
+    if (this.$router.currentRoute.name === 'locationInfo') {
+      const currentLocationInstanceId = this.$router.currentRoute.params.id || null;
+
+      if (!currentLocationInstanceId) {
+        return;
+      }
+      const currentRelation = this.relationsList?.find(relation => relation.locationInstance.id === currentLocationInstanceId);
+
+      if (currentRelation && this.isRelationHasCoordinates(currentRelation)) {
+        this.$refs.map.map.flyTo({
+          center: [
+            currentRelation.locationInstance.location.longitude,
+            currentRelation.locationInstance.location.latitude + 0.002
+          ],
+          zoom: 14
+        });
+      }
+    }
+  }
+
+  /**
+   * Move map to location or to center of St.Petersburg by route changes
+   */
+  beforeRouteUpdate(to: Route, from: Route, next: Function): void {
+    if (!this.isMapLoaded) return;
+    if (to.name === 'locationInfo') {
+      const currentLocationInstanceId = to.params.id || null;
+
+      if (!currentLocationInstanceId) {
+        return;
+      }
+      const currentRelation = this.relationsList?.find(relation => relation.locationInstance.id === currentLocationInstanceId);
+
+      if (currentRelation && this.isRelationHasCoordinates(currentRelation)) {
+        this.$refs.map.map.flyTo({
+          center: [
+            currentRelation.locationInstance.location.longitude,
+            currentRelation.locationInstance.location.latitude + 0.002
+          ],
+          zoom: 14
+        });
+      }
+    }
+    if (to.name === 'map') {
+      this.$refs.map.map.flyTo({
+        center: [30.28617, 59.93944],
+        zoom: 12
+      });
+    }
+    next();
   }
 }
 </script>
 
-<style src="mapbox-gl/dist/mapbox-gl.css">
-</style>
-
 <style>
-  #mapContainer {
+  .map {
     position: absolute;
     top: 0;
     bottom: 0;

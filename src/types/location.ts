@@ -1,28 +1,34 @@
+import Address from '@/types/address';
+import LocationInstance from '@/types/locationInstance';
+
 /**
  * Represents location info
  */
 interface Location {
   /**
-   * Location id
+   * Id of location
    */
   id: string;
 
   /**
-   * Location name
+   * Latitude of location
    */
-  name: MultilingualString;
+  latitude: number;
 
   /**
-   * Main location image
+   * Longitude of location
    */
-  mainPhotoLink: string;
+  longitude: number;
+
+  /**
+   * Array of addresses of location
+   */
+  addresses: Address[];
+
+  /**
+   * Possible location representations
+   */
+  instances: LocationInstance[];
 }
 
 export default Location;
-
-/**
- * Object storing strings in different languages
- */
-export interface MultilingualString {
-  [key: string]: string | null;
-}

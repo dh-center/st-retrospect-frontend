@@ -1,19 +1,36 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import { RouteConfig } from 'vue-router/types/router';
 
 Vue.use(VueRouter);
 
-const routes = [
+const routes: RouteConfig[] = [
   {
     path: '/',
     name: 'home',
     component: Home
   },
   {
-    path: '/map',
-    name: 'map',
-    component: () => import(/* webpackChunkName: "mapView" */ '../views/Map.vue')
+    path: '/search/:searchString',
+    component: () => import(/* webpackChunkName: "mapView" */ '../views/Map.vue'),
+    children: [
+      {
+        path: '',
+        name: 'map',
+        component: () => import(/* webpackChunkName: "mapView" */ '../components/RelationsList.vue')
+      },
+      {
+        path: 'location/:id',
+        name: 'locationInfo',
+        component: () => import(/* webpackChunkName: "mapView" */ '../components/LocationCard.vue')
+      },
+      {
+        path: 'person/:id',
+        name: 'personInfo',
+        component: () => import(/* webpackChunkName: "mapView" */ '../components/PersonCard.vue')
+      }
+    ]
   }
 ];
 
