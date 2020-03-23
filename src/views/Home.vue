@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <div class="home__top">
-      <SiteLogo />
+      <SiteLogo
+        class="site-logo--z-index"
+      />
       <button
         class="home__about-link"
         @click="openAboutProjectPopup"
@@ -126,6 +128,18 @@ export default class HomeView extends Vue {
   @import '../styles/custom-properties.css';
 
   .home {
+    @keyframes animate-clouds-top {
+      0% {
+        background-position: 100vw 0;
+      }
+    }
+
+    @keyframes animate-clouds-bottom {
+      0% {
+        background-position: 100vw 100%;
+      }
+    }
+
     position: relative;
 
     width: 100%;
@@ -136,16 +150,51 @@ export default class HomeView extends Vue {
     background-repeat: no-repeat;
     background-size: cover;
 
+    &::before, &::after {
+      position: absolute;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background-repeat: repeat-x;
+      background-size: 100% auto;
+
+      content: '';
+      will-change: background-position;
+    }
+
+    &::before {
+      top: 0;
+
+      background-image: url('../assets/images/clouds/cloud-top.png');
+      background-position: 0 0;
+
+      animation: animate-clouds-top 30s linear infinite;
+    }
+
+    &::after {
+      background-image: url('../assets/images/clouds/cloud-bottom.png');
+      background-position: 0 100%;
+
+      animation: animate-clouds-bottom 30s linear infinite;
+    }
+
     &__top {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      .site-logo--z-index {
+        z-index: 1;
+      }
     }
 
     &__main {
       position: absolute;
       top: 50%;
       left: 50%;
+      z-index: 1;
 
       padding: 0 30px;
 
@@ -155,11 +204,14 @@ export default class HomeView extends Vue {
     }
 
     &__about-link {
+      z-index: 1;
+
       color: #ffffff;
       font-size: 16px;
 
       background: none;
       border: none;
+      cursor: pointer;
     }
 
     &__title {
