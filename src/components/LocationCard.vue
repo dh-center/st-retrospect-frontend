@@ -134,7 +134,7 @@ export default class LocationCard extends Vue {
    * Returns CSS code for displaying location image
    */
   get mainImageStyle() {
-    if (this.locationInstance) {
+    if (this.locationInstance && this.locationInstance.mainPhotoLink) {
       return { 'background-image': `url('${this.locationInstance.mainPhotoLink}')` };
     }
 
@@ -253,6 +253,10 @@ export default class LocationCard extends Vue {
   @import '../styles/custom-properties.css';
 
   .location-card {
+    &__image {
+      background-image: url('../assets/images/default-images/default-location-inner.jpg');
+    }
+
     .persons {
       @apply --clearfix;
 
@@ -302,8 +306,7 @@ export default class LocationCard extends Vue {
         height: 40px;
         margin-bottom: 3px;
 
-        background-color: #f0f0f0;
-
+        background-image: url('../assets/images/default-images/default-person-small.jpg');
         background-position: center;
         background-size: cover;
 
