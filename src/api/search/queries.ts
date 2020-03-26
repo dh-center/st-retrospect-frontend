@@ -42,6 +42,7 @@ query locationInstance($locationInstanceId: ID!) {
     description
     demolitionDate
     constructionDate
+    wikiLink
     location {
       addresses {
         street

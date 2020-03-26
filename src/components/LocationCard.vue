@@ -70,7 +70,10 @@
         :images="locationInstance.photoLinks"
       />
       <div class="location-card__links">
-        <a href="wikipedia.org">
+        <a
+          :href="locationInstance.wikiLink"
+          target="_blank"
+        >
           {{ $t('source-link') }}
         </a>
       </div>
