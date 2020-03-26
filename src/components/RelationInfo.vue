@@ -2,7 +2,7 @@
   <div class="relation-info">
     <div
       class="relation-info__image"
-      :style="{ 'background-image': `url('${relation.locationInstance.mainPhotoLink}')` }"
+      :style="mainImageStyle"
     />
     <div class="relation-info__main">
       <h3 class="relation-info__name">
@@ -50,6 +50,17 @@ export default class RelationInfo extends Vue {
         `${locationAddresses[0].housing}`.replace(/\s{2,}/g, ' ');
     }
     return '';
+  }
+
+  /**
+   * Returns CSS code for displaying location image
+   */
+  get mainImageStyle() {
+    if (this.relation && this.relation.locationInstance.mainPhotoLink) {
+      return { 'background-image': `url('${this.relation.locationInstance.mainPhotoLink}')` };
+    }
+
+    return {};
   }
 }
 </script>
@@ -104,8 +115,9 @@ export default class RelationInfo extends Vue {
     &__image {
       min-width: 30%;
 
+      background-image: url('../assets/images/default-images/default-location-inner.jpg');
       background-position: center;
-      background-size: cover;
+      background-size: cover
     }
 
     &__wrapper {
