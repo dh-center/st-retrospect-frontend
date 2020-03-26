@@ -61,6 +61,11 @@ interface LocationInstance {
    * Array of architects for location
    */
   architects?: Person[];
+
+  /**
+   * Wikipedia link to source
+   */
+  wikiLink: string;
 }
 
 export default LocationInstance;

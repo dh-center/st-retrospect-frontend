@@ -42,6 +42,7 @@ query locationInstance($locationInstanceId: ID!) {
     description
     demolitionDate
     constructionDate
+    wikiLink
     location {
       addresses {
         street
@@ -88,6 +89,7 @@ query person($personId: ID!) {
     profession
     birthDate
     deathDate
+    wikiLink
   }
 }
 `;

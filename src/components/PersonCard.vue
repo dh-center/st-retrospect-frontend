@@ -43,8 +43,14 @@
         v-if="person.photoLinks && person.photoLinks.length"
         :images="person.photoLinks"
       />
-      <div class="person-card__links">
-        <a href="wikipedia.org">
+      <div
+        v-if="person.wikiLink"
+        class="person-card__links"
+      >
+        <a
+          :href="person.wikiLink"
+          target="_blank"
+        >
           {{ $t('source-link') }}
         </a>
       </div>
