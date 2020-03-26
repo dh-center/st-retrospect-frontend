@@ -302,8 +302,7 @@ export default class LocationCard extends Vue {
         height: 40px;
         margin-bottom: 3px;
 
-        background-color: #f0f0f0;
-
+        background-image: url('../assets/images/default-images/default-person-small.jpg');
         background-position: center;
         background-size: cover;
 
