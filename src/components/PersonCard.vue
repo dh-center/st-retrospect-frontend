@@ -107,8 +107,11 @@ export default class PersonCard extends Vue {
    * Returns CSS code for displaying person image
    */
   get mainImageStyle() {
-    if (this.person) {
-      return { 'background-image': `url('${this.person.mainPhotoLink}')` };
+    if (this.person && this.person.mainPhotoLink) {
+      return {
+        'background-image': `url('${this.person.mainPhotoLink}')`,
+        'background-position': 'center -40px'
+      };
     }
 
     return {};
@@ -156,7 +159,7 @@ export default class PersonCard extends Vue {
     }
 
     &__image {
-      background-position: center -40px;
+      background-image: url('../assets/images/default-images/default-person-inner.jpg');
     }
   }
 </style>
