@@ -44,7 +44,10 @@
         :images="person.photoLinks"
       />
       <div class="person-card__links">
-        <a href="wikipedia.org">
+        <a
+          :href="person.wikiLink"
+          target="_blank"
+        >
           {{ $t('source-link') }}
         </a>
       </div>

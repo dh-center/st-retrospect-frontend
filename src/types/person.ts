@@ -51,6 +51,11 @@ interface Person {
    * Person's photos
    */
   photoLinks?: string[];
+
+  /**
+   * Link to source
+   */
+  wikiLink: string;
 }
 
 export default Person;
