@@ -89,6 +89,7 @@ query person($personId: ID!) {
     profession
     birthDate
     deathDate
+    wikiLink
   }
 }
 `;

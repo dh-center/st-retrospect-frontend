@@ -43,7 +43,10 @@
         v-if="person.photoLinks && person.photoLinks.length"
         :images="person.photoLinks"
       />
-      <div class="person-card__links">
+      <div
+        v-if="person.wikiLink"
+        class="person-card__links"
+      >
         <a
           :href="person.wikiLink"
           target="_blank"

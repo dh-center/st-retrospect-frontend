@@ -69,7 +69,10 @@
         v-if="locationInstance.photoLinks && locationInstance.photoLinks.length"
         :images="locationInstance.photoLinks"
       />
-      <div class="location-card__links">
+      <div
+        v-if="locationInstance.wikiLink"
+        class="location-card__links"
+      >
         <a
           :href="locationInstance.wikiLink"
           target="_blank"
