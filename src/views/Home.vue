@@ -2,7 +2,7 @@
   <div class="home">
     <div class="home__top">
       <SiteLogo
-        class="site-logo--z-index"
+        class="home__site-logo"
       />
       <button
         class="home__about-link"
@@ -128,15 +128,12 @@ export default class HomeView extends Vue {
   @import '../styles/custom-properties.css';
 
   .home {
-    @keyframes animate-clouds-top {
+    @keyframes animate-clouds {
       0% {
-        background-position: 100vw 0;
+        transform: translateX(0);
       }
-    }
-
-    @keyframes animate-clouds-bottom {
-      0% {
-        background-position: 100vw 100%;
+      100% {
+        transform: translateX(-100vw);
       }
     }
 
@@ -154,14 +151,16 @@ export default class HomeView extends Vue {
       position: absolute;
       left: 0;
 
-      width: 100%;
+      width: 200vw;
       height: 100%;
 
       background-repeat: repeat-x;
-      background-size: 100% auto;
+      background-size: 100vw;
+
+      animation: animate-clouds 30s linear infinite;
 
       content: '';
-      will-change: background-position;
+      will-change: transform;
     }
 
     &::before {
@@ -169,25 +168,21 @@ export default class HomeView extends Vue {
 
       background-image: url('../assets/images/clouds/cloud-top.png');
       background-position: 0 0;
-
-      animation: animate-clouds-top 30s linear infinite;
     }
 
     &::after {
       background-image: url('../assets/images/clouds/cloud-bottom.png');
-      background-position: 0 100%;
-
-      animation: animate-clouds-bottom 30s linear infinite;
+      background-position: 0 100%
     }
 
     &__top {
       display: flex;
       align-items: center;
       justify-content: space-between;
+    }
 
-      .site-logo--z-index {
-        z-index: 1;
-      }
+    &__site-logo {
+      z-index: 1;
     }
 
     &__main {
