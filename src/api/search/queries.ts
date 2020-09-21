@@ -10,8 +10,8 @@ export const QUERY_FIND_RELATIONS = `
         name
         mainPhotoLink
         location {
-          latitude: coordinateX
-          longitude: coordinateY
+          latitude
+          longitude
           addresses {
             street
             build
