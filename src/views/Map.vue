@@ -17,7 +17,7 @@
         :relation="relation"
       />
     </MglMap>
-    <MapAside />
+    <Aside />
   </div>
 </template>
 
@@ -25,7 +25,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { MglMap, MglNavigationControl } from 'vue-mapbox';
 import MglRelationCard from '@/components/MglRelationCard.vue';
-import MapAside from '@/components/MapAside.vue';
+import Aside from '@/components/Aside.vue';
 import { State } from 'vuex-class';
 // eslint-disable-next-line no-unused-vars
 import Relation from '@/types/relation';
@@ -34,7 +34,7 @@ import { Route } from 'vue-router';
 
 @Component({
   components: {
-    MapAside,
+    Aside,
     MglMap,
     MglRelationCard,
     MglNavigationControl
