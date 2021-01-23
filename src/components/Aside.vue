@@ -3,6 +3,10 @@
     class="aside"
     :class="{'aside--opened': isOpen}"
   >
+    <div class="aside__header">
+      <SiteLogo />
+      <LanguageSelect />
+    </div>
     <div
       class="aside__open-button"
       @click="isOpen=!isOpen"
@@ -23,8 +27,15 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import SiteLogo from '@/components/SiteLogo.vue';
+import LanguageSelect from '@/components/LanguageSelect.vue';
 
-@Component
+@Component({
+  components: {
+    SiteLogo,
+    LanguageSelect
+  }
+})
 /**
  * Aside bar
  */
@@ -51,13 +62,25 @@ export default class Aside extends Vue {
 
   width: 372px;
   height: 100vh;
+  padding: 20px 16px;
 
   background: var(--color-bg-main);
   transform: translateX(-100%);
 
   transition: .5s;
+
   &--opened {
     transform: translateX(0%);
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 3px;
+
+    border-bottom: 2px solid var(--color-main);
   }
 
   &__open-button {

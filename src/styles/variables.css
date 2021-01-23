@@ -2,6 +2,9 @@
   /** Background colors */
   --color-bg-main: #FFFFFF;
 
+  /** Default colors */
+  --color-main: #4F4F4F;
+
   /** Box shadows */
   --box-shadow-main: {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 0 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);
