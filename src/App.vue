@@ -32,7 +32,6 @@ export default class App extends Vue {
 </style>
 
 <style>
-
 @import './styles/custom-properties.css';
 
 #app {
