@@ -80,7 +80,7 @@ export default class Aside extends Vue {
     justify-content: space-between;
     padding-bottom: 3px;
 
-    border-bottom: 2px solid var(--color-main);
+    border-bottom: 2px solid var(--color-gray-main);
   }
 
   &__open-button {

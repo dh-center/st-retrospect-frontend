@@ -23,7 +23,7 @@ export default class SiteLogo extends Vue {}
 
 .site-logo {
   @apply --font-serif-main;
-  color: var(--color-main);
+  color: var(--color-gray-main);
   font-size: 36px;
   text-decoration: none;
 }

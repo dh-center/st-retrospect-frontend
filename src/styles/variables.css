@@ -3,7 +3,9 @@
   --color-bg-main: #FFFFFF;
 
   /** Default colors */
-  --color-main: #4F4F4F;
+  --color-gray-main: #4F4F4F;
+  --color-gray-second: #BDBDBD;
+  --color-white: #FFFFFF;
 
   /** Box shadows */
   --box-shadow-main: {
