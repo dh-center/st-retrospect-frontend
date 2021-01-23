@@ -1,10 +1,9 @@
 name: Build and deploy
-
 on: [push]
 
 env:
   DOCKER_IMAGE_NAME: dhcenter/st-retrospect-frontend
-  ENV_FILE: ${{ secrets.ENV_FILE }}
+
 jobs:
 
   build_and_deploy:
@@ -13,20 +12,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - name: Decrypt .env file
-        run: .github/scripts/decrypt_secret.sh
-        env:
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      - uses: nelonoel/branch-name@v1.0.1
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          envkey_VUE_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.VUE_APP_MAPBOX_ACCESS_TOKEN }}
+          envkey_VUE_APP_API_ENDPOINT: ${{ secrets.VUE_APP_API_ENDPOINT }}
+
+      - name: Change API endpoint if prod
+        if: endsWith(github.ref, '/prod')
+        run: sed -i -E "s/api.stage.st-retrospect/api.st-retrospect/" .env
 
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
 
-
-      - name: Set branch name to environment variable
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
-
       - name: Set deploy command to env variable
-        run: echo "::set-env name=DEPLOY_COMMAND::$(echo "cd ~/st-retrospect/${BRANCH_NAME}/frontend && ./deploy.sh")"
+        run: echo "DEPLOY_COMMAND=$(echo "cd ~/st-retrospect/${BRANCH_NAME}/frontend && ./deploy.sh")" >> $GITHUB_ENV
 
       - name: Push to Docker Hub
         if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
@@ -44,4 +47,3 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: root
           privateKey: ${{ secrets.PRIVATE_KEY }}
-
