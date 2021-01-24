@@ -2,14 +2,14 @@
   <div class="language-select">
     <span
       class="language-select__link"
-      :class="{'language-select__link--active': (this.$store.state.app.interfaceLanguage === 'ru')}"
-      @click="changeInterfaceLanguage('ru')"
-    >RU</span>
-    <span
-      class="language-select__link"
       :class="{'language-select__link--active': (this.$store.state.app.interfaceLanguage === 'en')}"
       @click="changeInterfaceLanguage('en')"
     >EN</span>
+    <span
+      class="language-select__link"
+      :class="{'language-select__link--active': (this.$store.state.app.interfaceLanguage === 'ru')}"
+      @click="changeInterfaceLanguage('ru')"
+    >RU</span>
   </div>
 </template>
 
@@ -35,21 +35,45 @@ export default class LanguageSelect extends Vue {
 </script>
 
 <style>
-  .language-select {
-    color: #fff;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    text-shadow: 0 0 4px rgba(0, 0, 0, .5);
+@import '../styles/variables.css';
+@import "../styles/custom-properties.css";
 
-    &__link {
-      margin-left: 5px;
+.language-select {
+  display: flex;
+  flex-direction: row;
 
-      cursor: pointer;
+  color: var(--color-white);
+  font-size: 12px;
+  text-transform: uppercase;
 
-      &--active {
-        color: #f6c23d;
-      }
+  &__link {
+    @apply(--font-sans-serif-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+
+    color: var(--color-gray-second);
+
+    cursor: pointer;
+
+    &:hover {
+      @apply(--font-sans-serif-main);
+      color: var(--color-gray-main);
+
+      outline: .5px solid var(--color-gray-main);
+      outline-offset: -1px;
+    }
+
+    &--active, &--active:hover {
+      @apply(--font-sans-serif-main);
+      color: var(--color-white);
+
+      background: var(--color-gray-main);
+      outline: none;
+      cursor: default;
     }
   }
+}
 </style>
