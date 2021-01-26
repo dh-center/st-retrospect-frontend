@@ -10,6 +10,9 @@
     <div class="aside__search">
       <SearchLine />
     </div>
+    <CustomSelect
+      :options="['писатель', 'художник', 'скульптор', 'водитель', 'алкоголик', 'хто я?']"
+    />
     <div
       class="aside__open-button"
       @click="isOpen=!isOpen"
@@ -33,12 +36,14 @@ import { Vue, Component } from 'vue-property-decorator';
 import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import SearchLine from '@/components/SearchLine.vue';
+import CustomSelect from '@/components/CustomSelect.vue';
 
 @Component({
   components: {
     SiteLogo,
     LanguageSelect,
-    SearchLine
+    SearchLine,
+    CustomSelect
   }
 })
 /**
