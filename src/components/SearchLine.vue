@@ -1,16 +1,25 @@
 <template>
   <div class="search-line">
-    <label
-      class="search-line__label"
-      :for="$id('input')"
-    >{{ $t('search') }}</label>
+    <div class="search-line__menu-button">
+      <svg
+        v-svg
+        symbol="menu"
+      />
+    </div>
     <input
       :id="$id('input')"
       :value="value"
       class="search-line__input"
       type="text"
+      :placeholder="$t('inputPlaceholder')"
       @input="$emit('input', $event.target.value)"
     >
+    <div class="search-line__search-button">
+      <svg
+        v-svg
+        symbol="search"
+      />
+    </div>
   </div>
 </template>
 
@@ -37,41 +46,72 @@ export default class SearchLine extends Vue {
 <i18n>
 {
   "en": {
-    "search": "Search"
+    "inputPlaceholder": "Enter query..."
   },
   "ru": {
-    "search": "Поиск"
+    "inputPlaceholder": "Введите запрос..."
   }
 }
 </i18n>
 
 <style>
+@import "../styles/custom-properties.css";
+@import "../styles/variables.css";
+
 .search-line {
-  position: relative;
+  @apply(--box-shadow-main);
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 12px;
 
-  &__label {
-    position: absolute;
+  background: var(--color-white);
+  border-radius: 2px;
 
-    color: #7c7c7c;
-    font-size: 8px;
-    line-height: 9px;
-    letter-spacing: .2em;
-    text-transform: uppercase;
+  &__menu-button {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+
+    cursor: pointer;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &__input {
+    @apply(--font-sans-serif-main);
+    flex: 1;
     width: 100%;
-    height: 50px;
-    padding-right: 20px;
+    margin-right: 12px;
+    padding: 3px 2px;
 
-    color: #fff;
-    font-size: 16px;
-    line-height: 19px;
+    color: var(--color-gray-main);
 
-    background-color: transparent;
+    font-size: 14px;
+
+    background: transparent;
     border: none;
-    border-bottom: 1px solid #fff;
     outline: none;
+
+    &::placeholder {
+      @apply(--font-sans-serif-light);
+      color: var(--color-gray-second);
+    }
+  }
+
+  &__search-button {
+    width: 24px;
+    height: 24px;
+
+    cursor: pointer;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 </style>
