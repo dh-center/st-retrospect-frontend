@@ -7,6 +7,9 @@
       <SiteLogo />
       <LanguageSelect />
     </div>
+    <div class="aside__search">
+      <SearchLine />
+    </div>
     <div
       class="aside__open-button"
       @click="isOpen=!isOpen"
@@ -29,11 +32,13 @@
 import { Vue, Component } from 'vue-property-decorator';
 import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
+import SearchLine from '@/components/SearchLine.vue';
 
 @Component({
   components: {
     SiteLogo,
-    LanguageSelect
+    LanguageSelect,
+    SearchLine
   }
 })
 /**
@@ -78,6 +83,7 @@ export default class Aside extends Vue {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 25px;
     padding-bottom: 3px;
 
     border-bottom: 2px solid var(--color-gray-main);
