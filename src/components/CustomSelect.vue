@@ -208,6 +208,7 @@ export default class CustomSelect extends Vue {
     }
 
     &-checkbox {
+      flex-shrink: 0;
       width: 16px;
       height: 16px;
       margin-right: 8px;
