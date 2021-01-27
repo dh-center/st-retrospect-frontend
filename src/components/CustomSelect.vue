@@ -12,7 +12,7 @@
         @click="isOpen = !isOpen"
       >
         <div class="custom-select__input-text">
-          {{ selected.length !== 0 ? selected.join(', ') : 'Все категории' }}
+          {{ selected.length !== 0 ? selected.join(', ') : $t('placeholder') }}
         </div>
         <svg
           v-svg
@@ -41,7 +41,7 @@
             class="custom-select__item-checkbox"
           />
           <svg
-            v-if="!selected.includes(option)"
+            v-else
             v-svg
             symbol="checkbox"
             class="custom-select__item-checkbox"
@@ -59,12 +59,25 @@
               v-svg
               symbol="cross"
             />
-            Сброс</span>
+            {{ $t('reset') }}</span>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<i18n>
+{
+  "en": {
+    "reset": "Reset",
+    "placeholder": "All categories"
+  },
+  "ru": {
+    "reset": "Сброс",
+    "placeholder": "Все категории"
+  }
+}
+</i18n>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
@@ -127,6 +140,8 @@ export default class CustomSelect extends Vue {
 
   color: var(--color-gray-main);
   font-size: 14px;
+
+  user-select: none;
 
   &__wrapper {
     position: absolute;
