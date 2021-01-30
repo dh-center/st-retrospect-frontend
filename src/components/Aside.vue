@@ -10,9 +10,14 @@
     <div class="aside__search">
       <SearchLine />
     </div>
-    <CustomSelect
-      :options="['писатель', 'художник', 'скульптор', 'водитель', 'алкоголик', 'хто я?']"
-    />
+    <div class="aside__line">
+      <CustomSelect
+        :options="['писатель', 'художник', 'скульптор', 'водитель', 'алкоголик', 'хто я?']"
+      />
+      <button class="aside__search-button">
+        {{ $t('search') }}
+      </button>
+    </div>
     <div
       class="aside__open-button"
       @click="isOpen=!isOpen"
@@ -30,6 +35,17 @@
     My new aside
   </aside>
 </template>
+
+<i18n>
+{
+  "en": {
+    "search": "Search"
+  },
+  "ru": {
+    "search": "Поиск"
+  }
+}
+</i18n>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
@@ -59,6 +75,7 @@ export default class Aside extends Vue {
 
 <style>
 @import '../styles/variables.css';
+@import '../styles/custom-properties.css';
 
 :root {
   --aside__open-button-width: 48px;
@@ -125,6 +142,28 @@ export default class Aside extends Vue {
         transform: rotate(180deg);
       }
     }
+  }
+
+  &__search-button {
+    @apply(--font-sans-serif-main);
+    @apply(--box-shadow-medium);
+
+    width: 103px;
+
+    color: var(--color-white);
+    font-size: 14px;
+
+    background: var(--color-gray-main);
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  &__line {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
   }
 }
 </style>

@@ -135,8 +135,11 @@ export default class CustomSelect extends Vue {
 
   position: relative;
 
+  flex: 1;
+
   /** It needs for displaying dropdown over content */
   height: 38.4px;
+  margin-right: 16px;
 
   color: var(--color-gray-main);
   font-size: 14px;
