@@ -18,6 +18,37 @@
         {{ $t('search') }}
       </button>
     </div>
+    <div class="aside__years">
+      <div class="aside__years-label">
+        {{ $t('yearsFilterLabel') }}
+      </div>
+      <Range
+        :min="minYear"
+        :max="maxYear"
+        :on-change="onRangeChange"
+        :values="{
+          valueA: searchData.filters.startYear,
+          valueB: searchData.filters.endYear
+        }"
+      />
+      <div class="aside__years-inputs">
+        <input
+          value="1700"
+          type="number"
+          :min="minYear"
+          :max="maxYear"
+          class="aside__years-input"
+        >
+        –
+        <input
+          value="2021"
+          type="number"
+          :min="minYear"
+          :max="maxYear"
+          class="aside__years-input"
+        >
+      </div>
+    </div>
     <div
       class="aside__open-button"
       @click="isOpen=!isOpen"
@@ -32,17 +63,18 @@
         }"
       />
     </div>
-    My new aside
   </aside>
 </template>
 
 <i18n>
 {
   "en": {
-    "search": "Search"
+    "search": "Search",
+    "yearsFilterLabel": "Years period"
   },
   "ru": {
-    "search": "Поиск"
+    "search": "Поиск",
+    "yearsFilterLabel": "Временной промежуток"
   }
 }
 </i18n>
@@ -53,13 +85,15 @@ import SiteLogo from '@/components/SiteLogo.vue';
 import LanguageSelect from '@/components/LanguageSelect.vue';
 import SearchLine from '@/components/SearchLine.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
+import Range from '@/components/Range.vue';
 
 @Component({
   components: {
     SiteLogo,
     LanguageSelect,
     SearchLine,
-    CustomSelect
+    CustomSelect,
+    Range
   }
 })
 /**
@@ -70,6 +104,50 @@ export default class Aside extends Vue {
    * Is aside open or closed
    */
   private isOpen: boolean = true;
+
+  /**
+   * Minimum year
+   */
+  private minYear: string = '1700';
+  /**
+   * Maximum year
+   */
+  private maxYear: string = '2021';
+
+  /**
+   * Form data for search
+   *
+   * @private
+   */
+  private searchData: {
+    query: string,
+    filters: {
+      startYear: string,
+      endYear: string
+    }
+  } = {
+    query: '',
+    filters: {
+      startYear: this.minYear,
+      endYear: this.maxYear
+    }
+  };
+
+  /**
+   * Handler for changes in years range
+   *
+   * @param values - new values in range
+   */
+  private onRangeChange = (values: { valueA: string, valueB: string }): void => {
+    this.searchData = {
+      ...this.searchData,
+      filters: {
+        ...this.searchData.filters,
+        startYear: values.valueA,
+        endYear: values.valueB
+      }
+    };
+  };
 }
 </script>
 
@@ -164,6 +242,49 @@ export default class Aside extends Vue {
     display: flex;
     flex-direction: row;
     margin-bottom: 12px;
+  }
+
+  &__years {
+    @apply(--font-sans-serif-light);
+
+    padding-top: 12px;
+
+    color: var(--color-gray-main);
+
+    user-select: none;
+  }
+
+  &__years-label {
+    margin-bottom: 12px;
+  }
+
+  &__years-input {
+    @apply(--font-sans-serif-light);
+    position: relative;
+
+    box-sizing: border-box;
+
+    width: 102px;
+    height: 36px;
+
+    color: var(--color-gray-main);
+
+    text-align: center;
+
+    border: .5px solid #F2F2F2;
+    border-radius: 2px;
+    outline: none;
+
+    /** Remove arrows in number input field in Mozilla Firefox */
+    -moz-appearance: textfield;
+
+    /** Remove arrows in number input field in Webkit */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      margin: 0;
+
+      -webkit-appearance: none;
+    }
   }
 }
 </style>

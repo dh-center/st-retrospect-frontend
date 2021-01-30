@@ -194,6 +194,10 @@ export default class CustomSelect extends Vue {
     text-overflow: ellipsis;
   }
 
+  &__items {
+    z-index: 9999;
+  }
+
   &__item {
     display: flex;
     align-items: center;
