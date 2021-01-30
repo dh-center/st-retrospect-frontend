@@ -408,32 +408,8 @@
   </g>
 
 </symbol>
-<symbol id="range-thumb" viewBox="0 0 46 62">
-<g filter="url(#filter0_ddd)">
-<path d="M15.9963 8L20.2412 12.1017C21.0808 12.9124 21.6526 13.9454 21.8844 15.0701C22.1163 16.1948 21.9977 17.3607 21.5437 18.4202C21.0896 19.4798 20.3206 20.3855 19.3338 21.0227C18.347 21.6599 17.1869 22 16 22C14.8131 22 13.653 21.6599 12.6662 21.0227C11.6794 20.3855 10.9104 19.4798 10.4563 18.4202C10.0023 17.3607 9.88375 16.1948 10.1156 15.0701C10.3474 13.9454 10.9192 12.9124 11.7588 12.1017L15.9963 8Z" fill="none"/>
-<path d="M19.1989 13.1804L19.1993 13.1808C19.8253 13.7852 20.2455 14.5491 20.4153 15.3729C20.585 16.1963 20.4987 17.0504 20.1649 17.8295C19.8308 18.6092 19.2612 19.284 18.5201 19.7626C17.7785 20.2415 16.9014 20.5 16 20.5C15.0986 20.5 14.2215 20.2415 13.4799 19.7626C12.7388 19.284 12.1692 18.6092 11.8351 17.8295C11.5013 17.0504 11.415 16.1963 11.5847 15.3729C11.7545 14.5491 12.1747 13.7852 12.8007 13.1808L12.802 13.1795L15.9972 10.0867L19.1989 13.1804Z" stroke="#4F4F4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-<defs>
-<filter id="filter0_ddd" x="-14" y="0" width="60" height="62" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
-<feOffset/>
-<feGaussianBlur stdDeviation="0.5"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
-<feOffset dy="2"/>
-<feGaussianBlur stdDeviation="3"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"/>
-<feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
-<feOffset dy="16"/>
-<feGaussianBlur stdDeviation="12"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"/>
-<feBlend mode="normal" in2="effect2_dropShadow" result="effect3_dropShadow"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect3_dropShadow" result="shape"/>
-</filter>
-</defs>
+<symbol id="range-thumb" viewBox="0 0 12 14">
+<path d="M9.1989 5.1804L9.1993 5.1808C9.8253 5.7852 10.2455 6.5491 10.4153 7.3729C10.585 8.1963 10.4987 9.0504 10.1649 9.8295C9.8308 10.6092 9.2612 11.284 8.5201 11.7626C7.7785 12.2415 6.9014 12.5 6 12.5C5.0986 12.5 4.2215 12.2415 3.4799 11.7626C2.7388 11.284 2.1692 10.6092 1.8351 9.8295C1.5013 9.0504 1.415 8.1963 1.5847 7.3729C1.7545 6.5491 2.1747 5.7852 2.8007 5.1808L2.802 5.1795L5.9972 2.0867L9.1989 5.1804Z" stroke="#4F4F4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 
 </symbol>
 <symbol id="search" viewBox="0 0 24 24">
