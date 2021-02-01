@@ -134,6 +134,7 @@ export default class CustomSelect extends Vue {
   @apply(--font-sans-serif-light);
 
   position: relative;
+  z-index: 11;
 
   flex: 1;
 
@@ -192,10 +193,6 @@ export default class CustomSelect extends Vue {
 
     white-space: nowrap;
     text-overflow: ellipsis;
-  }
-
-  &__items {
-    z-index: 9999;
   }
 
   &__item {
