@@ -1,5 +1,6 @@
 <template>
   <div class="range">
+    <div class="range__line" />
     <input
       v-model="valueA"
       :min="min"
@@ -136,29 +137,35 @@ export default class Range extends Vue {
   position: relative;
 
   height: 20px;
+  margin: 0 -6px;
+
+  &__line {
+    height: 2px;
+    margin: 0 6px;
+
+    background: var(--color-gray-light);
+    border-radius: 2px;
+  }
 
   &__input {
     /** Webkit styles */
     position: absolute;
 
     width: 100%;
-    height: 2px;
-    margin: 0;
+    height: 0;
+    margin: 10px 0 0;
     padding: 0;
 
-    background: var(--color-gray-light);
-    border-radius: 2px;
+    background: transparent;
     outline: none;
 
     -webkit-appearance: none;
 
     pointer-events: none;
-    -webkit-tap-highlight-color: var(--color-gray-light);
+    -webkit-tap-highlight-color: transparent;
 
     &::-webkit-slider-thumb {
       position: relative;
-      top: 10px;
-      z-index: 10;
 
       width: 12px;
       height: 14px;
@@ -178,8 +185,6 @@ export default class Range extends Vue {
     /** Microsoft Edge styles */
     &::-ms-thumb {
       position: relative;
-      top: 10px;
-      z-index: 10;
 
       width: 12px;
       height: 14px;
@@ -200,12 +205,11 @@ export default class Range extends Vue {
     &::-moz-range-track {
       position: relative;
 
-      height: 2px;
+      height: 0;
       margin: 0;
       padding: 0;
 
       border: none;
-      border-radius: 2px;
       outline: none;
     }
 
@@ -217,7 +221,6 @@ export default class Range extends Vue {
 
     &::-moz-range-thumb {
       position: relative;
-      z-index: 10;
 
       width: 12px;
       height: 14px;
@@ -229,7 +232,6 @@ export default class Range extends Vue {
       background-size: cover;
       border: none;
       outline: none;
-      transform: translateY(10px);
       cursor: pointer;
 
       -moz-appearance: none;

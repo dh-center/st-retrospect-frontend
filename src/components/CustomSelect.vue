@@ -134,7 +134,7 @@ export default class CustomSelect extends Vue {
   @apply(--font-sans-serif-light);
 
   position: relative;
-  z-index: 11;
+  z-index: 1;
 
   flex: 1;
 

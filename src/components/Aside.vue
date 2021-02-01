@@ -258,6 +258,10 @@ export default class Aside extends Vue {
     margin-bottom: 12px;
   }
 
+  &__years-inputs {
+    margin-top: 12px;
+  }
+
   &__years-input {
     @apply(--font-sans-serif-light);
     position: relative;
