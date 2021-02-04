@@ -1,5 +1,28 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  }
+
+  *, *::after, *::before {
+    box-sizing: border-box;
+  }
+`;
 
 const AppContainer = styled.div`
   text-align: center;
@@ -25,20 +48,23 @@ const AppLink = styled.a`
  */
 function App(): ReactElement {
   return (
-    <AppContainer>
-      <AppHeader>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <AppLink
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </AppLink>
-      </AppHeader>
-    </AppContainer>
+    <>
+      <GlobalStyle/>
+      <AppContainer>
+        <AppHeader>
+          <p>
+            Edit <code>src/App.tsx</code> and save to reload.
+          </p>
+          <AppLink
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </AppLink>
+        </AppHeader>
+      </AppContainer>
+    </>
   );
 }
 
