@@ -1,14 +1,16 @@
 {
   "name": "st-retrospect-frontend",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": false,
   "dependencies": {
+    "@types/mapbox-gl": "^2.0.4",
     "@types/node": "^14.14.25",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.7",
     "eslint-config-codex": "^1.6.0",
+    "mapbox-gl": "^2.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
@@ -37,7 +39,8 @@
         ],
         "rules": {
           "no-use-before-define": "off",
-          "jsdoc/require-returns": "off"
+          "jsdoc/require-returns": "off",
+          "react-hooks/exhaustive-deps": "off"
         }
       }
     ]
