@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import HomeView from './views/HomeView';
+import HomePage from './pages/HomePage';
 import { Switch, Route } from 'react-router-dom';
 
 const GlobalStyle = createGlobalStyle`
@@ -35,7 +35,7 @@ function App(): ReactElement {
       <GlobalStyle/>
       <Switch>
         <Route path="/">
-          <HomeView/>
+          <HomePage/>
         </Route>
       </Switch>
     </>

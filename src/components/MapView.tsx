@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
 
 /**
- * Component displays map
+ * Component displays map view
  */
-function Map(): ReactElement {
+function MapView(): ReactElement {
   return (
     <h1>Map component</h1>
   );
 }
 
-export default Map;
+export default MapView;
