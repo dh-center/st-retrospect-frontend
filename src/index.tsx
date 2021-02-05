@@ -5,11 +5,21 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import * as Sentry from '@sentry/react';
 
 if (process.env.REACT_APP_MAPBOX_ACCESS_TOKEN) {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 } else {
-  console.warn('You must provide Mapbox access token to view map');
+  console.warn('You must provide Mapbox access token to view map: REACT_APP_MAPBOX_ACCESS_TOKEN is undefined.');
+}
+
+if (process.env.REACT_APP_SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DSN,
+    release: 'st-retrospect-frontend@' + process.env.REACT_APP_VERSION,
+  });
+} else {
+  console.warn('You must provide Sentry DSN endpoint to catch errors: REACT_APP_SENTRY_DSN is undefined.');
 }
 
 ReactDOM.render(
