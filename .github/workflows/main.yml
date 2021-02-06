@@ -1,0 +1,45 @@
+name: Build and deploy
+
+on: [ push ]
+
+env:
+  DOCKER_IMAGE_NAME: dhcenter/st-retrospect-frontend
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - uses: nelonoel/branch-name@v1.0.1
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
+          envkey_REACT_APP_SENTRY_DNS: ${{ secrets.REACT_APP_SENTRY_DSN }}
+          file_name: .env.local
+
+      - name: Build the Docker image
+        run: docker build . -t $DOCKER_IMAGE_NAME
+
+      - name: Set deploy command to env variable
+        run: echo "DEPLOY_COMMAND=$(echo "cd ~/st-retrospect/${BRANCH_NAME}/frontend && ./deploy.sh")" >> $GITHUB_ENV
+
+      - name: Push to Docker Hub
+        if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
+        run: |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker tag $DOCKER_IMAGE_NAME $DOCKER_IMAGE_NAME:$BRANCH_NAME
+          docker push $DOCKER_IMAGE_NAME:$BRANCH_NAME
+          docker logout
+
+      - name: Deploy
+        if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
+        uses: garygrossgarten/github-action-ssh@v0.3.0
+        with:
+          command: ${{ env.DEPLOY_COMMAND }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          privateKey: ${{ secrets.PRIVATE_KEY }}
