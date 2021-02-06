@@ -47,7 +47,7 @@ function MapView(): ReactElement {
         attributionControl: false,
         logoPosition: 'bottom-right',
         container: mapContainer.current,
-        style: 'mapbox://styles/dandriver/ck0epf0pe0qh51cr3ecw3v65y',
+        style: 'mapbox://styles/mapbox/light-v10',
         center: [mapState.lng, mapState.lat],
         zoom: mapState.zoom,
         maxBounds: MAX_BOUNDS,
