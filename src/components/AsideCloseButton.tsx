@@ -35,7 +35,14 @@ const CloseButton = styled.div<AsideCloseButtonProps>`
   opacity: 0.8;
   cursor: pointer;
 
-  img {
+  &::before {
+    height: 14px;
+    width: 8px;
+
+    content: '';
+    background-image: url("${LeftArrowIcon}");
+    background-size: cover;
+
     transform: rotate(${props => props.willClose ? '0deg' : '180deg'});
   }
 `;
@@ -47,9 +54,7 @@ const CloseButton = styled.div<AsideCloseButtonProps>`
  */
 function AsideCloseButton(props: AsideCloseButtonProps): ReactElement {
   return (
-    <CloseButton onClick={props.onClick} willClose={props.willClose} className={props.className}>
-      <img src={LeftArrowIcon} alt="Left arrow"/>
-    </CloseButton>
+    <CloseButton onClick={props.onClick} willClose={props.willClose} className={props.className}/>
   );
 }
 
