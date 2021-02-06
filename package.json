@@ -1,6 +1,6 @@
 {
   "name": "st-retrospect-frontend",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": false,
   "dependencies": {
     "@sentry/react": "^6.1.0",
