@@ -1,6 +1,6 @@
 {
   "name": "st-retrospect-frontend",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": false,
   "dependencies": {
     "@sentry/react": "^6.1.0",
@@ -30,7 +30,7 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "codex"
+      "codex/ts"
     ],
     "overrides": [
       {
@@ -41,7 +41,9 @@
         "rules": {
           "no-use-before-define": "off",
           "jsdoc/require-returns": "off",
-          "react-hooks/exhaustive-deps": "off"
+          "jsdoc/require-param-type": "off",
+          "react-hooks/exhaustive-deps": "off",
+          "@typescript-eslint/no-magic-numbers": "off"
         }
       }
     ]
