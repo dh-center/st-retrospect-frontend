@@ -1,5 +1,8 @@
 import { ReactElement, useEffect, useRef, useState } from 'react';
-import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl, { LngLatBoundsLike } from '!mapbox-gl';
 import styled from 'styled-components';
 
 const MapContainer = styled.div`
@@ -47,7 +50,7 @@ function MapView(): ReactElement {
         attributionControl: false,
         logoPosition: 'bottom-right',
         container: mapContainer.current,
-        style: 'mapbox://styles/dandriver/ck0epf0pe0qh51cr3ecw3v65y',
+        style: 'mapbox://styles/mapbox/light-v10',
         center: [mapState.lng, mapState.lat],
         zoom: mapState.zoom,
         maxBounds: MAX_BOUNDS,
