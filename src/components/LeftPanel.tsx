@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 
-const LeftPanelWrapper = styled.div<LeftPanelProps>`
+const LeftPanelWrapper = styled.aside<LeftPanelProps>`
   height: 100vh;
   width: 372px;
 
@@ -19,7 +19,7 @@ const LeftPanelWrapper = styled.div<LeftPanelProps>`
 /**
  * LeftPanel component props interface
  */
-interface LeftPanelProps {
+export interface LeftPanelProps {
   /**
    * Show or hide panel
    */
