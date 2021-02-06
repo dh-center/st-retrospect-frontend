@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { sansSerifRegular } from './FontStyles';
 
 /**
  * Global CSS styles for application
@@ -9,10 +10,8 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
+    ${ sansSerifRegular }
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
