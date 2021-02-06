@@ -19,7 +19,7 @@ const LeftPanelWrapper = styled.aside<LeftPanelProps>`
 /**
  * LeftPanel component props interface
  */
-export interface LeftPanelProps {
+interface LeftPanelProps {
   /**
    * Show or hide panel
    */
