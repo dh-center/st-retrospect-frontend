@@ -1,5 +1,8 @@
 import { ReactElement, useEffect, useRef, useState } from 'react';
-import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl, { LngLatBoundsLike } from '!mapbox-gl';
 import styled from 'styled-components';
 
 const MapContainer = styled.div`
