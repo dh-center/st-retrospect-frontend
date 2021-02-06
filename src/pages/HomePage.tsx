@@ -2,6 +2,7 @@ import {ReactElement, useState} from 'react';
 import MapView from '../components/MapView';
 import LeftPanel from '../components/LeftPanel';
 import styled from 'styled-components';
+import ApplicationLogo from '../components/ApplicationLogo';
 
 /**
  * This button needs only for test
@@ -23,7 +24,7 @@ function HomePage(): ReactElement {
   return (
     <div>
       <LeftPanel show={showLeftPanel}>
-        My left panel
+        <ApplicationLogo/>
       </LeftPanel>
       <TestButton onClick={() => setShowLeftPanel(!showLeftPanel)}>Close/Open left panel</TestButton>
       <MapView/>
