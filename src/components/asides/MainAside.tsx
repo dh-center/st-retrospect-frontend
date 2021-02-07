@@ -1,8 +1,8 @@
 import {ReactElement, useState} from 'react';
-import LeftPanel from './LeftPanel';
-import ApplicationLogo from './ApplicationLogo';
+import LeftPanel from '../LeftPanel';
 import AsideCloseButton from './AsideCloseButton';
 import styled from 'styled-components';
+import AsideHeader from './AsideHeader';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -22,7 +22,7 @@ function MainAside(): ReactElement {
         willClose={showAside}
         onClick={() => setShowAside(!showAside)}
       />
-      <ApplicationLogo/>
+      <AsideHeader/>
     </LeftPanel>
   );
 }
