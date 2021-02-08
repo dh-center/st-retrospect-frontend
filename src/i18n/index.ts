@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import {AvailableLanguages} from '../contexts/LanguageContext';
 import translationEn from './en/translation.json';
 import translationRu from './ru/translation.json';
-
+import LanguageController from '../localStorage/LanguageController';
 
 const resources = {
   [AvailableLanguages.EN]: {
@@ -15,6 +15,6 @@ const resources = {
 };
 
 i18n.use(initReactI18next).init({
-  lng: AvailableLanguages.RU,
+  lng: LanguageController.userLanguage,
   resources,
 });
