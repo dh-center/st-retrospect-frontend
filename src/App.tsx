@@ -6,12 +6,13 @@ import ColorVariables from './styles/ColorVariables';
 import ShadowVariables from './styles/ShadowVariables';
 import LanguageContext, {AvailableLanguages} from './contexts/LanguageContext';
 import {useTranslation} from 'react-i18next';
+import LanguageController from './localStorage/LanguageController';
 
 /**
  * Main component of the application
  */
 function App(): ReactElement {
-  const [userLanguage, setUserLanguage] = useState<AvailableLanguages>(AvailableLanguages.RU);
+  const [userLanguage, setUserLanguage] = useState<AvailableLanguages>(LanguageController.userLanguage);
   const {i18n} = useTranslation();
 
   return (
@@ -20,6 +21,7 @@ function App(): ReactElement {
         userLanguage,
         setUserLanguage: async (value) => {
           await i18n.changeLanguage(value);
+          LanguageController.changeUserLanguage(value);
           setUserLanguage(value);
         },
       }}>
