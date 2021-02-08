@@ -15,8 +15,8 @@ function App(): ReactElement {
   return (
     <>
       <LanguageContext.Provider value={{
-        userLanguage: userLanguage,
-        setUserLanguage: (value) => setUserLanguage(value),
+        userLanguage,
+        setUserLanguage,
       }}>
         <ColorVariables/>
         <ShadowVariables/>

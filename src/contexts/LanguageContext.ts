@@ -15,8 +15,20 @@ export enum AvailableLanguages {
   EN='EN'
 }
 
+/**
+ * Props of language context
+ */
 interface LanguageContextProps {
+  /**
+   * Current interface language
+   */
   userLanguage: AvailableLanguages,
+
+  /**
+   * Setter for current interface language
+   *
+   * @param language - new language
+   */
   setUserLanguage: (language: AvailableLanguages) => void
 }
 
