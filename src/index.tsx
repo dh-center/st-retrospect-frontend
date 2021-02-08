@@ -9,6 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import mapboxgl from '!mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import * as Sentry from '@sentry/react';
+import './i18n';
 
 if (process.env.REACT_APP_MAPBOX_ACCESS_TOKEN) {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
