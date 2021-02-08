@@ -1,5 +1,6 @@
-import {ReactElement, useState} from 'react';
+import {ReactElement, useContext} from 'react';
 import styled, {css} from 'styled-components';
+import LanguageContext, {AvailableLanguages} from '../contexts/LanguageContext';
 import {sansSerifLight, sansSerifRegular} from '../styles/FontStyles';
 
 const SwitchWrapper = styled.div`
@@ -60,12 +61,18 @@ const SwitchButton = styled.div<SwitchButtonProps>`
  * Language switch component
  */
 function LanguageSwitch(): ReactElement {
-  const [currentLanguage, setCurrentLanguage] = useState<'en'|'ru'>('ru');
+  const {userLanguage, setUserLanguage} = useContext(LanguageContext);
 
   return (
     <SwitchWrapper>
-      <SwitchButton isActive={currentLanguage === 'en'} onClick={() => setCurrentLanguage('en')}>En</SwitchButton>
-      <SwitchButton isActive={currentLanguage === 'ru'} onClick={() => setCurrentLanguage('ru')}>Ru</SwitchButton>
+      <SwitchButton
+        isActive={userLanguage === AvailableLanguages.EN}
+        onClick={() => setUserLanguage(AvailableLanguages.EN)}
+      >En</SwitchButton>
+      <SwitchButton
+        isActive={userLanguage === AvailableLanguages.RU}
+        onClick={() => setUserLanguage(AvailableLanguages.RU)}
+      >Ru</SwitchButton>
     </SwitchWrapper>
   );
 }
