@@ -1,6 +1,7 @@
 import {ReactElement} from 'react';
 import styled from 'styled-components';
 import ApplicationLogo from '../ApplicationLogo';
+import LanguageSwitch from '../LanguageSwitch';
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -22,7 +23,7 @@ function AsideHeader(): ReactElement {
   return (
     <HeaderWrapper>
       <ApplicationLogo/>
-      <span>en/ru</span>
+      <LanguageSwitch/>
     </HeaderWrapper>
   );
 }
