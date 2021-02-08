@@ -1,9 +1,11 @@
-import { ReactElement, useEffect, useRef, useState } from 'react';
+import {ReactElement, useContext, useEffect, useRef, useState} from 'react';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl, { LngLatBoundsLike } from '!mapbox-gl';
+import mapboxgl, {LngLatBoundsLike} from '!mapbox-gl';
 import styled from 'styled-components';
+import LanguageContext, {AvailableLanguages} from '../contexts/LanguageContext';
+import {AnyLayer} from 'mapbox-gl';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -43,6 +45,27 @@ function MapView(): ReactElement {
     lat: 59.93944,
     zoom: 11.5,
   });
+  const {userLanguage} = useContext(LanguageContext);
+
+  /**
+   * Changes map language
+   *
+   * @param language - new map language
+   */
+  const changeMapLanguage = (language: AvailableLanguages): void => {
+    if (map.current && map.current.isStyleLoaded()) {
+      const textLayers = map.current.getStyle().layers.filter((layer: AnyLayer) => layer.type === 'symbol');
+
+      textLayers.map((layer: AnyLayer) => {
+        map.current.setLayoutProperty(layer.id, 'text-field', [
+          'get',
+          'name_' + language.toLowerCase(),
+        ]);
+
+        return layer;
+      });
+    }
+  };
 
   useEffect(() => {
     if (mapContainer.current) {
@@ -71,8 +94,32 @@ function MapView(): ReactElement {
           zoom: +map.current.getZoom().toFixed(2),
         });
       });
+
+      /**
+       * When style loaded first time, we set interface language
+       */
+      map.current.once('styledata', () => {
+        /**
+         * Style data event can be fire, but we need to check is style loaded or not
+         */
+        const waitStyleLoading = (): void => {
+          if (!map.current.isStyleLoaded()) {
+            setTimeout(waitStyleLoading, 200);
+          } else {
+            if (userLanguage) {
+              changeMapLanguage(userLanguage || AvailableLanguages.EN);
+            }
+          }
+        };
+
+        waitStyleLoading();
+      });
     }
   }, []);
+
+  useEffect(() => {
+    changeMapLanguage(userLanguage);
+  }, [ userLanguage ]);
 
   return (
     <div>
