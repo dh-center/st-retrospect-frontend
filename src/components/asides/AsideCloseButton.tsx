@@ -1,4 +1,4 @@
-import {ReactElement} from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
 

@@ -1,4 +1,4 @@
-import {ReactElement} from 'react';
+import { ReactElement } from 'react';
 import MapView from '../components/MapView';
 import MainAside from '../components/asides/MainAside';
 

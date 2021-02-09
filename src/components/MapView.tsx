@@ -1,11 +1,11 @@
-import {ReactElement, useContext, useEffect, useRef, useState} from 'react';
+import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl, {LngLatBoundsLike} from '!mapbox-gl';
+import mapboxgl, { LngLatBoundsLike } from '!mapbox-gl';
 import styled from 'styled-components';
-import LanguageContext, {AvailableLanguages} from '../contexts/LanguageContext';
-import {AnyLayer} from 'mapbox-gl';
+import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
+import { AnyLayer } from 'mapbox-gl';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -45,7 +45,7 @@ function MapView(): ReactElement {
     lat: 59.93944,
     zoom: 11.5,
   });
-  const {userLanguage} = useContext(LanguageContext);
+  const { userLanguage } = useContext(LanguageContext);
 
   /**
    * Changes map language

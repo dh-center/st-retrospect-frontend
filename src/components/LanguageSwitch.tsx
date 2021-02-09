@@ -1,7 +1,7 @@
-import {ReactElement, useContext} from 'react';
-import styled, {css} from 'styled-components';
-import LanguageContext, {AvailableLanguages} from '../contexts/LanguageContext';
-import {sansSerifLight, sansSerifRegular} from '../styles/FontStyles';
+import { ReactElement, useContext } from 'react';
+import styled, { css } from 'styled-components';
+import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
+import { sansSerifLight, sansSerifRegular } from '../styles/FontStyles';
 
 const SwitchWrapper = styled.div`
   display: flex;
@@ -61,7 +61,7 @@ const SwitchButton = styled.div<SwitchButtonProps>`
  * Language switch component
  */
 function LanguageSwitch(): ReactElement {
-  const {userLanguage, setUserLanguage} = useContext(LanguageContext);
+  const { userLanguage, setUserLanguage } = useContext(LanguageContext);
 
   return (
     <SwitchWrapper>
