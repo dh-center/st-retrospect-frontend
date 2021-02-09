@@ -1,9 +1,9 @@
-import {ReactElement, useState} from 'react';
+import { ReactElement, useState } from 'react';
 import LeftPanel from '../LeftPanel';
 import AsideCloseButton from './AsideCloseButton';
 import styled from 'styled-components';
 import AsideHeader from './AsideHeader';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -16,7 +16,7 @@ const AsideCloseButtonPositioned = styled(AsideCloseButton)`
  */
 function MainAside(): ReactElement {
   const [showAside, setShowAside] = useState(true);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <LeftPanel show={showAside}>

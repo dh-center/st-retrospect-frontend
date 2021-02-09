@@ -1,4 +1,4 @@
-import {AvailableLanguages} from '../contexts/LanguageContext';
+import { AvailableLanguages } from '../contexts/LanguageContext';
 
 /**
  * Controller for user language in local storage

@@ -1,7 +1,7 @@
-import {ReactElement} from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
-import {NavLink} from 'react-router-dom';
-import {serifRegular} from '../styles/FontStyles';
+import { NavLink } from 'react-router-dom';
+import { serifRegular } from '../styles/FontStyles';
 
 const LogoLink = styled(NavLink)`
   ${ serifRegular };
