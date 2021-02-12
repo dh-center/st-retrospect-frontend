@@ -11,6 +11,10 @@ const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   right: -48px;
 `;
 
+const AsideHeaderWithMarginBottom = styled(AsideHeader)`
+  margin-bottom: 12px;
+`;
+
 /**
  * Main aside component
  */
@@ -23,7 +27,7 @@ function MainAside(): ReactElement {
         willClose={showAside}
         onClick={() => setShowAside(!showAside)}
       />
-      <AsideHeader/>
+      <AsideHeaderWithMarginBottom/>
       <SearchLine/>
     </LeftPanel>
   );

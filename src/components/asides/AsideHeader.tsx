@@ -3,6 +3,16 @@ import styled from 'styled-components';
 import ApplicationLogo from '../ApplicationLogo';
 import LanguageSwitch from '../LanguageSwitch';
 
+/**
+ * AsideHeader component props
+ */
+interface AsideHeaderProps {
+  /**
+   * Component class name
+   */
+  className?: string;
+}
+
 const HeaderWrapper = styled.header`
   width: 100%;
 
@@ -18,10 +28,12 @@ const HeaderWrapper = styled.header`
 
 /**
  * Header for asides
+ *
+ * @param props - props of component
  */
-function AsideHeader(): ReactElement {
+function AsideHeader(props: AsideHeaderProps): ReactElement {
   return (
-    <HeaderWrapper>
+    <HeaderWrapper className={props.className}>
       <ApplicationLogo/>
       <LanguageSwitch/>
     </HeaderWrapper>
