@@ -1,3 +1,5 @@
 {
-  "lang": "russian lang"
+  "search": {
+    "inputPlaceholder": "Введите запрос..."
+  }
 }

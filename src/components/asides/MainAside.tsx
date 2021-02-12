@@ -3,7 +3,7 @@ import LeftPanel from '../LeftPanel';
 import AsideCloseButton from './AsideCloseButton';
 import styled from 'styled-components';
 import AsideHeader from './AsideHeader';
-import { useTranslation } from 'react-i18next';
+import SearchLine from '../SearchLine';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -11,12 +11,15 @@ const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   right: -48px;
 `;
 
+const AsideHeaderWithMarginBottom = styled(AsideHeader)`
+  margin-bottom: 12px;
+`;
+
 /**
  * Main aside component
  */
 function MainAside(): ReactElement {
   const [showAside, setShowAside] = useState(true);
-  const { t } = useTranslation();
 
   return (
     <LeftPanel show={showAside}>
@@ -24,8 +27,8 @@ function MainAside(): ReactElement {
         willClose={showAside}
         onClick={() => setShowAside(!showAside)}
       />
-      <AsideHeader/>
-      {t('lang')}
+      <AsideHeaderWithMarginBottom/>
+      <SearchLine/>
     </LeftPanel>
   );
 }
