@@ -14,6 +14,7 @@ const LeftPanelWrapper = styled.aside<LeftPanelProps>`
 
   background: var(--color-white);
   box-shadow: var(--shadow-base);
+  transition: left ease-out .3s;
 `;
 
 /**
@@ -29,6 +30,11 @@ interface LeftPanelProps {
    * Children components
    */
   children?: ReactNode;
+
+  /**
+   * Component class name
+   */
+  className?: string;
 }
 
 /**
@@ -39,7 +45,7 @@ interface LeftPanelProps {
  */
 function LeftPanel(props: LeftPanelProps): ReactElement {
   return (
-    <LeftPanelWrapper show={props.show}>
+    <LeftPanelWrapper show={props.show} className={props.className}>
       { props.children }
     </LeftPanelWrapper>
   );
