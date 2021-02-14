@@ -1,5 +1,7 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
+import WithClassName from '../interfaces/WithClassName';
+import WithChildren from '../interfaces/WithChildren';
 
 const LeftPanelWrapper = styled.aside<LeftPanelProps>`
   height: 100vh;
@@ -20,21 +22,11 @@ const LeftPanelWrapper = styled.aside<LeftPanelProps>`
 /**
  * LeftPanel component props interface
  */
-interface LeftPanelProps {
+interface LeftPanelProps extends WithClassName, WithChildren {
   /**
    * Show or hide panel
    */
   show: boolean;
-
-  /**
-   * Children components
-   */
-  children?: ReactNode;
-
-  /**
-   * Component class name
-   */
-  className?: string;
 }
 
 /**
