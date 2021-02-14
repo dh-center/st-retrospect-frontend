@@ -3,9 +3,24 @@ import LeftPanel from '../LeftPanel';
 import AsideHeader from './AsideHeader';
 import styled from 'styled-components';
 import MenuAsideContext from '../../contexts/MenuAsideContext';
+import DoubleArrowsIcon from '../../assets/double-arrows.svg';
 
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
+`;
+
+const CloseMenuButton = styled.button`
+  width: 24px;
+  height: 24px;
+
+  margin-left: 16px;
+
+  border: none;
+  outline: none;
+  background: transparent url("${DoubleArrowsIcon}");
+  background-size: cover;
+
+  cursor: pointer;
 `;
 
 /**
@@ -16,9 +31,9 @@ function MenuAside(): ReactElement {
 
   return (
     <LeftPanelWithLargeShadow show={isMenuAsideShow}>
-      <AsideHeader/>
-      Menu aside
-      <button onClick={() => setMenuAsideShow(!isMenuAsideShow)}>Hide menu</button>
+      <AsideHeader>
+        <CloseMenuButton onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
+      </AsideHeader>
     </LeftPanelWithLargeShadow>
   );
 }
