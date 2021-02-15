@@ -1,5 +1,17 @@
 {
   "search": {
     "inputPlaceholder": "Enter query..."
+  },
+  "aboutProject": {
+    "title": "About project"
+  },
+  "howToGuide": {
+    "title": "How to use map?"
+  },
+  "partners": {
+    "title": "Our partners"
+  },
+  "thanks": {
+    "title": "Thanks"
   }
 }

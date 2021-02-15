@@ -5,6 +5,7 @@ import HelpCircleIcon from '../assets/help-circle.svg';
 import MapPinIcon from '../assets/map-pin.svg';
 import UsersIcon from '../assets/users.svg';
 import ThumbsUpIcon from '../assets/thumbs-up.svg';
+import { useTranslation } from 'react-i18next';
 
 const MenuWrapper = styled.ul`
   padding: 0;
@@ -55,26 +56,28 @@ const ThanksIcon = styled(MenuItemIcon)`
 `;
 
 /**
- *
+ * Menu component
  */
 function Menu(): ReactElement {
+  const { t } = useTranslation();
+
   return (
     <MenuWrapper>
       <MenuItem>
         <AboutProjectIcon/>
-        О проекте
+        {t('aboutProject.title')}
       </MenuItem>
       <MenuItem>
         <HowToIcon/>
-        Как пользоваться картой?
+        {t('howToGuide.title')}
       </MenuItem>
       <MenuItem>
         <OurPartnersIcon/>
-        Наши партнёры
+        {t('partners.title')}
       </MenuItem>
       <MenuItem>
         <ThanksIcon/>
-        Благодарности
+        {t('thanks.title')}
       </MenuItem>
     </MenuWrapper>
   );
