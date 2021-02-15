@@ -28,30 +28,23 @@ const MenuItem = styled.li`
   user-select: none;
 `;
 
-const MenuItemIcon = styled.div`
+/**
+ * Menu icon props
+ */
+interface MenuItemIconProps {
+  /**
+   * Displaying icon
+   */
+  icon: never;
+}
+
+const MenuItemIcon = styled.div<MenuItemIconProps>`
   height: 24px;
   width: 24px;
 
   margin-right: 18px;
-`;
 
-const AboutProjectIcon = styled(MenuItemIcon)`
-  background-image: url("${HelpCircleIcon}");
-  background-size: cover;
-`;
-
-const HowToIcon = styled(MenuItemIcon)`
-  background-image: url("${MapPinIcon}");
-  background-size: cover;
-`;
-
-const OurPartnersIcon = styled(MenuItemIcon)`
-  background-image: url("${UsersIcon}");
-  background-size: cover;
-`;
-
-const ThanksIcon = styled(MenuItemIcon)`
-  background-image: url("${ThumbsUpIcon}");
+  background-image: url("${ props => props.icon }");
   background-size: cover;
 `;
 
@@ -64,19 +57,19 @@ function Menu(): ReactElement {
   return (
     <MenuWrapper>
       <MenuItem>
-        <AboutProjectIcon/>
+        <MenuItemIcon icon={HelpCircleIcon}/>
         {t('aboutProject.title')}
       </MenuItem>
       <MenuItem>
-        <HowToIcon/>
+        <MenuItemIcon icon={MapPinIcon}/>
         {t('howToGuide.title')}
       </MenuItem>
       <MenuItem>
-        <OurPartnersIcon/>
+        <MenuItemIcon icon={UsersIcon}/>
         {t('partners.title')}
       </MenuItem>
       <MenuItem>
-        <ThanksIcon/>
+        <MenuItemIcon icon={ThumbsUpIcon}/>
         {t('thanks.title')}
       </MenuItem>
     </MenuWrapper>
