@@ -1,5 +1,17 @@
 {
   "search": {
     "inputPlaceholder": "Введите запрос..."
+  },
+  "aboutProject": {
+    "title": "О проекте"
+  },
+  "howToGuide": {
+    "title": "Как пользоваться картой?"
+  },
+  "partners": {
+    "title": "Наши партнёры"
+  },
+  "thanks": {
+    "title": "Благодарности"
   }
 }
