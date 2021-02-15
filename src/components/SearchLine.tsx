@@ -1,9 +1,10 @@
-import { ReactElement } from 'react';
+import { ReactElement, useContext } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight, sansSerifRegular } from '../styles/FontStyles';
 import BurgerMenuIcon from '../assets/burger-menu.svg';
 import SearchIcon from '../assets/search.svg';
 import { useTranslation } from 'react-i18next';
+import MenuAsideContext from '../contexts/MenuAsideContext';
 
 const SearchLineWrapper = styled.div`
   display: flex;
@@ -60,10 +61,11 @@ const SearchLineSearchButton = styled(SearchLineButton)`
  */
 function SearchLine(): ReactElement {
   const { t } = useTranslation();
+  const { isMenuAsideShow, setMenuAsideShow } = useContext(MenuAsideContext);
 
   return (
     <SearchLineWrapper>
-      <SearchLineMenuButton/>
+      <SearchLineMenuButton onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
       <SearchLineInput placeholder={t('search.inputPlaceholder')}/>
       <SearchLineSearchButton/>
     </SearchLineWrapper>

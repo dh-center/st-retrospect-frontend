@@ -4,6 +4,8 @@ import AsideCloseButton from './AsideCloseButton';
 import styled from 'styled-components';
 import AsideHeader from './AsideHeader';
 import SearchLine from '../SearchLine';
+import MenuAside from './MenuAside';
+import MenuAsideContext from '../../contexts/MenuAsideContext';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -20,15 +22,22 @@ const AsideHeaderWithMarginBottom = styled(AsideHeader)`
  */
 function MainAside(): ReactElement {
   const [showAside, setShowAside] = useState(true);
+  const [isMenuAsideShow, setMenuAsideShow] = useState(false);
 
   return (
     <LeftPanel show={showAside}>
-      <AsideCloseButtonPositioned
-        willClose={showAside}
-        onClick={() => setShowAside(!showAside)}
-      />
-      <AsideHeaderWithMarginBottom/>
-      <SearchLine/>
+      <MenuAsideContext.Provider value={{
+        isMenuAsideShow,
+        setMenuAsideShow,
+      }}>
+        <MenuAside/>
+        <AsideCloseButtonPositioned
+          willClose={showAside}
+          onClick={() => setShowAside(!showAside)}
+        />
+        <AsideHeaderWithMarginBottom/>
+        <SearchLine/>
+      </MenuAsideContext.Provider>
     </LeftPanel>
   );
 }

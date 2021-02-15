@@ -1,5 +1,7 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
+import WithClassName from '../interfaces/WithClassName';
+import WithChildren from '../interfaces/WithChildren';
 
 const LeftPanelWrapper = styled.aside<LeftPanelProps>`
   height: 100vh;
@@ -14,21 +16,17 @@ const LeftPanelWrapper = styled.aside<LeftPanelProps>`
 
   background: var(--color-white);
   box-shadow: var(--shadow-base);
+  transition: left ease-out .3s;
 `;
 
 /**
  * LeftPanel component props interface
  */
-interface LeftPanelProps {
+interface LeftPanelProps extends WithClassName, WithChildren {
   /**
    * Show or hide panel
    */
   show: boolean;
-
-  /**
-   * Children components
-   */
-  children?: ReactNode;
 }
 
 /**
@@ -39,7 +37,7 @@ interface LeftPanelProps {
  */
 function LeftPanel(props: LeftPanelProps): ReactElement {
   return (
-    <LeftPanelWrapper show={props.show}>
+    <LeftPanelWrapper show={props.show} className={props.className}>
       { props.children }
     </LeftPanelWrapper>
   );

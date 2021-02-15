@@ -2,16 +2,13 @@ import { ReactElement } from 'react';
 import styled from 'styled-components';
 import ApplicationLogo from '../ApplicationLogo';
 import LanguageSwitch from '../LanguageSwitch';
+import WithClassName from '../../interfaces/WithClassName';
+import WithChildren from '../../interfaces/WithChildren';
 
 /**
  * AsideHeader component props
  */
-interface AsideHeaderProps {
-  /**
-   * Component class name
-   */
-  className?: string;
-}
+interface AsideHeaderProps extends WithClassName, WithChildren {}
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -26,6 +23,10 @@ const HeaderWrapper = styled.header`
   border-bottom: 2px solid var(--color-dark-gray);
 `;
 
+const ApplicationLogoWithFlex = styled(ApplicationLogo)`
+  flex: 1;
+`;
+
 /**
  * Header for asides
  *
@@ -34,8 +35,9 @@ const HeaderWrapper = styled.header`
 function AsideHeader(props: AsideHeaderProps): ReactElement {
   return (
     <HeaderWrapper className={props.className}>
-      <ApplicationLogo/>
+      <ApplicationLogoWithFlex/>
       <LanguageSwitch/>
+      {props.children}
     </HeaderWrapper>
   );
 }

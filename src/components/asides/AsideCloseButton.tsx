@@ -1,11 +1,12 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
+import WithClassName from '../../interfaces/WithClassName';
 
 /**
  * AsideCloseButton props
  */
-interface AsideCloseButtonProps {
+interface AsideCloseButtonProps extends WithClassName {
   /**
    * Will button close or open aside
    */
@@ -15,11 +16,6 @@ interface AsideCloseButtonProps {
    * On button click event handler
    */
   onClick: () => void;
-
-  /**
-   * Component class name
-   */
-  className?: string;
 }
 
 const CloseButton = styled.div<AsideCloseButtonProps>`
