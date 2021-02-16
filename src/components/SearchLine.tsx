@@ -5,6 +5,12 @@ import BurgerMenuIcon from '../assets/burger-menu.svg';
 import SearchIcon from '../assets/search.svg';
 import { useTranslation } from 'react-i18next';
 import MenuAsideContext from '../contexts/MenuAsideContext';
+import WithClassName from '../interfaces/WithClassName';
+
+/**
+ * Search line props
+ */
+interface SearchLineProps extends WithClassName {}
 
 const SearchLineWrapper = styled.div`
   display: flex;
@@ -58,13 +64,15 @@ const SearchLineSearchButton = styled(SearchLineButton)`
 
 /**
  * Search line with menu button
+ *
+ * @param props - props of component
  */
-function SearchLine(): ReactElement {
+function SearchLine(props: SearchLineProps): ReactElement {
   const { t } = useTranslation();
   const { isMenuAsideShow, setMenuAsideShow } = useContext(MenuAsideContext);
 
   return (
-    <SearchLineWrapper>
+    <SearchLineWrapper className={props.className}>
       <SearchLineMenuButton onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
       <SearchLineInput placeholder={t('search.inputPlaceholder')}/>
       <SearchLineSearchButton/>
