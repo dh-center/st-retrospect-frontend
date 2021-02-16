@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import MenuAsideContext from '../../contexts/MenuAsideContext';
 import DoubleArrowsIcon from '../../assets/double-arrows.svg';
 import Menu from '../Menu';
+import Overlay from '../Overlay';
 
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
@@ -35,12 +36,15 @@ function MenuAside(): ReactElement {
   const { isMenuAsideShow, setMenuAsideShow } = useContext(MenuAsideContext);
 
   return (
-    <LeftPanelWithLargeShadow show={isMenuAsideShow}>
-      <AsideHeaderWithMarginBottom>
-        <CloseMenuButton onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
-      </AsideHeaderWithMarginBottom>
-      <Menu/>
-    </LeftPanelWithLargeShadow>
+    <>
+      <Overlay show={isMenuAsideShow}/>
+      <LeftPanelWithLargeShadow show={isMenuAsideShow}>
+        <AsideHeaderWithMarginBottom>
+          <CloseMenuButton onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
+        </AsideHeaderWithMarginBottom>
+        <Menu/>
+      </LeftPanelWithLargeShadow>
+    </>
   );
 }
 
