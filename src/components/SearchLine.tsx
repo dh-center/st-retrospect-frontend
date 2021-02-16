@@ -31,7 +31,7 @@ const SearchLineInput = styled.input`
 
   &::placeholder {
     ${ sansSerifLight };
-    color: var(--color-light-gray);
+    color: var(--color-gray);
   }
 `;
 
