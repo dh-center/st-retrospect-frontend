@@ -5,6 +5,7 @@ import LeftArrowIcon from '../assets/arrow-left.svg';
 import CheckboxIcon from '../assets/checkbox.svg';
 import CheckboxCheckedIcon from '../assets/checkbox-checked.svg';
 import CrossIcon from '../assets/cross.svg';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Props for custom select elements
@@ -144,6 +145,7 @@ const SelectResetText = styled.span`
  * Custom select component
  */
 function CustomSelect(): ReactElement {
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const options = ['писатель', 'художник', 'скульптор', 'водитель', 'алкоголик', 'хто я?'];
@@ -173,13 +175,13 @@ function CustomSelect(): ReactElement {
       <SelectWrapper isOpen={isOpen}>
         <SelectInput onClick={() => setOpen(!isOpen)} isOpen={isOpen}>
           <SelectInputText>{
-            selected.length ? selected.join(', ') : 'Все категории'
+            selected.length ? selected.join(', ') : t('customSelect.placeholder')
           }</SelectInputText>
         </SelectInput>
         <SelectDropdown isOpen={isOpen}>
           {SelectItems}
           <ListItem onClick={() => setSelected([])}>
-            <SelectResetText>Сброс</SelectResetText>
+            <SelectResetText>{t('customSelect.reset')}</SelectResetText>
           </ListItem>
         </SelectDropdown>
       </SelectWrapper>
