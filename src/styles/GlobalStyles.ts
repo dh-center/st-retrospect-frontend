@@ -23,6 +23,13 @@ const GlobalStyles = createGlobalStyle`
   *, *::after, *::before {
     box-sizing: border-box;
   }
+
+  .mapboxgl-ctrl-bottom-left,
+  .mapboxgl-ctrl-bottom-right,
+  .mapboxgl-ctrl-top-left,
+  .mapboxgl-ctrl-top-right {
+    z-index: 0;
+  }
 `;
 
 export default GlobalStyles;
