@@ -6,6 +6,7 @@ import AsideHeader from './AsideHeader';
 import SearchLine from '../SearchLine';
 import MenuAside from './MenuAside';
 import MenuAsideContext from '../../contexts/MenuAsideContext';
+import CustomSelect from '../CustomSelect';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -14,6 +15,10 @@ const AsideCloseButtonPositioned = styled(AsideCloseButton)`
 `;
 
 const AsideHeaderWithMarginBottom = styled(AsideHeader)`
+  margin-bottom: 12px;
+`;
+
+const SearchLineWithMarginBottom = styled(SearchLine)`
   margin-bottom: 12px;
 `;
 
@@ -36,7 +41,9 @@ function MainAside(): ReactElement {
           onClick={() => setShowAside(!showAside)}
         />
         <AsideHeaderWithMarginBottom/>
-        <SearchLine/>
+        <SearchLineWithMarginBottom/>
+        <CustomSelect/>
+        Next elements for test
       </MenuAsideContext.Provider>
     </LeftPanel>
   );
