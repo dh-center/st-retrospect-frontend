@@ -9,7 +9,7 @@ const SwitchWrapper = styled.div`
   ${ sansSerifLight };
   text-transform: uppercase;
   font-size: 12px;
-  color: var(--color-light-gray);
+  color: var(--color-gray);
 `;
 
 /**

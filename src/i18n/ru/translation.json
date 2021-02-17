@@ -13,5 +13,9 @@
   },
   "thanks": {
     "title": "Благодарности"
+  },
+  "customSelect": {
+    "placeholder": "Все категории",
+    "reset": "Сброс"
   }
 }
