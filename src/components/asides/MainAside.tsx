@@ -7,6 +7,7 @@ import SearchLine from '../SearchLine';
 import MenuAside from './MenuAside';
 import MenuAsideContext from '../../contexts/MenuAsideContext';
 import CustomSelect from '../CustomSelect';
+import CustomRange from '../CustomRange';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -43,6 +44,7 @@ function MainAside(): ReactElement {
         <AsideHeaderWithMarginBottom/>
         <SearchLineWithMarginBottom/>
         <CustomSelect/>
+        <CustomRange/>
         Next elements for test
       </MenuAsideContext.Provider>
     </LeftPanel>
