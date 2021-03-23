@@ -17,6 +17,18 @@ interface CustomRangeElementProps {
   max: string;
 }
 
+interface RangeValues {
+  /**
+   * Left value of range
+   */
+  left: string;
+
+  /**
+   * Right value of range
+   */
+  right: string;
+}
+
 const RangeWrapper = styled.div`
   position: relative;
 
