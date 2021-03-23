@@ -44,7 +44,7 @@ const RangeLine = styled.div`
   border-radius: 2px;
 `;
 
-const RangeInput = styled.input<CustomRangeElementProps>`
+const RangeInput = styled.input`
   position: absolute;
 
   width: 100%;
