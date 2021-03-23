@@ -44,7 +44,11 @@ function MainAside(): ReactElement {
         <AsideHeaderWithMarginBottom/>
         <SearchLineWithMarginBottom/>
         <CustomSelect/>
-        <CustomRange/>
+        {/*@todo unmock variables*/}
+        <CustomRange
+          min={'1500'}
+          max={'2021'}
+        />
         Next elements for test
       </MenuAsideContext.Provider>
     </LeftPanel>
