@@ -121,8 +121,7 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
       />
 
     </RangeWrapper>
-  )
-
+  );
 }
 
 export default CustomRange;
