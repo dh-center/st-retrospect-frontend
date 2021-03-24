@@ -79,14 +79,47 @@ const RangeInput = styled.input`
   }
 `;
 
-function CustomRange(): ReactElement {
-  const [left, right] = useState<string>();
+/**
+ * Custom range component
+ *
+ * @param props - properties (min and max range values)
+ */
+function CustomRange(props: CustomRangeElementProps): ReactElement {
+  const [values, setValues] = useState<RangeValues>({ left: props.min,
+    right: props.max });
 
   return (
     <RangeWrapper>
       <RangeLine/>
-        <RangeInput type="range" value={left} min={min} max={max} onChange={value => this.setState({left: value})} />
-        <RangeInput type="range" value={right} min={min} max={max} onChange={value => this.setState({right: value})} />
+
+      <RangeInput
+        type="range"
+        value={values.left}
+        min={props.min}
+        max={props.max}
+        onChange={
+          value => value.target.value > values.right ?
+            setValues({ left: values.right,
+              right: value.target.value }) :
+            setValues({ left: value.target.value,
+              right: values.right })
+        }
+      />
+
+      <RangeInput
+        type="range"
+        value={values.right}
+        min={props.min}
+        max={props.max}
+        onChange={
+          value => value.target.value < values.left ?
+            setValues({ left: value.target.value,
+              right: values.left }) :
+            setValues({ left: values.left,
+              right: value.target.value })
+        }
+      />
+
     </RangeWrapper>
   )
 
