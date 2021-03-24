@@ -38,7 +38,7 @@ const RangeWrapper = styled.div`
 
 const RangeLine = styled.div`
   height: 2px;
-  margin: 0 6px;
+  margin: 6px 6px 0 6px;
 
   background: var(--color-light-gray);
   border-radius: 2px;
