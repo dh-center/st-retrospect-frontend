@@ -85,8 +85,7 @@ const RangeInput = styled.input`
  * @param props - properties (min and max range values)
  */
 function CustomRange(props: CustomRangeElementProps): ReactElement {
-  const [values, setValues] = useState<RangeValues>({ left: props.min,
-    right: props.max });
+  const [values, setValues] = useState<RangeValues>({ left: props.min, right: props.max });
 
   return (
     <RangeWrapper>
@@ -97,12 +96,15 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
         value={values.left}
         min={props.min}
         max={props.max}
-        onChange={
-          value => value.target.value > values.right ?
+        onChange={value => {
+          if (value.target.value > values.right) {
             setValues({ left: values.right,
-              right: value.target.value }) :
+              right: value.target.value });
+          } else {
             setValues({ left: value.target.value,
-              right: values.right })
+              right: values.right });
+          }
+        }
         }
       />
 
@@ -111,12 +113,15 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
         value={values.right}
         min={props.min}
         max={props.max}
-        onChange={
-          value => value.target.value < values.left ?
+        onChange={value => {
+          if (value.target.value < values.left) {
             setValues({ left: value.target.value,
-              right: values.left }) :
+              right: values.left });
+          } else {
             setValues({ left: values.left,
-              right: value.target.value })
+              right: value.target.value });
+          }
+        }
         }
       />
 
