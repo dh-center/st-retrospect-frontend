@@ -1,6 +1,8 @@
 import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import RangeThumb from '../assets/range-thumb.svg';
+import { sansSerifLight } from '../styles/FontStyles';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Props for custom range elements
@@ -15,6 +17,11 @@ interface CustomRangeElementProps {
    * Maximum value
    */
   max: string;
+
+  /**
+   * Label for range input
+   */
+  label?: string;
 }
 
 interface RangeValues {
@@ -33,7 +40,15 @@ const RangeWrapper = styled.div`
   position: relative;
 
   height: 20px;
-  margin: 0 -6px;
+  margin: 0 -6px 20px 0;
+
+  ${ sansSerifLight };
+  font-size: 14px;
+  color: var(--color-dark-gray);
+`;
+
+const RangeLabel = styled.div`
+  margin: 24px 0 0 0;
 `;
 
 const RangeLine = styled.div`
@@ -85,11 +100,17 @@ const RangeInput = styled.input`
  * @param props - properties (min and max range values)
  */
 function CustomRange(props: CustomRangeElementProps): ReactElement {
+  const { t } = useTranslation();
   const [values, setValues] = useState<RangeValues>({ left: props.min,
     right: props.max });
 
   return (
     <RangeWrapper>
+
+      <RangeLabel>
+        { props.label && t(`customRange.${props.label}`) }
+      </RangeLabel>
+
       <RangeLine/>
 
       <RangeInput

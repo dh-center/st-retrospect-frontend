@@ -48,6 +48,7 @@ function MainAside(): ReactElement {
         <CustomRange
           min={'1500'}
           max={'2021'}
+          label={'years'}
         />
         Next elements for test
       </MenuAsideContext.Provider>
