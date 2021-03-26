@@ -53,7 +53,7 @@ const RangeLabel = styled.div`
 
 const RangeLine = styled.div`
   height: 2px;
-  margin: 6px 6px 0 6px;
+  margin: 6px 6px 0 0;
 
   background: var(--color-light-gray);
   border-radius: 2px;
@@ -64,7 +64,7 @@ const RangeInput = styled.input`
 
   width: 100%;
   height: 0;
-  margin: 10px 0 0;
+  margin: 10px 0 0 -6px;
   padding: 0;
 
   background: transparent;
