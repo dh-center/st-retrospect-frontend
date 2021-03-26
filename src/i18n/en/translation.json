@@ -17,5 +17,8 @@
   "customSelect": {
     "placeholder": "All categories",
     "reset": "Reset"
+  },
+  "customRange": {
+    "years": "Time period"
   }
 }
