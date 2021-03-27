@@ -39,8 +39,8 @@ interface RangeValues {
 const RangeWrapper = styled.div`
   position: relative;
 
-  height: 20px;
-  margin: 0 -6px 20px 0;
+  height: 47px;
+  margin: 24px -6px 12px;
 
   ${ sansSerifLight };
   font-size: 14px;
@@ -48,12 +48,12 @@ const RangeWrapper = styled.div`
 `;
 
 const RangeLabel = styled.div`
-  margin: 24px 0 0 0;
+  margin: 0 6px;
 `;
 
 const RangeLine = styled.div`
   height: 2px;
-  margin: 6px 6px 0 0;
+  margin: 12px 6px 0;
 
   background: var(--color-light-gray);
   border-radius: 2px;
@@ -64,7 +64,7 @@ const RangeInput = styled.input`
 
   width: 100%;
   height: 0;
-  margin: 10px 0 0 -6px;
+  margin: 10px 0 0;
   padding: 0;
 
   background: transparent;
