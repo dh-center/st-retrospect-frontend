@@ -77,6 +77,8 @@ const RangeInput = styled.input`
   &::-webkit-slider-thumb {
     position: relative;
 
+    border: none;
+
     width: 12px;
     height: 14px;
 
