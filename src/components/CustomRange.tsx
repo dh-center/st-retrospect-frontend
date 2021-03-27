@@ -107,9 +107,11 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
   return (
     <RangeWrapper>
 
-      <RangeLabel>
-        { props.label && t(`customRange.${props.label}`) }
-      </RangeLabel>
+      { props.label &&
+        <RangeLabel>
+          { t(`customRange.${props.label}`) }
+        </RangeLabel>
+      }
 
       <RangeLine/>
 
