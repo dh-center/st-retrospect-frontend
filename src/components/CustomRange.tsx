@@ -2,7 +2,6 @@ import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import RangeThumb from '../assets/range-thumb.svg';
 import { sansSerifLight } from '../styles/FontStyles';
-import { useTranslation } from 'react-i18next';
 
 /**
  * Props for custom range elements
@@ -100,7 +99,6 @@ const RangeInput = styled.input`
  * @param props - properties (min and max range values)
  */
 function CustomRange(props: CustomRangeElementProps): ReactElement {
-  const { t } = useTranslation();
   const [values, setValues] = useState<RangeValues>({ left: props.min,
     right: props.max });
 
@@ -109,7 +107,7 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
 
       { props.label &&
         <RangeLabel>
-          { t(`customRange.${props.label}`) }
+          { props.label }
         </RangeLabel>
       }
 
