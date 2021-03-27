@@ -122,18 +122,17 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
         max={props.max}
         onChange={value => {
           if (value.target.value > values.right) {
-            setValues({ 
+            setValues({
               left: values.right,
-              right: value.target.value 
+              right: value.target.value,
             });
           } else {
-            setValues({ 
+            setValues({
               left: value.target.value,
-              right: values.right 
+              right: values.right,
             });
           }
-        }
-        }
+        }}
       />
 
       <RangeInput
@@ -143,14 +142,17 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
         max={props.max}
         onChange={value => {
           if (value.target.value < values.left) {
-            setValues({ left: value.target.value,
-              right: values.left });
+            setValues({
+              left: value.target.value,
+              right: values.left,
+            });
           } else {
-            setValues({ left: values.left,
-              right: value.target.value });
+            setValues({
+              left: values.left,
+              right: value.target.value,
+            });
           }
-        }
-        }
+        }}
       />
 
     </RangeWrapper>
