@@ -122,11 +122,15 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
         max={props.max}
         onChange={value => {
           if (value.target.value > values.right) {
-            setValues({ left: values.right,
-              right: value.target.value });
+            setValues({ 
+              left: values.right,
+              right: value.target.value 
+            });
           } else {
-            setValues({ left: value.target.value,
-              right: values.right });
+            setValues({ 
+              left: value.target.value,
+              right: values.right 
+            });
           }
         }
         }
