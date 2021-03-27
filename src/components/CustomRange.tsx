@@ -88,6 +88,8 @@ const RangeInput = styled.input`
     background-size: cover;
     outline: none;
     cursor: pointer;
+    stroke: none;
+    stroke-opacity: 0;
 
     -webkit-appearance: none;
 
