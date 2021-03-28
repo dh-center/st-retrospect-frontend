@@ -17,5 +17,8 @@
   "customSelect": {
     "placeholder": "Все категории",
     "reset": "Сброс"
+  },
+  "customRange": {
+    "years": "Временной промежуток"
   }
 }

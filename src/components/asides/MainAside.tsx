@@ -7,6 +7,8 @@ import SearchLine from '../SearchLine';
 import MenuAside from './MenuAside';
 import MenuAsideContext from '../../contexts/MenuAsideContext';
 import CustomSelect from '../CustomSelect';
+import CustomRange from '../CustomRange';
+import { useTranslation } from 'react-i18next';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -26,6 +28,7 @@ const SearchLineWithMarginBottom = styled(SearchLine)`
  * Main aside component
  */
 function MainAside(): ReactElement {
+  const { t } = useTranslation();
   const [showAside, setShowAside] = useState(true);
   const [isMenuAsideShow, setMenuAsideShow] = useState(false);
 
@@ -43,6 +46,12 @@ function MainAside(): ReactElement {
         <AsideHeaderWithMarginBottom/>
         <SearchLineWithMarginBottom/>
         <CustomSelect/>
+        {/* @todo unmock variables*/}
+        <CustomRange
+          min={'1500'}
+          max={'2021'}
+          label={t(`customRange.years`)}
+        />
         Next elements for test
       </MenuAsideContext.Provider>
     </LeftPanel>
