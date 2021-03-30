@@ -58,7 +58,6 @@ const YearsDash = styled.span`
  * @param props - properties
  */
 function YearsInputs(props: YearsInputsElementProps): ReactElement {
-
   return (
     <YearsWrapper>
       <YearsInput
