@@ -20,5 +20,9 @@
   },
   "customRange": {
     "years": "Time period"
+  },
+  "aside": {
+    "searchBottomButton": "Map search",
+    "routesBottomButton": "Routes"
   }
 }
