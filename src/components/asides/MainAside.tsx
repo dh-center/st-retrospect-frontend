@@ -1,14 +1,16 @@
 import { ReactElement, useState } from 'react';
-import LeftPanel from '../LeftPanel';
-import AsideCloseButton from './AsideCloseButton';
-import styled from 'styled-components';
-import AsideHeader from './AsideHeader';
-import SearchLine from '../SearchLine';
-import MenuAside from './MenuAside';
 import MenuAsideContext from '../../contexts/MenuAsideContext';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+
+import AsideCloseButton from './AsideCloseButton';
+import AsideHeader from './AsideHeader';
+import MenuAside from './MenuAside';
+import LeftPanel from '../LeftPanel';
+import SearchLine from '../SearchLine';
 import CustomSelect from '../CustomSelect';
 import CustomRange from '../CustomRange';
-import { useTranslation } from 'react-i18next';
+import YearsInputs from '../YearsInputs';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -52,7 +54,10 @@ function MainAside(): ReactElement {
           max={'2021'}
           label={t(`customRange.years`)}
         />
-        Next elements for test
+        <YearsInputs
+          min={'1500'}
+          max={'2021'}
+        />
       </MenuAsideContext.Provider>
     </LeftPanel>
   );

@@ -39,7 +39,7 @@ const SelectWrapper = styled.div<CustomSelectElementProps>`
 
   box-shadow: var(${ props => props.isOpen ? '--shadow-medium' : '--shadow-base' });
   border-radius: 2px;
-  z-index: 2;
+  z-index: 1;
 `;
 
 const SelectInput = styled.div<CustomSelectElementProps>`
