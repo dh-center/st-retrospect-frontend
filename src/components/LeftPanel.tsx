@@ -4,6 +4,9 @@ import WithClassName from '../interfaces/WithClassName';
 import WithChildren from '../interfaces/WithChildren';
 
 const LeftPanelWrapper = styled.aside<LeftPanelProps>`
+  display: flex;
+  flex-direction: column;
+
   height: 100vh;
   width: 372px;
 
@@ -12,7 +15,7 @@ const LeftPanelWrapper = styled.aside<LeftPanelProps>`
   top: 0;
   z-index: 2;
 
-  padding: 0 16px;
+  padding: 0 16px 8px;
 
   background: var(--color-white);
   box-shadow: var(--shadow-base);

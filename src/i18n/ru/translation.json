@@ -20,5 +20,9 @@
   },
   "customRange": {
     "years": "Временной промежуток"
+  },
+  "aside": {
+    "searchBottomButton": "Поиск по карте",
+    "routesBottomButton": "Маршруты"
   }
 }
