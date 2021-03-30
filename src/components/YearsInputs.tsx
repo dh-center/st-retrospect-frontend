@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 
 /**
- * Props for custom range elements
+ * Props for years inputs
  */
 interface YearsInputsElementProps {
   /**
