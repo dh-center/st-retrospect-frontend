@@ -39,7 +39,7 @@ const RangeWrapper = styled.div`
   position: relative;
 
   height: 47px;
-  margin: 24px -5px 12px -6px;
+  margin: 24px -5px 0 -6px;
 
   ${ sansSerifLight };
   font-size: 14px;
