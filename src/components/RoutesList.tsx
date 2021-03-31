@@ -7,6 +7,9 @@ import { RoutesListQuery } from './__generated__/RoutesListQuery.graphql';
 import styled from 'styled-components';
 import RouteCard from './RouteCard';
 
+/**
+ * Default count of loading routes in list
+ */
 const ROUTES_ON_PAGE = 10;
 
 const ListWrapper = styled.div`

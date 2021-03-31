@@ -25,7 +25,13 @@ const Card = styled.div`
   overflow: hidden;
 `;
 
+/**
+ * Props of image block in route card
+ */
 interface ImageProps {
+  /**
+   * Source of image
+   */
   src: string;
 }
 
