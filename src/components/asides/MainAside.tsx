@@ -10,10 +10,11 @@ import LeftPanel from '../LeftPanel';
 import SearchLine from '../SearchLine';
 import CustomRange from '../CustomRange';
 import YearsInputs from '../YearsInputs';
-import AsideBottomButton from '../AsideBottomButton';
+import AsideBottomButton from './AsideBottomButton';
 import MapIcon from '../../assets/map.svg';
 import SearchIcon from '../../assets/search.svg';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import AsideParametersWrapper from './AsideParametersWrapper';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -75,19 +76,28 @@ function MainAside(): ReactElement {
           willClose={showAside}
           onClick={() => setShowAside(!showAside)}
         />
-        <AsideHeaderWithMarginBottom/>
-        <SearchLineWithMarginBottom/>
-        <CustomSelect/>
-        {/* @todo unmock variables*/}
-        <CustomRange
-          min={'1500'}
-          max={'2021'}
-          label={t(`customRange.years`)}
-        />
-        <YearsInputs
-          min={'1500'}
-          max={'2021'}
-        />
+        <AsideParametersWrapper>
+          <AsideHeaderWithMarginBottom/>
+          <Switch>
+            <Route exact path="/">
+              <SearchLineWithMarginBottom/>
+              <CustomSelect/>
+              {/* @todo unmock variables*/}
+              <CustomRange
+                min={'1500'}
+                max={'2021'}
+                label={t(`customRange.years`)}
+              />
+              <YearsInputs
+                min={'1500'}
+                max={'2021'}
+              />
+            </Route>
+            <Route path="/routes">
+              Здесь могли быть параметры маршрутов
+            </Route>
+          </Switch>
+        </AsideParametersWrapper>
 
         <Switch>
           <Route exact path="/">
