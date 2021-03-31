@@ -1,7 +1,7 @@
-import {RelayEnvironmentProvider} from 'react-relay/hooks';
-import {Environment, Network, RecordSource, RequestParameters, Store, Variables} from 'relay-runtime';
-import {ReactElement, useMemo} from 'react';
-import WithChildren from "./interfaces/WithChildren";
+import { RelayEnvironmentProvider } from 'react-relay';
+import { Environment, Network, RecordSource, RequestParameters, Store, Variables } from 'relay-runtime';
+import { ReactElement, useMemo } from 'react';
+import WithChildren from '../interfaces/WithChildren';
 
 /**
  * Client for performing GraphQL requests
@@ -43,7 +43,12 @@ class GraphQLClient {
   }
 }
 
-export default function RelayEnvironment(props: WithChildren): ReactElement {
+/**
+ * Relay environment provider to use it in hooks and other GraphQL requests
+ *
+ * @param props - props for component rendering
+ */
+export default function RelayEnvironmentContext(props: WithChildren): ReactElement {
   const client = useMemo(() => new GraphQLClient(), []);
 
   const env = useMemo(() => {
@@ -61,6 +66,8 @@ export default function RelayEnvironment(props: WithChildren): ReactElement {
   }, []);
 
   return (
-    <RelayEnvironmentProvider environment={env} {...props}/>
+    <RelayEnvironmentProvider environment={env}>
+      { props.children }
+    </RelayEnvironmentProvider>
   );
 }
