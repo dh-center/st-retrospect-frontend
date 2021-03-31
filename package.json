@@ -1,6 +1,6 @@
 {
   "name": "st-retrospect-frontend",
-  "version": "0.2.17",
+  "version": "0.3.0",
   "private": false,
   "dependencies": {
     "@sentry/react": "^6.1.0",
@@ -16,6 +16,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-i18next": "^11.8.5",
+    "react-relay": "^11.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "styled-components": "^5.2.1",
@@ -61,5 +62,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-relay": "^11.0.1",
+    "get-graphql-schema": "^2.1.2",
+    "graphql": "^15.5.0",
+    "relay-compiler": "^11.0.1",
+    "relay-compiler-language-typescript": "^13.0.6"
   }
 }
