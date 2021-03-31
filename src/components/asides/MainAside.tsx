@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, Suspense, useState } from 'react';
 import MenuAsideContext from '../../contexts/MenuAsideContext';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -16,6 +16,7 @@ import SearchIcon from '../../assets/search.svg';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import AsideParametersWrapper from './AsideParametersWrapper';
 import MenuIcon from '../../assets/burger-menu.svg';
+import RoutesList from '../RoutesList';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -128,6 +129,14 @@ function MainAside(): ReactElement {
             </Route>
           </Switch>
         </AsideParametersWrapper>
+
+        <Switch>
+          <Route path="/routes">
+            <Suspense fallback={<div>Loading...</div>}>
+              <RoutesList/>
+            </Suspense>
+          </Route>
+        </Switch>
 
         <Switch>
           <Route exact path="/">
