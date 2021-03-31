@@ -4,7 +4,7 @@ import { ReactElement } from 'react';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { useTranslation } from 'react-i18next';
-import { RouteCard_route$key } from './__generated__/RouteCard_route.graphql';
+import { RouteCard_quest$key } from './__generated__/RouteCard_quest.graphql';
 
 /**
  * Props with route fragment
@@ -13,7 +13,7 @@ interface RouteCardProps {
   /**
    * Route data as fragment
    */
-  route: RouteCard_route$key;
+  route: RouteCard_quest$key;
 }
 
 const Card = styled.div`
