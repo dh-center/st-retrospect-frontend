@@ -25,6 +25,17 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  *::-webkit-scrollbar {
+    width: 12px;
+
+    background: var(--color-light-gray);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border: 3px solid var(--color-light-gray);
+    background: #E0E0E0;
+  }
+
   .mapboxgl-ctrl-bottom-left,
   .mapboxgl-ctrl-bottom-right,
   .mapboxgl-ctrl-top-left,

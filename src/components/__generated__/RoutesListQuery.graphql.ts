@@ -31,6 +31,7 @@ fragment RoutesList_questsConnection_2QE1um on Query {
     edges {
       node {
         name
+        photo
         id
         __typename
       }
@@ -138,6 +139,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "photo",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "id",
                     "storageKey": null
                   },
@@ -201,12 +209,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ecd482e7875dd1827ec2ef541d68eda5",
+    "cacheID": "39b579cd6af4ce1c95c9fbee5b1e7f60",
     "id": null,
     "metadata": {},
     "name": "RoutesListQuery",
     "operationKind": "query",
-    "text": "query RoutesListQuery(\n  $count: Int\n  $after: Cursor\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        name\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query RoutesListQuery(\n  $count: Int\n  $after: Cursor\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        name\n        photo\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

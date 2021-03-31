@@ -24,5 +24,6 @@
   "aside": {
     "searchBottomButton": "Поиск по карте"
   },
-  "routes": "Маршруты"
+  "routes": "Маршруты",
+  "author": "Автор"
 }

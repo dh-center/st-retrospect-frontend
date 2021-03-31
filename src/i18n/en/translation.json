@@ -24,5 +24,6 @@
   "aside": {
     "searchBottomButton": "Map search"
   },
-  "routes": "Routes"
+  "routes": "Routes",
+  "author": "Author"
 }

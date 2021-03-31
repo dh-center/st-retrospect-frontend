@@ -9,6 +9,7 @@ export type RoutesList_questsConnection = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly name: string;
+                readonly photo: string | null;
             };
         }>;
     };
@@ -99,6 +100,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "photo",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 }
@@ -148,5 +156,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'bfc42f6dab3c712ff4993c61487ab1ed';
+(node as any).hash = 'cfb4330fd8d461e1e357c46358f3ecff';
 export default node;
