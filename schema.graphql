@@ -1,0 +1,1582 @@
+"""Directive for applying default values to nullable fields"""
+directive @default(value: String!) on FIELD_DEFINITION
+
+"""Converts MongoDB ObjectId value to the Global Unique ID"""
+directive @toGlobalId(type: String!) on FIELD_DEFINITION
+
+"""Extracts value from specified field in parent object"""
+directive @fromField(name: String!) on FIELD_DEFINITION
+
+"""
+Directive for multilingual fields support
+
+On input field maps provided value to multilingual object (e.g. 'hello' => {en: 'hello'})
+On type field maps multilingual object to value ({en: 'hello'} => 'hello')
+"""
+directive @multilingual on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+"""Load data via specific dataLoader"""
+directive @dataLoader(
+  """Name of needed DataLoader"""
+  dataLoaderName: String!
+
+  """Name of field with data for DataLoader"""
+  fieldName: String
+
+  """Arg name to extract id from"""
+  argName: String
+) on FIELD_DEFINITION
+
+"""Directive for pagination according to the Relay specification"""
+directive @pagination(collectionName: String!) on FIELD_DEFINITION
+
+"""Directive for checking user authorization"""
+directive @authCheck on FIELD_DEFINITION
+
+"""Directive for checking admin permissions"""
+directive @adminCheck on FIELD_DEFINITION
+
+"""Directive for checking editor permissions"""
+directive @editorCheck on FIELD_DEFINITION
+
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
+input AddArchitectInput {
+  """Location instance id"""
+  locationInstanceId: GlobalId!
+
+  """Architect for adding"""
+  architectId: GlobalId!
+}
+
+type AddArchitectPayload {
+  """New relation id"""
+  recordId: GlobalId!
+
+  """New relation"""
+  record: Relation!
+}
+
+"""Location address representation"""
+type Address {
+  """Country data"""
+  country: Country
+
+  """Country region data"""
+  region: Region
+
+  """City name, e.g. Saint-Petersburg"""
+  place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
+  locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
+  address: MultilingualString
+
+  """An optional second line of an address"""
+  address2: MultilingualString
+
+  """Address postcode"""
+  postcode: MultilingualString
+}
+
+"""Country data in address of location"""
+type Country implements Node {
+  """Country identifier"""
+  id: ID!
+
+  """ISO 3166 country code"""
+  code: String!
+
+  """Country name"""
+  name: MultilingualString!
+}
+
+"""Input type for specifying address in new location"""
+input CreateAddressInput {
+  """Unique country code from ISO 3166"""
+  countryCode: String!
+
+  """Unique region code from ISO 3166"""
+  regionCode: String!
+
+  """City name, e.g. Saint-Petersburg"""
+  place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
+  locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
+  address: MultilingualString!
+
+  """An optional second line of an address"""
+  address2: MultilingualString
+
+  """Address postcode"""
+  postcode: MultilingualString
+}
+
+"""Input for creating new location"""
+input CreateLocationInput {
+  """Location position latitude"""
+  latitude: Float!
+
+  """Location position longitude"""
+  longitude: Float!
+
+  """Possible location representations"""
+  instances: [LocationInstanceInput!]!
+
+  """Address to bind to new location"""
+  addresses: [CreateAddressInput!]!
+}
+
+input CreateLocationInstanceInput {
+  """Location's name"""
+  name: MultilingualString!
+
+  """Location's description"""
+  description: MultilingualString!
+
+  """Location style id"""
+  locationStyleId: GlobalId
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+
+  """Location id to which this instance below"""
+  locationId: GlobalId!
+
+  """Source of information about location instance"""
+  source: MultilingualString!
+}
+
+type CreateLocationInstancePayload {
+  """Created location id"""
+  recordId: GlobalId!
+
+  """Created location"""
+  record: LocationInstance!
+}
+
+type CreateLocationPayload {
+  """Created location id"""
+  recordId: GlobalId!
+
+  """Created location"""
+  record: Location!
+}
+
+"""Input for create mutation"""
+input CreateLocationStyleInput {
+  name: MultilingualString!
+}
+
+"""Payload of create mutation response"""
+type CreateLocationStylePayload {
+  """New record id"""
+  recordId: GlobalId!
+
+  """Location style object"""
+  record: LocationStyle!
+}
+
+input CreatePersonInput {
+  """Person's last name"""
+  lastName: MultilingualString
+
+  """Person's first name"""
+  firstName: MultilingualString
+
+  """Person's patronymic"""
+  patronymic: MultilingualString
+
+  """Person's pseudonym"""
+  pseudonym: MultilingualString
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Person's professions"""
+  professions: [String!]
+
+  """Person's description"""
+  description: MultilingualString
+
+  """Person's birth date"""
+  birthDate: String
+
+  """Person's death date"""
+  deathDate: String
+
+  """Contains links with person's photos"""
+  photoLinks: [String!]
+
+  """Person's info link"""
+  wikiLink: String
+
+  """Person tags"""
+  tagIds: [String!]!
+}
+
+type CreatePersonPayload {
+  """Created person id"""
+  recordId: GlobalId!
+
+  """Created person"""
+  record: Person!
+}
+
+input CreateQuestInput {
+  """Quest name"""
+  name: String!
+
+  """Quest description"""
+  description: String
+
+  """Quest photo"""
+  photo: String
+
+  """Quest type (quiz, route, etc.)"""
+  type: TaskTypes! = ROUTE
+
+  """The minimum level required by the user to complete this quest"""
+  minLevel: Int!
+
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int!
+
+  """Quest data"""
+  data: EditorDataInput!
+
+  """Information about quest authors"""
+  credits: EditorDataInput!
+
+  """Quest tags"""
+  tagIds: [String!]!
+}
+
+type CreateQuestPayload {
+  """Created quest id"""
+  recordId: GlobalId!
+
+  """Created quest"""
+  record: Quest!
+}
+
+input CreateRelationInput {
+  """Person ID in relation"""
+  personId: GlobalId!
+
+  """Location Instance ID in relation"""
+  locationInstanceId: GlobalId!
+
+  """Relation type ID"""
+  relationId: GlobalId!
+
+  """Quote about relation"""
+  quote: MultilingualString!
+
+  """Link to quote"""
+  link: MultilingualString!
+
+  """Date of relation start"""
+  startDate: String!
+
+  """Date of relation end"""
+  endDate: String!
+}
+
+type CreateRelationPayload {
+  """Created relation id"""
+  recordId: GlobalId!
+
+  """Created relation"""
+  record: Relation!
+}
+
+input CreateRelationTypeInput {
+  """Relation type name"""
+  name: MultilingualString!
+
+  """Relation type synonyms"""
+  synonyms: [String!]
+}
+
+type CreateRelationTypePayload {
+  """Created relation type id"""
+  recordId: GlobalId!
+
+  """Created relation type"""
+  record: RelationType!
+}
+
+input CreateTagInput {
+  """Value of tag"""
+  value: MultilingualString!
+}
+
+type CreateTagPayload {
+  """Created tag id"""
+  recordId: GlobalId!
+
+  """Created tag object"""
+  record: Tag!
+}
+
+scalar Cursor
+
+type DeleteLocationInstancePayload {
+  """Created location id"""
+  recordId: GlobalId!
+}
+
+type DeleteLocationPayload {
+  """Deleted location id"""
+  recordId: GlobalId!
+}
+
+"""Payload of delete mutation"""
+type DeleteLocationStylePayload {
+  """Deleted record id"""
+  recordId: GlobalId!
+}
+
+type DeletePersonPayload {
+  """Deleted person id"""
+  recordId: GlobalId!
+}
+
+type DeleteQuestPayload {
+  """Deleted quest id"""
+  recordId: GlobalId!
+}
+
+type DeleteRelationPayload {
+  """Deleted relation id"""
+  recordId: GlobalId!
+}
+
+type DeleteRelationTypePayload {
+  """Deleted relation type id"""
+  recordId: GlobalId!
+}
+
+type DeleteTagPayload {
+  """Deleted tag id"""
+  recordId: GlobalId!
+}
+
+"""
+Data saved from Editor.js
+See https://editorjs.io/saving-data
+"""
+type EditorData {
+  """Saving timestamp"""
+  time: Timestamp
+
+  """List of Blocks data"""
+  blocks: [JSON!]!
+
+  """Version of Editor.js"""
+  version: String
+}
+
+"""
+Data saved from Editor.js
+See https://editorjs.io/saving-data
+"""
+input EditorDataInput {
+  """Saving timestamp"""
+  time: Timestamp
+
+  """List of Blocks data"""
+  blocks: [JSON!]!
+
+  """Version of Editor.js"""
+  version: String
+}
+
+scalar GlobalId
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""Supported languages for data"""
+enum Languages {
+  EN
+  RU
+}
+
+"""Location for displaying on map and making relations with persons"""
+type Location implements Node {
+  """Location's ID"""
+  id: ID!
+
+  """Location position latitude"""
+  latitude: Float
+
+  """Location position longitude"""
+  longitude: Float
+
+  """Array of addresses ids"""
+  addresses: [Address!]
+
+  """Possible location representations"""
+  instances: [LocationInstance!]!
+}
+
+"""Model for representing list of locations"""
+type LocationConnection {
+  """List of locations edges"""
+  edges: [LocationEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific location in connection"""
+type LocationEdge {
+  """Cursor of this location"""
+  cursor: Cursor!
+
+  """Location info"""
+  node: Location!
+}
+
+"""
+Location context. This can be a time period, a special description for a particular route, etc.
+"""
+type LocationInstance implements Node {
+  """Instance's ID"""
+  id: ID!
+
+  """Location's name"""
+  name: String
+
+  """Location"""
+  location: Location!
+
+  """Location's description"""
+  description: String
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Array of location's types"""
+  locationTypes: [LocationType]
+
+  """Location style"""
+  locationStyle: LocationStyle
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+
+  """Location relations"""
+  relations: [Relation!]!
+
+  """Array of architects"""
+  architects: [Person]
+
+  """Source of information about location instance"""
+  source: MultilingualString
+
+  """Location instance tags"""
+  tags: [Tag!]!
+}
+
+input LocationInstanceInput {
+  """Location's name"""
+  name: MultilingualString!
+
+  """Location's description"""
+  description: MultilingualString!
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+
+  """Location instance tags"""
+  tagIds: [String!]
+}
+
+type LocationInstanceMutations {
+  """Create location instance"""
+  create(input: CreateLocationInstanceInput!): CreateLocationInstancePayload!
+
+  """Add architect to location instance"""
+  addArchitect(input: AddArchitectInput!): AddArchitectPayload!
+
+  """Remove architects from location instance"""
+  removeArchitect(input: RemoveArchitectInput!): RemoveArchitectPayload!
+
+  """Update location instance"""
+  update(input: UpdateLocationInstanceInput!): UpdateLocationInstancePayload!
+
+  """Delete location instance"""
+  delete(id: GlobalId!): DeleteLocationInstancePayload!
+}
+
+type LocationMutations {
+  """Create location"""
+  create(input: CreateLocationInput!): CreateLocationPayload!
+
+  """Update location"""
+  update(input: UpdateLocationInput!): UpdateLocationPayload!
+
+  """Delete location"""
+  delete(id: GlobalId!): DeleteLocationPayload!
+}
+
+"""Location style"""
+type LocationStyle implements Node {
+  """LoactionStyle ID"""
+  id: ID!
+
+  """LocationStyle name"""
+  name: String
+}
+
+"""Location style mutations"""
+type LocationStyleMutations {
+  """Creates new location style"""
+  create(input: CreateLocationStyleInput!): CreateLocationStylePayload!
+
+  """Updates existed location style"""
+  update(input: UpdateLocationStyleInput!): UpdateLocationStylePayload!
+
+  """Deletes location style by id"""
+  delete(id: GlobalId!): DeleteLocationStylePayload!
+}
+
+"""Location type to add it to Location"""
+type LocationType implements Node {
+  """LocationType's ID"""
+  id: ID!
+
+  """LocationTypes's name"""
+  name: String
+}
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar Long
+
+"""
+The `String` scalar type represents textual data, represented as UTF-8 character
+sequences. The String type is most often used by GraphQL to represent free-form
+human-readable text.
+"""
+scalar MultilingualString
+
+"""API mutations"""
+type Mutation {
+  """Unused field to let extend this type"""
+  _: Boolean
+  person: PersonMutations
+  locationStyles: LocationStyleMutations!
+  location: LocationMutations!
+  locationInstances: LocationInstanceMutations!
+  relation: RelationMutations!
+  relationType: RelationTypeMutations!
+  quest: QuestMutations!
+
+  """Mutations for users"""
+  user: UserMutations!
+  tag: TagMutations!
+}
+
+"""An object with a Globally Unique ID"""
+interface Node {
+  """The ID of the object."""
+  id: ID!
+}
+
+"""
+A field whose value conforms with the standard mongodb object ID as described
+here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId.
+Example: 5e5677d71bdc2ae76344968c
+"""
+scalar ObjectId
+
+"""Information about current page"""
+type PageInfo {
+  """Information about the existence of the next page"""
+  hasNextPage: Boolean!
+
+  """Information about the existence of the previous page"""
+  hasPreviousPage: Boolean!
+
+  """First cursor on this page"""
+  startCursor: Cursor
+
+  """Last cursor on this page"""
+  endCursor: Cursor
+}
+
+type Person implements Node {
+  """Person's id"""
+  id: ID!
+
+  """Person's first name"""
+  firstName: MultilingualString
+
+  """Person's last name"""
+  lastName: MultilingualString
+
+  """Person's patronymic"""
+  patronymic: MultilingualString
+
+  """Person's pseudonym"""
+  pseudonym: MultilingualString
+
+  """Person's professions"""
+  professions: [String]
+
+  """Person's description"""
+  description: MultilingualString
+
+  """Person's birth date"""
+  birthDate: String
+
+  """Person's death date"""
+  deathDate: String
+
+  """Person relations"""
+  relations: [Relation!]!
+
+  """Person's info link"""
+  wikiLink: String
+
+  """Person's main photo"""
+  mainPhotoLink: String
+
+  """Person's photos links"""
+  photoLinks: [String]
+
+  """Person tags"""
+  tags: [Tag!]!
+}
+
+"""Model for representing list of persons"""
+type PersonConnection {
+  """List of persons edges"""
+  edges: [PersonEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific person in connection"""
+type PersonEdge {
+  """Cursor of this person"""
+  cursor: Cursor!
+
+  """Person info"""
+  node: Person!
+}
+
+type PersonMutations {
+  """Create person"""
+  create(input: CreatePersonInput!): CreatePersonPayload!
+
+  """Update person"""
+  update(input: UpdatePersonInput!): UpdatePersonPayload!
+
+  """Delete person"""
+  delete(id: GlobalId!): DeletePersonPayload!
+}
+
+"""API queries"""
+type Query {
+  node(id: ID!): Node
+
+  """Get specific person"""
+  person(
+    """Person id"""
+    id: GlobalId!
+  ): Person
+
+  """Get all persons"""
+  persons(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): PersonConnection!
+
+  """Get specific location"""
+  location(
+    """Location id"""
+    id: GlobalId!
+  ): Location
+
+  """Get all locations"""
+  locations(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): LocationConnection!
+
+  """Get specific locationInstances"""
+  locationInstance(
+    """locationInstances id"""
+    id: GlobalId!
+  ): LocationInstance
+
+  """Get all locationInstances"""
+  locationInstances: [LocationInstance!]!
+
+  """Get relations on user request"""
+  search(
+    """The string on the basis of which the request will be made"""
+    searchString: String!
+  ): [Relation!]!
+
+  """Returns list of all location types"""
+  locationTypes: [LocationType!]!
+
+  """Returns list of all location styles"""
+  locationStyles: [LocationStyle!]!
+
+  """Get specific relation"""
+  relation(
+    """Relation id"""
+    id: GlobalId!
+  ): Relation
+
+  """Get all relations"""
+  relations(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): RelationConnection!
+
+  """Get specific relation type"""
+  relationType(
+    """Relation type id"""
+    id: GlobalId!
+  ): RelationType
+
+  """List of available relation types"""
+  relationTypes(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): RelationTypeConnection!
+
+  """Get info about user"""
+  me: User!
+
+  """Get specific User"""
+  user(
+    """User id"""
+    id: GlobalId!
+  ): User
+
+  """Returns connection with all users"""
+  users(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): UserConnection!
+
+  """Get specific Quest"""
+  quest(
+    """Quest id"""
+    id: GlobalId!
+  ): Quest
+
+  """Get all quests"""
+  quests(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): QuestConnection!
+
+  """Get specific tag"""
+  tag(
+    """Tag id"""
+    id: GlobalId!
+  ): Tag
+
+  """List of available tags"""
+  tags(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): TagConnection!
+}
+
+type Quest implements Node {
+  """Quest ID"""
+  id: ID!
+
+  """Quest name"""
+  name: String!
+
+  """Quest description"""
+  description: String
+
+  """Quest photo"""
+  photo: String
+
+  """Quest type (quiz, route, etc.)"""
+  type: TaskTypes!
+
+  """Quest task"""
+  task: JSON!
+
+  """Quest data"""
+  data: EditorData
+
+  """Information about quest authors"""
+  credits: EditorData
+
+  """Quest rewards"""
+  rewards: [JSON!]!
+
+  """The minimum level required by the user to complete this quest"""
+  minLevel: Int!
+
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int!
+
+  """Quest progress states (passed, available, blocked)"""
+  questProgressState: QuestUserProgressStates!
+
+  """Quest tags"""
+  tags: [Tag!]!
+}
+
+"""Model for representing list of quests"""
+type QuestConnection {
+  """List of quests edges"""
+  edges: [QuestEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific quest in connection"""
+type QuestEdge {
+  """Cursor of this quest"""
+  cursor: Cursor!
+
+  """Quest info"""
+  node: Quest!
+}
+
+type QuestMutations {
+  """Create quest"""
+  create(input: CreateQuestInput!): CreateQuestPayload!
+
+  """Update quest"""
+  update(input: UpdateQuestInput!): UpdateQuestPayload!
+
+  """Delete quest"""
+  delete(id: GlobalId!): DeleteQuestPayload!
+}
+
+"""Possible quest states"""
+enum QuestUserProgressStates {
+  """Quest is passed"""
+  PASSED
+
+  """Quest is available"""
+  AVAILABLE
+
+  """Quest is locked"""
+  LOCKED
+}
+
+"""Region data in address of location"""
+type Region implements Node {
+  """Region identifier"""
+  id: ID!
+
+  """
+  ISO 3166 country code
+  see https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+  """
+  code: String!
+
+  """Region name"""
+  name: MultilingualString!
+}
+
+"""Represents relation between person and location"""
+type Relation implements Node {
+  """Relation's id"""
+  id: ID!
+
+  """Person in relation"""
+  person: Person
+
+  """Location in relation"""
+  locationInstance: LocationInstance
+
+  """Relation type"""
+  relationType: RelationType
+
+  """Relation's quote"""
+  quote: MultilingualString
+
+  """Link to quote source"""
+  link: MultilingualString
+
+  """Date of relation start"""
+  startDate: String
+
+  """Date of relation end"""
+  endDate: String
+}
+
+"""Model for representing list of relations"""
+type RelationConnection {
+  """List of persons edges"""
+  edges: [RelationEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific relation in connection"""
+type RelationEdge {
+  """Cursor of this person"""
+  cursor: Cursor!
+
+  """Person info"""
+  node: Relation!
+}
+
+type RelationMutations {
+  """Create relation"""
+  create(input: CreateRelationInput!): CreateRelationPayload!
+
+  """Update relation"""
+  update(input: UpdateRelationInput!): UpdateRelationPayload!
+
+  """Delete relation"""
+  delete(id: GlobalId!): DeleteRelationPayload!
+}
+
+"""Represents one of the relations types"""
+type RelationType implements Node {
+  """Relation type id"""
+  id: ID!
+
+  """Relation type name"""
+  name: MultilingualString!
+
+  """Relation type synonyms"""
+  synonyms: [String!]!
+}
+
+"""Model for representing list of relation types"""
+type RelationTypeConnection {
+  """List of relation types edges"""
+  edges: [RelationTypeEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific relation type in connection"""
+type RelationTypeEdge {
+  """Cursor of this relation type"""
+  cursor: Cursor!
+
+  """Relation type info"""
+  node: RelationType!
+}
+
+type RelationTypeMutations {
+  """Creates relation type"""
+  create(input: CreateRelationTypeInput!): CreateRelationTypePayload!
+
+  """Update relation type"""
+  update(input: UpdateRelationTypeInput!): UpdateRelationTypePayload!
+
+  """Delete relation type"""
+  delete(id: GlobalId!): DeleteRelationTypePayload!
+}
+
+input RemoveArchitectInput {
+  """Location instance id"""
+  locationInstanceId: GlobalId!
+
+  """Architect for removing"""
+  architectId: GlobalId!
+}
+
+type RemoveArchitectPayload {
+  """Deleted relation id"""
+  recordId: GlobalId!
+}
+
+"""Tag of person or location instance"""
+type Tag implements Node {
+  """Tag id"""
+  id: ID!
+
+  """
+  Tag value
+  Can be multilingual
+  """
+  value: MultilingualString!
+}
+
+"""Model for representing page of tags"""
+type TagConnection {
+  """List of tags on current page"""
+  edges: [TagEdge!]!
+
+  """Information about current page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges on current page"""
+  totalCount: Int!
+}
+
+"""Information about specific tag in connection"""
+type TagEdge {
+  """Cursor of current tag"""
+  cursor: Cursor!
+
+  """Tag object"""
+  node: Tag!
+}
+
+type TagMutations {
+  """Creates tag"""
+  create(input: CreateTagInput!): CreateTagPayload!
+
+  """Updates existing tag"""
+  update(input: UpdateTagInput!): UpdateTagPayload!
+
+  """Deletes existing tag"""
+  delete(id: GlobalId!): DeleteTagPayload!
+}
+
+"""Possible task types"""
+enum TaskTypes {
+  """Task type quiz"""
+  QUIZ
+
+  """Task type route"""
+  ROUTE
+}
+
+"""
+The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+"""Input type for updating address in location"""
+input UpdateAddressInput {
+  """Unique country code from ISO 3166"""
+  countryCode: String
+
+  """Unique region code from ISO 3166"""
+  regionCode: String
+
+  """City name, e.g. Saint-Petersburg"""
+  place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
+  locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
+  address: MultilingualString
+
+  """An optional second line of an address"""
+  address2: MultilingualString
+
+  """Address postcode"""
+  postcode: MultilingualString
+}
+
+input UpdateLocationInput {
+  """Location id to update"""
+  id: GlobalId!
+
+  """Location position latitude"""
+  latitude: Float
+
+  """Location position longitude"""
+  longitude: Float
+
+  """Updated location address"""
+  addresses: [UpdateAddressInput!]
+}
+
+input UpdateLocationInstanceInput {
+  """Location instance id"""
+  id: GlobalId!
+
+  """Location's name"""
+  name: MultilingualString!
+
+  """Location's description"""
+  description: MultilingualString!
+
+  """Location style id"""
+  locationStyleId: GlobalId
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+
+  """Source of information about location instance"""
+  source: MultilingualString!
+}
+
+type UpdateLocationInstancePayload {
+  """Created location id"""
+  recordId: GlobalId!
+
+  """Created location"""
+  record: LocationInstance!
+}
+
+type UpdateLocationPayload {
+  """Updated location id"""
+  recordId: GlobalId!
+
+  """Updated location"""
+  record: Location!
+}
+
+"""Input for update mutation"""
+input UpdateLocationStyleInput {
+  """Location style id"""
+  id: GlobalId!
+
+  """Location style name"""
+  name: MultilingualString!
+}
+
+"""Payload of update mutation"""
+type UpdateLocationStylePayload {
+  """Updated record id"""
+  recordId: GlobalId!
+
+  """Location style object"""
+  record: LocationStyle!
+}
+
+input UpdatePersonInput {
+  """ID of person for updating"""
+  id: GlobalId!
+
+  """Person's last name"""
+  lastName: String
+
+  """Person's first name"""
+  firstName: String
+
+  """Person's patronymic"""
+  patronymic: String
+
+  """Person's pseudonym"""
+  pseudonym: String
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Person's professions"""
+  professions: [String!]
+
+  """Person's description"""
+  description: String
+
+  """Person's birth date"""
+  birthDate: String
+
+  """Person's death date"""
+  deathDate: String
+
+  """Contains links with person's photos"""
+  photoLinks: [String!]
+
+  """Person's info link"""
+  wikiLink: String
+
+  """Person tags"""
+  tagIds: [String!]!
+}
+
+type UpdatePersonPayload {
+  """Updated person id"""
+  recordId: GlobalId!
+
+  """Updated person"""
+  record: Person!
+}
+
+input UpdateQuestInput {
+  """Quest ID"""
+  id: GlobalId!
+
+  """Quest name"""
+  name: String
+
+  """Quest description"""
+  description: String
+
+  """Quest photo"""
+  photo: String
+
+  """Quest type (quiz, route, etc.)"""
+  type: TaskTypes
+
+  """The minimum level required by the user to complete this quest"""
+  minLevel: Int
+
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int
+
+  """Quest data"""
+  data: EditorDataInput
+
+  """Information about quest authors"""
+  credits: EditorDataInput
+
+  """Quest tags"""
+  tagIds: [String!]!
+}
+
+type UpdateQuestPayload {
+  """Updated quest id"""
+  recordId: GlobalId!
+
+  """Updated quest"""
+  record: Quest!
+}
+
+input UpdateRelationInput {
+  """ID of relation for updating"""
+  id: GlobalId!
+
+  """Person ID in relation"""
+  personId: GlobalId
+
+  """Location Instance ID in relation"""
+  locationInstanceId: GlobalId
+
+  """Relation type ID"""
+  relationId: GlobalId
+
+  """Quote about relation"""
+  quote: MultilingualString
+
+  """Link to quote"""
+  link: MultilingualString
+
+  """Date of relation start"""
+  startDate: String
+
+  """Date of relation end"""
+  endDate: String
+}
+
+type UpdateRelationPayload {
+  """Updated relation id"""
+  recordId: GlobalId!
+
+  """Updated relation"""
+  record: Relation!
+}
+
+input UpdateRelationTypeInput {
+  """ID of relation type for updating"""
+  id: GlobalId!
+
+  """Relation type name"""
+  name: MultilingualString
+
+  """Relation type synonyms"""
+  synonyms: [String!]
+}
+
+type UpdateRelationTypePayload {
+  """Updated relation type id"""
+  recordId: GlobalId!
+
+  """Updated relation type"""
+  record: RelationType!
+}
+
+input UpdateTagInput {
+  """Tag id for updating"""
+  id: GlobalId!
+
+  """New tag value"""
+  value: MultilingualString!
+}
+
+type UpdateTagPayload {
+  """Updated tag id"""
+  recordId: GlobalId!
+
+  """Updated tag object"""
+  record: Tag!
+}
+
+input UpdateUserInput {
+  """Id of the user to update"""
+  id: GlobalId!
+
+  """New persmissions"""
+  permissions: [String!]!
+}
+
+type UpdateUserPayload {
+  """Updated user id"""
+  recordId: GlobalId!
+
+  """Updated user"""
+  record: User!
+}
+
+type User implements Node {
+  """User's ID"""
+  id: ID!
+
+  """Username"""
+  username: String!
+
+  """User profile photo url"""
+  photo: String
+
+  """User first name"""
+  firstName: String
+
+  """User last name"""
+  lastName: String
+
+  """Quests that user complete"""
+  completedQuests: [Quest!]!
+
+  """User experience"""
+  exp: Int!
+
+  """User level"""
+  level: Int!
+
+  """Array of user permission"""
+  permissions: [String!]!
+}
+
+type UserCompleteQuestPayload {
+  """User id"""
+  recordId: GlobalId!
+
+  """User completed quest"""
+  record: User!
+}
+
+"""Model for representing list of persons"""
+type UserConnection {
+  """List of persons edges"""
+  edges: [UserEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific person in connection"""
+type UserEdge {
+  """Cursor of this person"""
+  cursor: Cursor!
+
+  """Person info"""
+  node: User!
+}
+
+"""Mutations for users"""
+type UserMutations {
+  """Complete quest"""
+  completeQuest(questId: GlobalId!): UserCompleteQuestPayload!
+
+  """Updates user data"""
+  update(input: UpdateUserInput!): UpdateUserPayload!
+}
+

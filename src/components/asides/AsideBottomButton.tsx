@@ -10,6 +10,7 @@ const Button = styled.button`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 
   height: 48px;
   width: 100%;
