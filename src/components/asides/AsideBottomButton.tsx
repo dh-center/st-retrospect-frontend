@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import WithClassName from '../interfaces/WithClassName';
-import WithChildren from '../interfaces/WithChildren';
-import { sansSerifLight } from '../styles/FontStyles';
-import WithOnClick from '../interfaces/WithOnClick';
+import WithClassName from '../../interfaces/WithClassName';
+import WithChildren from '../../interfaces/WithChildren';
+import { sansSerifLight } from '../../styles/FontStyles';
+import WithOnClick from '../../interfaces/WithOnClick';
 
 const Button = styled.button`
   display: flex;
