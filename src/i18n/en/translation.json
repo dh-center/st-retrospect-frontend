@@ -22,7 +22,7 @@
     "years": "Time period"
   },
   "aside": {
-    "searchBottomButton": "Map search",
-    "routesBottomButton": "Routes"
-  }
+    "searchBottomButton": "Map search"
+  },
+  "routes": "Routes"
 }

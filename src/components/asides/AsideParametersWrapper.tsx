@@ -1,11 +1,13 @@
 import { ReactElement } from 'react';
 import WithChildren from '../../interfaces/WithChildren';
 import styled from 'styled-components';
+import { sansSerifLight } from '../../styles/FontStyles';
 
 const Wrapper = styled.div`
   padding: 0 16px 24px;
   margin: 0 -16px;
 
+  ${ sansSerifLight };
   box-shadow: var(--shadow-base);
 `;
 
