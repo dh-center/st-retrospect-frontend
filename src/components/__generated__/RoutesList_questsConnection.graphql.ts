@@ -8,8 +8,7 @@ export type RoutesList_questsConnection = {
     readonly quests: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly name: string;
-                readonly photo: string | null;
+                readonly " $fragmentRefs": FragmentRefs<"RouteCard_quest">;
             };
         }>;
     };
@@ -93,22 +92,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "name",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "photo",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "RouteCard_quest"
                 }
               ],
               "storageKey": null
@@ -156,5 +146,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'cfb4330fd8d461e1e357c46358f3ecff';
+(node as any).hash = '90ff1a6388b1db42e0550874dc54bcf8';
 export default node;

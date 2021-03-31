@@ -26,12 +26,16 @@ query RoutesListPaginationQuery(
   ...RoutesList_questsConnection_2QE1um
 }
 
+fragment RouteCard_quest on Quest {
+  name
+  photo
+}
+
 fragment RoutesList_questsConnection_2QE1um on Query {
   quests(first: $count, after: $after) {
     edges {
       node {
-        name
-        photo
+        ...RouteCard_quest
         id
         __typename
       }
@@ -205,14 +209,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ddcfb8585c8af027edce2d20dfd2a645",
+    "cacheID": "fb0f7b83a9fa30089ba4ca8f38d79482",
     "id": null,
     "metadata": {},
     "name": "RoutesListPaginationQuery",
     "operationKind": "query",
-    "text": "query RoutesListPaginationQuery(\n  $after: Cursor\n  $count: Int = 1\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        name\n        photo\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query RoutesListPaginationQuery(\n  $after: Cursor\n  $count: Int = 1\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RouteCard_quest on Quest {\n  name\n  photo\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        ...RouteCard_quest\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'cfb4330fd8d461e1e357c46358f3ecff';
+(node as any).hash = '90ff1a6388b1db42e0550874dc54bcf8';
 export default node;
