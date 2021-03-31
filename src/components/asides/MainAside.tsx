@@ -15,6 +15,7 @@ import MapIcon from '../../assets/map.svg';
 import SearchIcon from '../../assets/search.svg';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import AsideParametersWrapper from './AsideParametersWrapper';
+import MenuIcon from '../../assets/burger-menu.svg';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -28,6 +29,30 @@ const AsideHeaderWithMarginBottom = styled(AsideHeader)`
 
 const SearchLineWithMarginBottom = styled(SearchLine)`
   margin-bottom: 12px;
+`;
+
+const MenuButton = styled.button`
+  height: 48px;
+  width: 48px;
+  margin-right: 24px;
+
+  background: var(--color-white);
+  background-image: url("${MenuIcon}");
+  background-repeat: no-repeat;
+  background-position: center;
+
+  border-radius: 2px;
+  box-shadow: var(--shadow-base);
+  outline: none;
+  border: none;
+  cursor: pointer;
+`;
+
+const LineWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 24px;
 `;
 
 const BottomButton = styled(AsideBottomButton)`
@@ -94,7 +119,12 @@ function MainAside(): ReactElement {
               />
             </Route>
             <Route path="/routes">
-              Здесь могли быть параметры маршрутов
+              <LineWrapper>
+                <MenuButton onClick={() => setMenuAsideShow(true)}/>
+                <MapBottomButtonIcon/>
+                { t('routes') }
+              </LineWrapper>
+              <CustomSelect/>
             </Route>
           </Switch>
         </AsideParametersWrapper>
@@ -103,7 +133,7 @@ function MainAside(): ReactElement {
           <Route exact path="/">
             <BottomButton onClick={() => history.push('/routes')}>
               <MapBottomButtonIcon/>
-              {t('aside.routesBottomButton')}
+              {t('routes')}
             </BottomButton>
           </Route>
           <Route path="/routes">

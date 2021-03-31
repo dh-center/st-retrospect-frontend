@@ -10,6 +10,8 @@ const ColorVariables = createGlobalStyle`
     --color-dark-gray: #4F4F4F;
     --color-gray: #BDBDBD;
     --color-light-gray: #F2F2F2;
+
+    --color-light-blue: rgba(47, 128, 237, 0.13);
   }
 `;
 

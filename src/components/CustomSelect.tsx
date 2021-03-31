@@ -115,6 +115,10 @@ const SelectItem = styled(ListItem)<SelectItemProps>`
 
     margin-right: 8px;
   }
+
+  &:hover {
+    background: var(--color-light-blue);
+  }
 `;
 
 const SelectItemText = styled.span`
