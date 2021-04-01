@@ -26,7 +26,7 @@ query RoutesListQuery(
   ...RoutesList_questsConnection_2QE1um
 }
 
-fragment RouteCard_quest on Quest {
+fragment RouteItem_quest on Quest {
   name
   photo
 }
@@ -35,7 +35,7 @@ fragment RoutesList_questsConnection_2QE1um on Query {
   quests(first: $count, after: $after) {
     edges {
       node {
-        ...RouteCard_quest
+        ...RouteItem_quest
         id
         __typename
       }
@@ -213,12 +213,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a8b8c64ae6c4c1d11a817dbea0b04415",
+    "cacheID": "7f54182f3173b019c678eb94c36493ad",
     "id": null,
     "metadata": {},
     "name": "RoutesListQuery",
     "operationKind": "query",
-    "text": "query RoutesListQuery(\n  $count: Int\n  $after: Cursor\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RouteCard_quest on Quest {\n  name\n  photo\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        ...RouteCard_quest\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query RoutesListQuery(\n  $count: Int\n  $after: Cursor\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RouteItem_quest on Quest {\n  name\n  photo\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        ...RouteItem_quest\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

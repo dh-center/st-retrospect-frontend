@@ -4,19 +4,19 @@ import { ReactElement } from 'react';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { useTranslation } from 'react-i18next';
-import { RouteCard_quest$key } from './__generated__/RouteCard_quest.graphql';
+import { RouteItem_quest$key } from './__generated__/RouteItem_quest.graphql';
 
 /**
  * Props with route fragment
  */
-interface RouteCardProps {
+interface RouteItemProps {
   /**
    * Route data as fragment
    */
-  route: RouteCard_quest$key;
+  route: RouteItem_quest$key;
 }
 
-const Card = styled.div`
+const Item = styled.div`
   display: flex;
   margin-bottom: 12px;
 
@@ -65,15 +65,15 @@ const Author = styled.span`
 `;
 
 /**
- * Route card in routes list
+ * Route item in routes list
  *
  * @param props - props of component
  */
-export default function RouteCard(props: RouteCardProps): ReactElement {
+export default function RouteItem(props: RouteItemProps): ReactElement {
   const { t } = useTranslation();
   const route = useFragment(
     graphql`
-      fragment RouteCard_quest on Quest {
+      fragment RouteItem_quest on Quest {
         name
         photo
       }
@@ -82,7 +82,7 @@ export default function RouteCard(props: RouteCardProps): ReactElement {
   );
 
   return (
-    <Card>
+    <Item>
       <Image src={route.photo ? route.photo : 'https://picsum.photos/seed/picsum/100/200'}/>
       <Information>
         {route.name}
@@ -91,6 +91,6 @@ export default function RouteCard(props: RouteCardProps): ReactElement {
           { t('author') }: ИТМО
         </Author>
       </Information>
-    </Card>
+    </Item>
   );
 }
