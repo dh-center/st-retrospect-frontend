@@ -26,7 +26,7 @@ const AsideCloseButtonPositioned = styled(AsideCloseButton)`
 `;
 
 const AsideHeaderWithMarginBottom = styled(AsideHeader)`
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 `;
 
 const SearchLineWithMarginBottom = styled(SearchLine)`
