@@ -30,7 +30,7 @@ const Item = styled(Link)`
 `;
 
 /**
- * Props of image block in route card
+ * Props of image block in route item
  */
 interface ImageProps {
   /**

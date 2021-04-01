@@ -17,6 +17,7 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import AsideParametersWrapper from './AsideParametersWrapper';
 import MenuIcon from '../../assets/burger-menu.svg';
 import RoutesList from '../RoutesList';
+import RouteCard from '../RouteCard';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -119,13 +120,15 @@ function MainAside(): ReactElement {
                 max={'2021'}
               />
             </Route>
-            <Route path="/routes">
+            <Route path={['/routes', '/route/:id']}>
               <LineWrapper>
                 <MenuButton onClick={() => setMenuAsideShow(true)}/>
                 <MapBottomButtonIcon/>
                 { t('routes') }
               </LineWrapper>
-              <CustomSelect/>
+              <Route path="/routes">
+                <CustomSelect/>
+              </Route>
             </Route>
           </Switch>
         </AsideParametersWrapper>
@@ -134,6 +137,11 @@ function MainAside(): ReactElement {
           <Route path="/routes">
             <Suspense fallback={<div>Loading...</div>}>
               <RoutesList/>
+            </Suspense>
+          </Route>
+          <Route path="/route/:id">
+            <Suspense fallback={<div>Loading route...</div>}>
+              <RouteCard/>
             </Suspense>
           </Route>
         </Switch>
