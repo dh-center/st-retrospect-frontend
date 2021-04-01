@@ -53,8 +53,10 @@ const MenuButton = styled.button`
 const LineWrapper = styled.div`
   display: flex;
   align-items: center;
+`;
 
-  margin-bottom: 24px;
+const CustomSelectWithMargin = styled(CustomSelect)`
+  margin-top: 24px;
 `;
 
 const BottomButton = styled(AsideBottomButton)`
@@ -127,7 +129,7 @@ function MainAside(): ReactElement {
                 { t('routes') }
               </LineWrapper>
               <Route path="/routes">
-                <CustomSelect/>
+                <CustomSelectWithMargin/>
               </Route>
             </Route>
           </Switch>
