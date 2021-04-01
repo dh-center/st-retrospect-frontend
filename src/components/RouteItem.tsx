@@ -5,6 +5,7 @@ import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { useTranslation } from 'react-i18next';
 import { RouteItem_quest$key } from './__generated__/RouteItem_quest.graphql';
+import { Link } from 'react-router-dom';
 
 /**
  * Props with route fragment
@@ -16,13 +17,16 @@ interface RouteItemProps {
   route: RouteItem_quest$key;
 }
 
-const Item = styled.div`
+const Item = styled(Link)`
   display: flex;
   margin-bottom: 12px;
 
   border: .5px solid #F2F2F2;
   border-radius: 2px;
   overflow: hidden;
+
+  text-decoration: none;
+  color: var(--color-dark-gray);
 `;
 
 /**
@@ -74,6 +78,7 @@ export default function RouteItem(props: RouteItemProps): ReactElement {
   const route = useFragment(
     graphql`
       fragment RouteItem_quest on Quest {
+        id
         name
         photo
       }
@@ -82,7 +87,7 @@ export default function RouteItem(props: RouteItemProps): ReactElement {
   );
 
   return (
-    <Item>
+    <Item to={`/route/${ route.id }`}>
       <Image src={route.photo ? route.photo : 'https://picsum.photos/seed/picsum/100/200'}/>
       <Information>
         {route.name}

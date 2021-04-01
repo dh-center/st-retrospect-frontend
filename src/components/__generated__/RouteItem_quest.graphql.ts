@@ -5,6 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type RouteItem_quest = {
+    readonly id: string;
     readonly name: string;
     readonly photo: string | null;
     readonly " $refType": "RouteItem_quest";
@@ -27,6 +28,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "name",
       "storageKey": null
     },
@@ -41,5 +49,5 @@ const node: ReaderFragment = {
   "type": "Quest",
   "abstractKey": null
 };
-(node as any).hash = 'c17b7f55d7f859e77be7ef9e73b6a1e1';
+(node as any).hash = '726e4495ca657528d1f81963dc8e6e9e';
 export default node;

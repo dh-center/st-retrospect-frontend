@@ -27,6 +27,7 @@ query RoutesListPaginationQuery(
 }
 
 fragment RouteItem_quest on Quest {
+  id
   name
   photo
 }
@@ -132,6 +133,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "name",
                     "storageKey": null
                   },
@@ -140,13 +148,6 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "photo",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
                     "storageKey": null
                   },
                   {
@@ -209,12 +210,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3038f2b18085d88ed95519c86ca508d7",
+    "cacheID": "48ff461197b4433f804ce7abefdf9fb6",
     "id": null,
     "metadata": {},
     "name": "RoutesListPaginationQuery",
     "operationKind": "query",
-    "text": "query RoutesListPaginationQuery(\n  $after: Cursor\n  $count: Int = 10\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RouteItem_quest on Quest {\n  name\n  photo\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        ...RouteItem_quest\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query RoutesListPaginationQuery(\n  $after: Cursor\n  $count: Int = 10\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RouteItem_quest on Quest {\n  id\n  name\n  photo\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        ...RouteItem_quest\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
