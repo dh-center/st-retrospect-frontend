@@ -145,7 +145,7 @@ export default function RouteCard(): ReactElement {
         <Author>{ t('author') }: ИТМО</Author>
         <Description>{ data.quest.description }</Description>
         <CenterWrapper>
-          <StartRouteButton>Перейти к маршруту</StartRouteButton>
+          <StartRouteButton>{ t('route.startRoute') }</StartRouteButton>
         </CenterWrapper>
       </InformationWrapper>
     </Wrapper>
