@@ -103,6 +103,7 @@ const StartRouteButton = styled.button`
   outline: none;
   border: none;
   border-radius: 2px;
+  cursor: pointer;
 
   font-size: 14px;
   color: var(--color-white);
