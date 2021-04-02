@@ -9,7 +9,7 @@ export interface SearchProps {
    *
    * @param values - end values of years
    */
-  onChange: (values: SearchYearsValues) => void;
+  onChange?: (values: SearchYearsValues) => void;
 
   /**
    * Minimum year for searching
