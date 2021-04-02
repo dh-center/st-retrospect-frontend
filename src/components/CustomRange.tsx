@@ -2,38 +2,8 @@ import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import RangeThumb from '../assets/range-thumb.svg';
 import { sansSerifLight } from '../styles/FontStyles';
-
-/**
- * Props for custom range elements
- */
-interface CustomRangeElementProps {
-  /**
-   * Minimum value
-   */
-  min: string;
-
-  /**
-   * Maximum value
-   */
-  max: string;
-
-  /**
-   * Label for range input
-   */
-  label?: string;
-}
-
-interface RangeValues {
-  /**
-   * Left value of range
-   */
-  left: string;
-
-  /**
-   * Right value of range
-   */
-  right: string;
-}
+import { SearchYearsValues } from '../interfaces/SearchYearsValues';
+import { SearchProps } from '../interfaces/SearchProps';
 
 const RangeWrapper = styled.div`
   position: relative;
@@ -102,9 +72,10 @@ const RangeInput = styled.input`
  *
  * @param props - properties (min and max range values)
  */
-function CustomRange(props: CustomRangeElementProps): ReactElement {
-  const [values, setValues] = useState<RangeValues>({ left: props.min,
-    right: props.max });
+function CustomRange(props: SearchProps): ReactElement {
+  const onChange = props.onChange;
+  const [ values ] = useState<SearchYearsValues>({ left: props.left,
+    right: props.right });
 
   return (
     <RangeWrapper>
@@ -122,14 +93,15 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
         value={values.left}
         min={props.min}
         max={props.max}
-        onChange={value => {
-          if (value.target.value > values.right) {
-            setValues({
+
+        onChange={(value) => {
+          if (onChange && (value.target.value > values.right)) {
+            onChange({
               left: values.right,
               right: value.target.value,
             });
-          } else {
-            setValues({
+          } else if (onChange) {
+            onChange({
               left: value.target.value,
               right: values.right,
             });
@@ -143,13 +115,13 @@ function CustomRange(props: CustomRangeElementProps): ReactElement {
         min={props.min}
         max={props.max}
         onChange={value => {
-          if (value.target.value < values.left) {
-            setValues({
+          if (onChange && (value.target.value < values.left)) {
+            onChange({
               left: value.target.value,
               right: values.left,
             });
-          } else {
-            setValues({
+          } else if (onChange) {
+            onChange({
               left: values.left,
               right: value.target.value,
             });
