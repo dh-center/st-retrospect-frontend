@@ -25,6 +25,7 @@ const Wrapper = styled.div`
   position: relative;
 
   margin: 0 -16px;
+  overflow-y: hidden;
 `;
 
 const GoingBackButton = styled(Link)`
