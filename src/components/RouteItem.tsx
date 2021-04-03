@@ -27,6 +27,10 @@ const Item = styled(Link)`
 
   text-decoration: none;
   color: var(--color-dark-gray);
+
+  &:hover {
+    background: var(--color-light-blue);
+  }
 `;
 
 /**
