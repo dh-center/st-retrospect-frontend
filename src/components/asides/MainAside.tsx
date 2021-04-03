@@ -61,6 +61,7 @@ const CustomSelectWithMargin = styled(CustomSelect)`
 
 const BottomButton = styled(AsideBottomButton)`
   margin-top: auto;
+  margin-bottom: 8px;
 `;
 
 const BottomButtonIcon = styled.div`
