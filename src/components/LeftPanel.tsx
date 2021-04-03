@@ -15,7 +15,7 @@ const LeftPanelWrapper = styled.aside<LeftPanelProps>`
   top: 0;
   z-index: 2;
 
-  padding: 0 16px 8px;
+  padding: 0 16px;
 
   background: var(--color-white);
   box-shadow: var(--shadow-base);

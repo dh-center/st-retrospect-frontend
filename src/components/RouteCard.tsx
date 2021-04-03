@@ -1,28 +1,47 @@
+import { ReactElement } from 'react';
+import { useParams, Redirect, Link } from 'react-router-dom';
+import { useLazyLoadQuery } from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
+import { RouteCardQuery } from './__generated__/RouteCardQuery.graphql';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
-import { ReactElement } from 'react';
-import { useFragment } from 'react-relay';
-import graphql from 'babel-plugin-relay/macro';
 import { useTranslation } from 'react-i18next';
-import { RouteCard_quest$key } from './__generated__/RouteCard_quest.graphql';
+import LeftArrowIcon from '../assets/arrow-left-second.svg';
 
 /**
- * Props with route fragment
+ * Parameters of '/route' route
  */
-interface RouteCardProps {
+interface RouteRouteParameters {
   /**
-   * Route data as fragment
+   * Id of current route
    */
-  route: RouteCard_quest$key;
+  id: string;
 }
 
-const Card = styled.div`
+const Wrapper = styled.div`
   display: flex;
-  margin-bottom: 12px;
+  flex-direction: column;
 
-  border: .5px solid #F2F2F2;
+  position: relative;
+
+  margin: 0 -16px;
+  overflow-y: hidden;
+`;
+
+const GoingBackButton = styled(Link)`
+  position: absolute;
+  top: 6px;
+  left: 16px;
+
+  width: 24px;
+  height: 24px;
+
+  background: var(--color-white);
+  background-image: url("${ LeftArrowIcon }");
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 2px;
-  overflow: hidden;
+  box-shadow: (--shadow-base);
 `;
 
 /**
@@ -36,8 +55,8 @@ interface ImageProps {
 }
 
 const Image = styled.div<ImageProps>`
-  min-width: 60px;
-  min-height: 100%;
+  min-width: 100%;
+  min-height: 144px;
 
   background-image: url("${ props => props.src }");
   background-size: cover;
@@ -45,52 +64,91 @@ const Image = styled.div<ImageProps>`
   background-repeat: no-repeat;
 `;
 
-const Information = styled.div`
-  padding: 18px 12px;
+const InformationWrapper = styled.div`
+  padding: 16px 16px 24px;
 
+  overflow-y: auto;
+`;
+
+const Name = styled.div`
   font-size: 16px;
+
+  margin-bottom: 12px;
 `;
 
-const Delimiter = styled.div`
-  width: 60px;
-  height: 1px;
-  margin: 12px 0;
-
-  background: var(--color-blue);
-`;
-
-const Author = styled.span`
+const Author = styled.div`
   ${ sansSerifLight };
   font-size: 14px;
+
+  margin-bottom: 24px;
+`;
+
+const Description = styled.div`
+  ${ sansSerifLight };
+  font-size: 16px;
+
+  margin-bottom: 24px;
+`;
+
+const CenterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StartRouteButton = styled.button`
+  width: 221px;
+  height: 36px;
+
+  background: var(--color-blue);
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+
+  font-size: 14px;
+  color: var(--color-white);
 `;
 
 /**
- * Route card in routes list
- *
- * @param props - props of component
+ * Route card with information about the route
  */
-export default function RouteCard(props: RouteCardProps): ReactElement {
+export default function RouteCard(): ReactElement {
   const { t } = useTranslation();
-  const route = useFragment(
+  const { id } = useParams<RouteRouteParameters>();
+  const data = useLazyLoadQuery<RouteCardQuery>(
     graphql`
-      fragment RouteCard_quest on Quest {
-        name
-        photo
+      query RouteCardQuery($id: GlobalId!) {
+        quest(id: $id) {
+          name
+          description
+          photo
+        }
       }
     `,
-    props.route
+    {
+      id,
+    }
   );
 
+  if (!data.quest) {
+    return (
+      <Redirect to="/routes"/>
+    );
+  }
+
   return (
-    <Card>
-      <Image src={route.photo ? route.photo : 'https://picsum.photos/seed/picsum/100/200'}/>
-      <Information>
-        {route.name}
-        <Delimiter/>
-        <Author>
-          { t('author') }: ИТМО
-        </Author>
-      </Information>
-    </Card>
+    <Wrapper>
+      <GoingBackButton to="/routes"/>
+      <Image src={data.quest.photo ? data.quest.photo : 'https://picsum.photos/seed/picsum/200/100'}/>
+      <InformationWrapper>
+        <Name>{ data.quest.name }</Name>
+        <Author>{ t('author') }: ИТМО</Author>
+        <Description>{ data.quest.description }</Description>
+        <CenterWrapper>
+          <StartRouteButton>{ t('route.startRoute') }</StartRouteButton>
+        </CenterWrapper>
+      </InformationWrapper>
+    </Wrapper>
   );
 }
