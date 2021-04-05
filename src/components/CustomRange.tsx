@@ -1,8 +1,7 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 import RangeThumb from '../assets/range-thumb.svg';
 import { sansSerifLight } from '../styles/FontStyles';
-import { SearchYearsValues } from '../interfaces/SearchYearsValues';
 import { SearchProps } from '../interfaces/SearchProps';
 
 const RangeWrapper = styled.div`
@@ -74,8 +73,6 @@ const RangeInput = styled.input`
  */
 function CustomRange(props: SearchProps): ReactElement {
   const onChange = props.onChange;
-  const [ values ] = useState<SearchYearsValues>({ left: props.left,
-    right: props.right });
 
   return (
     <RangeWrapper>
@@ -90,20 +87,20 @@ function CustomRange(props: SearchProps): ReactElement {
 
       <RangeInput
         type="range"
-        value={values.left}
+        value={props.left}
         min={props.min}
         max={props.max}
 
         onChange={(value) => {
-          if (onChange && (value.target.value > values.right)) {
+          if (onChange && (value.target.value > props.right)) {
             onChange({
-              left: values.right,
+              left: props.right,
               right: value.target.value,
             });
           } else if (onChange) {
             onChange({
               left: value.target.value,
-              right: values.right,
+              right: props.right,
             });
           }
         }}
@@ -111,18 +108,18 @@ function CustomRange(props: SearchProps): ReactElement {
 
       <RangeInput
         type="range"
-        value={values.right}
+        value={props.right}
         min={props.min}
         max={props.max}
         onChange={value => {
-          if (onChange && (value.target.value < values.left)) {
+          if (onChange && (value.target.value < props.left)) {
             onChange({
               left: value.target.value,
-              right: values.left,
+              right: props.left,
             });
           } else if (onChange) {
             onChange({
-              left: values.left,
+              left: props.left,
               right: value.target.value,
             });
           }
