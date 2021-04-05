@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
-import { SearchProps } from '../interfaces/SearchProps';
+import { YearsInputsElementProps } from '../interfaces/YearsInputsElementProps';
 
 const YearsWrapper = styled.div`
   margin-top: 12px;
@@ -42,8 +42,8 @@ const YearsDash = styled.span`
  *
  * @param props - properties
  */
-function YearsInputs(props: SearchProps): ReactElement {
-  const onChange = props.onChange;
+function YearsInputs(props: YearsInputsElementProps): ReactElement {
+  // const onChange = props.onChange;
 
   return (
     <YearsWrapper>
@@ -52,21 +52,21 @@ function YearsInputs(props: SearchProps): ReactElement {
         min={props.min}
         max={props.max}
         value={props.left}
-        onChange={value => {
-          const oldValue = props.left;
-
-          if (onChange && (value.target.value > props.right)) {
-            onChange({
-              left: oldValue,
-              right: props.right,
-            });
-          } else if (onChange) {
-            onChange({
-              left: props.left,
-              right: props.right,
-            });
-          }
-        }}
+        // onChange={value => {
+        //   const oldValue = props.left;
+        //
+        //   if (onChange && (value.target.value > props.right)) {
+        //     onChange({
+        //       left: oldValue,
+        //       right: props.right,
+        //     });
+        //   } else if (onChange) {
+        //     onChange({
+        //       left: props.left,
+        //       right: props.right,
+        //     });
+        //   }
+        // }}
       />
 
       <YearsDash>
@@ -78,21 +78,21 @@ function YearsInputs(props: SearchProps): ReactElement {
         min={props.min}
         max={props.max}
         value={props.right}
-        onChange={(value) => {
-          const oldValue = props.right;
-
-          if (onChange && (value.target.value < props.left)) {
-            onChange({
-              left: props.left,
-              right: oldValue,
-            });
-          } else if (onChange) {
-            onChange({
-              left: props.left,
-              right: value.target.value,
-            });
-          }
-        }}
+        // onChange={(value) => {
+        //   const oldValue = props.right;
+        //
+        //   if (onChange && (value.target.value < props.left)) {
+        //     onChange({
+        //       left: props.left,
+        //       right: oldValue,
+        //     });
+        //   } else if (onChange) {
+        //     onChange({
+        //       left: props.left,
+        //       right: value.target.value,
+        //     });
+        //   }
+        // }}
       />
     </YearsWrapper>
   );

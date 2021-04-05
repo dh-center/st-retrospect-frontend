@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import styled from 'styled-components';
 import RangeThumb from '../assets/range-thumb.svg';
 import { sansSerifLight } from '../styles/FontStyles';
-import { SearchProps } from '../interfaces/SearchProps';
+import { YearsInputsElementProps } from '../interfaces/YearsInputsElementProps';
 
 const RangeWrapper = styled.div`
   position: relative;
@@ -71,7 +71,7 @@ const RangeInput = styled.input`
  *
  * @param props - properties (min and max range values)
  */
-function CustomRange(props: SearchProps): ReactElement {
+function CustomRange(props: YearsInputsElementProps): ReactElement {
   const onChange = props.onChange;
 
   return (

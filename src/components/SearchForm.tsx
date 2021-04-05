@@ -5,7 +5,7 @@ import SearchLine from './SearchLine';
 import CustomRange from './CustomRange';
 import YearsInputs from './YearsInputs';
 import { useTranslation } from 'react-i18next';
-import { SearchProps } from '../interfaces/SearchProps';
+import { YearsInputsElementProps } from '../interfaces/YearsInputsElementProps';
 import { SearchYearsValues } from '../interfaces/SearchYearsValues';
 
 const SearchWrapper = styled.div``;
@@ -19,7 +19,7 @@ const SearchLineWithMarginBottom = styled(SearchLine)`
  *
  * @param props - properties (min and max range values)
  */
-function SearchForm(props: SearchProps): ReactElement {
+function SearchForm(props: YearsInputsElementProps): ReactElement {
   const { t } = useTranslation();
   const [values, setValues] = useState<SearchYearsValues>({ left: props.left,
     right: props.right });

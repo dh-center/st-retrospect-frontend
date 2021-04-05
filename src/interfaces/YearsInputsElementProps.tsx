@@ -3,7 +3,7 @@ import { SearchYearsValues } from './SearchYearsValues';
 /**
  * Interface of props for CustomSelect components
  */
-export interface SearchProps {
+export interface YearsInputsElementProps {
   /**
    * onChange event handler
    *
