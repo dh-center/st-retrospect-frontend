@@ -3,7 +3,7 @@
  */
 export interface SearchYearsValues {
   /**
-   * GraphQL query
+   * GraphQL query for form
    */
   query: string;
   /**

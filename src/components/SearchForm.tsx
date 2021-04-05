@@ -8,8 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { SearchYearsValues } from '../interfaces/SearchYearsValues';
 import { SearchYearsRange } from '../interfaces/SearchYearsRange';
 
-const SearchWrapper = styled.div``;
-
 const SearchLineWithMarginBottom = styled(SearchLine)`
   margin-bottom: 12px;
 `;
@@ -25,7 +23,7 @@ function SearchForm(props: SearchYearsRange): ReactElement {
     right: props.max });
 
   return (
-    <SearchWrapper>
+    <>
       <SearchLineWithMarginBottom/>
       <CustomSelect/>
 
@@ -59,7 +57,7 @@ function SearchForm(props: SearchYearsRange): ReactElement {
         right={currentYearsValues.right}
         left={currentYearsValues.left}
       />
-    </SearchWrapper>
+    </>
   );
 }
 
