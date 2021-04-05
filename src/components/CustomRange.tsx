@@ -92,12 +92,16 @@ function CustomRange(props: YearsInputsElementProps): ReactElement {
         max={props.max}
 
         onChange={(value) => {
-          if (onChange && (value.target.value > props.right)) {
+          if (!onChange) {
+            return;
+          }
+
+          if (value.target.value > props.right) {
             onChange({
               left: props.right,
               right: value.target.value,
             });
-          } else if (onChange) {
+          } else {
             onChange({
               left: value.target.value,
               right: props.right,
@@ -112,12 +116,16 @@ function CustomRange(props: YearsInputsElementProps): ReactElement {
         min={props.min}
         max={props.max}
         onChange={value => {
-          if (onChange && (value.target.value < props.left)) {
+          if (!onChange) {
+            return;
+          }
+
+          if (value.target.value < props.left) {
             onChange({
               left: value.target.value,
               right: props.left,
             });
-          } else if (onChange) {
+          } else {
             onChange({
               left: props.left,
               right: value.target.value,
