@@ -64,7 +64,7 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
             });
           } else {
             onChange({
-              left: props.left,
+              left: value.target.value,
               right: props.right,
             });
           }
