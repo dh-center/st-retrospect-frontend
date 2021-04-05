@@ -7,6 +7,7 @@ import ShadowVariables from './styles/ShadowVariables';
 import LanguageContext, { AvailableLanguages } from './contexts/LanguageContext';
 import { useTranslation } from 'react-i18next';
 import LanguageController from './localStorage/LanguageController';
+import RelayEnvironmentContext from './contexts/RelayEnvironmentContext';
 
 /**
  * Main component of the application
@@ -25,14 +26,16 @@ function App(): ReactElement {
           setUserLanguage(value);
         },
       }}>
-        <ColorVariables/>
-        <ShadowVariables/>
-        <GlobalStyles/>
-        <Switch>
-          <Route path="/">
-            <HomePage/>
-          </Route>
-        </Switch>
+        <RelayEnvironmentContext>
+          <ColorVariables/>
+          <ShadowVariables/>
+          <GlobalStyles/>
+          <Switch>
+            <Route path="/">
+              <HomePage/>
+            </Route>
+          </Switch>
+        </RelayEnvironmentContext>
       </LanguageContext.Provider>
     </>
   );

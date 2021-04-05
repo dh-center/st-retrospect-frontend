@@ -22,7 +22,11 @@
     "years": "Временной промежуток"
   },
   "aside": {
-    "searchBottomButton": "Поиск по карте",
-    "routesBottomButton": "Маршруты"
-  }
+    "searchBottomButton": "Поиск по карте"
+  },
+  "route": {
+    "startRoute": "Перейти к маршруту"
+  },
+  "routes": "Маршруты",
+  "author": "Автор"
 }

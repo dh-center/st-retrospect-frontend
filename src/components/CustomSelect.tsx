@@ -6,6 +6,7 @@ import CheckboxIcon from '../assets/checkbox.svg';
 import CheckboxCheckedIcon from '../assets/checkbox-checked.svg';
 import CrossIcon from '../assets/cross.svg';
 import { useTranslation } from 'react-i18next';
+import WithClassName from '../interfaces/WithClassName';
 
 /**
  * Props for custom select elements
@@ -115,6 +116,10 @@ const SelectItem = styled(ListItem)<SelectItemProps>`
 
     margin-right: 8px;
   }
+
+  &:hover {
+    background: var(--color-light-blue);
+  }
 `;
 
 const SelectItemText = styled.span`
@@ -144,8 +149,10 @@ const SelectResetText = styled.span`
 
 /**
  * Custom select component
+ *
+ * @param props - props of component
  */
-function CustomSelect(): ReactElement {
+function CustomSelect(props: WithClassName): ReactElement {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
@@ -172,7 +179,7 @@ function CustomSelect(): ReactElement {
   });
 
   return (
-    <SelectPlaceholder>
+    <SelectPlaceholder className={props.className}>
       <SelectWrapper isOpen={isOpen}>
         <SelectInput onClick={() => setOpen(!isOpen)} isOpen={isOpen}>
           <SelectInputText>{
