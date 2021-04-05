@@ -1,14 +1,14 @@
 /**
- * Interface of props for CustomSelect components
+ * Interface of props for search components
  */
 export interface SearchYearsValues {
   /**
-   * Left value of range
+   * Left value of years
    */
   left: string;
 
   /**
-   * Right value of range
+   * Right value of years
    */
   right: string;
 }

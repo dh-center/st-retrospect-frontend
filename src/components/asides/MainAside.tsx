@@ -107,8 +107,6 @@ function MainAside(): ReactElement {
               <SearchForm
                 min={'1500'}
                 max={'2021'}
-                left={'1700'}
-                right={'1900'}
               />
             </Route>
             <Route path={['/routes', '/route/:id']}>
