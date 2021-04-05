@@ -1,8 +1,7 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import { SearchProps } from '../interfaces/SearchProps';
-import { SearchYearsValues } from '../interfaces/SearchYearsValues';
 
 const YearsWrapper = styled.div`
   margin-top: 12px;
@@ -45,8 +44,6 @@ const YearsDash = styled.span`
  */
 function YearsInputs(props: SearchProps): ReactElement {
   const onChange = props.onChange;
-  const [ values ] = useState<SearchYearsValues>({ left: props.min,
-    right: props.max });
 
   return (
     <YearsWrapper>
@@ -54,19 +51,19 @@ function YearsInputs(props: SearchProps): ReactElement {
         type="number"
         min={props.min}
         max={props.max}
-        value={props.min }
+        value={props.left}
         onChange={value => {
-          const oldValue = values.left;
+          const oldValue = props.left;
 
-          if (onChange && (value.target.value > values.right)) {
+          if (onChange && (value.target.value > props.right)) {
             onChange({
               left: oldValue,
-              right: values.right,
+              right: props.right,
             });
           } else if (onChange) {
             onChange({
-              left: values.left,
-              right: values.right,
+              left: props.left,
+              right: props.right,
             });
           }
         }}
@@ -80,18 +77,18 @@ function YearsInputs(props: SearchProps): ReactElement {
         type="number"
         min={props.min}
         max={props.max}
-        value={props.max}
+        value={props.right}
         onChange={(value) => {
-          const oldValue = values.right;
+          const oldValue = props.right;
 
-          if (onChange && (value.target.value < values.left)) {
+          if (onChange && (value.target.value < props.left)) {
             onChange({
-              left: values.left,
+              left: props.left,
               right: oldValue,
             });
           } else if (onChange) {
             onChange({
-              left: values.left,
+              left: props.left,
               right: value.target.value,
             });
           }
