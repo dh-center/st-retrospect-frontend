@@ -21,7 +21,7 @@ const SearchLineWithMarginBottom = styled(SearchLine)`
  */
 function SearchForm(props: SearchYearsRange): ReactElement {
   const { t } = useTranslation();
-  const [values, setValues] = useState<SearchYearsValues>({ left: props.min,
+  const [currentYearsValues, setCurrentYearsValues] = useState<SearchYearsValues>({ left: props.min,
     right: props.max });
 
   return (
@@ -32,7 +32,7 @@ function SearchForm(props: SearchYearsRange): ReactElement {
       <CustomRange
         onChange={
           (value) => {
-            setValues({
+            setCurrentYearsValues({
               left: value.left,
               right: value.right,
             });
@@ -40,15 +40,15 @@ function SearchForm(props: SearchYearsRange): ReactElement {
         }
         min={props.min}
         max={props.max}
-        left={values.left}
-        right={values.right}
+        left={currentYearsValues.left}
+        right={currentYearsValues.right}
         label={t(`customRange.years`)}
       />
 
       <YearsInputs
         onChange={
           (value) => {
-            setValues({
+            setCurrentYearsValues({
               left: value.left,
               right: value.right,
             });
@@ -56,8 +56,8 @@ function SearchForm(props: SearchYearsRange): ReactElement {
         }
         max={props.max}
         min={props.min}
-        right={values.right}
-        left={values.left}
+        right={currentYearsValues.right}
+        left={currentYearsValues.left}
       />
     </SearchWrapper>
   );
