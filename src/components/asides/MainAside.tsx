@@ -7,9 +7,6 @@ import AsideHeader from './AsideHeader';
 import MenuAside from './MenuAside';
 import CustomSelect from '../CustomSelect';
 import LeftPanel from '../LeftPanel';
-import SearchLine from '../SearchLine';
-import CustomRange from '../CustomRange';
-import YearsInputs from '../YearsInputs';
 import AsideBottomButton from './AsideBottomButton';
 import MapIcon from '../../assets/map.svg';
 import SearchIcon from '../../assets/search.svg';
@@ -17,6 +14,7 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import AsideParametersWrapper from './AsideParametersWrapper';
 import MenuIcon from '../../assets/burger-menu.svg';
 import RoutesList from '../RoutesList';
+import SearchForm from '../SearchForm';
 import RouteCard from '../RouteCard';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
@@ -27,10 +25,6 @@ const AsideCloseButtonPositioned = styled(AsideCloseButton)`
 
 const AsideHeaderWithMarginBottom = styled(AsideHeader)`
   margin-bottom: 24px;
-`;
-
-const SearchLineWithMarginBottom = styled(SearchLine)`
-  margin-bottom: 12px;
 `;
 
 const MenuButton = styled.button`
@@ -110,15 +104,7 @@ function MainAside(): ReactElement {
           <AsideHeaderWithMarginBottom/>
           <Switch>
             <Route exact path="/">
-              <SearchLineWithMarginBottom/>
-              <CustomSelect/>
-              {/* @todo unmock variables*/}
-              <CustomRange
-                min={'1500'}
-                max={'2021'}
-                label={t(`customRange.years`)}
-              />
-              <YearsInputs
+              <SearchForm
                 min={'1500'}
                 max={'2021'}
               />
