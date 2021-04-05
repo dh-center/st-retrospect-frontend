@@ -1,5 +1,5 @@
 /**
- * Interface of props for CustomSelect components
+ * Interface of range (min and max) years for passing to SearchForm
  */
 export interface SearchYearsRange {
   /**

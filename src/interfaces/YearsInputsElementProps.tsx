@@ -1,7 +1,7 @@
 import { SearchYearsValues } from './SearchYearsValues';
 
 /**
- * Interface of props for CustomSelect components
+ * Interface of props for search components
  */
 export interface YearsInputsElementProps {
   /**

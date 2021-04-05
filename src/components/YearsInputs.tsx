@@ -40,7 +40,7 @@ const YearsDash = styled.span`
 /**
  * Years inputs component
  *
- * @param props - properties
+ * @param props - properties (min and max values of years)
  */
 function YearsInputs(props: YearsInputsElementProps): ReactElement {
   // const onChange = props.onChange;

@@ -69,7 +69,7 @@ const RangeInput = styled.input`
 /**
  * Custom range component
  *
- * @param props - properties (min and max range values)
+ * @param props - properties (min and max values of years)
  */
 function CustomRange(props: YearsInputsElementProps): ReactElement {
   const onChange = props.onChange;

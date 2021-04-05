@@ -1,5 +1,5 @@
 /**
- * Interface of props for search components
+ * Interface of current year values from CustomRange & YearsInputs
  */
 export interface SearchYearsValues {
   /**
