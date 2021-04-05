@@ -15,6 +15,7 @@ import AsideParametersWrapper from './AsideParametersWrapper';
 import MenuIcon from '../../assets/burger-menu.svg';
 import RoutesList from '../RoutesList';
 import SearchForm from '../SearchForm';
+import RouteCard from '../RouteCard';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -23,7 +24,7 @@ const AsideCloseButtonPositioned = styled(AsideCloseButton)`
 `;
 
 const AsideHeaderWithMarginBottom = styled(AsideHeader)`
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 `;
 
 const MenuButton = styled.button`
@@ -46,12 +47,15 @@ const MenuButton = styled.button`
 const LineWrapper = styled.div`
   display: flex;
   align-items: center;
+`;
 
-  margin-bottom: 24px;
+const CustomSelectWithMargin = styled(CustomSelect)`
+  margin-top: 24px;
 `;
 
 const BottomButton = styled(AsideBottomButton)`
   margin-top: auto;
+  margin-bottom: 8px;
 `;
 
 const BottomButtonIcon = styled.div`
@@ -107,13 +111,15 @@ function MainAside(): ReactElement {
                 right={'1900'}
               />
             </Route>
-            <Route path="/routes">
+            <Route path={['/routes', '/route/:id']}>
               <LineWrapper>
                 <MenuButton onClick={() => setMenuAsideShow(true)}/>
                 <MapBottomButtonIcon/>
                 { t('routes') }
               </LineWrapper>
-              <CustomSelect/>
+              <Route path="/routes">
+                <CustomSelectWithMargin/>
+              </Route>
             </Route>
           </Switch>
         </AsideParametersWrapper>
@@ -122,6 +128,11 @@ function MainAside(): ReactElement {
           <Route path="/routes">
             <Suspense fallback={<div>Loading...</div>}>
               <RoutesList/>
+            </Suspense>
+          </Route>
+          <Route path="/route/:id">
+            <Suspense fallback={<div>Loading route...</div>}>
+              <RouteCard/>
             </Suspense>
           </Route>
         </Switch>

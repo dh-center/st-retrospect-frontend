@@ -5,7 +5,7 @@ import { RoutesList_questsConnection$key } from './__generated__/RoutesList_ques
 import graphql from 'babel-plugin-relay/macro';
 import { RoutesListQuery } from './__generated__/RoutesListQuery.graphql';
 import styled from 'styled-components';
-import RouteCard from './RouteCard';
+import RouteItem from './RouteItem';
 
 /**
  * Default count of loading routes in list
@@ -48,7 +48,7 @@ export default function RoutesList(): ReactElement {
       @connection(key: "RoutesList_questsConnection_quests") {
         edges {
           node {
-            ...RouteCard_quest
+            ...RouteItem_quest
           }
         }
       }
@@ -60,7 +60,7 @@ export default function RoutesList(): ReactElement {
       {
         data.quests.edges.map(
           (edge, index) => {
-            return <RouteCard key={index} route={edge.node}/>;
+            return <RouteItem key={index} route={edge.node}/>;
           }
         )
       }
