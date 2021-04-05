@@ -43,7 +43,7 @@ const YearsDash = styled.span`
  * @param props - properties (min and max values of years)
  */
 function YearsInputs(props: YearsInputsElementProps): ReactElement {
-  // const onChange = props.onChange;
+  const onChange = props.onChange;
 
   return (
     <YearsWrapper>
@@ -52,21 +52,23 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
         min={props.min}
         max={props.max}
         value={props.left}
-        // onChange={value => {
-        //   const oldValue = props.left;
-        //
-        //   if (onChange && (value.target.value > props.right)) {
-        //     onChange({
-        //       left: oldValue,
-        //       right: props.right,
-        //     });
-        //   } else if (onChange) {
-        //     onChange({
-        //       left: props.left,
-        //       right: props.right,
-        //     });
-        //   }
-        // }}
+        onChange={(value) => {
+          if (!onChange) {
+            return;
+          }
+
+          if (value.target.value > props.right) {
+            onChange({
+              left: props.left,
+              right: props.right,
+            });
+          } else {
+            onChange({
+              left: props.left,
+              right: props.right,
+            });
+          }
+        }}
       />
 
       <YearsDash>
@@ -78,21 +80,23 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
         min={props.min}
         max={props.max}
         value={props.right}
-        // onChange={(value) => {
-        //   const oldValue = props.right;
-        //
-        //   if (onChange && (value.target.value < props.left)) {
-        //     onChange({
-        //       left: props.left,
-        //       right: oldValue,
-        //     });
-        //   } else if (onChange) {
-        //     onChange({
-        //       left: props.left,
-        //       right: value.target.value,
-        //     });
-        //   }
-        // }}
+        onChange={(value) => {
+          if (!onChange) {
+            return;
+          }
+
+          if (value.target.value < props.left) {
+            onChange({
+              left: props.left,
+              right: props.right,
+            });
+          } else {
+            onChange({
+              left: props.left,
+              right: value.target.value,
+            });
+          }
+        }}
       />
     </YearsWrapper>
   );
