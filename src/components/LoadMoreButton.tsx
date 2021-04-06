@@ -1,10 +1,11 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import styled from 'styled-components';
 import Loader from './Loader';
 import WithOnClick from '../interfaces/WithOnClick';
 import { sansSerifLight } from '../styles/FontStyles';
 import ArrowIcon from '../assets/arrow-left-second.svg';
 import { useTranslation } from 'react-i18next';
+import { useInView } from 'react-intersection-observer';
 
 /**
  * Props of load more button
@@ -52,9 +53,21 @@ const ArrowBottomIcon = styled.div`
  */
 export default function LoadMoreButton(props: LoadMoreButtonProps): ReactElement {
   const { t } = useTranslation();
+  const { ref, inView } = useInView({
+    threshold: 1,
+  });
+
+  /**
+   * Triggers click when button is fully in view
+   */
+  useEffect(() => {
+    if (inView && props.onClick && !props.isLoadingNext) {
+      props.onClick();
+    }
+  }, [ inView ]);
 
   return (
-    <Button onClick={props.onClick}>
+    <Button onClick={props.onClick} ref={ref}>
       { props.isLoadingNext ? <Loader/> : <>
         <ArrowBottomIcon/>
         { t('loadMore') }
