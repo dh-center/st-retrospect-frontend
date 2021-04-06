@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import { YearsInputsElementProps } from '../interfaces/YearsInputsElementProps';
@@ -49,6 +49,36 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
   const [currentYearsValues, setCurrentYearsValues] = useState<SearchYearsValues>({ left: props.left,
     right: props.right });
 
+  useEffect(() => {
+    currentYearsValues.left = props.left;
+    currentYearsValues.right = props.right;
+  }, [ props ]);
+
+  // useEffect(() => {
+  //   if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
+  //     setTimeout(() => {
+  //       if (onChange) {
+  //         onChange({
+  //           left: currentYearsValues.left,
+  //           right: currentYearsValues.right,
+  //         });
+  //       }
+  //     }, 500);
+  //   }
+  // }, [ currentYearsValues ]);
+
+  useEffect(() => {
+    if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
+      onChange && debounce(
+        () => onChange({
+          left: currentYearsValues.left,
+          right: currentYearsValues.right,
+        }),
+        1000
+      );
+    }
+  }, [ currentYearsValues ]);
+
   return (
     <YearsWrapper>
       <YearsInput
@@ -57,27 +87,6 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
         max={props.max}
         value={currentYearsValues.left}
         onChange={(value) => {
-          if (!onChange) {
-            return;
-          }
-
-          debounce(
-            () => {
-              if (value.target.value < props.left) {
-                onChange({
-                  left: props.left,
-                  right: props.right,
-                });
-              } else {
-                onChange({
-                  left: value.target.value,
-                  right: props.right,
-                });
-              }
-            },
-            500
-          );
-
           setCurrentYearsValues({
             left: value.target.value,
             right: currentYearsValues.right,
@@ -95,27 +104,6 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
         max={props.max}
         value={currentYearsValues.right}
         onChange={(value) => {
-          if (!onChange) {
-            return;
-          }
-
-          debounce(
-            () => {
-              if (value.target.value < props.left) {
-                onChange({
-                  left: props.left,
-                  right: props.right,
-                });
-              } else {
-                onChange({
-                  left: props.left,
-                  right: value.target.value,
-                });
-              }
-            },
-            500
-          );
-
           setCurrentYearsValues({
             left: currentYearsValues.left,
             right: value.target.value,
