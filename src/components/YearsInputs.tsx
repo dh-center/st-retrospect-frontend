@@ -1,7 +1,9 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import { YearsInputsElementProps } from '../interfaces/YearsInputsElementProps';
+import { debounce } from '../utils/debounce';
+import { SearchYearsValues } from '../interfaces/SearchYearsValues';
 
 const YearsWrapper = styled.div`
   margin-top: 12px;
@@ -44,6 +46,8 @@ const YearsDash = styled.span`
  */
 function YearsInputs(props: YearsInputsElementProps): ReactElement {
   const onChange = props.onChange;
+  const [currentYearsValues, setCurrentYearsValues] = useState<SearchYearsValues>({ left: props.left,
+    right: props.right });
 
   return (
     <YearsWrapper>
@@ -51,23 +55,33 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
         type="number"
         min={props.min}
         max={props.max}
-        value={props.left}
+        value={currentYearsValues.left}
         onChange={(value) => {
           if (!onChange) {
             return;
           }
 
-          if (value.target.value > props.right) {
-            onChange({
-              left: props.left,
-              right: props.right,
-            });
-          } else {
-            onChange({
-              left: value.target.value,
-              right: props.right,
-            });
-          }
+          debounce(
+            () => {
+              if (value.target.value < props.left) {
+                onChange({
+                  left: props.left,
+                  right: props.right,
+                });
+              } else {
+                onChange({
+                  left: value.target.value,
+                  right: props.right,
+                });
+              }
+            },
+            500
+          );
+
+          setCurrentYearsValues({
+            left: value.target.value,
+            right: currentYearsValues.right,
+          });
         }}
       />
 
@@ -79,23 +93,33 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
         type="number"
         min={props.min}
         max={props.max}
-        value={props.right}
+        value={currentYearsValues.right}
         onChange={(value) => {
           if (!onChange) {
             return;
           }
 
-          if (value.target.value < props.left) {
-            onChange({
-              left: props.left,
-              right: props.right,
-            });
-          } else {
-            onChange({
-              left: props.left,
-              right: value.target.value,
-            });
-          }
+          debounce(
+            () => {
+              if (value.target.value < props.left) {
+                onChange({
+                  left: props.left,
+                  right: props.right,
+                });
+              } else {
+                onChange({
+                  left: props.left,
+                  right: value.target.value,
+                });
+              }
+            },
+            500
+          );
+
+          setCurrentYearsValues({
+            left: currentYearsValues.left,
+            right: value.target.value,
+          });
         }}
       />
     </YearsWrapper>
