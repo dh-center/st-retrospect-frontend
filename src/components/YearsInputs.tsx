@@ -49,9 +49,15 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
   const [currentYearsValues, setCurrentYearsValues] = useState<SearchYearsValues>({ left: props.left,
     right: props.right });
 
+  /**
+   * To change the digits of the input numbers after moving range sliders
+   * because inputs depends from state variables
+   */
   useEffect(() => {
-    currentYearsValues.left = props.left;
-    currentYearsValues.right = props.right;
+    setCurrentYearsValues({
+      left: props.left,
+      right: props.right,
+    });
   }, [ props ]);
 
   // useEffect(() => {
@@ -67,6 +73,11 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
   //   }
   // }, [ currentYearsValues ]);
 
+  /**
+   * Effect works after state updating
+   * Then verifies, that this change was not due to changing of props,
+   * wait some time and update form state (call onChange)
+   */
   useEffect(() => {
     if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
       onChange && debounce(
