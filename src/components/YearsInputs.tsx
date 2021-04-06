@@ -50,8 +50,10 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
     right: props.right });
 
   useEffect(() => {
-    currentYearsValues.left = props.left;
-    currentYearsValues.right = props.right;
+    setCurrentYearsValues({
+      left: props.left,
+      right: props.right,
+    });
   }, [ props ]);
 
   // useEffect(() => {
