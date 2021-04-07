@@ -48,6 +48,7 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
   const onChange = props.onChange;
   const [currentYearsValues, setCurrentYearsValues] = useState<SearchYearsValues>({ left: props.left,
     right: props.right });
+  let rangeUpdateTimeout: NodeJS.Timeout;
 
   /**
    * To change the digits of the input numbers after moving range sliders
@@ -60,35 +61,47 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
     });
   }, [ props.left, props.right ]);
 
-  // useEffect(() => {
-  //   if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
-  //     setTimeout(() => {
-  //       if (onChange) {
-  //         onChange({
-  //           left: currentYearsValues.left,
-  //           right: currentYearsValues.right,
-  //         });
-  //       }
-  //     }, 500);
-  //   }
-  // }, [ currentYearsValues ]);
+  useEffect(() => {
+    if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
+      rangeUpdateTimeout = setTimeout(() => {
+        if (onChange) {
+          onChange({
+            left: currentYearsValues.left,
+            right: currentYearsValues.right,
+          });
+        }
+      }, 500);
+    }
+  }, [ currentYearsValues ]);
 
   /**
    * Effect works after state updating
    * Then verifies, that this change was not due to changing of props,
    * wait some time and update form state (call onChange)
    */
-  useEffect(() => {
-    if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
-      onChange && debounce(
-        () => onChange({
-          left: currentYearsValues.left,
-          right: currentYearsValues.right,
-        }),
-        1000
-      );
-    }
-  }, [ currentYearsValues ]);
+  // useEffect(() => {
+  //   if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
+  //     onChange && debounce(
+  //       () => onChange({
+  //         left: currentYearsValues.left,
+  //         right: currentYearsValues.right,
+  //       }),
+  //       1000
+  //     )();
+  //   }
+  // }, [ currentYearsValues ]);
+
+  // useEffect(() => {
+  //   if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
+  //     onChange && throttle(
+  //       () => onChange({
+  //         left: currentYearsValues.left,
+  //         right: currentYearsValues.right,
+  //       }),
+  //       1000
+  //     )();
+  //   }
+  // }, [ currentYearsValues ]);
 
   return (
     <YearsWrapper>
@@ -102,6 +115,7 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
             left: value.target.value,
             right: currentYearsValues.right,
           });
+          clearTimeout(rangeUpdateTimeout);
         }}
       />
 
@@ -119,6 +133,7 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
             left: currentYearsValues.left,
             right: value.target.value,
           });
+          clearTimeout(rangeUpdateTimeout);
         }}
       />
     </YearsWrapper>
