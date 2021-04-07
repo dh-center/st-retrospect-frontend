@@ -24,6 +24,10 @@
   "aside": {
     "searchBottomButton": "Map search"
   },
+  "route": {
+    "startRoute": "Start route"
+  },
   "routes": "Routes",
-  "author": "Author"
+  "author": "Author",
+  "loadMore": "Load more"
 }

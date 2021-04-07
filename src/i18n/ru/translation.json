@@ -24,6 +24,10 @@
   "aside": {
     "searchBottomButton": "Поиск по карте"
   },
+  "route": {
+    "startRoute": "Перейти к маршруту"
+  },
   "routes": "Маршруты",
-  "author": "Автор"
+  "author": "Автор",
+  "loadMore": "Загрузить ещё"
 }

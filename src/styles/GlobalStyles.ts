@@ -23,6 +23,11 @@ const GlobalStyles = createGlobalStyle`
 
   *, *::after, *::before {
     box-sizing: border-box;
+
+    /**
+     * Scrollbar style for Mozilla Firefox
+     */
+    scrollbar-color: #E0E0E0 var(--color-light-gray);
   }
 
   *::-webkit-scrollbar {
