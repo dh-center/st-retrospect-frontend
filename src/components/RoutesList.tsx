@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useLazyLoadQuery, usePaginationFragment } from 'react-relay';
 import { RoutesListPaginationQuery } from './__generated__/RoutesListPaginationQuery.graphql';
 import { RoutesList_questsConnection$key } from './__generated__/RoutesList_questsConnection.graphql';
@@ -7,6 +7,7 @@ import { RoutesListQuery } from './__generated__/RoutesListQuery.graphql';
 import styled from 'styled-components';
 import RouteItem from './RouteItem';
 import LoadMoreButton from './LoadMoreButton';
+import { useInView } from 'react-intersection-observer';
 
 /**
  * Default count of loading routes in list
@@ -67,6 +68,19 @@ export default function RoutesList(): ReactElement {
     }
   `, routesQueryData);
 
+  const [loadMoreButtonRef, loadMoreButtonInView] = useInView({
+    threshold: 1,
+  });
+
+  /**
+   * Triggers load next items in list if load more butto is fully in view
+   */
+  useEffect(() => {
+    if (loadMoreButtonInView && !isLoadingNext) {
+      loadNext(ROUTES_ON_PAGE);
+    }
+  }, [ loadMoreButtonInView ]);
+
   return (
     <ListWrapper hasNext={hasNext}>
       {
@@ -76,7 +90,11 @@ export default function RoutesList(): ReactElement {
           }
         )
       }
-      { hasNext && <LoadMoreButton isLoadingNext={isLoadingNext} onClick={() => loadNext(ROUTES_ON_PAGE)}/> }
+      { hasNext && <LoadMoreButton
+        isLoadingNext={isLoadingNext}
+        onClick={() => loadNext(ROUTES_ON_PAGE)}
+        ref={loadMoreButtonRef}
+      /> }
     </ListWrapper>
   );
 }
