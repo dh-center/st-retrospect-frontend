@@ -58,7 +58,7 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
       left: props.left,
       right: props.right,
     });
-  }, [ props ]);
+  }, [ props.left, props.right ]);
 
   // useEffect(() => {
   //   if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
