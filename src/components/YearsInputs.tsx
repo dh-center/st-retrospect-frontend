@@ -2,7 +2,6 @@ import { ReactElement, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import { YearsInputsElementProps } from '../interfaces/YearsInputsElementProps';
-import { debounce } from '../utils/debounce';
 import { SearchYearsValues } from '../interfaces/SearchYearsValues';
 
 const YearsWrapper = styled.div`
@@ -59,7 +58,7 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
       left: props.left,
       right: props.right,
     });
-  }, [ props.left, props.right ]);
+  }, [props.left, props.right]);
 
   useEffect(() => {
     if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
