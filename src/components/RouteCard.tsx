@@ -15,7 +15,7 @@ interface RouteRouteParameters {
   /**
    * Id of current route
    */
-  id: string;
+  questId: string;
 }
 
 const Wrapper = styled.div`
@@ -96,7 +96,11 @@ const CenterWrapper = styled.div`
   align-items: center;
 `;
 
-const StartRouteButton = styled.button`
+const StartRouteButton = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 221px;
   height: 36px;
 
@@ -108,6 +112,7 @@ const StartRouteButton = styled.button`
 
   font-size: 14px;
   color: var(--color-white);
+  text-decoration: none;
 `;
 
 /**
@@ -115,7 +120,7 @@ const StartRouteButton = styled.button`
  */
 export default function RouteCard(): ReactElement {
   const { t } = useTranslation();
-  const { id } = useParams<RouteRouteParameters>();
+  const { questId } = useParams<RouteRouteParameters>();
   const data = useLazyLoadQuery<RouteCardQuery>(
     graphql`
       query RouteCardQuery($id: GlobalId!) {
@@ -127,7 +132,7 @@ export default function RouteCard(): ReactElement {
       }
     `,
     {
-      id,
+      id: questId,
     }
   );
 
@@ -146,7 +151,7 @@ export default function RouteCard(): ReactElement {
         <Author>{ t('author') }: ИТМО</Author>
         <Description>{ data.quest.description }</Description>
         <CenterWrapper>
-          <StartRouteButton>{ t('route.startRoute') }</StartRouteButton>
+          <StartRouteButton to={`/route/${questId}/0`}>{ t('route.startRoute') }</StartRouteButton>
         </CenterWrapper>
       </InformationWrapper>
     </Wrapper>

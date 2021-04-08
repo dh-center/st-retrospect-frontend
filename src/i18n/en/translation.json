@@ -25,7 +25,8 @@
     "searchBottomButton": "Map search"
   },
   "route": {
-    "startRoute": "Start route"
+    "startRoute": "Start route",
+    "endRoute": "End route"
   },
   "routes": "Routes",
   "author": "Author",

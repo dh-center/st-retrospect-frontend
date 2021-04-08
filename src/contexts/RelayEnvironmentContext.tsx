@@ -28,6 +28,7 @@ class GraphQLClient {
   private async sendQuery(query: string | null | undefined, variables: Variables): Promise<any> {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
+      'Accept-Language': 'RU',
     };
 
     const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}`, {

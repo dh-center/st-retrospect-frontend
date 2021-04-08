@@ -40,7 +40,7 @@ interface MenuItemIconProps {
   /**
    * Displaying icon
    */
-  icon: never;
+  icon: string;
 }
 
 const MenuItemIcon = styled.div<MenuItemIconProps>`
@@ -50,7 +50,9 @@ const MenuItemIcon = styled.div<MenuItemIconProps>`
   margin-right: 18px;
 
   background-image: url("${ props => props.icon }");
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 /**
