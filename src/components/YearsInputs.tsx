@@ -47,6 +47,10 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
   const onChange = props.onChange;
   const [currentYearsValues, setCurrentYearsValues] = useState<SearchYearsValues>({ left: props.left,
     right: props.right });
+
+  /**
+   * global Variable for saving into timeout value
+   */
   let rangeUpdateTimeout: NodeJS.Timeout;
 
   /**
@@ -60,6 +64,11 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
     });
   }, [props.left, props.right]);
 
+  /**
+   * Effect works after state updating
+   * Then verifies, that this change was not due to changing of props,
+   * wait some time and update form state (call onChange)
+   */
   useEffect(() => {
     if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
       rangeUpdateTimeout = setTimeout(() => {
@@ -72,35 +81,6 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
       }, 500);
     }
   }, [ currentYearsValues ]);
-
-  /**
-   * Effect works after state updating
-   * Then verifies, that this change was not due to changing of props,
-   * wait some time and update form state (call onChange)
-   */
-  // useEffect(() => {
-  //   if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
-  //     onChange && debounce(
-  //       () => onChange({
-  //         left: currentYearsValues.left,
-  //         right: currentYearsValues.right,
-  //       }),
-  //       1000
-  //     )();
-  //   }
-  // }, [ currentYearsValues ]);
-
-  // useEffect(() => {
-  //   if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
-  //     onChange && throttle(
-  //       () => onChange({
-  //         left: currentYearsValues.left,
-  //         right: currentYearsValues.right,
-  //       }),
-  //       1000
-  //     )();
-  //   }
-  // }, [ currentYearsValues ]);
 
   return (
     <YearsWrapper>
