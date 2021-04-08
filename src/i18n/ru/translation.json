@@ -25,7 +25,8 @@
     "searchBottomButton": "Поиск по карте"
   },
   "route": {
-    "startRoute": "Перейти к маршруту"
+    "startRoute": "Перейти к маршруту",
+    "endRoute": "Закончить маршрут"
   },
   "routes": "Маршруты",
   "author": "Автор",

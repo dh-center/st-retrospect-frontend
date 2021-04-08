@@ -9,6 +9,7 @@ import Loader from './Loader';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import { ReactComponent as ArrowLeft } from '../assets/arrow-left-second.svg';
+import { useTranslation } from 'react-i18next';
 
 const BottomPanel = styled.div`
   display: flex;
@@ -82,6 +83,7 @@ const NextLocationButton = styled(SquaredButton)`
  */
 export default function RoutePassingRenderer(): ReactElement {
   const { questId, currentLocationIndex } = useParams<{ currentLocationIndex: string, questId: string }>();
+  const { t } = useTranslation();
 
   const data = useLazyLoadQuery<RoutePassingRendererQuery>(
     graphql`
@@ -143,7 +145,7 @@ export default function RoutePassingRenderer(): ReactElement {
         </div>
         <ButtonsWrapper>
           <EndRouteButton to={`/route/${questId}`}>
-            Закончить маршрут
+            { t('route.endRoute') }
           </EndRouteButton>
           { +currentLocationIndex !== 0 &&
             <PreviousLocationButton to={`/route/${questId}/${+currentLocationIndex - 1}`}>
