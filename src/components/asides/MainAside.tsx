@@ -19,6 +19,7 @@ import MenuIcon from '../../assets/burger-menu.svg';
 import RoutesList from '../RoutesList';
 import RouteCard from '../RouteCard';
 import Loader from '../Loader';
+import RoutePassingRenderer from '../RoutePassingRenderer';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -143,9 +144,14 @@ function MainAside(): ReactElement {
               <RoutesList/>
             </Suspense>
           </Route>
-          <Route path="/route/:id">
+          <Route exact path="/route/:questId">
             <Suspense fallback={<Loader/>}>
               <RouteCard/>
+            </Suspense>
+          </Route>
+          <Route path="/route/:questId/:currentLocationIndex">
+            <Suspense fallback={<Loader/>}>
+              <RoutePassingRenderer/>
             </Suspense>
           </Route>
         </Switch>
