@@ -1,7 +1,7 @@
 /**
  * Interface for search form values
  */
-export interface SearchYearsValues {
+export interface SearchFormState {
   /**
    * GraphQL query for form
    */
@@ -21,11 +21,11 @@ export interface SearchYearsValues {
       /**
        * Left year value
        */
-      left: number;
+      left: string;
       /**
        * Right year value
        */
-      right: number;
+      right: string;
     }
   }
 }
