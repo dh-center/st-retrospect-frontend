@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import LeftArrowIcon from '../assets/arrow-left.svg';
@@ -7,6 +7,7 @@ import CheckboxCheckedIcon from '../assets/checkbox-checked.svg';
 import CrossIcon from '../assets/cross.svg';
 import { useTranslation } from 'react-i18next';
 import WithClassName from '../interfaces/WithClassName';
+import { OnChangeSelected } from '../interfaces/OnChangeSelected';
 
 /**
  * Props for custom select elements
@@ -150,13 +151,19 @@ const SelectResetText = styled.span`
 /**
  * Custom select component
  *
+ * @param change - function for send selected items to form state
  * @param props - props of component
  */
-function CustomSelect(props: WithClassName): ReactElement {
+function CustomSelect(change: OnChangeSelected, props: WithClassName): ReactElement {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const options = ['писатель', 'художник', 'скульптор', 'водитель', 'алкоголик', 'хто я?'];
+  const onChange = change.onChange;
+
+  useEffect(() => {
+    onChange(selected);
+  }, [ selected ]);
 
   const SelectItems = options.map((option, key) => {
     return (
