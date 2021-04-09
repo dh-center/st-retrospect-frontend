@@ -75,7 +75,9 @@ function SearchLine(props: SearchLineProps): ReactElement {
     <SearchLineWrapper className={props.className}>
       <SearchLineMenuButton onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
       <SearchLineInput placeholder={t('search.inputPlaceholder')}/>
-      <SearchLineSearchButton/>
+      <SearchLineSearchButton
+        type={"submit"}
+      />
     </SearchLineWrapper>
   );
 }
