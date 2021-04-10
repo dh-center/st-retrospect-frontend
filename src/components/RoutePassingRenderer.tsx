@@ -1,4 +1,4 @@
-import { ReactElement, Suspense } from 'react';
+import { ReactElement, Suspense, useMemo } from 'react';
 import { Redirect, useParams, Link } from 'react-router-dom';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -109,22 +109,28 @@ export default function RoutePassingRenderer(): ReactElement {
   /**
    * Parse quest data to array of location with texts blocks
    */
-  const locationBlocksWithTexts: QuestBlock[][] = [];
-  let locationBlockWithTexts: QuestBlock[] = [];
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const locationBlocksWithTexts: QuestBlock[][] = useMemo(() => {
+    const result: QuestBlock[][] = [];
+    let locationBlockWithTexts: QuestBlock[] = [];
 
-  questDataBlocks.forEach(currentBlock => {
-    if (
-      (currentBlock.type === 'locationInstance' && locationBlockWithTexts.length === 0) ||
-      currentBlock.type !== 'locationInstance'
-    ) {
-      locationBlockWithTexts.push(currentBlock);
-    } else {
-      locationBlocksWithTexts.push(locationBlockWithTexts);
-      locationBlockWithTexts = [ currentBlock ];
-    }
-  });
+    questDataBlocks.forEach(currentBlock => {
+      if (
+        (currentBlock.type === 'locationInstance' && locationBlockWithTexts.length === 0) ||
+        currentBlock.type !== 'locationInstance'
+      ) {
+        locationBlockWithTexts.push(currentBlock);
+      } else {
+        result.push(locationBlockWithTexts);
+        locationBlockWithTexts = [ currentBlock ];
+      }
+    });
 
-  locationBlocksWithTexts.push(locationBlockWithTexts);
+    result.push(locationBlockWithTexts);
+
+    return result;
+  }, [ questDataBlocks ]);
+
 
   if (+currentLocationIndex >= locationBlocksWithTexts.length) {
     return <Redirect to={`/route/${questId}/${locationBlocksWithTexts.length-1}`}/>;
