@@ -1,8 +1,8 @@
 import { ReactElement, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
-import { YearsInputsElementProps } from '../interfaces/YearsInputsElementProps';
-import { SearchYearsValues } from '../interfaces/SearchYearsValues';
+import { YearsInputsElementProps } from '../interfaces/searchForm/YearsInputsElementProps';
+import { SearchYearsValues } from '../interfaces/searchForm/SearchYearsValues';
 
 const YearsWrapper = styled.div`
   margin-top: 12px;

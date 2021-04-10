@@ -73,7 +73,7 @@ function SearchLine(props: SearchLineProps): ReactElement {
 
   return (
     <SearchLineWrapper className={props.className}>
-      <SearchLineMenuButton onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
+      <SearchLineMenuButton type={'button'} onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
       <SearchLineInput placeholder={t('search.inputPlaceholder')}/>
       <SearchLineSearchButton/>
     </SearchLineWrapper>

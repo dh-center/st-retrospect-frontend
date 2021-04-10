@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import styled from 'styled-components';
 import RangeThumb from '../assets/range-thumb.svg';
 import { sansSerifLight } from '../styles/FontStyles';
-import { YearsInputsElementProps } from '../interfaces/YearsInputsElementProps';
+import { YearsInputsElementProps } from '../interfaces/searchForm/YearsInputsElementProps';
 
 const RangeWrapper = styled.div`
   position: relative;
