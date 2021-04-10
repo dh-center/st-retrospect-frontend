@@ -5,8 +5,8 @@ import SearchLine from './SearchLine';
 import CustomRange from './CustomRange';
 import YearsInputs from './YearsInputs';
 import { useTranslation } from 'react-i18next';
-import { SearchYearsRange } from '../interfaces/SearchYearsRange';
-import { SearchFormState } from '../interfaces/SearchFormState';
+import { SearchYearsRange } from '../interfaces/searchForm/SearchYearsRange';
+import { SearchFormState } from '../interfaces/searchForm/SearchFormState';
 
 const SearchLineWithMarginBottom = styled(SearchLine)`
   margin-bottom: 12px;

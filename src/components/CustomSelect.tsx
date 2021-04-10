@@ -7,7 +7,7 @@ import CheckboxCheckedIcon from '../assets/checkbox-checked.svg';
 import CrossIcon from '../assets/cross.svg';
 import { useTranslation } from 'react-i18next';
 import WithClassName from '../interfaces/WithClassName';
-import { OnChangeSelected } from '../interfaces/OnChangeSelected';
+import { OnChangeSelected } from '../interfaces/searchForm/OnChangeSelected';
 
 /**
  * Props for custom select elements
