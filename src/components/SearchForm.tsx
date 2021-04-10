@@ -25,9 +25,9 @@ function SearchForm(props: SearchYearsRange): ReactElement {
       categories: [],
       years: {
         left: props.min,
-        right: props.max
-      }
-    }
+        right: props.max,
+      },
+    },
   });
 
   return (
@@ -49,8 +49,8 @@ function SearchForm(props: SearchYearsRange): ReactElement {
                 years: {
                   left: currentValues.filters.years.left,
                   right: currentValues.filters.years.right,
-                }
-              }
+                },
+              },
             });
           }
         }
@@ -66,8 +66,8 @@ function SearchForm(props: SearchYearsRange): ReactElement {
                 years: {
                   left: value.left,
                   right: value.right,
-                }
-              }
+                },
+              },
             });
           }
         }
@@ -88,8 +88,8 @@ function SearchForm(props: SearchYearsRange): ReactElement {
                 years: {
                   left: value.left,
                   right: value.right,
-                }
-              }
+                },
+              },
             });
           }
         }
