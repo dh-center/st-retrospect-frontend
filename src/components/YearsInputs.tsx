@@ -49,9 +49,9 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
     right: props.right });
 
   /**
-   * global Variable for saving into timeout value
+   * variable for update timeout time when changing inputs
    */
-  let rangeUpdateTimeout: NodeJS.Timeout;
+  let rangeUpdateTimeout: ReturnType<typeof setTimeout>;
 
   /**
    * To change the digits of the input numbers after moving range sliders
