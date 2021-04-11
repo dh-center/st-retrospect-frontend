@@ -73,10 +73,22 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
     if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
       rangeUpdateTimeout = setTimeout(() => {
         if (onChange) {
-          onChange({
-            left: currentYearsValues.left,
-            right: currentYearsValues.right,
-          });
+          if (currentYearsValues.right < currentYearsValues.left) {
+            onChange({
+              left: currentYearsValues.left,
+              right: (Number(currentYearsValues.left) + 1).toString(),
+            });
+          } else if (currentYearsValues.left > currentYearsValues.right) {
+            onChange({
+              left: (Number(currentYearsValues.right) - 1).toString(),
+              right: currentYearsValues.right,
+            });
+          } else {
+            onChange({
+              left: currentYearsValues.left,
+              right: currentYearsValues.right,
+            });
+          }
         }
       }, 500);
     }
