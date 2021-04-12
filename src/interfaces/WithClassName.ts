@@ -1,7 +1,9 @@
+import { OnChangeSelected } from './searchForm/OnChangeSelected';
+
 /**
  * Default interface with className prop
  */
-interface WithClassName {
+interface WithClassName extends OnChangeSelected {
   /**
    * Component class name
    */

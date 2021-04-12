@@ -7,5 +7,5 @@ export interface OnChangeSelected {
    *
    * @param values - all selected values
    */
-  onChange: (values: string[]) => void;
+  onChange?: (values: string[]) => void;
 }
