@@ -118,7 +118,9 @@ function MainAside(): ReactElement {
                 { t('routes') }
               </LineWrapper>
               <Route path="/routes">
-                <CustomSelectWithMargin/>
+                <CustomSelectWithMargin
+                  selected={[]}
+                />
               </Route>
             </Route>
           </Switch>
