@@ -18,6 +18,16 @@ interface CustomSelectElementProps {
   isOpen: boolean;
 }
 
+interface CustomSelectInputProps extends WithClassName {
+  /**
+   * onChange event handler
+   *
+   * @param values - all selected values
+   */
+  onChange: (values: string[]) => void;
+  selected: string[];
+}
+
 /**
  * This element needs for displaying select over next elements
  */
@@ -152,7 +162,7 @@ const SelectResetText = styled.span`
  *
  * @param props - props of component
  */
-function CustomSelect(props: WithClassName): ReactElement {
+function CustomSelect(props: CustomSelectInputProps): ReactElement {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
@@ -160,7 +170,7 @@ function CustomSelect(props: WithClassName): ReactElement {
   const onChange = props.onChange;
 
   useEffect(() => {
-    onChange && onChange(selected);
+    onChange(selected);
   }, [ selected ]);
 
   const SelectItems = options.map((option, key) => {
