@@ -1,4 +1,4 @@
-import { ReactElement, useState, useEffect } from 'react';
+import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import LeftArrowIcon from '../assets/arrow-left.svg';
@@ -24,7 +24,10 @@ interface CustomSelectInputProps extends WithClassName {
    *
    * @param values - all selected values
    */
-  onChange: (values: string[]) => void;
+  onChange?: (values: string[]) => void;
+  /**
+   * Array of selected items
+   */
   selected: string[];
 }
 
@@ -165,25 +168,20 @@ const SelectResetText = styled.span`
 function CustomSelect(props: CustomSelectInputProps): ReactElement {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
-  const [selected, setSelected] = useState<string[]>([]);
   const options = ['писатель', 'художник', 'скульптор', 'водитель', 'алкоголик', 'хто я?'];
   const onChange = props.onChange;
-
-  useEffect(() => {
-    onChange(selected);
-  }, [ selected ]);
 
   const SelectItems = options.map((option, key) => {
     return (
       <SelectItem
-        selected={selected.includes(option)}
+        selected={props.selected.includes(option)}
         onClick={() => {
-          if (selected.includes(option)) {
-            const index = selected.indexOf(option);
+          if (props.selected.includes(option)) {
+            const index = props.selected.indexOf(option);
 
-            setSelected(selected.slice(0, index).concat(selected.slice(index + 1)));
+            onChange && onChange(props.selected.slice(0, index).concat(props.selected.slice(index + 1)));
           } else {
-            setSelected(selected.concat(option));
+            onChange && onChange(props.selected.concat(option));
           }
         }}
         key={key}
@@ -198,12 +196,12 @@ function CustomSelect(props: CustomSelectInputProps): ReactElement {
       <SelectWrapper isOpen={isOpen}>
         <SelectInput onClick={() => setOpen(!isOpen)} isOpen={isOpen}>
           <SelectInputText>{
-            selected.length ? selected.join(', ') : t('customSelect.placeholder')
+            props.selected.length ? props.selected.join(', ') : t('customSelect.placeholder')
           }</SelectInputText>
         </SelectInput>
         <SelectDropdown isOpen={isOpen}>
           {SelectItems}
-          <ListItem onClick={() => setSelected([])}>
+          <ListItem onClick={() => onChange && onChange([])}>
             <SelectResetText>{t('customSelect.reset')}</SelectResetText>
           </ListItem>
         </SelectDropdown>

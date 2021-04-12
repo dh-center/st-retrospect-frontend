@@ -40,6 +40,7 @@ function SearchForm(props: SearchYearsRange): ReactElement {
       <SearchLineWithMarginBottom/>
 
       <CustomSelect
+        selected={currentValues.filters.categories}
         onChange={
           (values) => {
             setCurrentValues({
