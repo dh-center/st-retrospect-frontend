@@ -1,5 +1,6 @@
-import { ReactElement, useState, useEffect } from 'react';
+import { ReactElement, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import debounce from 'lodash.debounce';
 import { sansSerifLight } from '../styles/FontStyles';
 import { YearsInputsElementProps } from '../interfaces/searchForm/YearsInputsElementProps';
 import { SearchYearsValues } from '../interfaces/searchForm/SearchYearsValues';
@@ -47,11 +48,12 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
   const onChange = props.onChange;
   const [currentYearsValues, setCurrentYearsValues] = useState<SearchYearsValues>({ left: props.left,
     right: props.right });
-
-  /**
-   * variable for update timeout time when changing inputs
-   */
-  let rangeUpdateTimeout: ReturnType<typeof setTimeout>;
+  const updateRange = useCallback(
+    () => debounce(
+      () => onChange && onChange(normalizeValues(currentYearsValues)),
+      500)(),
+    []
+  );
 
   /**
    * To change the digits of the input numbers after moving range sliders
@@ -64,35 +66,25 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
     });
   }, [props.left, props.right]);
 
-  /**
-   * Effect works after state updating
-   * Then verifies, that this change was not due to changing of props,
-   * wait some time and update form state (call onChange)
-   */
   useEffect(() => {
-    if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
-      rangeUpdateTimeout = setTimeout(() => {
-        if (onChange) {
-          if (currentYearsValues.right < currentYearsValues.left) {
-            onChange({
-              left: currentYearsValues.left,
-              right: (Number(currentYearsValues.left) + 1).toString(),
-            });
-          } else if (currentYearsValues.left > currentYearsValues.right) {
-            onChange({
-              left: (Number(currentYearsValues.right) - 1).toString(),
-              right: currentYearsValues.right,
-            });
-          } else {
-            onChange({
-              left: currentYearsValues.left,
-              right: currentYearsValues.right,
-            });
-          }
-        }
-      }, 500);
-    }
+    updateRange();
   }, [ currentYearsValues ]);
+
+  function normalizeValues (values: SearchYearsValues): SearchYearsValues {
+    if (values.right < values.left) {
+      return {
+        left: values.left,
+        right: (Number(values.left) + 1).toString(),
+      };
+    } else if (values.left > values.right) {
+      return {
+        left: (Number(values.right) - 1).toString(),
+        right: values.right,
+      };
+    } else {
+      return values;
+    }
+  }
 
   return (
     <YearsWrapper>
@@ -106,7 +98,6 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
             left: value.target.value,
             right: currentYearsValues.right,
           });
-          clearTimeout(rangeUpdateTimeout);
         }}
       />
 
@@ -124,7 +115,6 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
             left: currentYearsValues.left,
             right: value.target.value,
           });
-          clearTimeout(rangeUpdateTimeout);
         }}
       />
     </YearsWrapper>
