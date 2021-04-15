@@ -18,6 +18,20 @@ interface CustomSelectElementProps {
   isOpen: boolean;
 }
 
+interface CustomSelectInputProps extends WithClassName {
+  /**
+   * onChange event handler
+   *
+   * @param values - all selected values
+   */
+  onChange?: (values: string[]) => void;
+
+  /**
+   * Array of selected items
+   */
+  selected: string[];
+}
+
 /**
  * This element needs for displaying select over next elements
  */
@@ -152,23 +166,25 @@ const SelectResetText = styled.span`
  *
  * @param props - props of component
  */
-function CustomSelect(props: WithClassName): ReactElement {
+export default function CustomSelect(props: CustomSelectInputProps): ReactElement {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
-  const [selected, setSelected] = useState<string[]>([]);
   const options = ['писатель', 'художник', 'скульптор', 'водитель', 'алкоголик', 'хто я?'];
 
   const SelectItems = options.map((option, key) => {
     return (
       <SelectItem
-        selected={selected.includes(option)}
+        selected={props.selected.includes(option)}
         onClick={() => {
-          if (selected.includes(option)) {
-            const index = selected.indexOf(option);
+          if (!props.onChange) {
+            return;
+          }
+          if (props.selected.includes(option)) {
+            const index = props.selected.indexOf(option);
 
-            setSelected(selected.slice(0, index).concat(selected.slice(index + 1)));
+            props.onChange(props.selected.slice(0, index).concat(props.selected.slice(index + 1)));
           } else {
-            setSelected(selected.concat(option));
+            props.onChange(props.selected.concat(option));
           }
         }}
         key={key}
@@ -183,12 +199,12 @@ function CustomSelect(props: WithClassName): ReactElement {
       <SelectWrapper isOpen={isOpen}>
         <SelectInput onClick={() => setOpen(!isOpen)} isOpen={isOpen}>
           <SelectInputText>{
-            selected.length ? selected.join(', ') : t('customSelect.placeholder')
+            props.selected.length ? props.selected.join(', ') : t('customSelect.placeholder')
           }</SelectInputText>
         </SelectInput>
         <SelectDropdown isOpen={isOpen}>
           {SelectItems}
-          <ListItem onClick={() => setSelected([])}>
+          <ListItem onClick={() => props.onChange && props.onChange([])}>
             <SelectResetText>{t('customSelect.reset')}</SelectResetText>
           </ListItem>
         </SelectDropdown>
@@ -196,5 +212,3 @@ function CustomSelect(props: WithClassName): ReactElement {
     </SelectPlaceholder>
   );
 }
-
-export default CustomSelect;

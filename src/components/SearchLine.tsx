@@ -10,7 +10,19 @@ import WithClassName from '../interfaces/WithClassName';
 /**
  * Search line props
  */
-interface SearchLineProps extends WithClassName {}
+interface SearchLineProps extends WithClassName {
+  /**
+   * Current value of input
+   */
+  value: string;
+
+  /**
+   * onChange event handler
+   *
+   * @param value - new input value
+   */
+  onChange: (value: string) => void;
+}
 
 const SearchLineWrapper = styled.div`
   display: flex;
@@ -73,8 +85,12 @@ function SearchLine(props: SearchLineProps): ReactElement {
 
   return (
     <SearchLineWrapper className={props.className}>
-      <SearchLineMenuButton onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
-      <SearchLineInput placeholder={t('search.inputPlaceholder')}/>
+      <SearchLineMenuButton type={'button'} onClick={() => setMenuAsideShow(!isMenuAsideShow)}/>
+      <SearchLineInput
+        placeholder={t('search.inputPlaceholder')}
+        value={props.value}
+        onChange={event => props.onChange(event.target.value)}
+      />
       <SearchLineSearchButton/>
     </SearchLineWrapper>
   );

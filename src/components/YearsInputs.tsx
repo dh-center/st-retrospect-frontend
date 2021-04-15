@@ -1,18 +1,31 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
+import { SearchYearsValues } from '../interfaces/searchForm/SearchYearsValues';
 
 /**
- * Props for years inputs
+ * Interface of props for search components
  */
-interface YearsInputsElementProps {
+export interface YearsInputsProps {
   /**
-   * Minimum value
+   * onChange event handler
+   *
+   * @param values - end values of years
+   */
+  onChange?: (values: SearchYearsValues) => void;
+
+  /**
+   * Current years values
+   */
+  values: SearchYearsValues;
+
+  /**
+   * Minimum year for searching
    */
   min: string;
 
   /**
-   * Maximum value
+   * Maximum year for searching
    */
   max: string;
 }
@@ -37,7 +50,6 @@ const YearsInput = styled.input`
   border: .5px solid #F2F2F2;
   border-radius: 2px;
   outline: none;
-  user-select: none;
 
   /* Remove arrows in number input field in Webkit */
   &::-webkit-outer-spin-button,
@@ -55,16 +67,20 @@ const YearsDash = styled.span`
 /**
  * Years inputs component
  *
- * @param props - properties
+ * @param props - properties (min and max values of years)
  */
-function YearsInputs(props: YearsInputsElementProps): ReactElement {
+export default function YearsInputs(props: YearsInputsProps): ReactElement {
   return (
     <YearsWrapper>
       <YearsInput
         type="number"
         min={props.min}
         max={props.max}
-        value={props.min}
+        value={props.values.left}
+        onChange={event => props.onChange && props.onChange({
+          ...props.values,
+          left: event.target.value,
+        })}
       />
 
       <YearsDash>
@@ -75,10 +91,12 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
         type="number"
         min={props.min}
         max={props.max}
-        value={props.max}
+        value={props.values.right}
+        onChange={event => props.onChange && props.onChange({
+          ...props.values,
+          right: event.target.value,
+        })}
       />
     </YearsWrapper>
   );
 }
-
-export default YearsInputs;
