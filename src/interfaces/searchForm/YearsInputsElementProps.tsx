@@ -12,6 +12,11 @@ export interface YearsInputsElementProps {
   onChange?: (values: SearchYearsValues) => void;
 
   /**
+   * Current years values
+   */
+  values: SearchYearsValues;
+
+  /**
    * Minimum year for searching
    */
   min: string;
@@ -20,16 +25,6 @@ export interface YearsInputsElementProps {
    * Maximum year for searching
    */
   max: string;
-
-  /**
-   * Left value of range
-   */
-  left: string;
-
-  /**
-   * Right value of range
-   */
-  right: string;
 
   /**
    * Label for range input

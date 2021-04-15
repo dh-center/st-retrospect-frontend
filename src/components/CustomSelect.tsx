@@ -25,6 +25,7 @@ interface CustomSelectInputProps extends WithClassName {
    * @param values - all selected values
    */
   onChange?: (values: string[]) => void;
+
   /**
    * Array of selected items
    */
@@ -165,7 +166,7 @@ const SelectResetText = styled.span`
  *
  * @param props - props of component
  */
-function CustomSelect(props: CustomSelectInputProps): ReactElement {
+export default function CustomSelect(props: CustomSelectInputProps): ReactElement {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const options = ['писатель', 'художник', 'скульптор', 'водитель', 'алкоголик', 'хто я?'];
@@ -209,5 +210,3 @@ function CustomSelect(props: CustomSelectInputProps): ReactElement {
     </SelectPlaceholder>
   );
 }
-
-export default CustomSelect;

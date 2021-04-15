@@ -71,12 +71,9 @@ const RangeInput = styled.input`
  *
  * @param props - properties (min and max values of years)
  */
-function CustomRange(props: YearsInputsElementProps): ReactElement {
-  const onChange = props.onChange;
-
+export default function CustomRange(props: YearsInputsElementProps): ReactElement {
   return (
     <RangeWrapper>
-
       { props.label &&
         <RangeLabel>
           { props.label }
@@ -87,24 +84,24 @@ function CustomRange(props: YearsInputsElementProps): ReactElement {
 
       <RangeInput
         type="range"
-        value={props.left}
+        value={props.values.left}
         min={props.min}
         max={props.max}
 
-        onChange={(value) => {
-          if (!onChange) {
+        onChange={(event) => {
+          if (!props.onChange) {
             return;
           }
 
-          if (value.target.value > props.right) {
-            onChange({
-              left: props.right,
-              right: value.target.value,
+          if (event.target.value > props.values.right) {
+            props.onChange({
+              left: props.values.right,
+              right: event.target.value,
             });
           } else {
-            onChange({
-              left: value.target.value,
-              right: props.right,
+            props.onChange({
+              left: event.target.value,
+              right: props.values.right,
             });
           }
         }}
@@ -112,23 +109,23 @@ function CustomRange(props: YearsInputsElementProps): ReactElement {
 
       <RangeInput
         type="range"
-        value={props.right}
+        value={props.values.right}
         min={props.min}
         max={props.max}
-        onChange={value => {
-          if (!onChange) {
+        onChange={event => {
+          if (!props.onChange) {
             return;
           }
 
-          if (value.target.value < props.left) {
-            onChange({
-              left: value.target.value,
-              right: props.left,
+          if (event.target.value < props.values.left) {
+            props.onChange({
+              left: event.target.value,
+              right: props.values.left,
             });
           } else {
-            onChange({
-              left: props.left,
-              right: value.target.value,
+            props.onChange({
+              left: props.values.left,
+              right: event.target.value,
             });
           }
         }}
@@ -137,5 +134,3 @@ function CustomRange(props: YearsInputsElementProps): ReactElement {
     </RangeWrapper>
   );
 }
-
-export default CustomRange;
