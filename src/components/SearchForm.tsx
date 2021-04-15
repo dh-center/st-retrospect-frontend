@@ -5,7 +5,6 @@ import SearchLine from './SearchLine';
 import CustomRange from './CustomRange';
 import YearsInputs from './YearsInputs';
 import { useTranslation } from 'react-i18next';
-import { SearchYearsRange } from '../interfaces/searchForm/SearchYearsRange';
 import useDebounce from '../lib/useDebounce';
 
 const SearchLineWithMarginBottom = styled(SearchLine)`
@@ -14,11 +13,12 @@ const SearchLineWithMarginBottom = styled(SearchLine)`
 
 /**
  * Search form component
- *
- * @param props - properties (min and max range values)
  */
-function SearchForm(props: SearchYearsRange): ReactElement {
+export default function SearchForm(): ReactElement {
   const { t } = useTranslation();
+
+  const YEARS_MIN_VALUE = '1500';
+  const YEARS_MAX_VALUE = '2021';
 
   /**
    * Text query for search
@@ -34,8 +34,8 @@ function SearchForm(props: SearchYearsRange): ReactElement {
    * Years period for search
    */
   const [years, setYears] = useState({
-    left: props.min,
-    right: props.max,
+    left: YEARS_MIN_VALUE,
+    right: YEARS_MAX_VALUE,
   });
 
   const [yearsFromInputs, setYearsFromInputs] = useState(years);
@@ -67,28 +67,23 @@ function SearchForm(props: SearchYearsRange): ReactElement {
         value={query}
         onChange={value => setQuery(value)}
       />
-
       <CustomSelect
         selected={categories}
         onChange={values => setCategories(values)}
       />
-
       <CustomRange
         onChange={values => setYears(values)}
-        min={props.min}
-        max={props.max}
+        min={YEARS_MIN_VALUE}
+        max={YEARS_MAX_VALUE}
         values={years}
         label={t(`customRange.years`)}
       />
-
       <YearsInputs
         onChange={values => setYearsFromInputs(values)}
-        max={props.max}
-        min={props.min}
+        min={YEARS_MIN_VALUE}
+        max={YEARS_MAX_VALUE}
         values={yearsFromInputs}
       />
     </form>
   );
 }
-
-export default SearchForm;
