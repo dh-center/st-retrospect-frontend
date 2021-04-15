@@ -22,10 +22,15 @@ const MenuItem = styled.li`
   color: var(--color-dark-gray);
   font-size: 14px;
 
-  padding: 12px 0;
+  padding: 12px 16px;
+  margin: 0 -16px;
 
   cursor: pointer;
   user-select: none;
+
+  &:hover {
+    background: var(--color-light-blue);
+  }
 `;
 
 /**
@@ -35,7 +40,7 @@ interface MenuItemIconProps {
   /**
    * Displaying icon
    */
-  icon: never;
+  icon: string;
 }
 
 const MenuItemIcon = styled.div<MenuItemIconProps>`
@@ -45,7 +50,9 @@ const MenuItemIcon = styled.div<MenuItemIconProps>`
   margin-right: 18px;
 
   background-image: url("${ props => props.icon }");
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 /**

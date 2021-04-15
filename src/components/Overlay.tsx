@@ -20,7 +20,7 @@ const OverlayBlock = styled.div<OverlayProps>`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 2;
 
   background: #000;
   opacity: ${ props => props.show ? '0.7' : '0' };

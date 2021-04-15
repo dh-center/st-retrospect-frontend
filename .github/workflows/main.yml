@@ -21,11 +21,15 @@ jobs:
           envkey_REACT_APP_SENTRY_DSN: ${{ secrets.REACT_APP_SENTRY_DSN }}
           file_name: .env.local
 
+      - name: Change API endpoint if stage
+        if: endsWith(github.ref, '/stage')
+        run: sed -i -E "s/api.st-retrospect/api.stage.st-retrospect/" .env
+
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
 
       - name: Set deploy command to env variable
-        run: echo "DEPLOY_COMMAND=$(echo "cd ~/st-retrospect/${BRANCH_NAME}/frontend && ./deploy.sh")" >> $GITHUB_ENV
+        run: echo "DEPLOY_COMMAND=$(echo "cd ~/retrospect/${BRANCH_NAME}/frontend && ./deploy.sh")" >> $GITHUB_ENV
 
       - name: Push to Docker Hub
         if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')

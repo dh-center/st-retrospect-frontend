@@ -19,7 +19,6 @@ interface RouteItemProps {
 
 const Item = styled(Link)`
   display: flex;
-  margin-bottom: 12px;
 
   border: .5px solid #F2F2F2;
   border-radius: 2px;
@@ -27,6 +26,10 @@ const Item = styled(Link)`
 
   text-decoration: none;
   color: var(--color-dark-gray);
+
+  &:not(:last-of-type) {
+    margin-bottom: 12px;
+  }
 
   &:hover {
     background: var(--color-light-blue);
