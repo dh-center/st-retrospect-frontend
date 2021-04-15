@@ -2,12 +2,12 @@ import { ReactElement } from 'react';
 import styled from 'styled-components';
 import RangeThumb from '../assets/range-thumb.svg';
 import { sansSerifLight } from '../styles/FontStyles';
-import { YearsInputsElementProps } from '../interfaces/searchForm/YearsInputsElementProps';
+import { YearsInputsProps } from './YearsInputs';
 
 /**
  * Component props with information about years and label for range
  */
-interface CustomRangeProps extends YearsInputsElementProps {
+interface CustomRangeProps extends YearsInputsProps {
   /**
    * Label for range input
    */

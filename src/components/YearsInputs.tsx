@@ -1,7 +1,34 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
-import { YearsInputsElementProps } from '../interfaces/searchForm/YearsInputsElementProps';
+import { SearchYearsValues } from '../interfaces/searchForm/SearchYearsValues';
+
+/**
+ * Interface of props for search components
+ */
+export interface YearsInputsProps {
+  /**
+   * onChange event handler
+   *
+   * @param values - end values of years
+   */
+  onChange?: (values: SearchYearsValues) => void;
+
+  /**
+   * Current years values
+   */
+  values: SearchYearsValues;
+
+  /**
+   * Minimum year for searching
+   */
+  min: string;
+
+  /**
+   * Maximum year for searching
+   */
+  max: string;
+}
 
 const YearsWrapper = styled.div`
   margin-top: 12px;
@@ -42,7 +69,7 @@ const YearsDash = styled.span`
  *
  * @param props - properties (min and max values of years)
  */
-export default function YearsInputs(props: YearsInputsElementProps): ReactElement {
+export default function YearsInputs(props: YearsInputsProps): ReactElement {
   return (
     <YearsWrapper>
       <YearsInput
