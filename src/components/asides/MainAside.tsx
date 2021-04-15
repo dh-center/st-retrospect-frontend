@@ -106,10 +106,7 @@ function MainAside(): ReactElement {
           <AsideHeaderWithMarginBottom/>
           <Switch>
             <Route exact path="/">
-              <SearchForm
-                min={'1500'}
-                max={'2021'}
-              />
+              <SearchForm/>
             </Route>
             <Route path={['/routes', '/route/:id']}>
               <LineWrapper>
