@@ -54,8 +54,8 @@ export default function SearchForm(): ReactElement {
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
+      onSubmit={(event) => {
+        event.preventDefault();
         alert(JSON.stringify({
           query,
           categories,

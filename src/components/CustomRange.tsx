@@ -4,6 +4,16 @@ import RangeThumb from '../assets/range-thumb.svg';
 import { sansSerifLight } from '../styles/FontStyles';
 import { YearsInputsElementProps } from '../interfaces/searchForm/YearsInputsElementProps';
 
+/**
+ * Component props with information about years and label for range
+ */
+interface CustomRangeProps extends YearsInputsElementProps {
+  /**
+   * Label for range input
+   */
+  label?: string;
+}
+
 const RangeWrapper = styled.div`
   position: relative;
 
@@ -69,9 +79,9 @@ const RangeInput = styled.input`
 /**
  * Custom range component
  *
- * @param props - properties (min and max values of years)
+ * @param props - props of component
  */
-export default function CustomRange(props: YearsInputsElementProps): ReactElement {
+export default function CustomRange(props: CustomRangeProps): ReactElement {
   return (
     <RangeWrapper>
       { props.label &&

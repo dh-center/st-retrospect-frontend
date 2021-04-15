@@ -25,9 +25,4 @@ export interface YearsInputsElementProps {
    * Maximum year for searching
    */
   max: string;
-
-  /**
-   * Label for range input
-   */
-  label?: string;
 }
