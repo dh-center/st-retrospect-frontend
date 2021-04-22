@@ -7,7 +7,18 @@ import UsersIcon from '../assets/users.svg';
 import ThumbsUpIcon from '../assets/thumbs-up.svg';
 import { useTranslation } from 'react-i18next';
 
+interface MenuInputProps {
+  /**
+   * onChange event handler
+   *
+   * @param item - number of the pressed button
+   */
+  onChange: (item: number) => void;
+}
+
 const MenuWrapper = styled.ul`
+  display: inline-block;
+
   padding: 0;
   margin: 0;
 
@@ -57,29 +68,33 @@ const MenuItemIcon = styled.div<MenuItemIconProps>`
 
 /**
  * Menu component
+ *
+ * @param props - onChange event handler for tracking selected menu item
  */
-function Menu(): ReactElement {
+function Menu(props: MenuInputProps): ReactElement {
   const { t } = useTranslation();
 
   return (
-    <MenuWrapper>
-      <MenuItem>
-        <MenuItemIcon icon={HelpCircleIcon}/>
-        {t('aboutProject.title')}
-      </MenuItem>
-      <MenuItem>
-        <MenuItemIcon icon={MapPinIcon}/>
-        {t('howToGuide.title')}
-      </MenuItem>
-      <MenuItem>
-        <MenuItemIcon icon={UsersIcon}/>
-        {t('partners.title')}
-      </MenuItem>
-      <MenuItem>
-        <MenuItemIcon icon={ThumbsUpIcon}/>
-        {t('thanks.title')}
-      </MenuItem>
-    </MenuWrapper>
+    <>
+      <MenuWrapper>
+        <MenuItem onClick={() => props.onChange(1)}>
+          <MenuItemIcon icon={HelpCircleIcon}/>
+          {t('aboutProject.title')}
+        </MenuItem>
+        <MenuItem onClick={() => props.onChange(2)}>
+          <MenuItemIcon icon={MapPinIcon}/>
+          {t('howToGuide.title')}
+        </MenuItem>
+        <MenuItem onClick={() => props.onChange(3)}>
+          <MenuItemIcon icon={UsersIcon}/>
+          {t('partners.title')}
+        </MenuItem>
+        <MenuItem onClick={() => props.onChange(4)}>
+          <MenuItemIcon icon={ThumbsUpIcon}/>
+          {t('thanks.title')}
+        </MenuItem>
+      </MenuWrapper>
+    </>
   );
 }
 
