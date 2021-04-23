@@ -18,6 +18,7 @@ import SearchForm from '../SearchForm';
 import RouteCard from '../RouteCard';
 import Loader from '../Loader';
 import RoutePassingRenderer from '../RoutePassingRenderer';
+import LocationInstancesList from '../LocationInstancesList';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -138,6 +139,12 @@ function MainAside(): ReactElement {
             <Suspense fallback={<Loader/>}>
               <RoutePassingRenderer/>
             </Suspense>
+          </Route>
+        </Switch>
+
+        <Switch>
+          <Route exact path="/">
+            <LocationInstancesList/>
           </Route>
         </Switch>
 
