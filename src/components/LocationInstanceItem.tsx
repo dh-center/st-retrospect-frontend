@@ -26,7 +26,7 @@ const Address = styled(SecondaryInformation)`
  */
 export default function LocationInstanceItem(): ReactElement {
   return (
-    <Item to={'/'}>
+    <Item to="/location-instance/TG9jYXRpb25JbnN0YW5jZTo1ZWIxYzZiYTZmY2MzODAwM2RhOGVlMGY=">
       <Image src={'https://picsum.photos/seed/picsum/100/200'}/>
       <InformationWrapper>
         Большой Петергофский дворец
