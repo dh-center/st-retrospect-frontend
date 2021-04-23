@@ -18,6 +18,8 @@ import SearchForm from '../SearchForm';
 import RouteCard from '../RouteCard';
 import Loader from '../Loader';
 import RoutePassingRenderer from '../RoutePassingRenderer';
+import LocationInstancesList from '../LocationInstancesList';
+import LocationInstanceCard from '../LocationInstanceCard';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -105,10 +107,10 @@ function MainAside(): ReactElement {
         <AsideParametersWrapper>
           <AsideHeaderWithMarginBottom/>
           <Switch>
-            <Route exact path="/">
+            <Route exact path={['/', '/location-instance/:locationInstanceId']}>
               <SearchForm/>
             </Route>
-            <Route path={['/routes', '/route/:id']}>
+            <Route path={['/routes', '/route/:questId']}>
               <LineWrapper>
                 <MenuButton onClick={() => setMenuAsideShow(true)}/>
                 <MapBottomButtonIcon/>
@@ -137,6 +139,17 @@ function MainAside(): ReactElement {
           <Route path="/route/:questId/:currentLocationIndex">
             <Suspense fallback={<Loader/>}>
               <RoutePassingRenderer/>
+            </Suspense>
+          </Route>
+        </Switch>
+
+        <Switch>
+          <Route exact path="/">
+            <LocationInstancesList/>
+          </Route>
+          <Route path="/location-instance/:locationInstanceId">
+            <Suspense fallback={<Loader/>}>
+              <LocationInstanceCard/>
             </Suspense>
           </Route>
         </Switch>
