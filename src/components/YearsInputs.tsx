@@ -1,8 +1,34 @@
-import { ReactElement, useState, useEffect } from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
-import { YearsInputsElementProps } from '../interfaces/searchForm/YearsInputsElementProps';
 import { SearchYearsValues } from '../interfaces/searchForm/SearchYearsValues';
+
+/**
+ * Interface of props for search components
+ */
+export interface YearsInputsProps {
+  /**
+   * onChange event handler
+   *
+   * @param values - end values of years
+   */
+  onChange?: (values: SearchYearsValues) => void;
+
+  /**
+   * Current years values
+   */
+  values: SearchYearsValues;
+
+  /**
+   * Minimum year for searching
+   */
+  min: string;
+
+  /**
+   * Maximum year for searching
+   */
+  max: string;
+}
 
 const YearsWrapper = styled.div`
   margin-top: 12px;
@@ -43,71 +69,18 @@ const YearsDash = styled.span`
  *
  * @param props - properties (min and max values of years)
  */
-function YearsInputs(props: YearsInputsElementProps): ReactElement {
-  const onChange = props.onChange;
-  const [currentYearsValues, setCurrentYearsValues] = useState<SearchYearsValues>({ left: props.left,
-    right: props.right });
-
-  /**
-   * variable for update timeout time when changing inputs
-   */
-  let rangeUpdateTimeout: ReturnType<typeof setTimeout>;
-
-  /**
-   * To change the digits of the input numbers after moving range sliders
-   * because inputs depends from state variables
-   */
-  useEffect(() => {
-    setCurrentYearsValues({
-      left: props.left,
-      right: props.right,
-    });
-  }, [props.left, props.right]);
-
-  /**
-   * Effect works after state updating
-   * Then verifies, that this change was not due to changing of props,
-   * wait some time and update form state (call onChange)
-   */
-  useEffect(() => {
-    if ((props.left !== currentYearsValues.left) || (props.right !== currentYearsValues.right)) {
-      rangeUpdateTimeout = setTimeout(() => {
-        if (onChange) {
-          if (currentYearsValues.right < currentYearsValues.left) {
-            onChange({
-              left: currentYearsValues.left,
-              right: (Number(currentYearsValues.left) + 1).toString(),
-            });
-          } else if (currentYearsValues.left > currentYearsValues.right) {
-            onChange({
-              left: (Number(currentYearsValues.right) - 1).toString(),
-              right: currentYearsValues.right,
-            });
-          } else {
-            onChange({
-              left: currentYearsValues.left,
-              right: currentYearsValues.right,
-            });
-          }
-        }
-      }, 500);
-    }
-  }, [ currentYearsValues ]);
-
+export default function YearsInputs(props: YearsInputsProps): ReactElement {
   return (
     <YearsWrapper>
       <YearsInput
         type="number"
         min={props.min}
         max={props.max}
-        value={currentYearsValues.left}
-        onChange={(value) => {
-          setCurrentYearsValues({
-            left: value.target.value,
-            right: currentYearsValues.right,
-          });
-          clearTimeout(rangeUpdateTimeout);
-        }}
+        value={props.values.left}
+        onChange={event => props.onChange && props.onChange({
+          ...props.values,
+          left: event.target.value,
+        })}
       />
 
       <YearsDash>
@@ -118,17 +91,12 @@ function YearsInputs(props: YearsInputsElementProps): ReactElement {
         type="number"
         min={props.min}
         max={props.max}
-        value={currentYearsValues.right}
-        onChange={(value) => {
-          setCurrentYearsValues({
-            left: currentYearsValues.left,
-            right: value.target.value,
-          });
-          clearTimeout(rangeUpdateTimeout);
-        }}
+        value={props.values.right}
+        onChange={event => props.onChange && props.onChange({
+          ...props.values,
+          right: event.target.value,
+        })}
       />
     </YearsWrapper>
   );
 }
-
-export default YearsInputs;

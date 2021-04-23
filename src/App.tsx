@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import HomePage from './pages/HomePage';
 import { Switch, Route } from 'react-router-dom';
 import GlobalStyles from './styles/GlobalStyles';

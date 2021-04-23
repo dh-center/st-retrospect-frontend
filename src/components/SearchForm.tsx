@@ -1,12 +1,11 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CustomSelect from './CustomSelect';
 import SearchLine from './SearchLine';
 import CustomRange from './CustomRange';
 import YearsInputs from './YearsInputs';
 import { useTranslation } from 'react-i18next';
-import { SearchYearsRange } from '../interfaces/searchForm/SearchYearsRange';
-import { SearchFormState } from '../interfaces/searchForm/SearchFormState';
+import useDebounce from '../lib/useDebounce';
 
 const SearchLineWithMarginBottom = styled(SearchLine)`
   margin-bottom: 12px;
@@ -14,93 +13,77 @@ const SearchLineWithMarginBottom = styled(SearchLine)`
 
 /**
  * Search form component
- *
- * @param props - properties (min and max range values)
  */
-function SearchForm(props: SearchYearsRange): ReactElement {
+export default function SearchForm(): ReactElement {
   const { t } = useTranslation();
-  const [currentValues, setCurrentValues] = useState<SearchFormState>({
-    query: '',
-    filters: {
-      categories: [],
-      years: {
-        left: props.min,
-        right: props.max,
-      },
-    },
+
+  const YEARS_MIN_VALUE = '1500';
+  const YEARS_MAX_VALUE = '2021';
+
+  /**
+   * Text query for search
+   */
+  const [query, setQuery] = useState('');
+
+  /**
+   * Categories for search
+   */
+  const [categories, setCategories] = useState<string[]>([]);
+
+  /**
+   * Years period for search
+   */
+  const [years, setYears] = useState({
+    left: YEARS_MIN_VALUE,
+    right: YEARS_MAX_VALUE,
   });
+
+  const [yearsFromInputs, setYearsFromInputs] = useState(years);
+
+  const yearsFromInputsWithDebounce = useDebounce(yearsFromInputs, 400);
+
+  /**
+   * Set years to inputs from range instantly
+   */
+  useEffect(() => setYearsFromInputs(years), [ years ]);
+
+  /**
+   * Set years from inputs to range after debounce timeout
+   */
+  useEffect(() => setYears(yearsFromInputsWithDebounce), [ yearsFromInputsWithDebounce ]);
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        alert(JSON.stringify(currentValues));
+      onSubmit={(event) => {
+        event.preventDefault();
+        alert(JSON.stringify({
+          query,
+          categories,
+          years,
+        }));
       }}
     >
-      <SearchLineWithMarginBottom/>
-
-      <CustomSelect
-        selected={currentValues.filters.categories}
-        onChange={
-          (values) => {
-            setCurrentValues({
-              query: '',
-              filters: {
-                categories: values,
-                years: {
-                  left: currentValues.filters.years.left,
-                  right: currentValues.filters.years.right,
-                },
-              },
-            });
-          }
-        }
+      <SearchLineWithMarginBottom
+        value={query}
+        onChange={value => setQuery(value)}
       />
-
+      <CustomSelect
+        selected={categories}
+        onChange={values => setCategories(values)}
+      />
       <CustomRange
-        onChange={
-          (value) => {
-            setCurrentValues({
-              query: '',
-              filters: {
-                categories: currentValues.filters.categories,
-                years: {
-                  left: value.left,
-                  right: value.right,
-                },
-              },
-            });
-          }
-        }
-        min={props.min}
-        max={props.max}
-        left={currentValues.filters.years.left}
-        right={currentValues.filters.years.right}
+        onChange={values => setYears(values)}
+        min={YEARS_MIN_VALUE}
+        max={YEARS_MAX_VALUE}
+        values={years}
         label={t(`customRange.years`)}
       />
-
       <YearsInputs
-        onChange={
-          (value) => {
-            setCurrentValues({
-              query: '',
-              filters: {
-                categories: currentValues.filters.categories,
-                years: {
-                  left: value.left,
-                  right: value.right,
-                },
-              },
-            });
-          }
-        }
-        max={props.max}
-        min={props.min}
-        left={currentValues.filters.years.left}
-        right={currentValues.filters.years.right}
+        onChange={values => setYearsFromInputs(values)}
+        min={YEARS_MIN_VALUE}
+        max={YEARS_MAX_VALUE}
+        values={yearsFromInputs}
       />
     </form>
   );
 }
-
-export default SearchForm;
