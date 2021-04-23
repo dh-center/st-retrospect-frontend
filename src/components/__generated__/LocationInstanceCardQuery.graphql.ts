@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type LocationInstanceCardQueryVariables = {
     id: string;
 };
@@ -17,10 +18,8 @@ export type LocationInstanceCardQueryResponse = {
         };
         readonly relations: ReadonlyArray<{
             readonly person: {
-                readonly lastName: string | null;
-                readonly firstName: string | null;
-                readonly patronymic: string | null;
-                readonly mainPhotoLink: string | null;
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"RelatedPersonBlock_person">;
             } | null;
         }>;
         readonly description: string | null;
@@ -56,10 +55,7 @@ query LocationInstanceCardQuery(
     }
     relations {
       person {
-        lastName
-        firstName
-        patronymic
-        mainPhotoLink
+        ...RelatedPersonBlock_person
         id
       }
       id
@@ -76,6 +72,13 @@ query LocationInstanceCardQuery(
     wikiLink
     id
   }
+}
+
+fragment RelatedPersonBlock_person on Person {
+  lastName
+  firstName
+  patronymic
+  mainPhotoLink
 }
 */
 
@@ -130,56 +133,56 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "lastName",
+  "name": "id",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "firstName",
+  "name": "description",
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "patronymic",
+  "name": "lastName",
   "storageKey": null
 },
 v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "description",
+  "name": "firstName",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "constructionDate",
+  "name": "patronymic",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "demolitionDate",
+  "name": "constructionDate",
   "storageKey": null
 },
 v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "wikiLink",
+  "name": "demolitionDate",
   "storageKey": null
 },
 v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "wikiLink",
   "storageKey": null
 };
 return {
@@ -228,16 +231,18 @@ return {
                 "plural": false,
                 "selections": [
                   (v5/*: any*/),
-                  (v6/*: any*/),
-                  (v7/*: any*/),
-                  (v2/*: any*/)
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "RelatedPersonBlock_person"
+                  }
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v8/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -246,15 +251,15 @@ return {
             "name": "architects",
             "plural": true,
             "selections": [
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/)
+              (v7/*: any*/),
+              (v8/*: any*/),
+              (v9/*: any*/)
             ],
             "storageKey": null
           },
-          (v9/*: any*/),
           (v10/*: any*/),
-          (v11/*: any*/)
+          (v11/*: any*/),
+          (v12/*: any*/)
         ],
         "storageKey": null
       }
@@ -287,7 +292,7 @@ return {
             "plural": false,
             "selections": [
               (v4/*: any*/),
-              (v12/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -307,19 +312,19 @@ return {
                 "name": "person",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
-                  (v6/*: any*/),
                   (v7/*: any*/),
+                  (v8/*: any*/),
+                  (v9/*: any*/),
                   (v2/*: any*/),
-                  (v12/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v12/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v8/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -328,31 +333,31 @@ return {
             "name": "architects",
             "plural": true,
             "selections": [
-              (v5/*: any*/),
-              (v6/*: any*/),
               (v7/*: any*/),
-              (v12/*: any*/)
+              (v8/*: any*/),
+              (v9/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v9/*: any*/),
           (v10/*: any*/),
           (v11/*: any*/),
-          (v12/*: any*/)
+          (v12/*: any*/),
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "63c031c6c13ca5e6fcf8b3d54fd87bfc",
+    "cacheID": "2f405f11dbfb900992f2cde08c519d9d",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceCardQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        lastName\n        firstName\n        patronymic\n        mainPhotoLink\n        id\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    id\n  }\n}\n"
+    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        ...RelatedPersonBlock_person\n        id\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n"
   }
 };
 })();
-(node as any).hash = '25907257abb234d61b6336627a45f04f';
+(node as any).hash = 'f4165adabaf906715126e29d567756ec';
 export default node;
