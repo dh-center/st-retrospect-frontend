@@ -40,6 +40,7 @@
     "@types/react-relay": "^11.0.1",
     "@types/relay-runtime": "^11.0.0",
     "babel-plugin-relay": "^11.0.1",
+    "file-loader": "^6.2.0",
     "get-graphql-schema": "^2.1.2",
     "graphql": "^15.5.0",
     "relay-compiler": "^11.0.1",
