@@ -13,6 +13,8 @@ import {
 import RelatedPersonBlock from './RelatedPersonBlock';
 import { FragmentRefs } from 'relay-runtime';
 import styled from 'styled-components';
+import { sansSerifLight } from '../styles/FontStyles';
+import MapPin from '../assets/map-pin.svg';
 
 /**
  * Parameters of '/location-instance' route
@@ -24,6 +26,27 @@ interface LocationInstanceRouteParameters {
   locationInstanceId: string;
 }
 
+const Address = styled.div`
+  margin-bottom: 14px;
+
+  ${sansSerifLight};
+  font-size: 14px;
+
+  &::before {
+    content: '';
+
+    display: inline-block;
+    width: 12px;
+    height: 15px;
+    margin-right: 6px;
+
+    background-image: url("${MapPin}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+`;
+
 const StyledRelatedPersonBlock = styled(RelatedPersonBlock)``;
 
 const RelatedPersonsWrapper = styled.div`
@@ -31,7 +54,7 @@ const RelatedPersonsWrapper = styled.div`
   flex-wrap: wrap;
 
   margin-top: -12px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 
   & ${StyledRelatedPersonBlock} {
     margin-right: 12px;
@@ -40,7 +63,7 @@ const RelatedPersonsWrapper = styled.div`
 `;
 
 /**
- *
+ * Card of location instance with information about it
  */
 export default function LocationInstanceCard(): ReactElement {
   const { locationInstanceId } = useParams<LocationInstanceRouteParameters>();
@@ -107,6 +130,7 @@ export default function LocationInstanceCard(): ReactElement {
       <Image src={data.locationInstance.mainPhotoLink ? data.locationInstance.mainPhotoLink : 'https://picsum.photos/seed/picsum/200/100'}/>
       <InformationWrapper>
         <Name>{data.locationInstance.name}</Name>
+        {data.locationInstance.location.addresses && <Address>{data.locationInstance.location.addresses[0].address}</Address>}
         <RelatedPersonsWrapper>
           {Object.values(uniquePersons).map((person, index) => {
             return person && <StyledRelatedPersonBlock key={index} person={person}/>;
