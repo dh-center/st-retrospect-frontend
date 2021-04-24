@@ -38,14 +38,10 @@ const AsideHeaderWithMarginBottom = styled(AsideHeader)`
  */
 function MenuAside(): ReactElement {
   const { isMenuAsideShow, setMenuAsideShow } = useContext(MenuAsideContext);
-  const [selectedMenuItem, setSelectedMenuItem] = useState<number>(0);
+  const [selectedMenuItem, setSelectedMenuItem] = useState<number>(1);
   const [isMenuContentShow, setMenuContentShow] = useState<boolean>(false);
 
   const SelectedContent = (): ReactElement => {
-    if (!isMenuContentShow) {
-      return (<></>);
-    }
-
     switch (selectedMenuItem) {
       case 1:
         return (<AboutProject/>);
@@ -71,13 +67,12 @@ function MenuAside(): ReactElement {
           }}/>
         </AsideHeaderWithMarginBottom>
         <Menu onChange={(item) => {
-          if (item === selectedMenuItem) {
-            setMenuContentShow(false);
-            setSelectedMenuItem(0);
-          }
-          if ((item !== selectedMenuItem) || (selectedMenuItem === 0)) {
-            setMenuContentShow(true);
+          if (!isMenuContentShow) {
             setSelectedMenuItem(item);
+            setMenuContentShow(true);
+          } else {
+            item === selectedMenuItem && setMenuContentShow(false);
+            item !== selectedMenuItem && setSelectedMenuItem(item);
           }
         }}/>
       </LeftPanelWithLargeShadow>
