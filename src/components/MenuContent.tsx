@@ -26,7 +26,7 @@ const MenuContentWrapper = styled.div<MenuContentProps>`
   right: ${props => props.isMenuContentShow ? 'calc(372px - 100vw)' : 'calc((372px - 100vw)*2)'};
   z-index: 3;
 
-  transition: ease-out .5s;
+  transition: ease-out .3s;
 `;
 
 /**
