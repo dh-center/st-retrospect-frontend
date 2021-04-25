@@ -31,6 +31,7 @@ export type LocationInstanceCardQueryResponse = {
         readonly constructionDate: string | null;
         readonly demolitionDate: string | null;
         readonly wikiLink: string | null;
+        readonly source: string | null;
     } | null;
 };
 export type LocationInstanceCardQuery = {
@@ -70,6 +71,7 @@ query LocationInstanceCardQuery(
     constructionDate
     demolitionDate
     wikiLink
+    source
     id
   }
 }
@@ -184,6 +186,13 @@ v12 = {
   "kind": "ScalarField",
   "name": "wikiLink",
   "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "source",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -259,7 +268,8 @@ return {
           },
           (v10/*: any*/),
           (v11/*: any*/),
-          (v12/*: any*/)
+          (v12/*: any*/),
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
@@ -343,6 +353,7 @@ return {
           (v10/*: any*/),
           (v11/*: any*/),
           (v12/*: any*/),
+          (v13/*: any*/),
           (v5/*: any*/)
         ],
         "storageKey": null
@@ -350,14 +361,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f405f11dbfb900992f2cde08c519d9d",
+    "cacheID": "95edff659cd49d6f2337dfe840fb634d",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceCardQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        ...RelatedPersonBlock_person\n        id\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n"
+    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        ...RelatedPersonBlock_person\n        id\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    source\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n"
   }
 };
 })();
-(node as any).hash = 'f4165adabaf906715126e29d567756ec';
+(node as any).hash = '2cb3a1565d311707a67fd37e828028ed';
 export default node;

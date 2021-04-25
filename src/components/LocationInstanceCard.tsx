@@ -13,7 +13,7 @@ import {
 import RelatedPersonBlock from './RelatedPersonBlock';
 import { FragmentRefs } from 'relay-runtime';
 import styled from 'styled-components';
-import { sansSerifLight } from '../styles/FontStyles';
+import { sansSerifLight, sansSerifRegular } from '../styles/FontStyles';
 import MapPin from '../assets/map-pin.svg';
 
 /**
@@ -62,6 +62,25 @@ const RelatedPersonsWrapper = styled.div`
   }
 `;
 
+const InformationWithTitle = styled.div`
+  display: flex;
+
+  margin-bottom: 12px;
+
+  font-size: 16px;
+  color: var(--color-dark-gray);
+`;
+
+const InformationTitle = styled.div`
+  margin-right: 6px;
+
+  ${ sansSerifLight };
+`;
+
+const InformationContent = styled.div`
+  ${ sansSerifRegular };
+`;
+
 /**
  * Card of location instance with information about it
  */
@@ -80,8 +99,8 @@ export default function LocationInstanceCard(): ReactElement {
           }
           relations {
             person {
-              ...RelatedPersonBlock_person
               id
+              ...RelatedPersonBlock_person
             }
           }
           description
@@ -93,6 +112,7 @@ export default function LocationInstanceCard(): ReactElement {
           constructionDate
           demolitionDate
           wikiLink
+          source
         }
       }
     `,
@@ -137,6 +157,34 @@ export default function LocationInstanceCard(): ReactElement {
           })}
         </RelatedPersonsWrapper>
         <Description>{data.locationInstance.description}</Description>
+        { data.locationInstance.architects?.length &&
+          <InformationWithTitle>
+            <InformationTitle>
+              Архитектор:
+            </InformationTitle>
+            <InformationContent>
+              {`${data.locationInstance.architects[0]?.lastName} ${data.locationInstance.architects[0]?.firstName} ${data.locationInstance.architects[0]?.patronymic}`}
+            </InformationContent>
+          </InformationWithTitle>
+        }
+        <InformationWithTitle>
+          <InformationTitle>
+            Строительство:
+          </InformationTitle>
+          <InformationContent>
+            {`${data.locationInstance.constructionDate || '...'} — ${data.locationInstance.demolitionDate || '...'} г.`}
+          </InformationContent>
+        </InformationWithTitle>
+        { data.locationInstance.source &&
+          <InformationWithTitle>
+            <InformationTitle>
+              Источник:
+            </InformationTitle>
+            <InformationContent>
+              {data.locationInstance.source}
+            </InformationContent>
+          </InformationWithTitle>
+        }
       </InformationWrapper>
     </CardWrapper>
   );
