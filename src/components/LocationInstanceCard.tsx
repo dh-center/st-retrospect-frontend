@@ -15,6 +15,7 @@ import { FragmentRefs } from 'relay-runtime';
 import styled from 'styled-components';
 import { sansSerifLight, sansSerifRegular } from '../styles/FontStyles';
 import MapPin from '../assets/map-pin.svg';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Parameters of '/location-instance' route
@@ -86,6 +87,7 @@ const InformationContent = styled.div`
  */
 export default function LocationInstanceCard(): ReactElement {
   const { locationInstanceId } = useParams<LocationInstanceRouteParameters>();
+  const { t } = useTranslation();
   const data = useLazyLoadQuery<LocationInstanceCardQuery>(
     graphql`
       query LocationInstanceCardQuery($id: GlobalId!) {
@@ -160,7 +162,7 @@ export default function LocationInstanceCard(): ReactElement {
         { data.locationInstance.architects?.length &&
           <InformationWithTitle>
             <InformationTitle>
-              Архитектор:
+              {t('locationInstance.architect')}:
             </InformationTitle>
             <InformationContent>
               {`${data.locationInstance.architects[0]?.lastName} ${data.locationInstance.architects[0]?.firstName} ${data.locationInstance.architects[0]?.patronymic}`}
@@ -169,16 +171,16 @@ export default function LocationInstanceCard(): ReactElement {
         }
         <InformationWithTitle>
           <InformationTitle>
-            Строительство:
+            {t('locationInstance.dates')}:
           </InformationTitle>
           <InformationContent>
-            {`${data.locationInstance.constructionDate || '...'} — ${data.locationInstance.demolitionDate || '...'} г.`}
+            {`${data.locationInstance.constructionDate || '...'} — ${data.locationInstance.demolitionDate || '...'} ${t('yearsAbbreviated')}`}
           </InformationContent>
         </InformationWithTitle>
         { data.locationInstance.source &&
           <InformationWithTitle>
             <InformationTitle>
-              Источник:
+              {t('locationInstance.source')}:
             </InformationTitle>
             <InformationContent>
               {data.locationInstance.source}

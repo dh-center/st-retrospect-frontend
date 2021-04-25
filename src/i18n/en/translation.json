@@ -28,7 +28,13 @@
     "startRoute": "Start route",
     "endRoute": "End route"
   },
+  "locationInstance": {
+    "architect": "Architect",
+    "dates": "Construction dates",
+    "source": "Source"
+  },
   "routes": "Routes",
   "author": "Author",
-  "loadMore": "Load more"
+  "loadMore": "Load more",
+  "yearsAbbreviated": "y."
 }
