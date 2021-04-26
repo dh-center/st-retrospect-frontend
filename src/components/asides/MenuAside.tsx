@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useState } from 'react';
+import { ReactElement, useContext } from 'react';
 import LeftPanel from '../LeftPanel';
 import AsideHeader from './AsideHeader';
 import styled from 'styled-components';
@@ -6,10 +6,7 @@ import MenuAsideContext from '../../contexts/MenuAsideContext';
 import DoubleArrowsIcon from '../../assets/double-arrows.svg';
 import Menu from '../Menu';
 import Overlay from '../Overlay';
-import MenuContent from './../MenuContent';
-import AboutProject from '../content/AboutProject';
-import OurPartners from '../content/OurPartners';
-import Thanks from '../content/Thanks';
+import MenuItemsContext from '../../contexts/MenuItemsContext';
 
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
@@ -38,23 +35,7 @@ const AsideHeaderWithMarginBottom = styled(AsideHeader)`
  */
 function MenuAside(): ReactElement {
   const { isMenuAsideShow, setMenuAsideShow } = useContext(MenuAsideContext);
-  const [selectedMenuItem, setSelectedMenuItem] = useState<number>(1);
-  const [isMenuContentShow, setMenuContentShow] = useState<boolean>(false);
-
-  const SelectedContent = (): ReactElement => {
-    switch (selectedMenuItem) {
-      case 1:
-        return (<AboutProject/>);
-      case 2:
-        return (<></>);
-      case 3:
-        return (<OurPartners/>);
-      case 4:
-        return (<Thanks/>);
-    }
-
-    return (<></>);
-  };
+  const { numberOfSelectedMenuItem, setNumberOfSelectedMenuItem } = useContext(MenuItemsContext);
 
   return (
     <>
@@ -63,22 +44,18 @@ function MenuAside(): ReactElement {
         <AsideHeaderWithMarginBottom>
           <CloseMenuButton onClick={() => {
             setMenuAsideShow(!isMenuAsideShow);
-            setMenuContentShow(false);
+            setNumberOfSelectedMenuItem(0);
           }}/>
         </AsideHeaderWithMarginBottom>
         <Menu onChange={(item) => {
-          if (!isMenuContentShow) {
-            setSelectedMenuItem(item);
-            setMenuContentShow(true);
+          if (numberOfSelectedMenuItem === 0) {
+            setNumberOfSelectedMenuItem(item);
           } else {
-            item === selectedMenuItem && setMenuContentShow(false);
-            item !== selectedMenuItem && setSelectedMenuItem(item);
+            item === numberOfSelectedMenuItem && setNumberOfSelectedMenuItem(0);
+            item !== numberOfSelectedMenuItem && setNumberOfSelectedMenuItem(item);
           }
         }}/>
       </LeftPanelWithLargeShadow>
-      <MenuContent isMenuContentShow={isMenuContentShow}>
-        <SelectedContent/>
-      </MenuContent>
     </>
   );
 }

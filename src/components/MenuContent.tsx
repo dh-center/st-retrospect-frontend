@@ -4,9 +4,9 @@ import WithChildren from '../interfaces/WithChildren';
 
 interface MenuContentProps extends WithChildren {
   /**
-   * Menu Content open state
+   * Number of selected item
    */
-  isMenuContentShow: boolean;
+  numberOfSelectedMenuItem: number;
 }
 
 const MenuContentWrapper = styled.div<MenuContentProps>`
@@ -21,7 +21,7 @@ const MenuContentWrapper = styled.div<MenuContentProps>`
 
   position: absolute;
   top: 0;
-  right: ${props => props.isMenuContentShow ? 'calc(372px - 100vw)' : 'calc((372px - 100vw)*2 - 372px)'};
+  right: ${props => props.numberOfSelectedMenuItem !== 0 ? 'calc(372px - 100vw)' : 'calc((372px - 100vw)*2 - 372px)'};
   z-index: 3;
 
   transition: ease-out .35s;
@@ -34,7 +34,7 @@ const MenuContentWrapper = styled.div<MenuContentProps>`
  */
 function MenuContent(props: MenuContentProps): ReactElement {
   return (
-    <MenuContentWrapper isMenuContentShow={props.isMenuContentShow}>
+    <MenuContentWrapper numberOfSelectedMenuItem={props.numberOfSelectedMenuItem}>
       { props.children }
     </MenuContentWrapper>
   );
