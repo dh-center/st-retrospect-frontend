@@ -12,8 +12,6 @@ interface MenuContentProps extends WithChildren {
 const MenuContentWrapper = styled.div<MenuContentProps>`
   background-color: var(--color-white);
 
-  display: inline-block;
-
   height: 100vh;
   overflow: scroll;
   width: calc(100vw - 372px);
@@ -23,10 +21,10 @@ const MenuContentWrapper = styled.div<MenuContentProps>`
 
   position: absolute;
   top: 0;
-  right: ${props => props.isMenuContentShow ? 'calc(372px - 100vw)' : 'calc((372px - 100vw)*2)'};
+  right: ${props => props.isMenuContentShow ? 'calc(372px - 100vw)' : 'calc((372px - 100vw)*2 - 372px)'};
   z-index: 3;
 
-  transition: ease-out .3s;
+  transition: ease-out .35s;
 `;
 
 /**
