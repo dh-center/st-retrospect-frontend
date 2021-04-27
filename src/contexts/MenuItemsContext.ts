@@ -12,9 +12,9 @@ interface MenuItemsContextProps {
   /**
    * Setter for selected item
    *
-   * @param number - is menu show or not
+   * @param item - is menu show or not
    */
-  setNumberOfSelectedMenuItem: (number: number) => void;
+  setNumberOfSelectedMenuItem: (item: number) => void;
 }
 
 /**
@@ -22,8 +22,8 @@ interface MenuItemsContextProps {
  */
 const MenuItemsContext = React.createContext<MenuItemsContextProps>({
   numberOfSelectedMenuItem: 0,
-  setNumberOfSelectedMenuItem: number => {
-    return number;
+  setNumberOfSelectedMenuItem: item => {
+    return item;
   },
 });
 
