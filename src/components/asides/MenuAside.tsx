@@ -47,12 +47,11 @@ function MenuAside(): ReactElement {
             setNumberOfSelectedMenuItem(0);
           }}/>
         </AsideHeaderWithMarginBottom>
-        <Menu onChange={(item) => {
-          if (numberOfSelectedMenuItem === 0) {
+        <Menu onClick={(item) => {
+          if ((numberOfSelectedMenuItem === 0) || (item !== numberOfSelectedMenuItem)) {
             setNumberOfSelectedMenuItem(item);
-          } else {
-            item === numberOfSelectedMenuItem && setNumberOfSelectedMenuItem(0);
-            item !== numberOfSelectedMenuItem && setNumberOfSelectedMenuItem(item);
+          } else if (item === numberOfSelectedMenuItem) {
+            setNumberOfSelectedMenuItem(0);
           }
         }}/>
       </LeftPanelWithLargeShadow>

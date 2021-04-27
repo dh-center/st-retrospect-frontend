@@ -13,7 +13,7 @@ interface MenuInputProps {
    *
    * @param item - number of the pressed button
    */
-  onChange: (item: number) => void;
+  onClick: (item: number) => void;
 }
 
 const MenuWrapper = styled.ul`
@@ -77,19 +77,19 @@ function Menu(props: MenuInputProps): ReactElement {
   return (
     <>
       <MenuWrapper>
-        <MenuItem onClick={() => props.onChange(1)}>
+        <MenuItem onClick={() => props.onClick(1)}>
           <MenuItemIcon icon={HelpCircleIcon}/>
           {t('aboutProject.title')}
         </MenuItem>
-        <MenuItem onClick={() => props.onChange(2)}>
+        <MenuItem onClick={() => props.onClick(2)}>
           <MenuItemIcon icon={MapPinIcon}/>
           {t('howToGuide.title')}
         </MenuItem>
-        <MenuItem onClick={() => props.onChange(3)}>
+        <MenuItem onClick={() => props.onClick(3)}>
           <MenuItemIcon icon={UsersIcon}/>
           {t('partners.title')}
         </MenuItem>
-        <MenuItem onClick={() => props.onChange(4)}>
+        <MenuItem onClick={() => props.onClick(4)}>
           <MenuItemIcon icon={ThumbsUpIcon}/>
           {t('thanks.title')}
         </MenuItem>
