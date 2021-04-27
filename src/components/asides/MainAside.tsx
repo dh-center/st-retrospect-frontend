@@ -18,6 +18,11 @@ import SearchForm from '../SearchForm';
 import RouteCard from '../RouteCard';
 import Loader from '../Loader';
 import RoutePassingRenderer from '../RoutePassingRenderer';
+import MenuItemsContext from '../../contexts/MenuItemsContext';
+import MenuContent from '../MenuContent';
+import AboutProject from '../content/AboutProject';
+import OurPartners from '../content/OurPartners';
+import Thanks from '../content/Thanks';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -82,6 +87,10 @@ const SearchBottomButtonIcon = styled(BottomButtonIcon)`
   background-image: url("${SearchIcon}");
 `;
 
+interface Num {
+  item: number;
+}
+
 /**
  * Main aside component
  */
@@ -89,74 +98,98 @@ function MainAside(): ReactElement {
   const { t } = useTranslation();
   const [showAside, setShowAside] = useState(true);
   const [isMenuAsideShow, setMenuAsideShow] = useState(false);
+  const [numberOfSelectedMenuItem, setNumberOfSelectedMenuItem] = useState(0);
   const history = useHistory();
 
+  function SelectedMenuItem(props: Num): ReactElement {
+    console.log('item = ' + props.item);
+    switch (props.item) {
+      case 1: return (<AboutProject/>);
+      case 2: return (<></>);
+      case 3: return (<OurPartners/>);
+      case 4: return (<Thanks/>);
+    }
+
+    return <></>;
+  }
+
   return (
-    <LeftPanel show={showAside}>
-      <MenuAsideContext.Provider value={{
-        isMenuAsideShow,
-        setMenuAsideShow,
-      }}>
-        <MenuAside/>
-        <AsideCloseButtonPositioned
-          willClose={showAside}
-          onClick={() => setShowAside(!showAside)}
-        />
-        <AsideParametersWrapper>
-          <AsideHeaderWithMarginBottom/>
-          <Switch>
-            <Route exact path="/">
-              <SearchForm/>
-            </Route>
-            <Route path={['/routes', '/route/:id']}>
-              <LineWrapper>
-                <MenuButton onClick={() => setMenuAsideShow(true)}/>
-                <MapBottomButtonIcon/>
-                { t('routes') }
-              </LineWrapper>
-              <Route path="/routes">
-                <CustomSelectWithMargin
-                  selected={[]}
-                />
+    <>
+      <LeftPanel show={showAside}>
+        <MenuAsideContext.Provider value={{
+          isMenuAsideShow,
+          setMenuAsideShow,
+        }}>
+          <MenuAside/>
+          <AsideCloseButtonPositioned
+            willClose={showAside}
+            onClick={() => setShowAside(!showAside)}
+          />
+          <AsideParametersWrapper>
+            <AsideHeaderWithMarginBottom/>
+            <Switch>
+              <Route exact path="/">
+                <SearchForm/>
               </Route>
+              <Route path={['/routes', '/route/:id']}>
+                <LineWrapper>
+                  <MenuButton onClick={() => setMenuAsideShow(true)}/>
+                  <MapBottomButtonIcon/>
+                  { t('routes') }
+                </LineWrapper>
+                <Route path="/routes">
+                  <CustomSelectWithMargin
+                    selected={[]}
+                  />
+                </Route>
+              </Route>
+            </Switch>
+          </AsideParametersWrapper>
+
+          <Switch>
+            <Route path="/routes">
+              <Suspense fallback={<Loader/>}>
+                <RoutesList/>
+              </Suspense>
+            </Route>
+            <Route exact path="/route/:questId">
+              <Suspense fallback={<Loader/>}>
+                <RouteCard/>
+              </Suspense>
+            </Route>
+            <Route path="/route/:questId/:currentLocationIndex">
+              <Suspense fallback={<Loader/>}>
+                <RoutePassingRenderer/>
+              </Suspense>
             </Route>
           </Switch>
-        </AsideParametersWrapper>
 
-        <Switch>
-          <Route path="/routes">
-            <Suspense fallback={<Loader/>}>
-              <RoutesList/>
-            </Suspense>
-          </Route>
-          <Route exact path="/route/:questId">
-            <Suspense fallback={<Loader/>}>
-              <RouteCard/>
-            </Suspense>
-          </Route>
-          <Route path="/route/:questId/:currentLocationIndex">
-            <Suspense fallback={<Loader/>}>
-              <RoutePassingRenderer/>
-            </Suspense>
-          </Route>
-        </Switch>
+          <Switch>
+            <Route exact path="/">
+              <BottomButton onClick={() => history.push('/routes')}>
+                <MapBottomButtonIcon/>
+                {t('routes')}
+              </BottomButton>
+            </Route>
+            <Route path="/routes">
+              <BottomButton onClick={() => history.push('/')}>
+                <SearchBottomButtonIcon/>
+                {t('aside.searchBottomButton')}
+              </BottomButton>
+            </Route>
+          </Switch>
+        </MenuAsideContext.Provider>
+      </LeftPanel>
 
-        <Switch>
-          <Route exact path="/">
-            <BottomButton onClick={() => history.push('/routes')}>
-              <MapBottomButtonIcon/>
-              {t('routes')}
-            </BottomButton>
-          </Route>
-          <Route path="/routes">
-            <BottomButton onClick={() => history.push('/')}>
-              <SearchBottomButtonIcon/>
-              {t('aside.searchBottomButton')}
-            </BottomButton>
-          </Route>
-        </Switch>
-      </MenuAsideContext.Provider>
-    </LeftPanel>
+      <MenuItemsContext.Provider value={{
+        numberOfSelectedMenuItem,
+        setNumberOfSelectedMenuItem,
+      }}>
+        <MenuContent numberOfSelectedMenuItem={numberOfSelectedMenuItem}>
+          <SelectedMenuItem item={numberOfSelectedMenuItem}/>
+        </MenuContent>
+      </MenuItemsContext.Provider>
+    </>
   );
 }
 
