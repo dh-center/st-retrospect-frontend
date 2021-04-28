@@ -56,8 +56,8 @@ query LocationInstanceCardQuery(
     }
     relations {
       person {
-        ...RelatedPersonBlock_person
         id
+        ...RelatedPersonBlock_person
       }
       id
     }
@@ -77,6 +77,7 @@ query LocationInstanceCardQuery(
 }
 
 fragment RelatedPersonBlock_person on Person {
+  id
   lastName
   firstName
   patronymic
@@ -322,11 +323,11 @@ return {
                 "name": "person",
                 "plural": false,
                 "selections": [
+                  (v5/*: any*/),
                   (v7/*: any*/),
                   (v8/*: any*/),
                   (v9/*: any*/),
-                  (v2/*: any*/),
-                  (v5/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -361,14 +362,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "95edff659cd49d6f2337dfe840fb634d",
+    "cacheID": "ac4b5a5912d978a148c943110f225bd3",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceCardQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        ...RelatedPersonBlock_person\n        id\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    source\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n"
+    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        id\n        ...RelatedPersonBlock_person\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    source\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n"
   }
 };
 })();
-(node as any).hash = '2cb3a1565d311707a67fd37e828028ed';
+(node as any).hash = '19bcc89cfe9afe1d4ceac0e0b8e6ff9a';
 export default node;

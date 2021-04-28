@@ -6,13 +6,13 @@ import { LocationInstanceCardQuery } from './__generated__/LocationInstanceCardQ
 import {
   CardWrapper, Description,
   GoingBackButton,
-  Image,
+  Image, InformationContent, InformationTitle, InformationWithTitle,
   InformationWrapper,
   Name
 } from './cards';
 import RelatedPersonBlock from './RelatedPersonBlock';
 import styled from 'styled-components';
-import { sansSerifLight, sansSerifRegular } from '../styles/FontStyles';
+import { sansSerifLight } from '../styles/FontStyles';
 import MapPin from '../assets/map-pin.svg';
 import { useTranslation } from 'react-i18next';
 
@@ -60,25 +60,6 @@ const RelatedPersonsWrapper = styled.div`
     margin-right: 12px;
     margin-top: 12px;
   }
-`;
-
-const InformationWithTitle = styled.div`
-  display: flex;
-
-  margin-bottom: 12px;
-
-  font-size: 16px;
-  color: var(--color-dark-gray);
-`;
-
-const InformationTitle = styled.div`
-  margin-right: 6px;
-
-  ${ sansSerifLight };
-`;
-
-const InformationContent = styled.div`
-  ${ sansSerifRegular };
 `;
 
 /**
@@ -144,7 +125,7 @@ export default function LocationInstanceCard(): ReactElement {
 
   return (
     <CardWrapper>
-      <GoingBackButton to="/"/>
+      <GoingBackButton/>
       <Image src={data.locationInstance.mainPhotoLink ? data.locationInstance.mainPhotoLink : 'https://picsum.photos/seed/picsum/200/100'}/>
       <InformationWrapper>
         <Name>{data.locationInstance.name}</Name>

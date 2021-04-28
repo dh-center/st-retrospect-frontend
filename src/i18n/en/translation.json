@@ -33,8 +33,12 @@
     "dates": "Construction dates",
     "source": "Source"
   },
+  "person": {
+    "source": "Source"
+  },
   "routes": "Routes",
   "author": "Author",
   "loadMore": "Load more",
-  "yearsAbbreviated": "y."
+  "yearsAbbreviated": "y.",
+  "wikipedia": "From Wikipedia, the free encyclopedia"
 }
