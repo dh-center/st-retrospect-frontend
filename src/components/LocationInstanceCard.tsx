@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -11,7 +11,6 @@ import {
   Name
 } from './cards';
 import RelatedPersonBlock from './RelatedPersonBlock';
-import { FragmentRefs } from 'relay-runtime';
 import styled from 'styled-components';
 import { sansSerifLight, sansSerifRegular } from '../styles/FontStyles';
 import MapPin from '../assets/map-pin.svg';
@@ -123,28 +122,25 @@ export default function LocationInstanceCard(): ReactElement {
     }
   );
 
+  /**
+   * Filter relations to get unique persons
+   */
+  const uniquePersons = useMemo(() => {
+    if(!data.locationInstance) {
+      return [];
+    }
+
+    return data.locationInstance.relations.filter(
+      (element, index, arr) => index === arr.findIndex(e => e.person?.id === element.person?.id)
+    );
+  }, [ data ]);
+
+
   if (!data.locationInstance) {
     return (
       <Redirect to="/"/>
     );
   }
-
-  /**
-   * Get object of unique relation persons
-   * Key is an ID of person
-   * Value is a person object
-   */
-  const uniquePersons = data.locationInstance.relations.reduce((acc, value) => {
-    if (value.person) {
-      acc[value.person.id] = value.person;
-    }
-
-    return acc;
-  }, {} as {[key: string]: {
-      id: string,
-      ' $fragmentRefs': FragmentRefs<'RelatedPersonBlock_person'>
-    }}
-  );
 
   return (
     <CardWrapper>
@@ -154,9 +150,11 @@ export default function LocationInstanceCard(): ReactElement {
         <Name>{data.locationInstance.name}</Name>
         {data.locationInstance.location.addresses && <Address>{data.locationInstance.location.addresses[0].address}</Address>}
         <RelatedPersonsWrapper>
-          {Object.values(uniquePersons).map((person, index) => {
-            return person && <StyledRelatedPersonBlock key={index} person={person}/>;
-          })}
+          {
+            uniquePersons.map((relation, index) =>
+              relation.person && <StyledRelatedPersonBlock key={index} person={relation.person}/>
+            )
+          }
         </RelatedPersonsWrapper>
         <Description>{data.locationInstance.description}</Description>
         { data.locationInstance.architects?.length &&
