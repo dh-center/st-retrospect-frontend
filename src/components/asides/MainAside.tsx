@@ -20,6 +20,7 @@ import Loader from '../Loader';
 import RoutePassingRenderer from '../RoutePassingRenderer';
 import LocationInstancesList from '../LocationInstancesList';
 import LocationInstanceCard from '../LocationInstanceCard';
+import PersonCard from '../PersonCard';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -87,7 +88,7 @@ const SearchBottomButtonIcon = styled(BottomButtonIcon)`
 /**
  * Main aside component
  */
-function MainAside(): ReactElement {
+export default function MainAside(): ReactElement {
   const { t } = useTranslation();
   const [showAside, setShowAside] = useState(true);
   const [isMenuAsideShow, setMenuAsideShow] = useState(false);
@@ -107,7 +108,7 @@ function MainAside(): ReactElement {
         <AsideParametersWrapper>
           <AsideHeaderWithMarginBottom/>
           <Switch>
-            <Route exact path={['/', '/location-instance/:locationInstanceId']}>
+            <Route exact path={['/', '/location-instance/:locationInstanceId', '/person/:personId']}>
               <SearchForm/>
             </Route>
             <Route path={['/routes', '/route/:questId']}>
@@ -125,6 +126,7 @@ function MainAside(): ReactElement {
           </Switch>
         </AsideParametersWrapper>
 
+        {/* Routes content */}
         <Switch>
           <Route path="/routes">
             <Suspense fallback={<Loader/>}>
@@ -143,6 +145,7 @@ function MainAside(): ReactElement {
           </Route>
         </Switch>
 
+        {/* Location instance content */}
         <Switch>
           <Route exact path="/">
             <LocationInstancesList/>
@@ -154,6 +157,16 @@ function MainAside(): ReactElement {
           </Route>
         </Switch>
 
+        {/* Persons content */}
+        <Switch>
+          <Route path="/person/:personId">
+            <Suspense fallback={<Loader/>}>
+              <PersonCard/>
+            </Suspense>
+          </Route>
+        </Switch>
+
+        {/* Bottom buttons */}
         <Switch>
           <Route exact path="/">
             <BottomButton onClick={() => history.push('/routes')}>
@@ -172,5 +185,3 @@ function MainAside(): ReactElement {
     </LeftPanel>
   );
 }
-
-export default MainAside;

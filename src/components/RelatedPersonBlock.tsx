@@ -75,6 +75,7 @@ export default function RelatedPersonBlock(props: RelatedPersonBlockProps): Reac
   const data = useFragment(
     graphql`
       fragment RelatedPersonBlock_person on Person {
+        id
         lastName
         firstName
         patronymic
@@ -87,7 +88,7 @@ export default function RelatedPersonBlock(props: RelatedPersonBlockProps): Reac
   const abbreviatedName = abbreviatePersonName(data.lastName, data.firstName, data.patronymic);
 
   return (
-    <Wrapper className={props.className} to="/">
+    <Wrapper className={props.className} to={`/person/${data.id}`}>
       {data.mainPhotoLink ? <Photo src={data.mainPhotoLink}/> : <NoPhotoIcon/>}
       {abbreviatedName}
     </Wrapper>
