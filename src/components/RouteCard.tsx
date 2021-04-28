@@ -86,7 +86,7 @@ export default function RouteCard(): ReactElement {
 
   return (
     <CardWrapper>
-      <GoingBackButton to="/routes"/>
+      <GoingBackButton/>
       <Image src={data.quest.photo ? data.quest.photo : 'https://picsum.photos/seed/picsum/200/100'}/>
       <InformationWrapper>
         <Name>{ data.quest.name }</Name>

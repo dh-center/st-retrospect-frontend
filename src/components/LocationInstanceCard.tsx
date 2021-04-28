@@ -144,7 +144,7 @@ export default function LocationInstanceCard(): ReactElement {
 
   return (
     <CardWrapper>
-      <GoingBackButton to="/"/>
+      <GoingBackButton/>
       <Image src={data.locationInstance.mainPhotoLink ? data.locationInstance.mainPhotoLink : 'https://picsum.photos/seed/picsum/200/100'}/>
       <InformationWrapper>
         <Name>{data.locationInstance.name}</Name>

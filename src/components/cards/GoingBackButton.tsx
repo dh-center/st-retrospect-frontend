@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { Link, LinkProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '../../assets/arrow-left-second.svg';
 import { ReactElement } from 'react';
 
-const Wrapper = styled(Link)`
+const Wrapper = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,8 +17,11 @@ const Wrapper = styled(Link)`
 
   background: var(--color-white);
   border-radius: 2px;
-  box-shadow: (--shadow-base);
+  box-shadow: var(--shadow-base);
   color: var(--color-blue);
+  outline: none;
+  border: none;
+  cursor: pointer;
 `;
 
 const Arrow = styled(ArrowLeft)`
@@ -28,12 +31,12 @@ const Arrow = styled(ArrowLeft)`
 
 /**
  * Going back button in top-left corner
- *
- * @param props - props of component
  */
-export default function GoingBackButton(props: LinkProps): ReactElement {
+export default function GoingBackButton(): ReactElement {
+  const history = useHistory();
+
   return (
-    <Wrapper {...props}>
+    <Wrapper onClick={() => history.goBack()}>
       <Arrow/>
     </Wrapper>
   );
