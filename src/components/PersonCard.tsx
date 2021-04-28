@@ -5,7 +5,14 @@ import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { PersonCardQuery } from './__generated__/PersonCardQuery.graphql';
 import styled from 'styled-components';
-import { CardWrapper, Description, GoingBackButton } from './cards';
+import {
+  CardWrapper,
+  Description,
+  GoingBackButton,
+  InformationContent,
+  InformationTitle,
+  InformationWithTitle
+} from './cards';
 import { sansSerifLight } from '../styles/FontStyles';
 import { Delimiter } from './lists';
 
@@ -36,6 +43,8 @@ interface PhotoProps {
 }
 
 const HeaderWrapper = styled.div`
+  display: flex;
+
   margin-bottom: 12px;
   font-size: 18px;
 `;
@@ -50,7 +59,6 @@ const Photo = styled.div<PhotoProps>`
   background-position: center;
   background-repeat: no-repeat;
 
-  float: left;
   margin-right: 12px;
 `;
 
@@ -68,6 +76,11 @@ const FirstNameWithPatronymic = styled.div`
 const LivingYears = styled.div`
   font-size: 14px;
   ${ sansSerifLight };
+`;
+
+const WikiLink = styled.a`
+  text-decoration: none;
+  color: inherit;
 `;
 
 /**
@@ -102,8 +115,6 @@ export default function PersonCard(): ReactElement {
     );
   }
 
-  console.log(t);
-
   return (
     <CardWrapperWithScroll>
       <GoingBackButton/>
@@ -125,7 +136,16 @@ export default function PersonCard(): ReactElement {
       <Description>
         {data.person.description}
       </Description>
-
+      { data.person.wikiLink &&
+        <InformationWithTitle>
+          <InformationTitle>
+            {t('person.source')}:
+          </InformationTitle>
+          <InformationContent>
+            <WikiLink href={data.person.wikiLink} target="_blank" rel="noreferrer">{t('wikipedia')}</WikiLink>
+          </InformationContent>
+        </InformationWithTitle>
+      }
     </CardWrapperWithScroll>
   );
 }

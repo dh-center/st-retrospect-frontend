@@ -33,8 +33,12 @@
     "dates": "Строительство",
     "source": "Источник"
   },
+  "person": {
+    "source": "Источник"
+  },
   "routes": "Маршруты",
   "author": "Автор",
   "loadMore": "Загрузить ещё",
-  "yearsAbbreviated": "г."
+  "yearsAbbreviated": "г.",
+  "wikipedia": "Материал из Википедии — свободной энциклопедии"
 }
