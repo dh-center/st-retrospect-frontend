@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { RelatedPersonBlock_person$key } from './__generated__/RelatedPersonBlock_person.graphql';
-import abbreviatedPersonName from '../lib/abbreviatedPersonName';
+import abbreviatePersonName from '../lib/abbreviatePersonName';
 import WithClassName from '../interfaces/WithClassName';
 import { sansSerifLight } from '../styles/FontStyles';
 import { Link } from 'react-router-dom';
@@ -84,7 +84,7 @@ export default function RelatedPersonBlock(props: RelatedPersonBlockProps): Reac
     props.person
   );
 
-  const abbreviatedName = abbreviatedPersonName(data.lastName, data.firstName, data.patronymic);
+  const abbreviatedName = abbreviatePersonName(data.lastName, data.firstName, data.patronymic);
 
   return (
     <Wrapper className={props.className} to="/">
