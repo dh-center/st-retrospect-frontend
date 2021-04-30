@@ -14,16 +14,7 @@ import {
   Name,
   Description
 } from './cards';
-
-/**
- * Parameters of '/route' route
- */
-interface RouteRouteParameters {
-  /**
-   * Id of current route
-   */
-  questId: string;
-}
+import { QuestRouteParameters } from '../interfaces/routeParameters';
 
 const Author = styled.div`
   ${ sansSerifLight };
@@ -62,7 +53,7 @@ const StartRouteButton = styled(Link)`
  */
 export default function RouteCard(): ReactElement {
   const { t } = useTranslation();
-  const { questId } = useParams<RouteRouteParameters>();
+  const { questId } = useParams<QuestRouteParameters>();
   const data = useLazyLoadQuery<RouteCardQuery>(
     graphql`
       query RouteCardQuery($id: GlobalId!) {

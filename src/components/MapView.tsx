@@ -2,7 +2,7 @@ import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl, { LngLatBoundsLike, AnyLayer } from '!mapbox-gl';
+import mapboxgl, { LngLatBoundsLike, AnyLayer, LngLatLike } from '!mapbox-gl';
 import styled from 'styled-components';
 import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
 import { useRouteMatch } from 'react-router-dom';
@@ -15,6 +15,7 @@ import {
 import { MapViewQuestLocationQuery } from './__generated__/MapViewQuestLocationQuery.graphql';
 import { LocationInstanceBlock, QuestBlock } from '../interfaces/QuestBlocks';
 import { MapViewQuestQuery } from './__generated__/MapViewQuestQuery.graphql';
+import { PersonRouteParameters, QuestRouteParameters } from '../interfaces/routeParameters';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -55,10 +56,11 @@ export default function MapView(): ReactElement {
     zoom: 11.5,
   });
   const { userLanguage } = useContext(LanguageContext);
-  const personRouteMatch = useRouteMatch<{personId: string}>('/person/:personId');
-  const questRouteMatch = useRouteMatch<{questId: string}>('/route/:questId');
+  const personRouteMatch = useRouteMatch<PersonRouteParameters>('/person/:personId');
+  const questRouteMatch = useRouteMatch<QuestRouteParameters>('/route/:questId');
   const environment = useRelayEnvironment();
-  const [currentMarkers, setCurrentMarkers] = useState<{latitude: number, longitude: number}[]>();
+  const [currentMarkerCoordinates, setCurrentMarkerCoordinates] = useState<LngLatLike[]>();
+  const [currentMarkers, setCurrentMarkers] = useState<mapboxgl.Marker[]>([]);
 
   /**
    * useEffect hook for '/person/:personId' route
@@ -106,15 +108,15 @@ export default function MapView(): ReactElement {
         })
         .map(relation => {
           return {
-            latitude: relation.locationInstance.location.latitude,
-            longitude: relation.locationInstance.location.longitude,
+            lat: relation.locationInstance.location.latitude,
+            lng: relation.locationInstance.location.longitude,
           };
         });
 
       /**
        * Sets person's locations as current markers
        */
-      setCurrentMarkers(locationsCoordinates);
+      setCurrentMarkerCoordinates(locationsCoordinates);
     };
 
     fetchData();
@@ -182,18 +184,41 @@ export default function MapView(): ReactElement {
         .filter((locationInstance): locationInstance is { location: { latitude: number, longitude: number } } => typeof locationInstance?.location.latitude === 'number' && typeof locationInstance?.location.longitude === 'number')
         .map(locationInstance => {
           return {
-            latitude: locationInstance.location.latitude,
-            longitude: locationInstance.location.longitude,
+            lat: locationInstance.location.latitude,
+            lng: locationInstance.location.longitude,
           };
         });
 
-      setCurrentMarkers(locationCoordinates);
+      setCurrentMarkerCoordinates(locationCoordinates);
     };
 
     fetchData();
   }, [ questRouteMatch?.params.questId ]);
 
-  useEffect(() => console.log(currentMarkers), [ currentMarkers ]);
+  /**
+   * Changes markers on map
+   */
+  useEffect(() => {
+    if (!map.current || !currentMarkerCoordinates) {
+      return;
+    }
+
+    /**
+     * Removes old markers from map
+     */
+    currentMarkers.forEach(marker => marker.remove());
+
+    /**
+     * Creates new markers and adds them to the map
+     */
+    const newMarkers = currentMarkerCoordinates.map(markerCoordinates => {
+      return new mapboxgl.Marker()
+        .setLngLat(markerCoordinates)
+        .addTo(map.current);
+    });
+
+    setCurrentMarkers(newMarkers);
+  }, [ currentMarkerCoordinates ]);
 
   /**
    * Changes map language

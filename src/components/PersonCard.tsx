@@ -15,16 +15,7 @@ import {
 } from './cards';
 import { sansSerifLight } from '../styles/FontStyles';
 import { Delimiter } from './lists';
-
-/**
- * Parameters of '/person' route
- */
-interface PersonRouteParameters {
-  /**
-   * Id of current person
-   */
-  personId: string;
-}
+import { PersonRouteParameters } from '../interfaces/routeParameters';
 
 const CardWrapperWithScroll = styled(CardWrapper)`
   padding: 40px 16px;
