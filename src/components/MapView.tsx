@@ -5,6 +5,13 @@ import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import mapboxgl, { LngLatBoundsLike, AnyLayer } from '!mapbox-gl';
 import styled from 'styled-components';
 import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
+import { useRouteMatch } from 'react-router-dom';
+import { fetchQuery } from 'relay-runtime';
+import { useRelayEnvironment } from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
+import {
+  MapViewPersonLocationsQuery
+} from './__generated__/MapViewPersonLocationsQuery.graphql';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -45,6 +52,57 @@ export default function MapView(): ReactElement {
     zoom: 11.5,
   });
   const { userLanguage } = useContext(LanguageContext);
+  const personRouteMatch = useRouteMatch<{personId: string}>('/person/:personId');
+  const environment = useRelayEnvironment();
+  const [currentMarkers, setCurrentMarkers] = useState<{latitude: number, longitude: number}[]>();
+
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      if (!personRouteMatch) {
+        return;
+      }
+      const data = await fetchQuery<MapViewPersonLocationsQuery>(
+        environment,
+        graphql`
+          query MapViewPersonLocationsQuery($id: GlobalId!) {
+            person(id: $id) {
+              relations {
+                locationInstance {
+                  location {
+                    latitude
+                    longitude
+                  }
+                }
+              }
+            }
+          }
+        `,
+        {
+          id: personRouteMatch.params.personId,
+        }
+      ).toPromise();
+
+      if (!data) {
+        return;
+      }
+      const locationsCoordinates = data.person?.relations
+        .filter((relation): relation is { locationInstance: { location: { latitude: number, longitude: number } } } => {
+          return typeof relation.locationInstance?.location.latitude === 'number' && typeof relation.locationInstance?.location.longitude === 'number' ;
+        })
+        .map(relation => {
+          return {
+            latitude: relation.locationInstance.location.latitude,
+            longitude: relation.locationInstance.location.longitude,
+          };
+        });
+
+      setCurrentMarkers(locationsCoordinates);
+    };
+
+    fetchData();
+  }, [ personRouteMatch?.params.personId ]);
+
+  useEffect(() => console.log(currentMarkers), [ currentMarkers ]);
 
   /**
    * Changes map language
