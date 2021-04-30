@@ -103,7 +103,14 @@ export default function MapView(): ReactElement {
        * Gets coordinates of related locations
        */
       const locationsCoordinates = data.person?.relations
-        .filter((relation): relation is { locationInstance: { location: { latitude: number, longitude: number } } } => {
+        .filter((relation): relation is {
+          locationInstance: {
+            location: {
+              latitude: number,
+              longitude: number
+            }
+          }
+        } => {
           return typeof relation.locationInstance?.location.latitude === 'number' && typeof relation.locationInstance?.location.longitude === 'number' ;
         })
         .map(relation => {
@@ -156,6 +163,9 @@ export default function MapView(): ReactElement {
 
       const questDataBlocks = data.quest.data?.blocks as QuestBlock[];
 
+      /**
+       * Fetches location instances from quest
+       */
       const locationInstances = await Promise.all(questDataBlocks
         .filter((block): block is LocationInstanceBlock => block.type === 'locationInstance')
         .map(block => block.data.locationInstanceId)
@@ -180,8 +190,16 @@ export default function MapView(): ReactElement {
           return response?.locationInstance;
         }));
 
+      /**
+       * Coordinates of current location instances
+       */
       const locationCoordinates = locationInstances
-        .filter((locationInstance): locationInstance is { location: { latitude: number, longitude: number } } => typeof locationInstance?.location.latitude === 'number' && typeof locationInstance?.location.longitude === 'number')
+        .filter((locationInstance): locationInstance is {
+          location: {
+            latitude: number,
+            longitude: number
+          }
+        } => typeof locationInstance?.location.latitude === 'number' && typeof locationInstance?.location.longitude === 'number')
         .map(locationInstance => {
           return {
             lat: locationInstance.location.latitude,
