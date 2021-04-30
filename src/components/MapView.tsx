@@ -12,6 +12,9 @@ import graphql from 'babel-plugin-relay/macro';
 import {
   MapViewPersonLocationsQuery
 } from './__generated__/MapViewPersonLocationsQuery.graphql';
+import { MapViewQuestLocationQuery } from './__generated__/MapViewQuestLocationQuery.graphql';
+import { LocationInstanceBlock, QuestBlock } from '../interfaces/QuestBlocks';
+import { MapViewQuestQuery } from './__generated__/MapViewQuestQuery.graphql';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -53,10 +56,18 @@ export default function MapView(): ReactElement {
   });
   const { userLanguage } = useContext(LanguageContext);
   const personRouteMatch = useRouteMatch<{personId: string}>('/person/:personId');
+  const questRouteMatch = useRouteMatch<{questId: string}>('/route/:questId');
   const environment = useRelayEnvironment();
   const [currentMarkers, setCurrentMarkers] = useState<{latitude: number, longitude: number}[]>();
 
+  /**
+   * useEffect hook for '/person/:personId' route
+   * Fetches related locations and sets them as current markers
+   */
   useEffect(() => {
+    /**
+     * Fetch information about relations of person
+     */
     const fetchData = async (): Promise<void> => {
       if (!personRouteMatch) {
         return;
@@ -85,6 +96,10 @@ export default function MapView(): ReactElement {
       if (!data) {
         return;
       }
+
+      /**
+       * Gets coordinates of related locations
+       */
       const locationsCoordinates = data.person?.relations
         .filter((relation): relation is { locationInstance: { location: { latitude: number, longitude: number } } } => {
           return typeof relation.locationInstance?.location.latitude === 'number' && typeof relation.locationInstance?.location.longitude === 'number' ;
@@ -96,11 +111,87 @@ export default function MapView(): ReactElement {
           };
         });
 
+      /**
+       * Sets person's locations as current markers
+       */
       setCurrentMarkers(locationsCoordinates);
     };
 
     fetchData();
   }, [ personRouteMatch?.params.personId ]);
+
+  /**
+   * useEffect hook for '/route/:questId' route
+   * Fetches quest locations
+   */
+  useEffect(() => {
+    /**
+     * Fetch information about quest locations
+     */
+    const fetchData = async (): Promise<void> => {
+      if (!questRouteMatch) {
+        return;
+      }
+      const data = await fetchQuery<MapViewQuestQuery>(
+        environment,
+        graphql`
+          query MapViewQuestQuery($id: GlobalId!) {
+            quest(id: $id) {
+              data {
+                blocks
+              }
+            }
+          }
+        `,
+        {
+          id: questRouteMatch.params.questId,
+        }
+      ).toPromise();
+
+      if (!data || !data.quest?.data?.blocks) {
+        return;
+      }
+
+      const questDataBlocks = data.quest.data?.blocks as QuestBlock[];
+
+      const locationInstances = await Promise.all(questDataBlocks
+        .filter((block): block is LocationInstanceBlock => block.type === 'locationInstance')
+        .map(block => block.data.locationInstanceId)
+        .map(async (id) => {
+          const response = await fetchQuery<MapViewQuestLocationQuery>(
+            environment,
+            graphql`
+              query MapViewQuestLocationQuery($id: GlobalId!) {
+                locationInstance(id: $id) {
+                  location {
+                    latitude
+                    longitude
+                  }
+                }
+              }
+            `,
+            {
+              id,
+            }
+          ).toPromise();
+
+          return response?.locationInstance;
+        }));
+
+      const locationCoordinates = locationInstances
+        .filter((locationInstance): locationInstance is { location: { latitude: number, longitude: number } } => typeof locationInstance?.location.latitude === 'number' && typeof locationInstance?.location.longitude === 'number')
+        .map(locationInstance => {
+          return {
+            latitude: locationInstance.location.latitude,
+            longitude: locationInstance.location.longitude,
+          };
+        });
+
+      setCurrentMarkers(locationCoordinates);
+    };
+
+    fetchData();
+  }, [ questRouteMatch?.params.questId ]);
 
   useEffect(() => console.log(currentMarkers), [ currentMarkers ]);
 
