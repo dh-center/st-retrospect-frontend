@@ -3,25 +3,25 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type MapViewQuestQueryVariables = {
+export type CurrentMarkersContextProviderQuestQueryVariables = {
     id: string;
 };
-export type MapViewQuestQueryResponse = {
+export type CurrentMarkersContextProviderQuestQueryResponse = {
     readonly quest: {
         readonly data: {
             readonly blocks: ReadonlyArray<unknown>;
         } | null;
     } | null;
 };
-export type MapViewQuestQuery = {
-    readonly response: MapViewQuestQueryResponse;
-    readonly variables: MapViewQuestQueryVariables;
+export type CurrentMarkersContextProviderQuestQuery = {
+    readonly response: CurrentMarkersContextProviderQuestQueryResponse;
+    readonly variables: CurrentMarkersContextProviderQuestQueryVariables;
 };
 
 
 
 /*
-query MapViewQuestQuery(
+query CurrentMarkersContextProviderQuestQuery(
   $id: GlobalId!
 ) {
   quest(id: $id) {
@@ -71,7 +71,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "MapViewQuestQuery",
+    "name": "CurrentMarkersContextProviderQuestQuery",
     "selections": [
       {
         "alias": null,
@@ -93,7 +93,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "MapViewQuestQuery",
+    "name": "CurrentMarkersContextProviderQuestQuery",
     "selections": [
       {
         "alias": null,
@@ -117,14 +117,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b80304bcdc14841a3c5e3ac5c9564a94",
+    "cacheID": "4866d6f64e105900edc8119386b6dba1",
     "id": null,
     "metadata": {},
-    "name": "MapViewQuestQuery",
+    "name": "CurrentMarkersContextProviderQuestQuery",
     "operationKind": "query",
-    "text": "query MapViewQuestQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    data {\n      blocks\n    }\n    id\n  }\n}\n"
+    "text": "query CurrentMarkersContextProviderQuestQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    data {\n      blocks\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3189833941bb976e3115b62b584cf0c4';
+(node as any).hash = '959e666ac67e5e8c55d05787ff062019';
 export default node;

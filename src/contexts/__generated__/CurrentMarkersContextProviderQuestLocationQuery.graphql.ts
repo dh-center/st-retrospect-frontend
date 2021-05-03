@@ -3,10 +3,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type MapViewQuestLocationQueryVariables = {
+export type CurrentMarkersContextProviderQuestLocationQueryVariables = {
     id: string;
 };
-export type MapViewQuestLocationQueryResponse = {
+export type CurrentMarkersContextProviderQuestLocationQueryResponse = {
     readonly locationInstance: {
         readonly location: {
             readonly latitude: number | null;
@@ -14,15 +14,15 @@ export type MapViewQuestLocationQueryResponse = {
         };
     } | null;
 };
-export type MapViewQuestLocationQuery = {
-    readonly response: MapViewQuestLocationQueryResponse;
-    readonly variables: MapViewQuestLocationQueryVariables;
+export type CurrentMarkersContextProviderQuestLocationQuery = {
+    readonly response: CurrentMarkersContextProviderQuestLocationQueryResponse;
+    readonly variables: CurrentMarkersContextProviderQuestLocationQueryVariables;
 };
 
 
 
 /*
-query MapViewQuestLocationQuery(
+query CurrentMarkersContextProviderQuestLocationQuery(
   $id: GlobalId!
 ) {
   locationInstance(id: $id) {
@@ -77,7 +77,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "MapViewQuestLocationQuery",
+    "name": "CurrentMarkersContextProviderQuestLocationQuery",
     "selections": [
       {
         "alias": null,
@@ -111,7 +111,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "MapViewQuestLocationQuery",
+    "name": "CurrentMarkersContextProviderQuestLocationQuery",
     "selections": [
       {
         "alias": null,
@@ -142,14 +142,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b02df32017385d889efd3691e234d699",
+    "cacheID": "6f2044408a7d7d9730351e3f969d4665",
     "id": null,
     "metadata": {},
-    "name": "MapViewQuestLocationQuery",
+    "name": "CurrentMarkersContextProviderQuestLocationQuery",
     "operationKind": "query",
-    "text": "query MapViewQuestLocationQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    location {\n      latitude\n      longitude\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query CurrentMarkersContextProviderQuestLocationQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    location {\n      latitude\n      longitude\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '73cc60481d5f64fc48ae2d21f0e9e07e';
+(node as any).hash = '04e41877a0602696c52051cdd36acb47';
 export default node;

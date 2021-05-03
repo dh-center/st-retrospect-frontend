@@ -2,20 +2,10 @@ import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl, { LngLatBoundsLike, AnyLayer, LngLatLike } from '!mapbox-gl';
+import mapboxgl, { LngLatBoundsLike, AnyLayer } from '!mapbox-gl';
 import styled from 'styled-components';
 import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
-import { useRouteMatch } from 'react-router-dom';
-import { fetchQuery } from 'relay-runtime';
-import { useRelayEnvironment } from 'react-relay';
-import graphql from 'babel-plugin-relay/macro';
-import {
-  MapViewPersonLocationsQuery
-} from './__generated__/MapViewPersonLocationsQuery.graphql';
-import { MapViewQuestLocationQuery } from './__generated__/MapViewQuestLocationQuery.graphql';
-import { LocationInstanceBlock, QuestBlock } from '../interfaces/QuestBlocks';
-import { MapViewQuestQuery } from './__generated__/MapViewQuestQuery.graphql';
-import { PersonRouteParameters, QuestRouteParameters } from '../interfaces/routeParameters';
+import { CurrentMarkersContext } from '../contexts/CurrentMarkersContextProvider';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -56,187 +46,7 @@ export default function MapView(): ReactElement {
     zoom: 11.5,
   });
   const { userLanguage } = useContext(LanguageContext);
-  const personRouteMatch = useRouteMatch<PersonRouteParameters>('/person/:personId');
-  const questRouteMatch = useRouteMatch<QuestRouteParameters>('/route/:questId');
-  const environment = useRelayEnvironment();
-  const [currentMarkerCoordinates, setCurrentMarkerCoordinates] = useState<LngLatLike[]>();
-  const [currentMarkers, setCurrentMarkers] = useState<mapboxgl.Marker[]>([]);
-
-  /**
-   * useEffect hook for '/person/:personId' route
-   * Fetches related locations and sets them as current markers
-   */
-  useEffect(() => {
-    /**
-     * Fetch information about relations of person
-     */
-    const fetchData = async (): Promise<void> => {
-      if (!personRouteMatch) {
-        return;
-      }
-      const data = await fetchQuery<MapViewPersonLocationsQuery>(
-        environment,
-        graphql`
-          query MapViewPersonLocationsQuery($id: GlobalId!) {
-            person(id: $id) {
-              relations {
-                locationInstance {
-                  location {
-                    latitude
-                    longitude
-                  }
-                }
-              }
-            }
-          }
-        `,
-        {
-          id: personRouteMatch.params.personId,
-        }
-      ).toPromise();
-
-      if (!data) {
-        return;
-      }
-
-      /**
-       * Gets coordinates of related locations
-       */
-      const locationsCoordinates = data.person?.relations
-        .filter((relation): relation is {
-          locationInstance: {
-            location: {
-              latitude: number,
-              longitude: number
-            }
-          }
-        } => {
-          return typeof relation.locationInstance?.location.latitude === 'number' && typeof relation.locationInstance?.location.longitude === 'number' ;
-        })
-        .map(relation => {
-          return {
-            lat: relation.locationInstance.location.latitude,
-            lng: relation.locationInstance.location.longitude,
-          };
-        });
-
-      /**
-       * Sets person's locations as current markers
-       */
-      setCurrentMarkerCoordinates(locationsCoordinates);
-    };
-
-    fetchData();
-  }, [ personRouteMatch?.params.personId ]);
-
-  /**
-   * useEffect hook for '/route/:questId' route
-   * Fetches quest locations
-   */
-  useEffect(() => {
-    /**
-     * Fetch information about quest locations
-     */
-    const fetchData = async (): Promise<void> => {
-      if (!questRouteMatch) {
-        return;
-      }
-      const data = await fetchQuery<MapViewQuestQuery>(
-        environment,
-        graphql`
-          query MapViewQuestQuery($id: GlobalId!) {
-            quest(id: $id) {
-              data {
-                blocks
-              }
-            }
-          }
-        `,
-        {
-          id: questRouteMatch.params.questId,
-        }
-      ).toPromise();
-
-      if (!data || !data.quest?.data?.blocks) {
-        return;
-      }
-
-      const questDataBlocks = data.quest.data?.blocks as QuestBlock[];
-
-      /**
-       * Fetches location instances from quest
-       */
-      const locationInstances = await Promise.all(questDataBlocks
-        .filter((block): block is LocationInstanceBlock => block.type === 'locationInstance')
-        .map(block => block.data.locationInstanceId)
-        .map(async (id) => {
-          const response = await fetchQuery<MapViewQuestLocationQuery>(
-            environment,
-            graphql`
-              query MapViewQuestLocationQuery($id: GlobalId!) {
-                locationInstance(id: $id) {
-                  location {
-                    latitude
-                    longitude
-                  }
-                }
-              }
-            `,
-            {
-              id,
-            }
-          ).toPromise();
-
-          return response?.locationInstance;
-        }));
-
-      /**
-       * Coordinates of current location instances
-       */
-      const locationCoordinates = locationInstances
-        .filter((locationInstance): locationInstance is {
-          location: {
-            latitude: number,
-            longitude: number
-          }
-        } => typeof locationInstance?.location.latitude === 'number' && typeof locationInstance?.location.longitude === 'number')
-        .map(locationInstance => {
-          return {
-            lat: locationInstance.location.latitude,
-            lng: locationInstance.location.longitude,
-          };
-        });
-
-      setCurrentMarkerCoordinates(locationCoordinates);
-    };
-
-    fetchData();
-  }, [ questRouteMatch?.params.questId ]);
-
-  /**
-   * Changes markers on map
-   */
-  useEffect(() => {
-    if (!map.current || !currentMarkerCoordinates) {
-      return;
-    }
-
-    /**
-     * Removes old markers from map
-     */
-    currentMarkers.forEach(marker => marker.remove());
-
-    /**
-     * Creates new markers and adds them to the map
-     */
-    const newMarkers = currentMarkerCoordinates.map(markerCoordinates => {
-      return new mapboxgl.Marker()
-        .setLngLat(markerCoordinates)
-        .addTo(map.current);
-    });
-
-    setCurrentMarkers(newMarkers);
-  }, [ currentMarkerCoordinates ]);
+  const { currentMarkers } = useContext(CurrentMarkersContext);
 
   /**
    * Changes map language
@@ -311,6 +121,19 @@ export default function MapView(): ReactElement {
   useEffect(() => {
     changeMapLanguage(userLanguage);
   }, [ userLanguage ]);
+
+  /**
+   * Adds new current markers to map
+   */
+  useEffect(() => {
+    if (!map.current) {
+      return;
+    }
+
+    currentMarkers.forEach(marker => {
+      marker.addTo(map.current);
+    });
+  }, [ currentMarkers ]);
 
   return (
     <div>

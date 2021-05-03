@@ -8,6 +8,7 @@ import LanguageContext, { AvailableLanguages } from './contexts/LanguageContext'
 import { useTranslation } from 'react-i18next';
 import LanguageController from './localStorage/LanguageController';
 import RelayEnvironmentContext from './contexts/RelayEnvironmentContext';
+import CurrentMarkersContextProvider from './contexts/CurrentMarkersContextProvider';
 
 /**
  * Main component of the application
@@ -27,14 +28,16 @@ function App(): ReactElement {
         },
       }}>
         <RelayEnvironmentContext>
-          <ColorVariables/>
-          <ShadowVariables/>
-          <GlobalStyles/>
-          <Switch>
-            <Route path="/">
-              <HomePage/>
-            </Route>
-          </Switch>
+          <CurrentMarkersContextProvider>
+            <ColorVariables/>
+            <ShadowVariables/>
+            <GlobalStyles/>
+            <Switch>
+              <Route path="/">
+                <HomePage/>
+              </Route>
+            </Switch>
+          </CurrentMarkersContextProvider>
         </RelayEnvironmentContext>
       </LanguageContext.Provider>
     </>

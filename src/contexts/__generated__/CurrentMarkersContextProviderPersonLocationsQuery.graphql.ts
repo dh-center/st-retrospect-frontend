@@ -3,10 +3,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type MapViewPersonLocationsQueryVariables = {
+export type CurrentMarkersContextProviderPersonLocationsQueryVariables = {
     id: string;
 };
-export type MapViewPersonLocationsQueryResponse = {
+export type CurrentMarkersContextProviderPersonLocationsQueryResponse = {
     readonly person: {
         readonly relations: ReadonlyArray<{
             readonly locationInstance: {
@@ -18,15 +18,15 @@ export type MapViewPersonLocationsQueryResponse = {
         }>;
     } | null;
 };
-export type MapViewPersonLocationsQuery = {
-    readonly response: MapViewPersonLocationsQueryResponse;
-    readonly variables: MapViewPersonLocationsQueryVariables;
+export type CurrentMarkersContextProviderPersonLocationsQuery = {
+    readonly response: CurrentMarkersContextProviderPersonLocationsQueryResponse;
+    readonly variables: CurrentMarkersContextProviderPersonLocationsQueryVariables;
 };
 
 
 
 /*
-query MapViewPersonLocationsQuery(
+query CurrentMarkersContextProviderPersonLocationsQuery(
   $id: GlobalId!
 ) {
   person(id: $id) {
@@ -87,7 +87,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "MapViewPersonLocationsQuery",
+    "name": "CurrentMarkersContextProviderPersonLocationsQuery",
     "selections": [
       {
         "alias": null,
@@ -143,7 +143,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "MapViewPersonLocationsQuery",
+    "name": "CurrentMarkersContextProviderPersonLocationsQuery",
     "selections": [
       {
         "alias": null,
@@ -198,14 +198,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "71e03e34095f4fb986ddcb1780e6f993",
+    "cacheID": "8cf8fd251fed876944e501ee679d151e",
     "id": null,
     "metadata": {},
-    "name": "MapViewPersonLocationsQuery",
+    "name": "CurrentMarkersContextProviderPersonLocationsQuery",
     "operationKind": "query",
-    "text": "query MapViewPersonLocationsQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    relations {\n      locationInstance {\n        location {\n          latitude\n          longitude\n          id\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query CurrentMarkersContextProviderPersonLocationsQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    relations {\n      locationInstance {\n        location {\n          latitude\n          longitude\n          id\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b75504c44f16a2470025d451bed75c7f';
+(node as any).hash = '7cb24cc5843f2b57c6311f350c0e3df9';
 export default node;
