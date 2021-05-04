@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import {sansSerifBold, sansSerifRegular} from '../../styles/FontStyles';
+import { sansSerifBold, sansSerifRegular } from '../../styles/FontStyles';
 import { useTranslation } from 'react-i18next';
 
 const ThanksWrapper = styled.div`
@@ -30,7 +30,7 @@ const AboutProjectText = styled.p`
 /**
  * Component for displaying content about our partners
  */
-function Thanks(): ReactElement {
+export default function Thanks(): ReactElement {
   const { t } = useTranslation();
 
   return (
@@ -44,10 +44,7 @@ function Thanks(): ReactElement {
         Этот проект не был бы возможен без помощи, оказанной Университетом ИТМО: его администрацией, преподавателями и студентами. Особо значимый вклад в развитие проекта и пополнение контента ежегодно вносят студенты международной магистерской программы “Анализ культурных данных и визуализация”. Мы также благодарны нашим партнёрам из культурных институций, которые помогают нам с поиском информации и новых сюжетов.
         <br/><br/>
         Вы также можете помочь проекту, предложив новую локацию через форму обратной связи или написав нам на почту dh@itmo.ru.
-
       </AboutProjectText>
     </ThanksWrapper>
   );
 }
-
-export default Thanks;

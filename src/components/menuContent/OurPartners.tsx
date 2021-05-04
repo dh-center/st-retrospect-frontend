@@ -53,12 +53,12 @@ const OurParentsLogo = styled.div`
 /**
  * Component for displaying content about our partners
  */
-function OurPartners(): ReactElement {
+export default function OurPartners(): ReactElement {
   const { t } = useTranslation();
 
   return (
     <>
-      <OurPartnersTitle> {t('partners.title')} </OurPartnersTitle>
+      <OurPartnersTitle>{t('partners.title')}</OurPartnersTitle>
       <OurPartnersLogosWrapper>
         <OurParentsLogo/>
         <OurParentsLogo/>
@@ -70,5 +70,3 @@ function OurPartners(): ReactElement {
     </>
   );
 }
-
-export default OurPartners;

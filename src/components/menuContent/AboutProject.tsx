@@ -43,7 +43,7 @@ const AboutProjectLinks = styled.div`
 /**
  * Component for displaying content about our partners
  */
-function AboutProject(): ReactElement {
+export default function AboutProject(): ReactElement {
   const { t } = useTranslation();
 
   return (
@@ -65,5 +65,3 @@ function AboutProject(): ReactElement {
     </AboutProjectWrapper>
   );
 }
-
-export default AboutProject;

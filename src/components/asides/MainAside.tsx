@@ -18,11 +18,6 @@ import SearchForm from '../SearchForm';
 import RouteCard from '../RouteCard';
 import Loader from '../Loader';
 import RoutePassingRenderer from '../RoutePassingRenderer';
-import MenuItemsContext from '../../contexts/MenuItemsContext';
-import MenuContent from '../MenuContent';
-import AboutProject from '../content/AboutProject';
-import OurPartners from '../content/OurPartners';
-import Thanks from '../content/Thanks';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -87,10 +82,6 @@ const SearchBottomButtonIcon = styled(BottomButtonIcon)`
   background-image: url("${SearchIcon}");
 `;
 
-interface Num {
-  item: number;
-}
-
 /**
  * Main aside component
  */
@@ -98,20 +89,7 @@ function MainAside(): ReactElement {
   const { t } = useTranslation();
   const [showAside, setShowAside] = useState(true);
   const [isMenuAsideShow, setMenuAsideShow] = useState(false);
-  const [numberOfSelectedMenuItem, setNumberOfSelectedMenuItem] = useState(0);
   const history = useHistory();
-
-  function SelectedMenuItem(props: Num): ReactElement {
-    console.log('item = ' + props.item);
-    switch (props.item) {
-      case 1: return (<AboutProject/>);
-      case 2: return (<></>);
-      case 3: return (<OurPartners/>);
-      case 4: return (<Thanks/>);
-    }
-
-    return <></>;
-  }
 
   return (
     <>
@@ -180,15 +158,6 @@ function MainAside(): ReactElement {
           </Switch>
         </MenuAsideContext.Provider>
       </LeftPanel>
-
-      <MenuItemsContext.Provider value={{
-        numberOfSelectedMenuItem,
-        setNumberOfSelectedMenuItem,
-      }}>
-        <MenuContent numberOfSelectedMenuItem={numberOfSelectedMenuItem}>
-          <SelectedMenuItem item={numberOfSelectedMenuItem}/>
-        </MenuContent>
-      </MenuItemsContext.Provider>
     </>
   );
 }
