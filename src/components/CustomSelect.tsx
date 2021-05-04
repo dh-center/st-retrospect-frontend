@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled  from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import LeftArrowIcon from '../assets/arrow-left.svg';
 import CheckboxIcon from '../assets/checkbox.svg';
@@ -30,48 +30,16 @@ interface CustomSelectInputProps extends WithClassName {
    * Array of selected items
    */
   selected: string[];
-
-  /**
-   * Is component displaying
-   */
-  show?: boolean;
-}
-
-/**
- * Props of placeholder
- */
-interface SelectPlaceholderProps {
-  /**
-   * Is component displaying
-   */
-  show?: boolean;
 }
 
 /**
  * This element needs for displaying select over next elements
- *
- * @param props - props of element
  */
-const SelectPlaceholder = styled.div<SelectPlaceholderProps>`
+const SelectPlaceholder = styled.div`
   position: relative;
 
   height: 34px;
   width: 100%;
-
-  ${props => {
-    if (!props.show) {
-      return css`
-        height: 0;
-        margin: 0;
-        visibility: hidden;
-      `;
-    }
-  }};
-  opacity: ${ props => props.show ? '1' : '0' };
-  transition: opacity ease-out .2s,
-              height ease-out .2s,
-              margin ease-out .2s,
-              visibility ease-out .2s;
 `;
 
 const SelectWrapper = styled.div<CustomSelectElementProps>`
@@ -227,7 +195,7 @@ export default function CustomSelect(props: CustomSelectInputProps): ReactElemen
   });
 
   return (
-    <SelectPlaceholder className={props.className} show={props.show !== undefined ? props.show : true}>
+    <SelectPlaceholder className={props.className}>
       <SelectWrapper isOpen={isOpen}>
         <SelectInput onClick={() => setOpen(!isOpen)} isOpen={isOpen}>
           <SelectInputText>{

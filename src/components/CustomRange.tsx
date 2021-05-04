@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import styled, { css } from 'styled-components';
+import styled  from 'styled-components';
 import RangeThumb from '../assets/range-thumb.svg';
 import { sansSerifLight } from '../styles/FontStyles';
 import { YearsInputsProps } from './YearsInputs';
@@ -12,24 +12,9 @@ interface CustomRangeProps extends YearsInputsProps {
    * Label for range input
    */
   label?: string;
-
-  /**
-   * Is component displaying
-   */
-  show?: boolean;
 }
 
-/**
- * Props of wrapper
- */
-interface RangeWrapperProps {
-  /**
-   * Is component displaying
-   */
-  show?: boolean;
-}
-
-const RangeWrapper = styled.div<RangeWrapperProps>`
+const RangeWrapper = styled.div`
   position: relative;
 
   height: 47px;
@@ -38,21 +23,6 @@ const RangeWrapper = styled.div<RangeWrapperProps>`
   ${ sansSerifLight };
   font-size: 14px;
   color: var(--color-dark-gray);
-
-  ${props => {
-    if (!props.show) {
-      return css`
-        height: 0;
-        margin: 0;
-        visibility: hidden;
-      `;
-    }
-  }};
-  opacity: ${ props => props.show ? '1' : '0' };
-  transition: opacity ease-out .2s,
-              height ease-out .2s,
-              margin ease-out .2s,
-              visibility ease-out .2s;
 `;
 
 const RangeLabel = styled.div`
@@ -113,7 +83,7 @@ const RangeInput = styled.input`
  */
 export default function CustomRange(props: CustomRangeProps): ReactElement {
   return (
-    <RangeWrapper show={props.show !== undefined ? props.show : true}>
+    <RangeWrapper>
       { props.label &&
         <RangeLabel>
           { props.label }
