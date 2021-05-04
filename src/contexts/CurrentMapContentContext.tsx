@@ -27,7 +27,7 @@ interface CurrentMapContentContextValue {
 /**
  * Context with current markers
  */
-export const CurrentMapContentContext = createContext<CurrentMapContentContextValue | undefined>(undefined);
+const CurrentMapContentContext = createContext<CurrentMapContentContextValue | undefined>(undefined);
 
 /**
  * Provider of current markers context
@@ -59,13 +59,13 @@ export function CurrentMapContentProvider(props: WithChildren): ReactElement {
 }
 
 /**
- *
+ * Helper hook fir accessing data in CurrentMapContentContext
  */
 export default function useCurrentMapContent(): CurrentMapContentContextValue {
   const context = useContext(CurrentMapContentContext);
 
   if (!context) {
-    throw new Error('kek');
+    throw new Error('You should use this hook only inside CurrentMapContentProvider');
   }
 
   return context;
