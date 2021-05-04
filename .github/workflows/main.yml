@@ -19,6 +19,7 @@ jobs:
         with:
           envkey_REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
           envkey_REACT_APP_SENTRY_DSN: ${{ secrets.REACT_APP_SENTRY_DSN }}
+          envkey_REACT_APP_API_ENDPOINT: https://api.st-retrospect.dh-center.ru/graphql
           file_name: .env.local
 
       - name: Change API endpoint if stage
