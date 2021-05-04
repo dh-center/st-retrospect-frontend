@@ -8,11 +8,14 @@ import ThumbsUpIcon from '../assets/thumbs-up.svg';
 import { useTranslation } from 'react-i18next';
 import { MenuItems } from './asides/MenuAside';
 
-interface MenuInputProps {
+/**
+ * Props of component
+ */
+interface MenuProps {
   /**
-   * onChange event handler
+   * onClick event handler
    *
-   * @param item - number of the pressed button
+   * @param item - selected menu item
    */
   onClick: (item: MenuItems) => void;
 }
@@ -70,9 +73,9 @@ const MenuItemIcon = styled.div<MenuItemIconProps>`
 /**
  * Menu component
  *
- * @param props - onChange event handler for tracking selected menu item
+ * @param props - props of component
  */
-function Menu(props: MenuInputProps): ReactElement {
+function Menu(props: MenuProps): ReactElement {
   const { t } = useTranslation();
 
   return (
