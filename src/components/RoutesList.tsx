@@ -4,33 +4,15 @@ import { RoutesListPaginationQuery } from './__generated__/RoutesListPaginationQ
 import { RoutesList_questsConnection$key } from './__generated__/RoutesList_questsConnection.graphql';
 import graphql from 'babel-plugin-relay/macro';
 import { RoutesListQuery } from './__generated__/RoutesListQuery.graphql';
-import styled from 'styled-components';
 import RouteItem from './RouteItem';
 import LoadMoreButton from './LoadMoreButton';
 import { useInView } from 'react-intersection-observer';
+import { ListWrapper } from './lists';
 
 /**
  * Default count of loading routes in list
  */
 const ROUTES_ON_PAGE = 10;
-
-/**
- * Props of list wrapper
- */
-interface ListWrapperProps {
-  /**
-   * Has list next items for load
-   * It needs for displaying padding if it isn't next items and LoadMoreButton is hiding
-   */
-  hasNext: boolean;
-}
-
-const ListWrapper = styled.div<ListWrapperProps>`
-  margin: 0 -16px;
-  padding: 12px 4px ${ props => props.hasNext ? 0 : '12px' } 16px;
-
-  overflow-y: auto;
-`;
 
 /**
  * List of all routes

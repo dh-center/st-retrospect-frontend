@@ -6,7 +6,14 @@ import { RouteCardQuery } from './__generated__/RouteCardQuery.graphql';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import { useTranslation } from 'react-i18next';
-import LeftArrowIcon from '../assets/arrow-left-second.svg';
+import {
+  CardWrapper,
+  GoingBackButton,
+  Image,
+  InformationWrapper,
+  Name,
+  Description
+} from './cards';
 
 /**
  * Parameters of '/route' route
@@ -18,74 +25,9 @@ interface RouteRouteParameters {
   questId: string;
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  position: relative;
-
-  margin: 0 -16px;
-  overflow-y: hidden;
-`;
-
-const GoingBackButton = styled(Link)`
-  position: absolute;
-  top: 6px;
-  left: 16px;
-
-  width: 24px;
-  height: 24px;
-
-  background: var(--color-white);
-  background-image: url("${ LeftArrowIcon }");
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 2px;
-  box-shadow: (--shadow-base);
-`;
-
-/**
- * Props of image block in route card
- */
-interface ImageProps {
-  /**
-   * Source of image
-   */
-  src: string;
-}
-
-const Image = styled.div<ImageProps>`
-  min-width: 100%;
-  min-height: 144px;
-
-  background-image: url("${ props => props.src }");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-`;
-
-const InformationWrapper = styled.div`
-  padding: 16px 16px 24px;
-
-  overflow-y: auto;
-`;
-
-const Name = styled.div`
-  font-size: 16px;
-
-  margin-bottom: 12px;
-`;
-
 const Author = styled.div`
   ${ sansSerifLight };
   font-size: 14px;
-
-  margin-bottom: 24px;
-`;
-
-const Description = styled.div`
-  ${ sansSerifLight };
-  font-size: 16px;
 
   margin-bottom: 24px;
 `;
@@ -143,8 +85,8 @@ export default function RouteCard(): ReactElement {
   }
 
   return (
-    <Wrapper>
-      <GoingBackButton to="/routes"/>
+    <CardWrapper>
+      <GoingBackButton/>
       <Image src={data.quest.photo ? data.quest.photo : 'https://picsum.photos/seed/picsum/200/100'}/>
       <InformationWrapper>
         <Name>{ data.quest.name }</Name>
@@ -154,6 +96,6 @@ export default function RouteCard(): ReactElement {
           <StartRouteButton to={`/route/${questId}/0`}>{ t('route.startRoute') }</StartRouteButton>
         </CenterWrapper>
       </InformationWrapper>
-    </Wrapper>
+    </CardWrapper>
   );
 }

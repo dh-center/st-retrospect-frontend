@@ -28,7 +28,17 @@
     "startRoute": "Перейти к маршруту",
     "endRoute": "Закончить маршрут"
   },
+  "locationInstance": {
+    "architect": "Архитектор",
+    "dates": "Строительство",
+    "source": "Источник"
+  },
+  "person": {
+    "source": "Источник"
+  },
   "routes": "Маршруты",
   "author": "Автор",
-  "loadMore": "Загрузить ещё"
+  "loadMore": "Загрузить ещё",
+  "yearsAbbreviated": "г.",
+  "wikipedia": "Материал из Википедии — свободной энциклопедии"
 }
