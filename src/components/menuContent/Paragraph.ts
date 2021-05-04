@@ -12,4 +12,8 @@ export default styled.p`
   margin: 0 0 28px;
 
   padding: 0 13% 0;
+
+  a {
+    color: var(--color-blue);
+  }
 `;
