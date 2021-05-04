@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import { SearchYearsValues } from '../interfaces/searchForm/SearchYearsValues';
 
@@ -28,10 +28,40 @@ export interface YearsInputsProps {
    * Maximum year for searching
    */
   max: string;
+
+  /**
+   * Is component displaying
+   */
+  show?: boolean;
 }
 
-const YearsWrapper = styled.div`
+/**
+ * Props of wrapper
+ */
+interface YearsWrapperProps {
+  /**
+   * Is component displaying
+   */
+  show?: boolean
+}
+
+const YearsWrapper = styled.div<YearsWrapperProps>`
   margin-top: 12px;
+
+  ${props => {
+    if (!props.show) {
+      return css`
+        height: 0;
+        margin: 0;
+        visibility: hidden;
+      `;
+    }
+  }};
+  opacity: ${ props => props.show ? '1' : '0' };
+  transition: opacity ease-out .2s,
+              height ease-out .2s,
+              margin ease-out .2s,
+              visibility ease-out .2s;
 `;
 
 const YearsInput = styled.input`
@@ -79,7 +109,7 @@ const YearsDash = styled.span`
  */
 export default function YearsInputs(props: YearsInputsProps): ReactElement {
   return (
-    <YearsWrapper>
+    <YearsWrapper show={props.show}>
       <YearsInput
         type="number"
         min={props.min}

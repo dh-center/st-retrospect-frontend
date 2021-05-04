@@ -7,14 +7,27 @@ import YearsInputs from './YearsInputs';
 import { useTranslation } from 'react-i18next';
 import useDebounce from '../lib/useDebounce';
 
-const SearchLineWithMarginBottom = styled(SearchLine)`
-  margin-bottom: 12px;
+/**
+ * Props of component
+ */
+interface SearchFormProps {
+  /**
+   * Is search form displaying all inputs
+   */
+  isSearchFormOpen: boolean;
+}
+
+const SearchLineWithMarginBottom = styled(SearchLine)<SearchFormProps>`
+  margin-bottom: ${ props => props.isSearchFormOpen ? '12px' : '0' };
+  transition: margin ease-out .2s;
 `;
 
 /**
  * Search form component
+ *
+ * @param props - props of component
  */
-export default function SearchForm(): ReactElement {
+export default function SearchForm(props: SearchFormProps): ReactElement {
   const { t } = useTranslation();
 
   const YEARS_MIN_VALUE = '1500';
@@ -66,10 +79,12 @@ export default function SearchForm(): ReactElement {
       <SearchLineWithMarginBottom
         value={query}
         onChange={value => setQuery(value)}
+        isSearchFormOpen={props.isSearchFormOpen}
       />
       <CustomSelect
         selected={categories}
         onChange={values => setCategories(values)}
+        show={props.isSearchFormOpen}
       />
       <CustomRange
         onChange={values => setYears(values)}
@@ -77,12 +92,14 @@ export default function SearchForm(): ReactElement {
         max={YEARS_MAX_VALUE}
         values={years}
         label={t(`customRange.years`)}
+        show={props.isSearchFormOpen}
       />
       <YearsInputs
         onChange={values => setYearsFromInputs(values)}
         min={YEARS_MIN_VALUE}
         max={YEARS_MAX_VALUE}
         values={yearsFromInputs}
+        show={props.isSearchFormOpen}
       />
     </form>
   );
