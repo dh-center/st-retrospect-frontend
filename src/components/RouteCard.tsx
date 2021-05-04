@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useParams, Redirect, Link } from 'react-router-dom';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -14,16 +14,8 @@ import {
   Name,
   Description
 } from './cards';
-
-/**
- * Parameters of '/route' route
- */
-interface RouteRouteParameters {
-  /**
-   * Id of current route
-   */
-  questId: string;
-}
+import { QuestRouteParameters } from '../interfaces/routeParameters';
+import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 
 const Author = styled.div`
   ${ sansSerifLight };
@@ -62,7 +54,9 @@ const StartRouteButton = styled(Link)`
  */
 export default function RouteCard(): ReactElement {
   const { t } = useTranslation();
-  const { questId } = useParams<RouteRouteParameters>();
+  const { questId } = useParams<QuestRouteParameters>();
+  const { setCurrentLocations } = useCurrentMapContent();
+
   const data = useLazyLoadQuery<RouteCardQuery>(
     graphql`
       query RouteCardQuery($id: GlobalId!) {
@@ -70,6 +64,11 @@ export default function RouteCard(): ReactElement {
           name
           description
           photo
+          locationInstances {
+            location {
+              ...CurrentMapContentContextLocation
+            }
+          }
         }
       }
     `,
@@ -77,6 +76,14 @@ export default function RouteCard(): ReactElement {
       id: questId,
     }
   );
+
+  useEffect(() => {
+    if (!data.quest) {
+      return;
+    }
+
+    setCurrentLocations(data.quest.locationInstances.map(locationInstance => locationInstance.location));
+  }, [ data.quest?.locationInstances ]);
 
   if (!data.quest) {
     return (

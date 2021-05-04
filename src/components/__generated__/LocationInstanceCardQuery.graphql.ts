@@ -20,14 +20,14 @@ export type LocationInstanceCardQueryResponse = {
             readonly person: {
                 readonly id: string;
                 readonly " $fragmentRefs": FragmentRefs<"RelatedPersonBlock_person">;
-            } | null;
+            };
         }>;
         readonly description: string | null;
         readonly architects: ReadonlyArray<{
             readonly lastName: string | null;
             readonly firstName: string | null;
             readonly patronymic: string | null;
-        } | null> | null;
+        }>;
         readonly constructionDate: string | null;
         readonly demolitionDate: string | null;
         readonly wikiLink: string | null;
