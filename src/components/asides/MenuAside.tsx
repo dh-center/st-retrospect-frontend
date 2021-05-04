@@ -9,7 +9,6 @@ import Overlay from '../Overlay';
 import AboutProject from '../menuContent/AboutProject';
 import OurPartners from '../menuContent/OurPartners';
 import Thanks from '../menuContent/Thanks';
-import WithChildren from '../../interfaces/WithChildren';
 
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
