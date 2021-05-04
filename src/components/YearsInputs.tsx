@@ -109,7 +109,7 @@ const YearsDash = styled.span`
  */
 export default function YearsInputs(props: YearsInputsProps): ReactElement {
   return (
-    <YearsWrapper show={props.show}>
+    <YearsWrapper show={props.show !== undefined ? props.show : true}>
       <YearsInput
         type="number"
         min={props.min}

@@ -227,7 +227,7 @@ export default function CustomSelect(props: CustomSelectInputProps): ReactElemen
   });
 
   return (
-    <SelectPlaceholder className={props.className} show={props.show}>
+    <SelectPlaceholder className={props.className} show={props.show !== undefined ? props.show : true}>
       <SelectWrapper isOpen={isOpen}>
         <SelectInput onClick={() => setOpen(!isOpen)} isOpen={isOpen}>
           <SelectInputText>{

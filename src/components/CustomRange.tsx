@@ -113,7 +113,7 @@ const RangeInput = styled.input`
  */
 export default function CustomRange(props: CustomRangeProps): ReactElement {
   return (
-    <RangeWrapper show={props.show}>
+    <RangeWrapper show={props.show !== undefined ? props.show : true}>
       { props.label &&
         <RangeLabel>
           { props.label }
