@@ -92,73 +92,71 @@ function MainAside(): ReactElement {
   const history = useHistory();
 
   return (
-    <>
-      <LeftPanel show={showAside}>
-        <MenuAsideContext.Provider value={{
-          isMenuAsideShow,
-          setMenuAsideShow,
-        }}>
-          <MenuAside/>
-          <AsideCloseButtonPositioned
-            willClose={showAside}
-            onClick={() => setShowAside(!showAside)}
-          />
-          <AsideParametersWrapper>
-            <AsideHeaderWithMarginBottom/>
-            <Switch>
-              <Route exact path="/">
-                <SearchForm/>
-              </Route>
-              <Route path={['/routes', '/route/:id']}>
-                <LineWrapper>
-                  <MenuButton onClick={() => setMenuAsideShow(true)}/>
-                  <MapBottomButtonIcon/>
-                  { t('routes') }
-                </LineWrapper>
-                <Route path="/routes">
-                  <CustomSelectWithMargin
-                    selected={[]}
-                  />
-                </Route>
-              </Route>
-            </Switch>
-          </AsideParametersWrapper>
-
-          <Switch>
-            <Route path="/routes">
-              <Suspense fallback={<Loader/>}>
-                <RoutesList/>
-              </Suspense>
-            </Route>
-            <Route exact path="/route/:questId">
-              <Suspense fallback={<Loader/>}>
-                <RouteCard/>
-              </Suspense>
-            </Route>
-            <Route path="/route/:questId/:currentLocationIndex">
-              <Suspense fallback={<Loader/>}>
-                <RoutePassingRenderer/>
-              </Suspense>
-            </Route>
-          </Switch>
-
+    <LeftPanel show={showAside}>
+      <MenuAsideContext.Provider value={{
+        isMenuAsideShow,
+        setMenuAsideShow,
+      }}>
+        <MenuAside/>
+        <AsideCloseButtonPositioned
+          willClose={showAside}
+          onClick={() => setShowAside(!showAside)}
+        />
+        <AsideParametersWrapper>
+          <AsideHeaderWithMarginBottom/>
           <Switch>
             <Route exact path="/">
-              <BottomButton onClick={() => history.push('/routes')}>
-                <MapBottomButtonIcon/>
-                {t('routes')}
-              </BottomButton>
+              <SearchForm/>
             </Route>
-            <Route path="/routes">
-              <BottomButton onClick={() => history.push('/')}>
-                <SearchBottomButtonIcon/>
-                {t('aside.searchBottomButton')}
-              </BottomButton>
+            <Route path={['/routes', '/route/:id']}>
+              <LineWrapper>
+                <MenuButton onClick={() => setMenuAsideShow(true)}/>
+                <MapBottomButtonIcon/>
+                { t('routes') }
+              </LineWrapper>
+              <Route path="/routes">
+                <CustomSelectWithMargin
+                  selected={[]}
+                />
+              </Route>
             </Route>
           </Switch>
-        </MenuAsideContext.Provider>
-      </LeftPanel>
-    </>
+        </AsideParametersWrapper>
+
+        <Switch>
+          <Route path="/routes">
+            <Suspense fallback={<Loader/>}>
+              <RoutesList/>
+            </Suspense>
+          </Route>
+          <Route exact path="/route/:questId">
+            <Suspense fallback={<Loader/>}>
+              <RouteCard/>
+            </Suspense>
+          </Route>
+          <Route path="/route/:questId/:currentLocationIndex">
+            <Suspense fallback={<Loader/>}>
+              <RoutePassingRenderer/>
+            </Suspense>
+          </Route>
+        </Switch>
+
+        <Switch>
+          <Route exact path="/">
+            <BottomButton onClick={() => history.push('/routes')}>
+              <MapBottomButtonIcon/>
+              {t('routes')}
+            </BottomButton>
+          </Route>
+          <Route path="/routes">
+            <BottomButton onClick={() => history.push('/')}>
+              <SearchBottomButtonIcon/>
+              {t('aside.searchBottomButton')}
+            </BottomButton>
+          </Route>
+        </Switch>
+      </MenuAsideContext.Provider>
+    </LeftPanel>
   );
 }
 
