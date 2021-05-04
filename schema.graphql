@@ -1064,13 +1064,13 @@ type Relation implements Node {
   id: ID!
 
   """Person in relation"""
-  person: Person
+  person: Person!
 
   """Location in relation"""
-  locationInstance: LocationInstance
+  locationInstance: LocationInstance!
 
   """Relation type"""
-  relationType: RelationType
+  relationType: RelationType!
 
   """Relation's quote"""
   quote: MultilingualString

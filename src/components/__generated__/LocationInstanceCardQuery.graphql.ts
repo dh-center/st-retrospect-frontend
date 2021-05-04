@@ -20,7 +20,7 @@ export type LocationInstanceCardQueryResponse = {
             readonly person: {
                 readonly id: string;
                 readonly " $fragmentRefs": FragmentRefs<"RelatedPersonBlock_person">;
-            } | null;
+            };
         }>;
         readonly description: string | null;
         readonly architects: ReadonlyArray<{

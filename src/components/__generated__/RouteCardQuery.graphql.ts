@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type RouteCardQueryVariables = {
     id: string;
 };
@@ -13,8 +14,7 @@ export type RouteCardQueryResponse = {
         readonly photo: string | null;
         readonly locationInstances: ReadonlyArray<{
             readonly location: {
-                readonly latitude: number | null;
-                readonly longitude: number | null;
+                readonly " $fragmentRefs": FragmentRefs<"CurrentMapContentContextLocation">;
             };
         }>;
     } | null;
@@ -36,14 +36,18 @@ query RouteCardQuery(
     photo
     locationInstances {
       location {
-        latitude
-        longitude
+        ...CurrentMapContentContextLocation
         id
       }
       id
     }
     id
   }
+}
+
+fragment CurrentMapContentContextLocation on Location {
+  longitude
+  latitude
 }
 */
 
@@ -87,20 +91,6 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "latitude",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "longitude",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -138,8 +128,11 @@ return {
                 "name": "location",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
-                  (v6/*: any*/)
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "CurrentMapContentContextLocation"
+                  }
                 ],
                 "storageKey": null
               }
@@ -186,31 +179,43 @@ return {
                 "name": "location",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
-                  (v6/*: any*/),
-                  (v7/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "longitude",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "latitude",
+                    "storageKey": null
+                  },
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v7/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "f8f94ed4a0492e6c13e39d44cae52a74",
+    "cacheID": "c77cad1e7f37d41da8d0dc456052115e",
     "id": null,
     "metadata": {},
     "name": "RouteCardQuery",
     "operationKind": "query",
-    "text": "query RouteCardQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    name\n    description\n    photo\n    locationInstances {\n      location {\n        latitude\n        longitude\n        id\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query RouteCardQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    name\n    description\n    photo\n    locationInstances {\n      location {\n        ...CurrentMapContentContextLocation\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment CurrentMapContentContextLocation on Location {\n  longitude\n  latitude\n}\n"
   }
 };
 })();
-(node as any).hash = '345eee74b3dace17a0b2b9f0c313bf74';
+(node as any).hash = '31f318fc163400ff6337dca0683bf4c7';
 export default node;

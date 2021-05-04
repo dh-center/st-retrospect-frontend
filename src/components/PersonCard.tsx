@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLazyLoadQuery } from 'react-relay';
@@ -16,7 +16,7 @@ import {
 import { sansSerifLight } from '../styles/FontStyles';
 import { Delimiter } from './lists';
 import { PersonRouteParameters } from '../interfaces/routeParameters';
-import { CurrentMarkersContext } from '../contexts/CurrentMarkersContextProvider';
+import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 
 const CardWrapperWithScroll = styled(CardWrapper)`
   padding: 40px 16px;
@@ -81,7 +81,7 @@ const WikiLink = styled.a`
 export default function PersonCard(): ReactElement {
   const { personId } = useParams<PersonRouteParameters>();
   const { t } = useTranslation();
-  const { setCurrentMarkersCoordinates } = useContext(CurrentMarkersContext);
+  const { setCurrentLocations } = useCurrentMapContent();
 
   const data = useLazyLoadQuery<PersonCardQuery>(
     graphql`
@@ -98,8 +98,7 @@ export default function PersonCard(): ReactElement {
           relations {
             locationInstance {
               location {
-                longitude
-                latitude
+                ...CurrentMapContentContextLocation
               }
             }
           }
@@ -115,28 +114,8 @@ export default function PersonCard(): ReactElement {
     if (!data.person) {
       return;
     }
-    /**
-     * Sets new coordinates to CurrentMarkersContext
-     */
-    const currentMarkersCoordinates = data.person.relations
-      .filter((relation): relation is {
-          locationInstance: {
-            location: {
-              latitude: number,
-              longitude: number
-            }
-          }
-        } => typeof relation.locationInstance?.location.latitude === 'number' &&
-        typeof relation.locationInstance?.location.longitude === 'number'
-      )
-      .map(relation => {
-        return {
-          lng: relation.locationInstance.location.longitude,
-          lat: relation.locationInstance.location.latitude,
-        };
-      });
 
-    setCurrentMarkersCoordinates(currentMarkersCoordinates);
+    setCurrentLocations(data.person.relations.map(rel => rel.locationInstance.location));
   }, [ data.person?.relations ]);
 
   if (!data.person) {

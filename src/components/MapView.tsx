@@ -5,7 +5,7 @@ import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import mapboxgl, { LngLatBoundsLike, AnyLayer } from '!mapbox-gl';
 import styled from 'styled-components';
 import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
-import { CurrentMarkersContext } from '../contexts/CurrentMarkersContextProvider';
+import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -46,7 +46,7 @@ export default function MapView(): ReactElement {
     zoom: 11.5,
   });
   const { userLanguage } = useContext(LanguageContext);
-  const { currentMarkers } = useContext(CurrentMarkersContext);
+  const { currentLocations } = useCurrentMapContent();
 
   /**
    * Changes map language
@@ -130,10 +130,21 @@ export default function MapView(): ReactElement {
       return;
     }
 
-    currentMarkers.forEach(marker => {
-      marker.addTo(map.current);
-    });
-  }, [ currentMarkers ]);
+    const markers = currentLocations
+      .filter((loc) => loc.longitude && loc.latitude)
+      .map(location => {
+        const marker = new mapboxgl.Marker()
+          .setLngLat([location.longitude || 0, location.latitude || 0]);
+
+        marker.addTo(map.current);
+
+        return marker;
+      });
+
+    return () => {
+      markers.forEach(marker => marker.remove());
+    };
+  }, [ currentLocations ]);
 
   return (
     <div>

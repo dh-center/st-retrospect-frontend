@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type PersonCardQueryVariables = {
     id: string;
 };
@@ -19,10 +20,9 @@ export type PersonCardQueryResponse = {
         readonly relations: ReadonlyArray<{
             readonly locationInstance: {
                 readonly location: {
-                    readonly longitude: number | null;
-                    readonly latitude: number | null;
+                    readonly " $fragmentRefs": FragmentRefs<"CurrentMapContentContextLocation">;
                 };
-            } | null;
+            };
         }>;
     } | null;
 };
@@ -49,8 +49,7 @@ query PersonCardQuery(
     relations {
       locationInstance {
         location {
-          longitude
-          latitude
+          ...CurrentMapContentContextLocation
           id
         }
         id
@@ -59,6 +58,11 @@ query PersonCardQuery(
     }
     id
   }
+}
+
+fragment CurrentMapContentContextLocation on Location {
+  longitude
+  latitude
 }
 */
 
@@ -137,20 +141,6 @@ v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "longitude",
-  "storageKey": null
-},
-v11 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "latitude",
-  "storageKey": null
-},
-v12 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -201,8 +191,11 @@ return {
                     "name": "location",
                     "plural": false,
                     "selections": [
-                      (v10/*: any*/),
-                      (v11/*: any*/)
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "CurrentMapContentContextLocation"
+                      }
                     ],
                     "storageKey": null
                   }
@@ -265,35 +258,47 @@ return {
                     "name": "location",
                     "plural": false,
                     "selections": [
-                      (v10/*: any*/),
-                      (v11/*: any*/),
-                      (v12/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "longitude",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "latitude",
+                        "storageKey": null
+                      },
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v12/*: any*/)
+                  (v10/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v12/*: any*/)
+              (v10/*: any*/)
             ],
             "storageKey": null
           },
-          (v12/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d722ec71bc35f8d914fc8428da1951d6",
+    "cacheID": "b71657f2af6e7c5c31282e3e1d993c46",
     "id": null,
     "metadata": {},
     "name": "PersonCardQuery",
     "operationKind": "query",
-    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      locationInstance {\n        location {\n          longitude\n          latitude\n          id\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      locationInstance {\n        location {\n          ...CurrentMapContentContextLocation\n          id\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment CurrentMapContentContextLocation on Location {\n  longitude\n  latitude\n}\n"
   }
 };
 })();
-(node as any).hash = 'dc16144881b7077a27aabb7b94283a8e';
+(node as any).hash = '701c4cfe9128021a6051f8edef4d10fe';
 export default node;
