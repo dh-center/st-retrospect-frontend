@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import styled  from 'styled-components';
+import styled from 'styled-components';
 import RangeThumb from '../assets/range-thumb.svg';
 import { sansSerifLight } from '../styles/FontStyles';
 import { YearsInputsProps } from './YearsInputs';

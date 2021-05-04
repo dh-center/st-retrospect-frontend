@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react';
-import styled  from 'styled-components';
+import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import LeftArrowIcon from '../assets/arrow-left.svg';
 import CheckboxIcon from '../assets/checkbox.svg';

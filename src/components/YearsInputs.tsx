@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import styled  from 'styled-components';
+import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import { SearchYearsValues } from '../interfaces/searchForm/SearchYearsValues';
 
