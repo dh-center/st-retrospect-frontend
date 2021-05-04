@@ -33,17 +33,26 @@ const AsideHeaderWithMarginBottom = styled(AsideHeader)`
   margin-bottom: 12px;
 `;
 
+/**
+ * Possible menu items in content
+ */
 export enum MenuItems {
   THANKS='THANKS',
   ABOUT_PROJECT='ABOUT_PROJECT',
   OUR_PARTNERS='OUR_PARTNERS'
 }
 
-interface MenuContentProps extends WithChildren{
+/**
+ * Props of MenuContentWrapper
+ */
+interface MenuContentWrapperProps {
+  /**
+   * Is menu content show
+   */
   isMenuContentShow: boolean
 }
 
-const MenuContentWrapper = styled.div<MenuContentProps>`
+const MenuContentWrapper = styled.div<MenuContentWrapperProps>`
   position: absolute;
   top: 0;
   left: ${props => props.isMenuContentShow ? '372px' : '100vw'};
@@ -62,7 +71,7 @@ const MenuContentWrapper = styled.div<MenuContentProps>`
 /**
  * Aside panel with menu
  */
-function MenuAside(): ReactElement {
+export default function MenuAside(): ReactElement {
   const { isMenuAsideShow, setMenuAsideShow } = useContext(MenuAsideContext);
   const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItems>(MenuItems.ABOUT_PROJECT);
   const [isMenuContentShow, setMenuContentShow] = useState(false);
@@ -104,5 +113,3 @@ function MenuAside(): ReactElement {
     </>
   );
 }
-
-export default MenuAside;
