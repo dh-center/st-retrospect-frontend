@@ -81,7 +81,7 @@ const WikiLink = styled.a`
 export default function PersonCard(): ReactElement {
   const { personId } = useParams<PersonRouteParameters>();
   const { t } = useTranslation();
-  const { setCurrentMarkerCoordinates } = useContext(CurrentMarkersContext);
+  const { setCurrentMarkersCoordinates } = useContext(CurrentMarkersContext);
 
   const data = useLazyLoadQuery<PersonCardQuery>(
     graphql`
@@ -136,7 +136,7 @@ export default function PersonCard(): ReactElement {
         };
       });
 
-    setCurrentMarkerCoordinates(currentMarkersCoordinates);
+    setCurrentMarkersCoordinates(currentMarkersCoordinates);
   }, [ data.person?.relations ]);
 
   if (!data.person) {

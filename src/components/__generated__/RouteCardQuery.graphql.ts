@@ -11,6 +11,12 @@ export type RouteCardQueryResponse = {
         readonly name: string;
         readonly description: string | null;
         readonly photo: string | null;
+        readonly locationInstances: ReadonlyArray<{
+            readonly location: {
+                readonly latitude: number | null;
+                readonly longitude: number | null;
+            };
+        }>;
     } | null;
 };
 export type RouteCardQuery = {
@@ -28,6 +34,14 @@ query RouteCardQuery(
     name
     description
     photo
+    locationInstances {
+      location {
+        latitude
+        longitude
+        id
+      }
+      id
+    }
     id
   }
 }
@@ -68,6 +82,27 @@ v4 = {
   "kind": "ScalarField",
   "name": "photo",
   "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "latitude",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "longitude",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -86,7 +121,31 @@ return {
         "selections": [
           (v2/*: any*/),
           (v3/*: any*/),
-          (v4/*: any*/)
+          (v4/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "LocationInstance",
+            "kind": "LinkedField",
+            "name": "locationInstances",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Location",
+                "kind": "LinkedField",
+                "name": "location",
+                "plural": false,
+                "selections": [
+                  (v5/*: any*/),
+                  (v6/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -114,24 +173,44 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "LocationInstance",
+            "kind": "LinkedField",
+            "name": "locationInstances",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Location",
+                "kind": "LinkedField",
+                "name": "location",
+                "plural": false,
+                "selections": [
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v7/*: any*/)
+            ],
             "storageKey": null
-          }
+          },
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "a9bbe50c842129b7215f0411d66497a5",
+    "cacheID": "f8f94ed4a0492e6c13e39d44cae52a74",
     "id": null,
     "metadata": {},
     "name": "RouteCardQuery",
     "operationKind": "query",
-    "text": "query RouteCardQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    name\n    description\n    photo\n    id\n  }\n}\n"
+    "text": "query RouteCardQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    name\n    description\n    photo\n    locationInstances {\n      location {\n        latitude\n        longitude\n        id\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0c18b7a1356ac057fae315c33a20de22';
+(node as any).hash = '345eee74b3dace17a0b2b9f0c313bf74';
 export default node;

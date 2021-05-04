@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useContext, useEffect } from 'react';
 import { useParams, Redirect, Link } from 'react-router-dom';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -15,6 +15,7 @@ import {
   Description
 } from './cards';
 import { QuestRouteParameters } from '../interfaces/routeParameters';
+import { CurrentMarkersContext } from '../contexts/CurrentMarkersContextProvider';
 
 const Author = styled.div`
   ${ sansSerifLight };
@@ -54,6 +55,8 @@ const StartRouteButton = styled(Link)`
 export default function RouteCard(): ReactElement {
   const { t } = useTranslation();
   const { questId } = useParams<QuestRouteParameters>();
+  const { setCurrentMarkersCoordinates } = useContext(CurrentMarkersContext);
+
   const data = useLazyLoadQuery<RouteCardQuery>(
     graphql`
       query RouteCardQuery($id: GlobalId!) {
@@ -61,6 +64,12 @@ export default function RouteCard(): ReactElement {
           name
           description
           photo
+          locationInstances {
+            location {
+              latitude
+              longitude
+            }
+          }
         }
       }
     `,
@@ -68,6 +77,24 @@ export default function RouteCard(): ReactElement {
       id: questId,
     }
   );
+
+  useEffect(() => {
+    if (!data.quest) {
+      return;
+    }
+
+    /**
+     * Sets new coordinates to CurrentMarkersContext
+     */
+    const currentMarkersCoordinates = data.quest.locationInstances.map(locationInstance => {
+      return {
+        lng: locationInstance.location.longitude,
+        lat: locationInstance.location.latitude,
+      };
+    });
+
+    setCurrentMarkersCoordinates(currentMarkersCoordinates);
+  }, [ data.quest?.locationInstances ]);
 
   if (!data.quest) {
     return (
