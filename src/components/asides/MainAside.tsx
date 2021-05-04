@@ -49,6 +49,18 @@ const MenuButton = styled.button`
   cursor: pointer;
 `;
 
+const HideSearchFormButton = styled.button`
+  position: absolute;
+  top: 100%;
+  right: 16px;
+
+  border-radius: 0 0 2px 2px;
+  border: none;
+  outline: none;
+  background: var(--color-white);
+  box-shadow: var(--shadow-base);
+`;
+
 const LineWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -110,6 +122,7 @@ export default function MainAside(): ReactElement {
           <Switch>
             <Route exact path={['/', '/location-instance/:locationInstanceId', '/person/:personId']}>
               <SearchForm/>
+              <HideSearchFormButton>Hide</HideSearchFormButton>
             </Route>
             <Route path={['/routes', '/route/:questId']}>
               <LineWrapper>

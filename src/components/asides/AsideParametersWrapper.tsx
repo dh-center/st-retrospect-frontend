@@ -10,4 +10,6 @@ export default styled.div`
 
   ${ sansSerifLight };
   box-shadow: var(--shadow-base);
+
+  position: relative;
 `;
