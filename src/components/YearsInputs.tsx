@@ -51,12 +51,20 @@ const YearsInput = styled.input`
   border-radius: 2px;
   outline: none;
 
+  transition: background-color .2s ease-in-out,
+    border-color .2s ease-in-out;
+
   /* Remove arrows in number input field in Webkit */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     margin: 0;
 
     -webkit-appearance: none;
+  }
+
+  &:out-of-range {
+    border-color: var(--color-red);
+    background: var(--color-light-red);
   }
 `;
 
