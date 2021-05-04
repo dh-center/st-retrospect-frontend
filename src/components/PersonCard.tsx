@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useContext, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLazyLoadQuery } from 'react-relay';
@@ -16,6 +16,7 @@ import {
 import { sansSerifLight } from '../styles/FontStyles';
 import { Delimiter } from './lists';
 import { PersonRouteParameters } from '../interfaces/routeParameters';
+import { CurrentMarkersContext } from '../contexts/CurrentMarkersContextProvider';
 
 const CardWrapperWithScroll = styled(CardWrapper)`
   padding: 40px 16px;
@@ -80,6 +81,8 @@ const WikiLink = styled.a`
 export default function PersonCard(): ReactElement {
   const { personId } = useParams<PersonRouteParameters>();
   const { t } = useTranslation();
+  const { setCurrentMarkerCoordinates } = useContext(CurrentMarkersContext);
+
   const data = useLazyLoadQuery<PersonCardQuery>(
     graphql`
       query PersonCardQuery($id: GlobalId!) {
@@ -92,6 +95,14 @@ export default function PersonCard(): ReactElement {
           deathDate
           description
           wikiLink
+          relations {
+            locationInstance {
+              location {
+                longitude
+                latitude
+              }
+            }
+          }
         }
       }
     `,
@@ -99,6 +110,34 @@ export default function PersonCard(): ReactElement {
       id: personId,
     }
   );
+
+  useEffect(() => {
+    if (!data.person) {
+      return;
+    }
+    /**
+     * Sets new coordinates to CurrentMarkersContext
+     */
+    const currentMarkersCoordinates = data.person.relations
+      .filter((relation): relation is {
+          locationInstance: {
+            location: {
+              latitude: number,
+              longitude: number
+            }
+          }
+        } => typeof relation.locationInstance?.location.latitude === 'number' &&
+        typeof relation.locationInstance?.location.longitude === 'number'
+      )
+      .map(relation => {
+        return {
+          lng: relation.locationInstance.location.longitude,
+          lat: relation.locationInstance.location.latitude,
+        };
+      });
+
+    setCurrentMarkerCoordinates(currentMarkersCoordinates);
+  }, [ data.person?.relations ]);
 
   if (!data.person) {
     return (

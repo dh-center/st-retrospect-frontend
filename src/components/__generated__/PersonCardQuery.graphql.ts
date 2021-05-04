@@ -16,6 +16,14 @@ export type PersonCardQueryResponse = {
         readonly deathDate: string | null;
         readonly description: string | null;
         readonly wikiLink: string | null;
+        readonly relations: ReadonlyArray<{
+            readonly locationInstance: {
+                readonly location: {
+                    readonly longitude: number | null;
+                    readonly latitude: number | null;
+                };
+            } | null;
+        }>;
     } | null;
 };
 export type PersonCardQuery = {
@@ -38,6 +46,17 @@ query PersonCardQuery(
     deathDate
     description
     wikiLink
+    relations {
+      locationInstance {
+        location {
+          longitude
+          latitude
+          id
+        }
+        id
+      }
+      id
+    }
     id
   }
 }
@@ -113,6 +132,27 @@ v9 = {
   "kind": "ScalarField",
   "name": "wikiLink",
   "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "longitude",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "latitude",
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -136,7 +176,42 @@ return {
           (v6/*: any*/),
           (v7/*: any*/),
           (v8/*: any*/),
-          (v9/*: any*/)
+          (v9/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Relation",
+            "kind": "LinkedField",
+            "name": "relations",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LocationInstance",
+                "kind": "LinkedField",
+                "name": "locationInstance",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
+                    "name": "location",
+                    "plural": false,
+                    "selections": [
+                      (v10/*: any*/),
+                      (v11/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -169,24 +244,56 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "Relation",
+            "kind": "LinkedField",
+            "name": "relations",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LocationInstance",
+                "kind": "LinkedField",
+                "name": "locationInstance",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
+                    "name": "location",
+                    "plural": false,
+                    "selections": [
+                      (v10/*: any*/),
+                      (v11/*: any*/),
+                      (v12/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v12/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v12/*: any*/)
+            ],
             "storageKey": null
-          }
+          },
+          (v12/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "c1508dc34d789253885336ea27784154",
+    "cacheID": "d722ec71bc35f8d914fc8428da1951d6",
     "id": null,
     "metadata": {},
     "name": "PersonCardQuery",
     "operationKind": "query",
-    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    id\n  }\n}\n"
+    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      locationInstance {\n        location {\n          longitude\n          latitude\n          id\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'e7f17a4f49467fcf2fbc5eee550dde77';
+(node as any).hash = 'dc16144881b7077a27aabb7b94283a8e';
 export default node;

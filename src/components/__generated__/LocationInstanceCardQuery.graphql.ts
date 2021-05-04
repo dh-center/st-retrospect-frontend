@@ -27,7 +27,7 @@ export type LocationInstanceCardQueryResponse = {
             readonly lastName: string | null;
             readonly firstName: string | null;
             readonly patronymic: string | null;
-        } | null> | null;
+        }>;
         readonly constructionDate: string | null;
         readonly demolitionDate: string | null;
         readonly wikiLink: string | null;
