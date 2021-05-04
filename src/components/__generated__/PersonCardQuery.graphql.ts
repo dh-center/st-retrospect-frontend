@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type PersonCardQueryVariables = {
     id: string;
 };
@@ -16,6 +17,13 @@ export type PersonCardQueryResponse = {
         readonly deathDate: string | null;
         readonly description: string | null;
         readonly wikiLink: string | null;
+        readonly relations: ReadonlyArray<{
+            readonly locationInstance: {
+                readonly location: {
+                    readonly " $fragmentRefs": FragmentRefs<"CurrentMapContentContextLocation">;
+                };
+            };
+        }>;
     } | null;
 };
 export type PersonCardQuery = {
@@ -38,8 +46,23 @@ query PersonCardQuery(
     deathDate
     description
     wikiLink
+    relations {
+      locationInstance {
+        location {
+          ...CurrentMapContentContextLocation
+          id
+        }
+        id
+      }
+      id
+    }
     id
   }
+}
+
+fragment CurrentMapContentContextLocation on Location {
+  longitude
+  latitude
 }
 */
 
@@ -113,6 +136,13 @@ v9 = {
   "kind": "ScalarField",
   "name": "wikiLink",
   "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -136,7 +166,45 @@ return {
           (v6/*: any*/),
           (v7/*: any*/),
           (v8/*: any*/),
-          (v9/*: any*/)
+          (v9/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Relation",
+            "kind": "LinkedField",
+            "name": "relations",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LocationInstance",
+                "kind": "LinkedField",
+                "name": "locationInstance",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
+                    "name": "location",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "CurrentMapContentContextLocation"
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -169,24 +237,68 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "Relation",
+            "kind": "LinkedField",
+            "name": "relations",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LocationInstance",
+                "kind": "LinkedField",
+                "name": "locationInstance",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
+                    "name": "location",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "longitude",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "latitude",
+                        "storageKey": null
+                      },
+                      (v10/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v10/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v10/*: any*/)
+            ],
             "storageKey": null
-          }
+          },
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "c1508dc34d789253885336ea27784154",
+    "cacheID": "b71657f2af6e7c5c31282e3e1d993c46",
     "id": null,
     "metadata": {},
     "name": "PersonCardQuery",
     "operationKind": "query",
-    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    id\n  }\n}\n"
+    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      locationInstance {\n        location {\n          ...CurrentMapContentContextLocation\n          id\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment CurrentMapContentContextLocation on Location {\n  longitude\n  latitude\n}\n"
   }
 };
 })();
-(node as any).hash = 'e7f17a4f49467fcf2fbc5eee550dde77';
+(node as any).hash = '701c4cfe9128021a6051f8edef4d10fe';
 export default node;

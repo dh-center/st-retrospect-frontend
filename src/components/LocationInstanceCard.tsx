@@ -15,16 +15,7 @@ import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import MapPin from '../assets/map-pin.svg';
 import { useTranslation } from 'react-i18next';
-
-/**
- * Parameters of '/location-instance' route
- */
-interface LocationInstanceRouteParameters {
-  /**
-   * Id of current location instance
-   */
-  locationInstanceId: string;
-}
+import { LocationInstanceRouteParameters } from '../interfaces/routeParameters';
 
 const Address = styled.div`
   margin-bottom: 14px;

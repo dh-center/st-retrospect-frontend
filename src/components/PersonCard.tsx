@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLazyLoadQuery } from 'react-relay';
@@ -15,16 +15,8 @@ import {
 } from './cards';
 import { sansSerifLight } from '../styles/FontStyles';
 import { Delimiter } from './lists';
-
-/**
- * Parameters of '/person' route
- */
-interface PersonRouteParameters {
-  /**
-   * Id of current person
-   */
-  personId: string;
-}
+import { PersonRouteParameters } from '../interfaces/routeParameters';
+import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 
 const CardWrapperWithScroll = styled(CardWrapper)`
   padding: 40px 16px;
@@ -89,6 +81,8 @@ const WikiLink = styled.a`
 export default function PersonCard(): ReactElement {
   const { personId } = useParams<PersonRouteParameters>();
   const { t } = useTranslation();
+  const { setCurrentLocations } = useCurrentMapContent();
+
   const data = useLazyLoadQuery<PersonCardQuery>(
     graphql`
       query PersonCardQuery($id: GlobalId!) {
@@ -101,6 +95,13 @@ export default function PersonCard(): ReactElement {
           deathDate
           description
           wikiLink
+          relations {
+            locationInstance {
+              location {
+                ...CurrentMapContentContextLocation
+              }
+            }
+          }
         }
       }
     `,
@@ -108,6 +109,14 @@ export default function PersonCard(): ReactElement {
       id: personId,
     }
   );
+
+  useEffect(() => {
+    if (!data.person) {
+      return;
+    }
+
+    setCurrentLocations(data.person.relations.map(rel => rel.locationInstance.location));
+  }, [ data.person?.relations ]);
 
   if (!data.person) {
     return (
