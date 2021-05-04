@@ -54,7 +54,13 @@ const PositionRelativeWrapper = styled.div`
   position: relative;
 `;
 
+/**
+ * Props of hide search form button
+ */
 interface HideSearchFormButtonProps {
+  /**
+   * Is search form hidden
+   */
   isOpen: boolean;
 }
 
