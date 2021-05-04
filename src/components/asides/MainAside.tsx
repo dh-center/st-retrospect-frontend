@@ -52,6 +52,8 @@ const MenuButton = styled.button`
 
 const PositionRelativeWrapper = styled.div`
   position: relative;
+
+  z-index: 1;
 `;
 
 /**
