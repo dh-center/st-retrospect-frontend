@@ -13,7 +13,7 @@ const LeftPanelWrapper = styled.aside<LeftPanelProps>`
   position: absolute;
   left: ${props => props.show ? '0' : '-372px'};
   top: 0;
-  z-index: 3;
+  z-index: 4;
 
   padding: 0 16px;
 

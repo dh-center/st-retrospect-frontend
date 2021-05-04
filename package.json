@@ -62,7 +62,16 @@
           "jsdoc/require-returns": "off",
           "jsdoc/require-param-type": "off",
           "react-hooks/exhaustive-deps": "off",
-          "@typescript-eslint/no-magic-numbers": "off"
+          "@typescript-eslint/no-magic-numbers": "off",
+          "@typescript-eslint/naming-convention": [
+            "error",
+            {
+              "selector": "enumMember",
+              "format": [
+                "UPPER_CASE"
+              ]
+            }
+          ]
         }
       }
     ]

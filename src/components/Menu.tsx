@@ -6,6 +6,19 @@ import MapPinIcon from '../assets/map-pin.svg';
 import UsersIcon from '../assets/users.svg';
 import ThumbsUpIcon from '../assets/thumbs-up.svg';
 import { useTranslation } from 'react-i18next';
+import { MenuItems } from './asides/MenuAside';
+
+/**
+ * Props of component
+ */
+interface MenuProps {
+  /**
+   * onClick event handler
+   *
+   * @param item - selected menu item
+   */
+  onClick: (item: MenuItems) => void;
+}
 
 const MenuWrapper = styled.ul`
   padding: 0;
@@ -57,29 +70,33 @@ const MenuItemIcon = styled.div<MenuItemIconProps>`
 
 /**
  * Menu component
+ *
+ * @param props - props of component
  */
-function Menu(): ReactElement {
+function Menu(props: MenuProps): ReactElement {
   const { t } = useTranslation();
 
   return (
-    <MenuWrapper>
-      <MenuItem>
-        <MenuItemIcon icon={HelpCircleIcon}/>
-        {t('aboutProject.title')}
-      </MenuItem>
-      <MenuItem>
-        <MenuItemIcon icon={MapPinIcon}/>
-        {t('howToGuide.title')}
-      </MenuItem>
-      <MenuItem>
-        <MenuItemIcon icon={UsersIcon}/>
-        {t('partners.title')}
-      </MenuItem>
-      <MenuItem>
-        <MenuItemIcon icon={ThumbsUpIcon}/>
-        {t('thanks.title')}
-      </MenuItem>
-    </MenuWrapper>
+    <>
+      <MenuWrapper>
+        <MenuItem onClick={() => props.onClick(MenuItems.ABOUT_PROJECT)}>
+          <MenuItemIcon icon={HelpCircleIcon}/>
+          {t('aboutProject.title')}
+        </MenuItem>
+        <MenuItem onClick={() => console.log('How to guide')}>
+          <MenuItemIcon icon={MapPinIcon}/>
+          {t('howToGuide.title')}
+        </MenuItem>
+        <MenuItem onClick={() => props.onClick(MenuItems.OUR_PARTNERS)}>
+          <MenuItemIcon icon={UsersIcon}/>
+          {t('partners.title')}
+        </MenuItem>
+        <MenuItem onClick={() => props.onClick(MenuItems.THANKS)}>
+          <MenuItemIcon icon={ThumbsUpIcon}/>
+          {t('thanks.title')}
+        </MenuItem>
+      </MenuWrapper>
+    </>
   );
 }
 
