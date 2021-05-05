@@ -115,6 +115,10 @@ export default function Mapbox(props: WithChildren): React.ReactElement {
         waitStyleLoading();
       });
     }
+
+    return () => {
+      map.current?.remove();
+    };
   }, []);
 
   useEffect(() => {
@@ -124,6 +128,10 @@ export default function Mapbox(props: WithChildren): React.ReactElement {
   console.log('mapbox rendering');
 
   const canvas = map.current?.getCanvasContainer();
+
+  console.log(canvas);
+
+  console.log(map.current?.getContainer())
 
   return (
     <MapboxContext.Provider value={{ map: map.current }}>

@@ -5,9 +5,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type RelationCard_relation = {
-    readonly locationInstance: {
-        readonly name: string | null;
-    };
     readonly person: {
         readonly " $fragmentRefs": FragmentRefs<"RelatedPersonBlock_person">;
     };
@@ -30,24 +27,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "RelationCard_relation",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "LocationInstance",
-      "kind": "LinkedField",
-      "name": "locationInstance",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -89,5 +68,5 @@ const node: ReaderFragment = {
   "type": "Relation",
   "abstractKey": null
 };
-(node as any).hash = '7c0d73522804e0a448235d1b9ed7e822';
+(node as any).hash = '031510e703237f165c64c396cb90d5bd';
 export default node;

@@ -46,6 +46,7 @@ fragment LocationInstanceRelationsPopup_data on LocationInstance {
     latitude
     id
   }
+  name
   relations {
     ...RelationCard_relation
     id
@@ -61,10 +62,6 @@ fragment RelatedPersonBlock_person on Person {
 }
 
 fragment RelationCard_relation on Relation {
-  locationInstance {
-    name
-    id
-  }
   person {
     ...RelatedPersonBlock_person
     id
@@ -210,6 +207,7 @@ return {
                 ],
                 "storageKey": null
               },
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -218,19 +216,6 @@ return {
                 "name": "relations",
                 "plural": true,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "LocationInstance",
-                    "kind": "LinkedField",
-                    "name": "locationInstance",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/),
-                      (v5/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
                   {
                     "alias": null,
                     "args": null,
@@ -307,12 +292,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c1c9a16d538bc036f6c8c6789d6f01cf",
+    "cacheID": "678c0871e52bee113d30a4c21cb63a50",
     "id": null,
     "metadata": {},
     "name": "RouteCardQuery",
     "operationKind": "query",
-    "text": "query RouteCardQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    name\n    description\n    photo\n    locationInstances {\n      ...LocationInstanceRelationsPopup_data\n      id\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  locationInstance {\n    name\n    id\n  }\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
+    "text": "query RouteCardQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    name\n    description\n    photo\n    locationInstances {\n      ...LocationInstanceRelationsPopup_data\n      id\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
   }
 };
 })();
