@@ -22,7 +22,13 @@ const SearchLineWithMarginBottom = styled(SearchLine)<SearchFormProps>`
   transition: margin ease-in-out .2s;
 `;
 
+/**
+ * Props of element
+ */
 interface HideWrapperProps {
+  /**
+   * Is element displaying
+   */
   show: boolean;
 }
 
@@ -37,9 +43,7 @@ const HideWrapper = styled.div<HideWrapperProps>`
     }
   }};
   opacity: ${ props => props.show ? '1' : '0' };
-  transition: opacity ease-in-out .2s,
-              height ease-in-out .2s,
-              visibility ease-in-out .2s;
+  transition: all ease-in-out .2s;
 `;
 
 /**
