@@ -6,6 +6,7 @@ import mapboxgl, { LngLatBoundsLike, AnyLayer } from '!mapbox-gl';
 import styled from 'styled-components';
 import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
 import useCurrentMapContent from '../contexts/CurrentMapContentContext';
+import { PopupOpenEvent } from 'mapboxgl';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -133,12 +134,18 @@ export default function MapView(): ReactElement {
     const markers = currentLocations
       .filter((loc) => loc.longitude && loc.latitude)
       .map(location => {
-        const marker = new mapboxgl.Marker()
-          .setLngLat([location.longitude || 0, location.latitude || 0]);
+        const popup = new mapboxgl.Popup()
+          .on('open', (e: PopupOpenEvent) => {
+            map.current.flyTo({
+              center: e.target.getLngLat(),
+              zoom: 14,
+            });
+          });
 
-        marker.addTo(map.current);
-
-        return marker;
+        return new mapboxgl.Marker()
+          .setLngLat([location.longitude || 0, location.latitude || 0])
+          .setPopup(popup)
+          .addTo(map.current);
       });
 
     return () => {
