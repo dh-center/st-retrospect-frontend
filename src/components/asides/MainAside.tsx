@@ -203,7 +203,9 @@ export default function MainAside(): ReactElement {
         {/* Location instance content */}
         <Switch>
           <Route exact path="/">
-            <LocationInstancesList/>
+            <Suspense fallback={<Loader/>}>
+              <LocationInstancesList/>
+            </Suspense>
           </Route>
           <Route path="/location-instance/:locationInstanceId">
             <Suspense fallback={<Loader/>}>
