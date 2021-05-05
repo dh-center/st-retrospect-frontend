@@ -352,6 +352,24 @@ type CreateTagPayload {
 
 scalar Cursor
 
+input CursoredPaginationArgs {
+  """The cursor after which we take the data"""
+  after: Cursor
+
+  """The cursor after before we take the data"""
+  before: Cursor
+
+  """
+  Number of requested nodes after a node with a cursor in the after argument
+  """
+  first: Int
+
+  """
+  Number of requested nodes before a node with a cursor in the before argument
+  """
+  last: Int
+}
+
 type DeleteLocationInstancePayload {
   """Created location id"""
   recordId: GlobalId!
@@ -473,6 +491,9 @@ type LocationEdge {
 
   """Location info"""
   node: Location!
+
+  """How much the location matches the search term"""
+  searchScore: Float
 }
 
 """
@@ -529,6 +550,28 @@ type LocationInstance implements Node {
 
   """Location instance tags"""
   tags: [Tag!]!
+}
+
+"""Model for representing list of locations instances"""
+type LocationInstanceConnection {
+  """List of location instances edges"""
+  edges: [LocationInstanceEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+  suggest: String
+}
+
+"""Information about specific location instance in connection"""
+type LocationInstanceEdge {
+  """Cursor of this location"""
+  cursor: Cursor!
+
+  """Location instance info"""
+  node: LocationInstance!
 }
 
 input LocationInstanceInput {
@@ -589,6 +632,21 @@ type LocationMutations {
 
   """Delete location"""
   delete(id: GlobalId!): DeleteLocationPayload!
+}
+
+"""Model for representing list of locations"""
+type LocationSearchConnection {
+  """List of locations edges"""
+  edges: [LocationEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+
+  """Proposed query if user made a typo"""
+  suggest: String
 }
 
 """Location style"""
@@ -926,8 +984,11 @@ type Query {
     last: Int
   ): QuestConnection!
 
-  """Search for entities by search query"""
-  search(input: SearchInput!): [SearchResult!]!
+  """Query for search over the location instances"""
+  locationInstancesSearch(input: SearchInput!): LocationInstanceConnection!
+
+  """Query for search over the locations"""
+  locationsSearch(input: SearchInput!): LocationSearchConnection!
 
   """Get specific tag"""
   tag(
@@ -1180,17 +1241,20 @@ input SearchInput {
   query: String!
 
   """Start of search range"""
-  startYear: Int!
+  startYear: Int
 
   """End of search range"""
-  endYear: Int!
+  endYear: Int
 
   """Entity category"""
   category: [String!]
-}
 
-"""Possible data types that the search might return"""
-union SearchResult = LocationInstance | Person | Quest
+  """Args for implementing windowed pagination"""
+  windowedPagination: WindowedPaginationArgs
+
+  """Args for implementing cursor-based pagination"""
+  cursorPagination: CursoredPaginationArgs
+}
 
 """Tag of person or location instance"""
 type Tag implements Node {
@@ -1602,5 +1666,14 @@ type UserMutations {
 
   """Updates user data"""
   update(input: UpdateUserInput!): UpdateUserPayload!
+}
+
+"""Args for implementing windowed pagination"""
+input WindowedPaginationArgs {
+  """How many documents in the selection to skip"""
+  skip: Int
+
+  """How many documents to fetch"""
+  first: Int
 }
 
