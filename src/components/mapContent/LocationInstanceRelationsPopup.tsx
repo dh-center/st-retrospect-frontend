@@ -6,6 +6,7 @@ import useMapboxContext from '../../contexts/MapboxContext';
 import mapboxgl from 'mapbox-gl';
 import { LocationInstanceRelationsPopup_data$key } from './__generated__/LocationInstanceRelationsPopup_data.graphql';
 import styled from 'styled-components';
+import ArrowButton from '../ArrowButton';
 
 interface RelationsPopupProps {
   location: LocationInstanceRelationsPopup_data$key;
@@ -16,6 +17,8 @@ const Wrapper = styled.div`
   border-radius: 2px;
   box-shadow: var(--shadow-medium);
 
+  position: relative;
+
   padding: 24px 16px;
 
   width: 372px;
@@ -23,6 +26,20 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   font-size: 16px;
+`;
+
+const LeftArrowButton = styled(ArrowButton)`
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translate(-100%, -50%);
+  z-index: 1000;
+`;
+
+const RightArrowButton = styled(LeftArrowButton)`
+  left: auto;
+  transform: translate(100%, -50%);
+  right: -6px;
 `;
 
 /**
@@ -88,6 +105,26 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
       </div>
       <div ref={popupRef}>
         <Wrapper>
+          <LeftArrowButton
+            onClick={() => {
+              console.log('click');
+              if(currentIndex - 1 < 0) {
+                setCurrentIndex(0);
+              }else{
+                setCurrentIndex(currentIndex - 1);
+              }
+            }}/>
+          <RightArrowButton
+            arrowDirection={'right'}
+            onClick={() => {
+              console.log('click')
+              if (currentIndex + 1 >= data.relations.length) {
+                setCurrentIndex(data.relations.length - 1);
+              } else {
+                setCurrentIndex(currentIndex + 1);
+              }
+            }}
+          />
           <Title>{data.name}</Title>
           {
             !data.relations.length && 'Нет связей('
