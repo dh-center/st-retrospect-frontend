@@ -5,6 +5,9 @@ import graphql from 'babel-plugin-relay/macro';
 import useMapboxContext from '../../contexts/MapboxContext';
 import mapboxgl from 'mapbox-gl';
 import { LocationInstanceRelationsPopup_data$key } from './__generated__/LocationInstanceRelationsPopup_data.graphql';
+import { useRouteMatch } from 'react-router-dom';
+import { QuestPassingRouteParameters } from '../../interfaces/routeParameters';
+import useCurrentMapContent from '../../contexts/CurrentMapContentContext';
 
 interface RelationsPopupProps {
   location: LocationInstanceRelationsPopup_data$key;
@@ -15,6 +18,8 @@ interface RelationsPopupProps {
  */
 export default function LocationInstanceRelationsPopup(props: RelationsPopupProps): ReactElement {
   const { map } = useMapboxContext();
+  const { currentLocations } = useCurrentMapContent();
+  const routePassingMatch = useRouteMatch<QuestPassingRouteParameters>('/route/:questId/:currentLocationIndex');
 
   const popupRef = useRef<HTMLDivElement>(null);
   const markerRef = useRef<HTMLDivElement>(null);
@@ -34,7 +39,6 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
     props.location
   );
 
-
   useEffect(() => {
     if (!map || !popupRef.current || !markerRef.current) {
       return;
@@ -53,6 +57,24 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
       marker.remove();
     };
   }, [map, data]);
+
+  /**
+   * Fly to point on route passing
+   */
+  useEffect(() => {
+    if (!routePassingMatch || !map) {
+      return;
+    }
+
+    if (currentLocations.indexOf(props.location) !== +routePassingMatch.params.currentLocationIndex) {
+      return;
+    }
+
+    map.flyTo({
+      center: [data.location.longitude || 0, data.location.latitude || 0],
+      zoom: 14,
+    });
+  }, [ routePassingMatch?.params ]);
 
   return (
     <div>
