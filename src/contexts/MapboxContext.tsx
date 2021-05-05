@@ -1,24 +1,20 @@
 import React, { useContext } from 'react';
 import mapboxgl from 'mapbox-gl';
 
+/**
+ * Value of the mapbox context
+ */
 interface MapboxContextValue {
+  /**
+   * Current map index
+   */
   map: mapboxgl.Map | undefined;
 }
 
 export const MapboxContext = React.createContext<MapboxContextValue | undefined>(undefined);
 
-// export function MapboxContextProvider(props: React.PropsWithChildren<unknown>) {
-//   const map = useRef<mapboxgl.Map>();
-//   return (
-//     <MapboxContext.Provider value={}>
-//       {props.children}
-//     </MapboxContext.Provider>
-//   )
-// }
-
-
 /**
- *
+ * Hook for accessing Mapbox context
  */
 export default function useMapboxContext(): MapboxContextValue {
   const context = useContext(MapboxContext);
