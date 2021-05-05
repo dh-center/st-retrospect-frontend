@@ -52,7 +52,7 @@ interface MenuContentWrapperProps {
 }
 
 const MenuContentWrapper = styled.div<MenuContentWrapperProps>`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: ${props => props.isMenuContentShow ? '372px' : '100vw'};
 
