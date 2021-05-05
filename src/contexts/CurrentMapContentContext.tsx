@@ -33,20 +33,6 @@ const CurrentMapContentContext = createContext<CurrentMapContentContextValue | u
  */
 export function CurrentMapContentProvider(props: WithChildren): ReactElement {
   const [locationsRef, setLocations] = useState<readonly LocationInstanceRelationsPopup_data$key[]>([]);
-  // const [relationsRef, setRelations] = useState<LocationInstanceRelationsPopup_data$key[]>([]);
-
-
-  // const relationsData = useFragment(
-  //   graphql`
-  //     fragment CurrentMapContentContext_relations on Relation @relay(plural: true) {
-  //       id
-  //       locationInstance {
-  //         ...LocationInstanceRelationsPopup_relations
-  //       }
-  //     }
-  //   `,
-  //   relationsRef
-  // );
 
   return (
     <CurrentMapContentContext.Provider

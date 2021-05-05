@@ -102,7 +102,6 @@ export default function LocationInstanceCard(): ReactElement {
 
   useEffect(() => {
     if (data.locationInstance) {
-      console.log('set new current location', data.locationInstance);
       setCurrentLocations([ data.locationInstance ]);
     }
   }, [ data.locationInstance?.id ]);
