@@ -81,7 +81,7 @@ const WikiLink = styled.a`
 export default function PersonCard(): ReactElement {
   const { personId } = useParams<PersonRouteParameters>();
   const { t } = useTranslation();
-  const { setCurrentLocations, setCurrentRelations } = useCurrentMapContent();
+  const { setCurrentLocations } = useCurrentMapContent();
 
   const data = useLazyLoadQuery<PersonCardQuery>(
     graphql`
@@ -96,11 +96,8 @@ export default function PersonCard(): ReactElement {
           description
           wikiLink
           relations {
-            ...CurrentMapContentContext_relations
             locationInstance {
-              location {
-                ...CurrentMapContentContextLocation
-              }
+              ...LocationInstanceRelationsPopup_data
             }
           }
         }
@@ -116,8 +113,7 @@ export default function PersonCard(): ReactElement {
       return;
     }
 
-    setCurrentRelations(data.person.relations);
-    setCurrentLocations(data.person.relations.map(rel => rel.locationInstance.location));
+    setCurrentLocations(data.person.relations.map(rel => rel.locationInstance));
   }, [ data.person?.relations ]);
 
   if (!data.person) {

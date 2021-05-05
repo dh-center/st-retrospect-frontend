@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type RelationsPopup_relations = {
+export type LocationInstanceRelationsPopup_data = {
     readonly location: {
         readonly longitude: number | null;
         readonly latitude: number | null;
@@ -12,12 +12,12 @@ export type RelationsPopup_relations = {
     readonly relations: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"RelationCard_relation">;
     }>;
-    readonly " $refType": "RelationsPopup_relations";
+    readonly " $refType": "LocationInstanceRelationsPopup_data";
 };
-export type RelationsPopup_relations$data = RelationsPopup_relations;
-export type RelationsPopup_relations$key = {
-    readonly " $data"?: RelationsPopup_relations$data;
-    readonly " $fragmentRefs": FragmentRefs<"RelationsPopup_relations">;
+export type LocationInstanceRelationsPopup_data$data = LocationInstanceRelationsPopup_data;
+export type LocationInstanceRelationsPopup_data$key = {
+    readonly " $data"?: LocationInstanceRelationsPopup_data$data;
+    readonly " $fragmentRefs": FragmentRefs<"LocationInstanceRelationsPopup_data">;
 };
 
 
@@ -26,7 +26,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "RelationsPopup_relations",
+  "name": "LocationInstanceRelationsPopup_data",
   "selections": [
     {
       "alias": null,
@@ -73,5 +73,5 @@ const node: ReaderFragment = {
   "type": "LocationInstance",
   "abstractKey": null
 };
-(node as any).hash = '2b79fd1bcfa28675149407aff83e757e';
+(node as any).hash = '6fa9dc932b86711f70778950e3cf3508';
 export default node;

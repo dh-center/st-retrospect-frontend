@@ -65,9 +65,7 @@ export default function RouteCard(): ReactElement {
           description
           photo
           locationInstances {
-            location {
-              ...CurrentMapContentContextLocation
-            }
+            ...LocationInstanceRelationsPopup_data
           }
         }
       }
@@ -82,7 +80,7 @@ export default function RouteCard(): ReactElement {
       return;
     }
 
-    setCurrentLocations(data.quest.locationInstances.map(locationInstance => locationInstance.location));
+    setCurrentLocations(data.quest.locationInstances);
   }, [ data.quest?.locationInstances ]);
 
   if (!data.quest) {

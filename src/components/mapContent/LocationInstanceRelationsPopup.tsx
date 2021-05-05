@@ -2,25 +2,26 @@ import { ReactElement, useEffect, useRef } from 'react';
 import RelationCard from './RelationCard';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import { RelationsPopup_relations$key } from './__generated__/RelationsPopup_relations.graphql';
 import useMapboxContext from '../../contexts/MapboxContext';
 import mapboxgl from 'mapbox-gl';
+import { LocationInstanceRelationsPopup_data$key } from './__generated__/LocationInstanceRelationsPopup_data.graphql';
 
 interface RelationsPopupProps {
-  relation: RelationsPopup_relations$key;
+  location: LocationInstanceRelationsPopup_data$key;
 }
 
 /**
  * @param props - props of component
  */
-export default function RelationsPopup(props: RelationsPopupProps): ReactElement {
+export default function LocationInstanceRelationsPopup(props: RelationsPopupProps): ReactElement {
   const { map } = useMapboxContext();
 
   const popupRef = useRef<HTMLDivElement>(null);
+  const markerRef = useRef<HTMLDivElement>(null);
 
   const data = useFragment(
     graphql`
-      fragment RelationsPopup_relations on LocationInstance {
+      fragment LocationInstanceRelationsPopup_data on LocationInstance {
         location {
           longitude
           latitude
@@ -30,26 +31,36 @@ export default function RelationsPopup(props: RelationsPopupProps): ReactElement
         }
       }
     `,
-    props.relation
+    props.location
   );
 
 
   useEffect(() => {
-    if (!map || !popupRef.current) {
+    if (!map || !popupRef.current || !markerRef.current) {
       return;
     }
+    console.log('create marker and popup', data);
     const popup = new mapboxgl.Popup()
-      .setLngLat([data.location.longitude || 0, data.location.latitude || 0])
       .setDOMContent(popupRef.current)
+      .addTo(map);
+
+    const marker = new mapboxgl.Marker(markerRef.current)
+      .setLngLat([data.location.longitude || 0, data.location.latitude || 0])
+      .setPopup(popup)
       .addTo(map);
 
     return () => {
       popup.remove();
+      marker.remove();
     };
-  }, []);
+  }, [map, data]);
 
   return (
-    <div style={{ display: 'none' }}>
+    <div>
+      <div style={{ background: 'red',
+        height: '30px',
+        width:'30px',
+        zIndex: 100 }} ref={markerRef}/>
       <div ref={popupRef}>
         {
           data.relations.map((relation, index) => <RelationCard key={index} relation={relation}/>)
