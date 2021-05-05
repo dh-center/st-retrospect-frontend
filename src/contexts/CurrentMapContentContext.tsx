@@ -2,7 +2,7 @@ import { createContext, ReactElement, useContext, useState } from 'react';
 import WithChildren from '../interfaces/WithChildren';
 import {
   LocationInstanceRelationsPopup_data$key
-} from "../components/mapContent/__generated__/LocationInstanceRelationsPopup_data.graphql";
+} from '../components/mapContent/__generated__/LocationInstanceRelationsPopup_data.graphql';
 
 /**
  * Props of CurrentMarkersContext

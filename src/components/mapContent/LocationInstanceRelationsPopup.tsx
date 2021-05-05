@@ -39,7 +39,6 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
     if (!map || !popupRef.current || !markerRef.current) {
       return;
     }
-    console.log('create marker and popup', data);
     const popup = new mapboxgl.Popup()
       .setDOMContent(popupRef.current)
       .addTo(map);
@@ -57,10 +56,13 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
 
   return (
     <div>
-      <div style={{ background: 'red',
-        height: '30px',
-        width:'30px',
-        zIndex: 100 }} ref={markerRef}/>
+      <div
+        style={{ background: 'red',
+          height: '30px',
+          width:'30px',
+          zIndex: 100 }}
+        ref={markerRef}
+      />
       <div ref={popupRef}>
         {
           data.relations.map((relation, index) => <RelationCard key={index} relation={relation}/>)

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
 import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxContext } from '../contexts/MapboxContext';
@@ -34,7 +34,9 @@ const MAX_BOUNDS: LngLatBoundsLike = [
 ];
 
 /**
- * @param props
+ * Wrapper for the Mapbox map
+ *
+ * @param props - props for component rendering
  */
 export default function Mapbox(props: WithChildren): React.ReactElement {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -119,7 +121,7 @@ export default function Mapbox(props: WithChildren): React.ReactElement {
     changeMapLanguage(userLanguage);
   }, [ userLanguage ]);
 
-  console.log('mapbox rendering')
+  console.log('mapbox rendering');
 
   const canvas = map.current?.getCanvasContainer();
 
