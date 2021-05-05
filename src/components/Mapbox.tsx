@@ -126,8 +126,6 @@ export default function Mapbox(props: WithChildren): React.ReactElement {
     changeMapLanguage(userLanguage);
   }, [ userLanguage ]);
 
-  console.log('mapbox rendering');
-
   const canvas = map.current?.getCanvasContainer();
 
   return (
