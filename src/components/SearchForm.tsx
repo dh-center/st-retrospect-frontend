@@ -6,6 +6,7 @@ import CustomRange from './CustomRange';
 import YearsInputs from './YearsInputs';
 import { useTranslation } from 'react-i18next';
 import useDebounce from '../lib/useDebounce';
+import { useHistory } from 'react-router-dom';
 
 /**
  * Props of component
@@ -53,6 +54,7 @@ const HideWrapper = styled.div<HideWrapperProps>`
  */
 export default function SearchForm(props: SearchFormProps): ReactElement {
   const { t } = useTranslation();
+  const history = useHistory();
 
   const YEARS_MIN_VALUE = '1500';
   const YEARS_MAX_VALUE = '2021';
@@ -93,11 +95,9 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        alert(JSON.stringify({
-          query,
-          categories,
-          years,
-        }));
+        history.push({
+          search: `?query=${query}&startYear=${years.left}&endYear=${years.right}`,
+        });
       }}
     >
       <SearchLineWithMarginBottom
