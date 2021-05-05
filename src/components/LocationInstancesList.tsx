@@ -1,16 +1,18 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import LocationInstanceItem from './LocationInstanceItem';
 import { ListWrapper } from './lists';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { LocationInstancesListQuery, SearchInput } from './__generated__/LocationInstancesListQuery.graphql';
 import useQuery from '../lib/useQuery';
+import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 
 /**
  * List of location instances
  */
 export default function LocationInstancesList(): ReactElement {
   const query = useQuery();
+  const { setCurrentLocations } = useCurrentMapContent();
 
   const input: SearchInput = {
     query: query.get('query') || '',
@@ -27,6 +29,7 @@ export default function LocationInstancesList(): ReactElement {
           edges {
             node {
               ...LocationInstanceItem_locationInstance
+              ...LocationInstanceRelationsPopup_data
             }
           }
         }
@@ -36,6 +39,14 @@ export default function LocationInstancesList(): ReactElement {
       input,
     }
   );
+
+  useEffect(() => {
+    if (!data.locationInstancesSearch) {
+      return;
+    }
+
+    setCurrentLocations(data.locationInstancesSearch.edges.map(edge => edge.node));
+  }, [ data.locationInstancesSearch.edges ]);
 
   return (
     <ListWrapper hasNext={false}>
