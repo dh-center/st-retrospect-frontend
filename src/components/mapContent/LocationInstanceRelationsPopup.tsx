@@ -22,6 +22,8 @@ const Wrapper = styled.div`
   padding: 24px 16px;
 
   width: 372px;
+
+  overflow: hidden;
 `;
 
 const Title = styled.div`
@@ -117,7 +119,7 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
           <RightArrowButton
             arrowDirection={'right'}
             onClick={() => {
-              console.log('click')
+              console.log('click');
               if (currentIndex + 1 >= data.relations.length) {
                 setCurrentIndex(data.relations.length - 1);
               } else {
