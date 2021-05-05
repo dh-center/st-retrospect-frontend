@@ -29,7 +29,7 @@ export type LocationInstancesListQueryResponse = {
     readonly locationInstancesSearch: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"LocationInstanceItem_locationInstance">;
+                readonly " $fragmentRefs": FragmentRefs<"LocationInstanceItem_locationInstance" | "LocationInstanceRelationsPopup_data">;
             };
         }>;
     };
@@ -49,6 +49,7 @@ query LocationInstancesListQuery(
     edges {
       node {
         ...LocationInstanceItem_locationInstance
+        ...LocationInstanceRelationsPopup_data
         id
       }
     }
@@ -65,6 +66,40 @@ fragment LocationInstanceItem_locationInstance on LocationInstance {
     }
     id
   }
+}
+
+fragment LocationInstanceRelationsPopup_data on LocationInstance {
+  location {
+    longitude
+    latitude
+    id
+  }
+  relations {
+    ...RelationCard_relation
+    id
+  }
+}
+
+fragment RelatedPersonBlock_person on Person {
+  id
+  lastName
+  firstName
+  patronymic
+  mainPhotoLink
+}
+
+fragment RelationCard_relation on Relation {
+  locationInstance {
+    name
+    id
+  }
+  person {
+    ...RelatedPersonBlock_person
+    id
+  }
+  startDate
+  endDate
+  quote
 }
 */
 
@@ -88,6 +123,20 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "mainPhotoLink",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
@@ -125,6 +174,11 @@ return {
                     "args": null,
                     "kind": "FragmentSpread",
                     "name": "LocationInstanceItem_locationInstance"
+                  },
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "LocationInstanceRelationsPopup_data"
                   }
                 ],
                 "storageKey": null
@@ -170,20 +224,8 @@ return {
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "mainPhotoLink",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "name",
-                    "storageKey": null
-                  },
+                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -210,6 +252,100 @@ return {
                         ],
                         "storageKey": null
                       },
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "longitude",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "latitude",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Relation",
+                    "kind": "LinkedField",
+                    "name": "relations",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "LocationInstance",
+                        "kind": "LinkedField",
+                        "name": "locationInstance",
+                        "plural": false,
+                        "selections": [
+                          (v4/*: any*/),
+                          (v2/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Person",
+                        "kind": "LinkedField",
+                        "name": "person",
+                        "plural": false,
+                        "selections": [
+                          (v2/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "lastName",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "firstName",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "patronymic",
+                            "storageKey": null
+                          },
+                          (v3/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "startDate",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "endDate",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "quote",
+                        "storageKey": null
+                      },
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -226,14 +362,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b968a0d9bd1b68a9f80b215afa6d4fcc",
+    "cacheID": "18e702d73a948c378cc219fc52f425a0",
     "id": null,
     "metadata": {},
     "name": "LocationInstancesListQuery",
     "operationKind": "query",
-    "text": "query LocationInstancesListQuery(\n  $input: SearchInput!\n) {\n  locationInstancesSearch(input: $input) {\n    edges {\n      node {\n        ...LocationInstanceItem_locationInstance\n        id\n      }\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n"
+    "text": "query LocationInstancesListQuery(\n  $input: SearchInput!\n) {\n  locationInstancesSearch(input: $input) {\n    edges {\n      node {\n        ...LocationInstanceItem_locationInstance\n        ...LocationInstanceRelationsPopup_data\n        id\n      }\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  locationInstance {\n    name\n    id\n  }\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
   }
 };
 })();
-(node as any).hash = '34773d26b101ce6c25dcde75e61648e6';
+(node as any).hash = 'bcc2c1ba628f6b50e532160aca04b20b';
 export default node;

@@ -6,6 +6,11 @@ import styled from 'styled-components';
 import WithChildren from '../interfaces/WithChildren';
 import { createPortal } from 'react-dom';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax,@typescript-eslint/no-var-requires
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
+
 const MapContainer = styled.div`
   height: 100vh;
   width: 100vw;
