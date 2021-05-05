@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import CustomSelect from './CustomSelect';
 import SearchLine from './SearchLine';
 import CustomRange from './CustomRange';
@@ -7,14 +7,51 @@ import YearsInputs from './YearsInputs';
 import { useTranslation } from 'react-i18next';
 import useDebounce from '../lib/useDebounce';
 
-const SearchLineWithMarginBottom = styled(SearchLine)`
-  margin-bottom: 12px;
+/**
+ * Props of component
+ */
+interface SearchFormProps {
+  /**
+   * Is search form displaying all inputs
+   */
+  isSearchFormOpen: boolean;
+}
+
+const SearchLineWithMarginBottom = styled(SearchLine)<SearchFormProps>`
+  margin-bottom: ${ props => props.isSearchFormOpen ? '12px' : '0' };
+  transition: margin ease-in-out .2s;
+`;
+
+/**
+ * Props of element
+ */
+interface HideWrapperProps {
+  /**
+   * Is element displaying
+   */
+  show: boolean;
+}
+
+const HideWrapper = styled.div<HideWrapperProps>`
+  ${props => {
+    if (!props.show) {
+      return css`
+        height: 0;
+        visibility: hidden;
+        overflow: hidden;
+      `;
+    }
+  }};
+  opacity: ${ props => props.show ? '1' : '0' };
+  transition: all ease-in-out .2s;
 `;
 
 /**
  * Search form component
+ *
+ * @param props - props of component
  */
-export default function SearchForm(): ReactElement {
+export default function SearchForm(props: SearchFormProps): ReactElement {
   const { t } = useTranslation();
 
   const YEARS_MIN_VALUE = '1500';
@@ -66,24 +103,27 @@ export default function SearchForm(): ReactElement {
       <SearchLineWithMarginBottom
         value={query}
         onChange={value => setQuery(value)}
+        isSearchFormOpen={props.isSearchFormOpen}
       />
-      <CustomSelect
-        selected={categories}
-        onChange={values => setCategories(values)}
-      />
-      <CustomRange
-        onChange={values => setYears(values)}
-        min={YEARS_MIN_VALUE}
-        max={YEARS_MAX_VALUE}
-        values={years}
-        label={t(`customRange.years`)}
-      />
-      <YearsInputs
-        onChange={values => setYearsFromInputs(values)}
-        min={YEARS_MIN_VALUE}
-        max={YEARS_MAX_VALUE}
-        values={yearsFromInputs}
-      />
+      <HideWrapper show={props.isSearchFormOpen}>
+        <CustomSelect
+          selected={categories}
+          onChange={values => setCategories(values)}
+        />
+        <CustomRange
+          onChange={values => setYears(values)}
+          min={YEARS_MIN_VALUE}
+          max={YEARS_MAX_VALUE}
+          values={years}
+          label={t(`customRange.years`)}
+        />
+        <YearsInputs
+          onChange={values => setYearsFromInputs(values)}
+          min={YEARS_MIN_VALUE}
+          max={YEARS_MAX_VALUE}
+          values={yearsFromInputs}
+        />
+      </HideWrapper>
     </form>
   );
 }

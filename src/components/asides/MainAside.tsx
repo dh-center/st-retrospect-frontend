@@ -21,6 +21,7 @@ import RoutePassingRenderer from '../RoutePassingRenderer';
 import LocationInstancesList from '../LocationInstancesList';
 import LocationInstanceCard from '../LocationInstanceCard';
 import PersonCard from '../PersonCard';
+import LeftArrowIcon from '../../assets/arrow-left.svg';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
@@ -47,6 +48,51 @@ const MenuButton = styled.button`
   outline: none;
   border: none;
   cursor: pointer;
+`;
+
+const PositionRelativeWrapper = styled.div`
+  position: relative;
+
+  z-index: 1;
+`;
+
+/**
+ * Props of hide search form button
+ */
+interface HideSearchFormButtonProps {
+  /**
+   * Is search form hidden
+   */
+  isOpen: boolean;
+}
+
+const HideSearchFormButton = styled.button<HideSearchFormButtonProps>`
+  position: absolute;
+  top: 100%;
+  right: 0;
+
+  border-radius: 0 0 2px 2px;
+  border: none;
+  outline: none;
+  background: var(--color-white);
+  box-shadow: var(--shadow-base);
+
+  cursor: pointer;
+
+  &::after {
+    height: 24px;
+    width: 24px;
+
+    display: block;
+    content: '';
+    background-image: url("${LeftArrowIcon}");
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    transform: rotate(${ props => props.isOpen ? '90deg' : '-90deg' });
+
+    transition: transform .2s ease-in-out;
+  }
 `;
 
 const LineWrapper = styled.div`
@@ -92,6 +138,7 @@ export default function MainAside(): ReactElement {
   const { t } = useTranslation();
   const [showAside, setShowAside] = useState(true);
   const [isMenuAsideShow, setMenuAsideShow] = useState(false);
+  const [isSearchFormOpen, setSearchFormOpen] = useState(false);
   const history = useHistory();
 
   return (
@@ -105,26 +152,32 @@ export default function MainAside(): ReactElement {
           willClose={showAside}
           onClick={() => setShowAside(!showAside)}
         />
-        <AsideParametersWrapper>
-          <AsideHeaderWithMarginBottom/>
-          <Switch>
-            <Route exact path={['/', '/location-instance/:locationInstanceId', '/person/:personId']}>
-              <SearchForm/>
-            </Route>
-            <Route path={['/routes', '/route/:questId']}>
-              <LineWrapper>
-                <MenuButton onClick={() => setMenuAsideShow(true)}/>
-                <MapBottomButtonIcon/>
-                { t('routes') }
-              </LineWrapper>
-              <Route path="/routes">
-                <CustomSelectWithMargin
-                  selected={[]}
-                />
+        <PositionRelativeWrapper>
+          {/* Show button for hiding search form only when search form is rendering */}
+          <Route exact path={['/', '/location-instance/:locationInstanceId', '/person/:personId']}>
+            <HideSearchFormButton isOpen={isSearchFormOpen} onClick={() => setSearchFormOpen(!isSearchFormOpen)}/>
+          </Route>
+          <AsideParametersWrapper>
+            <AsideHeaderWithMarginBottom/>
+            <Switch>
+              <Route exact path={['/', '/location-instance/:locationInstanceId', '/person/:personId']}>
+                <SearchForm isSearchFormOpen={isSearchFormOpen}/>
               </Route>
-            </Route>
-          </Switch>
-        </AsideParametersWrapper>
+              <Route path={['/routes', '/route/:questId']}>
+                <LineWrapper>
+                  <MenuButton onClick={() => setMenuAsideShow(true)}/>
+                  <MapBottomButtonIcon/>
+                  { t('routes') }
+                </LineWrapper>
+                <Route path="/routes">
+                  <CustomSelectWithMargin
+                    selected={[]}
+                  />
+                </Route>
+              </Route>
+            </Switch>
+          </AsideParametersWrapper>
+        </PositionRelativeWrapper>
 
         {/* Routes content */}
         <Switch>
