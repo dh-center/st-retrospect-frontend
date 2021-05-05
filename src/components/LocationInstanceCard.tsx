@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -16,6 +16,7 @@ import { sansSerifLight } from '../styles/FontStyles';
 import MapPin from '../assets/map-pin.svg';
 import { useTranslation } from 'react-i18next';
 import { LocationInstanceRouteParameters } from '../interfaces/routeParameters';
+import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 
 const Address = styled.div`
   margin-bottom: 14px;
@@ -59,10 +60,14 @@ const RelatedPersonsWrapper = styled.div`
 export default function LocationInstanceCard(): ReactElement {
   const { locationInstanceId } = useParams<LocationInstanceRouteParameters>();
   const { t } = useTranslation();
+  const { setCurrentLocations } = useCurrentMapContent();
+
+
   const data = useLazyLoadQuery<LocationInstanceCardQuery>(
     graphql`
       query LocationInstanceCardQuery($id: GlobalId!) {
         locationInstance(id: $id) {
+          id
           mainPhotoLink
           name
           location {
@@ -86,6 +91,7 @@ export default function LocationInstanceCard(): ReactElement {
           demolitionDate
           wikiLink
           source
+          ...LocationInstanceRelationsPopup_data
         }
       }
     `,
@@ -93,6 +99,13 @@ export default function LocationInstanceCard(): ReactElement {
       id: locationInstanceId,
     }
   );
+
+  useEffect(() => {
+    if (data.locationInstance) {
+      setCurrentLocations([ data.locationInstance ]);
+    }
+  }, [ data.locationInstance?.id ]);
+
 
   /**
    * Filter relations to get unique persons

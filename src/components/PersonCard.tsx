@@ -97,9 +97,7 @@ export default function PersonCard(): ReactElement {
           wikiLink
           relations {
             locationInstance {
-              location {
-                ...CurrentMapContentContextLocation
-              }
+              ...LocationInstanceRelationsPopup_data
             }
           }
         }
@@ -115,7 +113,7 @@ export default function PersonCard(): ReactElement {
       return;
     }
 
-    setCurrentLocations(data.person.relations.map(rel => rel.locationInstance.location));
+    setCurrentLocations(data.person.relations.map(rel => rel.locationInstance));
   }, [ data.person?.relations ]);
 
   if (!data.person) {

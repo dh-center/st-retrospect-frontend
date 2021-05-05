@@ -1,11 +1,8 @@
 import { createContext, ReactElement, useContext, useState } from 'react';
 import WithChildren from '../interfaces/WithChildren';
-import { useFragment } from 'react-relay';
-import graphql from 'babel-plugin-relay/macro';
 import {
-  CurrentMapContentContextLocation,
-  CurrentMapContentContextLocation$key
-} from './__generated__/CurrentMapContentContextLocation.graphql';
+  LocationInstanceRelationsPopup_data$key
+} from '../components/mapContent/__generated__/LocationInstanceRelationsPopup_data.graphql';
 
 /**
  * Props of CurrentMarkersContext
@@ -14,14 +11,14 @@ interface CurrentMapContentContextValue {
   /**
    * Current markers
    */
-  currentLocations: CurrentMapContentContextLocation;
+  currentLocations: readonly LocationInstanceRelationsPopup_data$key[];
 
   /**
    * Sets new markers coordinates
    *
    * @param ref - array of new coordinates
    */
-  setCurrentLocations(ref: CurrentMapContentContextLocation$key): void;
+  setCurrentLocations(ref: readonly LocationInstanceRelationsPopup_data$key[]): void;
 }
 
 /**
@@ -35,21 +32,12 @@ const CurrentMapContentContext = createContext<CurrentMapContentContextValue | u
  * @param props - props of component
  */
 export function CurrentMapContentProvider(props: WithChildren): ReactElement {
-  const [locationsRef, setLocations] = useState<CurrentMapContentContextLocation$key>([]);
-  const data = useFragment(
-    graphql`
-      fragment CurrentMapContentContextLocation on Location @relay(plural: true) {
-        longitude
-        latitude
-      }
-    `,
-    locationsRef
-  );
+  const [locationsRef, setLocations] = useState<readonly LocationInstanceRelationsPopup_data$key[]>([]);
 
   return (
     <CurrentMapContentContext.Provider
       value={{
-        currentLocations: data,
+        currentLocations: locationsRef,
         setCurrentLocations: setLocations,
       }}
     >

@@ -9,6 +9,7 @@ export type LocationInstanceCardQueryVariables = {
 };
 export type LocationInstanceCardQueryResponse = {
     readonly locationInstance: {
+        readonly id: string;
         readonly mainPhotoLink: string | null;
         readonly name: string | null;
         readonly location: {
@@ -32,6 +33,7 @@ export type LocationInstanceCardQueryResponse = {
         readonly demolitionDate: string | null;
         readonly wikiLink: string | null;
         readonly source: string | null;
+        readonly " $fragmentRefs": FragmentRefs<"LocationInstanceRelationsPopup_data">;
     } | null;
 };
 export type LocationInstanceCardQuery = {
@@ -46,6 +48,7 @@ query LocationInstanceCardQuery(
   $id: GlobalId!
 ) {
   locationInstance(id: $id) {
+    id
     mainPhotoLink
     name
     location {
@@ -72,6 +75,18 @@ query LocationInstanceCardQuery(
     demolitionDate
     wikiLink
     source
+    ...LocationInstanceRelationsPopup_data
+  }
+}
+
+fragment LocationInstanceRelationsPopup_data on LocationInstance {
+  location {
+    longitude
+    latitude
+    id
+  }
+  relations {
+    ...RelationCard_relation
     id
   }
 }
@@ -82,6 +97,20 @@ fragment RelatedPersonBlock_person on Person {
   firstName
   patronymic
   mainPhotoLink
+}
+
+fragment RelationCard_relation on Relation {
+  locationInstance {
+    name
+    id
+  }
+  person {
+    ...RelatedPersonBlock_person
+    id
+  }
+  startDate
+  endDate
+  quote
 }
 */
 
@@ -104,17 +133,24 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "mainPhotoLink",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "mainPhotoLink",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "concreteType": "Address",
@@ -130,13 +166,6 @@ v4 = {
       "storageKey": null
     }
   ],
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
   "storageKey": null
 },
 v6 = {
@@ -212,6 +241,7 @@ return {
         "selections": [
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -220,7 +250,7 @@ return {
             "name": "location",
             "plural": false,
             "selections": [
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -240,7 +270,7 @@ return {
                 "name": "person",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
+                  (v2/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
@@ -270,7 +300,12 @@ return {
           (v10/*: any*/),
           (v11/*: any*/),
           (v12/*: any*/),
-          (v13/*: any*/)
+          (v13/*: any*/),
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "LocationInstanceRelationsPopup_data"
+          }
         ],
         "storageKey": null
       }
@@ -294,6 +329,7 @@ return {
         "selections": [
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -302,8 +338,22 @@ return {
             "name": "location",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v5/*: any*/),
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "longitude",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "latitude",
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -323,15 +373,49 @@ return {
                 "name": "person",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
+                  (v2/*: any*/),
                   (v7/*: any*/),
                   (v8/*: any*/),
                   (v9/*: any*/),
+                  (v3/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LocationInstance",
+                "kind": "LinkedField",
+                "name": "locationInstance",
+                "plural": false,
+                "selections": [
+                  (v4/*: any*/),
                   (v2/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startDate",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endDate",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "quote",
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -347,29 +431,28 @@ return {
               (v7/*: any*/),
               (v8/*: any*/),
               (v9/*: any*/),
-              (v5/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
           (v10/*: any*/),
           (v11/*: any*/),
           (v12/*: any*/),
-          (v13/*: any*/),
-          (v5/*: any*/)
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "ac4b5a5912d978a148c943110f225bd3",
+    "cacheID": "5422e216aa10ed9b5c3e6dd73202e6a1",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceCardQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        id\n        ...RelatedPersonBlock_person\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    source\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n"
+    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    id\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        id\n        ...RelatedPersonBlock_person\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    source\n    ...LocationInstanceRelationsPopup_data\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  locationInstance {\n    name\n    id\n  }\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
   }
 };
 })();
-(node as any).hash = '19bcc89cfe9afe1d4ceac0e0b8e6ff9a';
+(node as any).hash = 'a71ec9a632f158c5c0dea2556c51f8c5';
 export default node;
