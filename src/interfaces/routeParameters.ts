@@ -9,6 +9,16 @@ export interface QuestRouteParameters {
 }
 
 /**
+ * Parameters of '/route/:questId/:currentLocationIndex' route
+ */
+export interface QuestPassingRouteParameters extends QuestRouteParameters {
+  /**
+   * Index of current location
+   */
+  currentLocationIndex: string;
+}
+
+/**
  * Parameters of '/location-instance/:locationInstanceId' route
  */
 export interface LocationInstanceRouteParameters {

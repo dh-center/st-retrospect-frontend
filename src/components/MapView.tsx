@@ -3,7 +3,6 @@ import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 import LocationInstanceRelationsPopup from './mapContent/LocationInstanceRelationsPopup';
 import Mapbox from './Mapbox';
 
-
 /**
  * Component displays map view
  */
