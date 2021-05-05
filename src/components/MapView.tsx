@@ -7,6 +7,9 @@ import styled from 'styled-components';
 import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
 import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 import { PopupOpenEvent } from 'mapboxgl';
+import RelationsPopup from './mapContent/RelationsPopup';
+import ReactDOM from 'react-dom';
+import RelayEnvironmentContext from '../contexts/RelayEnvironmentContext';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -47,7 +50,7 @@ export default function MapView(): ReactElement {
     zoom: 11.5,
   });
   const { userLanguage } = useContext(LanguageContext);
-  const { currentLocations } = useCurrentMapContent();
+  const { currentLocations, currentRelations } = useCurrentMapContent();
 
   /**
    * Changes map language
@@ -134,17 +137,8 @@ export default function MapView(): ReactElement {
     const markers = currentLocations
       .filter((loc) => loc.longitude && loc.latitude)
       .map(location => {
-        const popup = new mapboxgl.Popup()
-          .on('open', (e: PopupOpenEvent) => {
-            map.current.flyTo({
-              center: e.target.getLngLat(),
-              zoom: 14,
-            });
-          });
-
         return new mapboxgl.Marker()
           .setLngLat([location.longitude || 0, location.latitude || 0])
-          .setPopup(popup)
           .addTo(map.current);
       });
 
@@ -152,6 +146,41 @@ export default function MapView(): ReactElement {
       markers.forEach(marker => marker.remove());
     };
   }, [ currentLocations ]);
+
+  useEffect(() => {
+    console.log(currentRelations);
+    if (!map.current) {
+      return;
+    }
+
+    const popups = currentRelations.map(relation => {
+      const popupContainer = document.createElement('div');
+
+      ReactDOM.render(
+        <RelayEnvironmentContext>
+          <RelationsPopup relation={relation.locationInstance}/>
+        </RelayEnvironmentContext>,
+        popupContainer
+      );
+
+      return new mapboxgl.Popup({
+        closeButton: false,
+        anchor: 'left',
+      })
+        .setDOMContent(popupContainer)
+        .on('open', (e: PopupOpenEvent) => {
+          map.current.flyTo({
+            center: e.target.getLngLat(),
+            zoom: 14,
+          });
+        })
+        .addTo(map.current);
+    });
+
+    return () => {
+      popups.forEach(popup => popup.remove());
+    };
+  }, [ currentRelations ]);
 
   return (
     <div>

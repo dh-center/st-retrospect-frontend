@@ -6,6 +6,10 @@ import {
   CurrentMapContentContextLocation,
   CurrentMapContentContextLocation$key
 } from './__generated__/CurrentMapContentContextLocation.graphql';
+import {
+  CurrentMapContentContext_relations,
+  CurrentMapContentContext_relations$key
+} from './__generated__/CurrentMapContentContext_relations.graphql';
 
 /**
  * Props of CurrentMarkersContext
@@ -22,6 +26,18 @@ interface CurrentMapContentContextValue {
    * @param ref - array of new coordinates
    */
   setCurrentLocations(ref: CurrentMapContentContextLocation$key): void;
+
+  /**
+   * Current relations
+   */
+  currentRelations: CurrentMapContentContext_relations;
+
+  /**
+   * Sets new relations
+   *
+   * @param ref - array of new relations
+   */
+  setCurrentRelations(ref: CurrentMapContentContext_relations$key): void;
 }
 
 /**
@@ -36,7 +52,9 @@ const CurrentMapContentContext = createContext<CurrentMapContentContextValue | u
  */
 export function CurrentMapContentProvider(props: WithChildren): ReactElement {
   const [locationsRef, setLocations] = useState<CurrentMapContentContextLocation$key>([]);
-  const data = useFragment(
+  const [relationsRef, setRelations] = useState<CurrentMapContentContext_relations$key>([]);
+
+  const locationsData = useFragment(
     graphql`
       fragment CurrentMapContentContextLocation on Location @relay(plural: true) {
         longitude
@@ -46,11 +64,25 @@ export function CurrentMapContentProvider(props: WithChildren): ReactElement {
     locationsRef
   );
 
+  const relationsData = useFragment(
+    graphql`
+      fragment CurrentMapContentContext_relations on Relation @relay(plural: true) {
+        id
+        locationInstance {
+          ...RelationsPopup_relations
+        }
+      }
+    `,
+    relationsRef
+  );
+
   return (
     <CurrentMapContentContext.Provider
       value={{
-        currentLocations: data,
+        currentLocations: locationsData,
         setCurrentLocations: setLocations,
+        currentRelations: relationsData,
+        setCurrentRelations: setRelations,
       }}
     >
       {props.children}

@@ -48,6 +48,17 @@ const GlobalStyles = createGlobalStyle`
   .mapboxgl-ctrl-top-right {
     z-index: 0;
   }
+
+  .mapboxgl-popup-tip {
+    display: none;
+  }
+
+  .mapboxgl-popup-content {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
 `;
 
 export default GlobalStyles;
