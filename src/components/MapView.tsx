@@ -11,9 +11,7 @@ export default function MapView(): ReactElement {
 
   return (
     <Mapbox>
-      {currentLocations.map((location, index) => {
-        return <LocationInstanceRelationsPopup key={index} location={location}/>;
-      })}
+      {currentLocations.map((location, index) => <LocationInstanceRelationsPopup key={index} location={location}/>)}
     </Mapbox>
   );
 }

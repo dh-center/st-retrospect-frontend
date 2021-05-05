@@ -9,6 +9,7 @@ export type LocationInstanceRelationsPopup_data = {
         readonly longitude: number | null;
         readonly latitude: number | null;
     };
+    readonly name: string | null;
     readonly relations: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"RelationCard_relation">;
     }>;
@@ -56,6 +57,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Relation",
       "kind": "LinkedField",
       "name": "relations",
@@ -73,5 +81,5 @@ const node: ReaderFragment = {
   "type": "LocationInstance",
   "abstractKey": null
 };
-(node as any).hash = '6fa9dc932b86711f70778950e3cf3508';
+(node as any).hash = '7754548ec8cab9392324ad97addbee80';
 export default node;

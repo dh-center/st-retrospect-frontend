@@ -120,6 +120,10 @@ export default function Mapbox(props: WithChildren): React.ReactElement {
         waitStyleLoading();
       });
     }
+
+    return () => {
+      map.current?.remove();
+    };
   }, []);
 
   useEffect(() => {

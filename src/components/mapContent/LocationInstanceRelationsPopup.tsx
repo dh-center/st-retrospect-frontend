@@ -1,10 +1,12 @@
-import { ReactElement, useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import RelationCard from './RelationCard';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import useMapboxContext from '../../contexts/MapboxContext';
 import mapboxgl from 'mapbox-gl';
 import { LocationInstanceRelationsPopup_data$key } from './__generated__/LocationInstanceRelationsPopup_data.graphql';
+import styled from 'styled-components';
+import ArrowButton from '../ArrowButton';
 import { useRouteMatch } from 'react-router-dom';
 import { QuestPassingRouteParameters } from '../../interfaces/routeParameters';
 import useCurrentMapContent from '../../contexts/CurrentMapContentContext';
@@ -13,11 +15,44 @@ interface RelationsPopupProps {
   location: LocationInstanceRelationsPopup_data$key;
 }
 
+const Wrapper = styled.div`
+  background: var(--color-white);
+  border-radius: 2px;
+  box-shadow: var(--shadow-medium);
+
+  position: relative;
+
+  padding: 24px 16px;
+
+  width: 372px;
+
+  overflow: hidden;
+`;
+
+const Title = styled.div`
+  font-size: 16px;
+`;
+
+const LeftArrowButton = styled(ArrowButton)`
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translate(-100%, -50%);
+  z-index: 1000;
+`;
+
+const RightArrowButton = styled(LeftArrowButton)`
+  left: auto;
+  transform: translate(100%, -50%);
+  right: -6px;
+`;
+
 /**
  * @param props - props of component
  */
 export default function LocationInstanceRelationsPopup(props: RelationsPopupProps): ReactElement {
   const { map } = useMapboxContext();
+  const [currentIndex, setCurrentIndex] = useState(0);
   const { currentLocations } = useCurrentMapContent();
   const routePassingMatch = useRouteMatch<QuestPassingRouteParameters>('/route/:questId/:currentLocationIndex');
 
@@ -31,6 +66,7 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
           longitude
           latitude
         }
+        name
         relations {
           ...RelationCard_relation
         }
@@ -43,7 +79,12 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
     if (!map || !popupRef.current || !markerRef.current) {
       return;
     }
-    const popup = new mapboxgl.Popup()
+    const popup = new mapboxgl
+      .Popup({
+        maxWidth: 'none',
+        closeButton: false,
+        anchor: 'bottom',
+      })
       .setDOMContent(popupRef.current)
       .addTo(map);
 
@@ -79,16 +120,43 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
   return (
     <div>
       <div
-        style={{ background: 'red',
-          height: '30px',
-          width:'30px',
-          zIndex: 100 }}
         ref={markerRef}
-      />
+      >
+        <svg width="24.5" height="30" viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M72 36C72 64 36 88 36 88C36 88 0 64 0 36C1.42273e-07 26.4522 3.79285 17.2955 10.5442 10.5442C17.2955 3.79285 26.4522 0 36 0C45.5478 0 54.7045 3.79285 61.4558 10.5442C68.2072 17.2955 72 26.4522 72 36Z" fill="#2F80ED"/>
+          <path d="M35.9995 48.0003C42.6269 48.0003 47.9995 42.6277 47.9995 36.0003C47.9995 29.3729 42.6269 24.0003 35.9995 24.0003C29.3721 24.0003 23.9995 29.3729 23.9995 36.0003C23.9995 42.6277 29.3721 48.0003 35.9995 48.0003Z" fill="white"/>
+        </svg>
+      </div>
       <div ref={popupRef}>
-        {
-          data.relations.map((relation, index) => <RelationCard key={index} relation={relation}/>)
-        }
+        <Wrapper>
+          <LeftArrowButton
+            onClick={() => {
+              console.log('click');
+              if(currentIndex - 1 < 0) {
+                setCurrentIndex(0);
+              }else{
+                setCurrentIndex(currentIndex - 1);
+              }
+            }}/>
+          <RightArrowButton
+            arrowDirection={'right'}
+            onClick={() => {
+              console.log('click');
+              if (currentIndex + 1 >= data.relations.length) {
+                setCurrentIndex(data.relations.length - 1);
+              } else {
+                setCurrentIndex(currentIndex + 1);
+              }
+            }}
+          />
+          <Title>{data.name}</Title>
+          {
+            !data.relations.length && 'Нет связей('
+          }
+          {
+            data.relations.length && <RelationCard relation={data.relations[currentIndex]}/>
+          }
+        </Wrapper>
       </div>
     </div>
   );
