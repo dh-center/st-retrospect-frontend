@@ -1,15 +1,12 @@
 import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl, { LngLatBoundsLike, AnyLayer } from '!mapbox-gl';
+import mapboxgl, { LngLatBoundsLike, AnyLayer } from 'mapbox-gl';
 import styled from 'styled-components';
 import LanguageContext, { AvailableLanguages } from '../contexts/LanguageContext';
 import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 import { PopupOpenEvent } from 'mapboxgl';
 import RelationsPopup from './mapContent/RelationsPopup';
 import ReactDOM from 'react-dom';
-import RelayEnvironmentContext from '../contexts/RelayEnvironmentContext';
+import { MapboxContext } from '../contexts/MapboxContext';
 
 const MapContainer = styled.div`
   height: 100vh;
@@ -58,10 +55,17 @@ export default function MapView(): ReactElement {
    * @param language - new map language
    */
   const changeMapLanguage = (language: AvailableLanguages): void => {
-    if (map.current && map.current.isStyleLoaded()) {
-      const textLayers = map.current.getStyle().layers.filter((layer: AnyLayer) => layer.type === 'symbol');
+    if (!map.current) {
+      return;
+    }
 
-      textLayers.map((layer: AnyLayer) => {
+    if (map.current && map.current.isStyleLoaded()) {
+      const textLayers = map.current.getStyle().layers?.filter((layer: AnyLayer) => layer.type === 'symbol');
+
+      textLayers?.map((layer: AnyLayer) => {
+        if (!map.current) {
+          return layer;
+        }
         map.current.setLayoutProperty(layer.id, 'text-field', [
           'get',
           'name_' + language.toLowerCase(),
@@ -78,6 +82,7 @@ export default function MapView(): ReactElement {
         attributionControl: false,
         logoPosition: 'bottom-right',
         container: mapContainer.current,
+        accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
         style: 'mapbox://styles/mapbox/light-v10',
         center: [mapState.lng, mapState.lat],
         zoom: mapState.zoom,
@@ -108,6 +113,9 @@ export default function MapView(): ReactElement {
          * Style data event can be fire, but we need to check is style loaded or not
          */
         const waitStyleLoading = (): void => {
+          if (!map.current) {
+            return;
+          }
           if (!map.current.isStyleLoaded()) {
             setTimeout(waitStyleLoading, 200);
           } else {
@@ -137,13 +145,17 @@ export default function MapView(): ReactElement {
     const markers = currentLocations
       .filter((loc) => loc.longitude && loc.latitude)
       .map(location => {
+        if (!map.current) {
+          return null;
+        }
+
         return new mapboxgl.Marker()
           .setLngLat([location.longitude || 0, location.latitude || 0])
           .addTo(map.current);
       });
 
     return () => {
-      markers.forEach(marker => marker.remove());
+      markers.forEach(marker => marker && marker.remove());
     };
   }, [ currentLocations ]);
 
@@ -156,21 +168,26 @@ export default function MapView(): ReactElement {
     const popups = currentRelations.map(relation => {
       const popupContainer = document.createElement('div');
 
-      ReactDOM.render(
-        <RelayEnvironmentContext>
-          <RelationsPopup relation={relation.locationInstance}/>
-        </RelayEnvironmentContext>,
+      ReactDOM.createPortal(
+        <RelationsPopup relation={relation.locationInstance}/>,
         popupContainer
       );
+
+      if (!map.current) {
+        return null;
+      }
 
       return new mapboxgl.Popup({
         closeButton: false,
         anchor: 'left',
       })
         .setDOMContent(popupContainer)
-        .on('open', (e: PopupOpenEvent) => {
+        .on('open', (e) => {
+          if (!map.current) {
+            return;
+          }
           map.current.flyTo({
-            center: e.target.getLngLat(),
+            center: (e as PopupOpenEvent).target.getLngLat(),
             zoom: 14,
           });
         })
@@ -178,13 +195,17 @@ export default function MapView(): ReactElement {
     });
 
     return () => {
-      popups.forEach(popup => popup.remove());
+      popups.forEach(popup => popup && popup.remove());
     };
   }, [ currentRelations ]);
 
   return (
-    <div>
-      <MapContainer ref={mapContainer}/>
-    </div>
+    <MapboxContext.Provider value={{ map: map.current }}>
+      <div>
+        <MapContainer ref={mapContainer}>
+          {currentRelations.map(relation => <RelationsPopup relation={relation.locationInstance}/>)}
+        </MapContainer>
+      </div>
+    </MapboxContext.Provider>
   );
 }

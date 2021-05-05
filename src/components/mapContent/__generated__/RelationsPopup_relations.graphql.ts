@@ -5,6 +5,10 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type RelationsPopup_relations = {
+    readonly location: {
+        readonly longitude: number | null;
+        readonly latitude: number | null;
+    };
     readonly relations: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"RelationCard_relation">;
     }>;
@@ -27,6 +31,31 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Location",
+      "kind": "LinkedField",
+      "name": "location",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "longitude",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "latitude",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Relation",
       "kind": "LinkedField",
       "name": "relations",
@@ -44,5 +73,5 @@ const node: ReaderFragment = {
   "type": "LocationInstance",
   "abstractKey": null
 };
-(node as any).hash = '66a6c1e8a5b8d5f537074ab1f2a961e1';
+(node as any).hash = '2b79fd1bcfa28675149407aff83e757e';
 export default node;
