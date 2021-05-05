@@ -71,6 +71,8 @@ const HideSearchFormButton = styled.button<HideSearchFormButtonProps>`
   top: 100%;
   right: 0;
 
+  height: 27px;
+
   border-radius: 0 0 2px 2px;
   border: none;
   outline: none;
