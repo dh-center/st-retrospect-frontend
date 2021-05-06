@@ -5,7 +5,7 @@ import graphql from 'babel-plugin-relay/macro';
 import useMapboxContext from '../../contexts/MapboxContext';
 import { LocationInstanceRelationsPopup_data$key } from './__generated__/LocationInstanceRelationsPopup_data.graphql';
 import styled from 'styled-components';
-import ArrowButton from '../ArrowButton';
+import ArrowButton from '../buttons/ArrowButton';
 import { useRouteMatch } from 'react-router-dom';
 import { QuestPassingRouteParameters } from '../../interfaces/routeParameters';
 import useCurrentMapContent from '../../contexts/CurrentMapContentContext';
@@ -134,7 +134,7 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
           />
           <Title>{data.name}</Title>
           {
-            !data.relations.length && 'Нет связей('
+            (!data.relations || !data.relations.length) && 'Нет связей('
           }
           {
             data.relations.length && <RelationCard relation={data.relations[currentIndex]}/>

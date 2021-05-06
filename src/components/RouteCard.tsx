@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from 'react';
-import { useParams, Redirect, Link } from 'react-router-dom';
+import { useParams, Redirect, Link, useHistory } from 'react-router-dom';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { RouteCardQuery } from './__generated__/RouteCardQuery.graphql';
@@ -56,6 +56,7 @@ export default function RouteCard(): ReactElement {
   const { t } = useTranslation();
   const { questId } = useParams<QuestRouteParameters>();
   const { setCurrentLocations } = useCurrentMapContent();
+  const history = useHistory();
 
   const data = useLazyLoadQuery<RouteCardQuery>(
     graphql`
@@ -91,7 +92,7 @@ export default function RouteCard(): ReactElement {
 
   return (
     <CardWrapper>
-      <GoingBackButton/>
+      <GoingBackButton onClick={() => history.push('/routes')}/>
       <Image src={data.quest.photo ? data.quest.photo : 'https://picsum.photos/seed/picsum/200/100'}/>
       <InformationWrapper>
         <Name>{ data.quest.name }</Name>
