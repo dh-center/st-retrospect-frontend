@@ -3,13 +3,15 @@ import RelationCard from './RelationCard';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import useMapboxContext from '../../contexts/MapboxContext';
-import mapboxgl from 'mapbox-gl';
 import { LocationInstanceRelationsPopup_data$key } from './__generated__/LocationInstanceRelationsPopup_data.graphql';
 import styled from 'styled-components';
 import ArrowButton from '../ArrowButton';
 import { useRouteMatch } from 'react-router-dom';
 import { QuestPassingRouteParameters } from '../../interfaces/routeParameters';
 import useCurrentMapContent from '../../contexts/CurrentMapContentContext';
+import Marker from './Marker';
+import Popup from './Popup';
+import mapboxgl from 'mapbox-gl';
 
 interface RelationsPopupProps {
   location: LocationInstanceRelationsPopup_data$key;
@@ -25,8 +27,6 @@ const Wrapper = styled.div`
   padding: 24px 16px;
 
   width: 372px;
-
-  overflow: hidden;
 `;
 
 const Title = styled.div`
@@ -55,9 +55,8 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
   const [currentIndex, setCurrentIndex] = useState(0);
   const { currentLocations } = useCurrentMapContent();
   const routePassingMatch = useRouteMatch<QuestPassingRouteParameters>('/route/:questId/:currentLocationIndex');
-
-  const popupRef = useRef<HTMLDivElement>(null);
-  const markerRef = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<mapboxgl.Popup>();
+  const markerRef = useRef<mapboxgl.Marker>();
 
   const data = useFragment(
     graphql`
@@ -76,28 +75,12 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
   );
 
   useEffect(() => {
-    if (!map || !popupRef.current || !markerRef.current) {
-      return;
+    if (popupRef.current && markerRef.current) {
+      console.log('set popup');
+      markerRef.current.setPopup(popupRef.current);
     }
-    const popup = new mapboxgl
-      .Popup({
-        maxWidth: 'none',
-        closeButton: false,
-        anchor: 'bottom',
-      })
-      .setDOMContent(popupRef.current)
-      .addTo(map);
+  }, [popupRef.current, markerRef.current]);
 
-    const marker = new mapboxgl.Marker(markerRef.current)
-      .setLngLat([data.location.longitude || 0, data.location.latitude || 0])
-      .setPopup(popup)
-      .addTo(map);
-
-    return () => {
-      popup.remove();
-      marker.remove();
-    };
-  }, [map, data]);
 
   /**
    * Fly to point on route passing
@@ -118,20 +101,22 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
   }, [ routePassingMatch?.params ]);
 
   return (
-    <div>
-      <div
-        ref={markerRef}
+    <>
+      <Marker
+        lngLat={[data.location.longitude || 0, data.location.latitude || 0]}
+        markerRef={(ref) => markerRef.current = ref}
       >
         <svg width="24.5" height="30" viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M72 36C72 64 36 88 36 88C36 88 0 64 0 36C1.42273e-07 26.4522 3.79285 17.2955 10.5442 10.5442C17.2955 3.79285 26.4522 0 36 0C45.5478 0 54.7045 3.79285 61.4558 10.5442C68.2072 17.2955 72 26.4522 72 36Z" fill="#2F80ED"/>
           <path d="M35.9995 48.0003C42.6269 48.0003 47.9995 42.6277 47.9995 36.0003C47.9995 29.3729 42.6269 24.0003 35.9995 24.0003C29.3721 24.0003 23.9995 29.3729 23.9995 36.0003C23.9995 42.6277 29.3721 48.0003 35.9995 48.0003Z" fill="white"/>
         </svg>
-      </div>
-      <div ref={popupRef}>
+      </Marker>
+      <Popup
+        popupRef={(ref) => popupRef.current = ref}
+      >
         <Wrapper>
           <LeftArrowButton
             onClick={() => {
-              console.log('click');
               if(currentIndex - 1 < 0) {
                 setCurrentIndex(0);
               }else{
@@ -141,7 +126,6 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
           <RightArrowButton
             arrowDirection={'right'}
             onClick={() => {
-              console.log('click');
               if (currentIndex + 1 >= data.relations.length) {
                 setCurrentIndex(data.relations.length - 1);
               } else {
@@ -157,7 +141,7 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
             data.relations.length && <RelationCard relation={data.relations[currentIndex]}/>
           }
         </Wrapper>
-      </div>
-    </div>
+      </Popup>
+    </>
   );
 }
