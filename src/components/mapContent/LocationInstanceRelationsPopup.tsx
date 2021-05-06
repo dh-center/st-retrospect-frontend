@@ -76,7 +76,6 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
 
   useEffect(() => {
     if (popupRef.current && markerRef.current) {
-      console.log('set popup');
       markerRef.current.setPopup(popupRef.current);
     }
   }, [popupRef.current, markerRef.current]);
