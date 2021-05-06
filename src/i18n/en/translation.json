@@ -1,0 +1,44 @@
+{
+  "search": {
+    "inputPlaceholder": "Enter query..."
+  },
+  "aboutProject": {
+    "title": "About project"
+  },
+  "howToGuide": {
+    "title": "How to use map?"
+  },
+  "partners": {
+    "title": "Our partners"
+  },
+  "thanks": {
+    "title": "Thanks"
+  },
+  "customSelect": {
+    "placeholder": "All categories",
+    "reset": "Reset"
+  },
+  "customRange": {
+    "years": "Time period"
+  },
+  "aside": {
+    "searchBottomButton": "Map search"
+  },
+  "route": {
+    "startRoute": "Start route",
+    "endRoute": "End route"
+  },
+  "locationInstance": {
+    "architect": "Architect",
+    "dates": "Construction dates",
+    "source": "Source"
+  },
+  "person": {
+    "source": "Source"
+  },
+  "routes": "Routes",
+  "author": "Author",
+  "loadMore": "Load more",
+  "yearsAbbreviated": "y.",
+  "wikipedia": "From Wikipedia, the free encyclopedia"
+}

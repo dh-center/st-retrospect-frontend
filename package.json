@@ -1,79 +1,92 @@
 {
   "name": "st-retrospect-frontend",
   "version": "1.0.0",
-  "private": true,
-  "author": "DH Center <dh@itmo.ru>",
+  "private": false,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
-    "lint:css": "stylelint \"src/**/*{.css,.vue}\" --fix",
-    "svg": "svg-sprite-generate -d src/assets/sprite-icons -o src/assets/sprite.svg"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .js --ext .ts --ext .tsx --fix",
+    "lint:test": "eslint . --ext .js --ext .ts --ext .tsx --max-warnings 0",
+    "get-schema": "get-graphql-schema https://api.st-retrospect.dh-center.ru/graphql > schema.graphql",
+    "get-schema:stage": "get-graphql-schema https://api.stage.st-retrospect.dh-center.ru/graphql > schema.graphql",
+    "get-schema:local": "get-graphql-schema http://localhost:4000/graphql > schema.graphql",
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql --language typescript --customScalars.Timestamp=Int --customScalars.MultilingualString=String --customScalars.ObjectId=String --customScalars.GlobalId=ID"
   },
   "dependencies": {
-    "@kazupon/vue-i18n-loader": "^0.5.0",
-    "@sentry/browser": "^5.11.1",
-    "@sentry/integrations": "^5.11.1",
-    "@types/mapbox-gl": "^1.6.1",
-    "@types/node": "^13.5.0",
-    "@types/webpack": "^4.4.0",
-    "@typescript-eslint/eslint-plugin": "^2.14.0",
-    "@typescript-eslint/parser": "^2.14.0",
-    "@vue/cli-plugin-babel": "^4.1.0",
-    "@vue/cli-plugin-eslint": "^4.1.0",
-    "@vue/cli-plugin-typescript": "^4.1.0",
-    "@vue/cli-service": "^4.1.2",
-    "@vue/eslint-config-typescript": "^5.0.1",
-    "axios": "^0.19.2",
-    "core-js": "^3.4.4",
-    "cssnano": "^4.1.10",
-    "eslint": "^6.7.2",
-    "eslint-config-codex": "github:codex-team/eslint-config",
-    "eslint-plugin-vue": "^6.1.2",
-    "mapbox-gl": "^1.8.1",
-    "postcss-apply": "^0.12.0",
-    "postcss-import": "^12.0.1",
-    "postcss-nested": "^4.2.1",
-    "postcss-preset-env": "^6.7.0",
-    "stylelint-order": "^4.0.0",
-    "typescript": "~3.8.3",
-    "vue": "^2.6.10",
-    "vue-class-component": "^7.0.2",
-    "vue-cli-plugin-i18n": "^0.6.0",
-    "vue-i18n": "^8.15.3",
-    "vue-js-modal": "euvl/vue-js-modal#master",
-    "vue-light-gallery": "^1.0.1",
-    "vue-mapbox": "^0.4.1",
-    "vue-property-decorator": "^8.3.0",
-    "vue-router": "^3.1.3",
-    "vue-svg-sprite": "^1.4.0",
-    "vue-template-compiler": "^2.6.10",
-    "vue-unique-id": "^3.0.0",
-    "vuex": "^3.1.2",
-    "vuex-class": "^0.3.2",
-    "vuex-persistedstate": "^2.7.0"
+    "@sentry/react": "^6.3.4",
+    "@types/mapbox-gl": "^2.1.1",
+    "@types/node": "^15.0.1",
+    "@types/react": "^17.0.4",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/styled-components": "^5.1.9",
+    "eslint-config-codex": "^1.6.1",
+    "i18next": "^20.2.2",
+    "mapbox-gl": "^2.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-i18next": "^11.8.15",
+    "react-intersection-observer": "^8.31.1",
+    "react-relay": "^11.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "relay-runtime": "^11.0.2",
+    "styled-components": "^5.2.3",
+    "typescript": "^4.2.4",
+    "web-vitals": "^1.1.1",
+    "worker-loader": "^3.0.8"
   },
   "devDependencies": {
-    "lint-staged": "^10.0.8",
-    "stylelint": "^13.2.1",
-    "stylelint-config-rational-order": "^0.1.2",
-    "stylelint-config-recommended": "^3.0.0",
-    "svg-sprite-generator": "^0.0.7"
+    "@types/react-relay": "^11.0.1",
+    "@types/relay-runtime": "^11.0.0",
+    "babel-plugin-relay": "^11.0.2",
+    "get-graphql-schema": "^2.1.2",
+    "graphql": "^15.5.0",
+    "relay-compiler": "^11.0.2",
+    "relay-compiler-language-typescript": "^14.0.0",
+    "relay-config": "^11.0.2"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "license": "Unlicense",
-  "lint-staged": {
-    "*.{js,vue,ts}": [
-      "vue-cli-service lint",
-      "git add"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "codex/ts"
     ],
-    "*.{css,vue}": [
-      "stylelint \"src/**/*{.css,.vue}\" --fix",
-      "git add"
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts",
+          "**/*.tsx"
+        ],
+        "rules": {
+          "no-use-before-define": "off",
+          "jsdoc/require-returns": "off",
+          "jsdoc/require-param-type": "off",
+          "react-hooks/exhaustive-deps": "off",
+          "@typescript-eslint/no-magic-numbers": "off",
+          "@typescript-eslint/naming-convention": [
+            "error",
+            {
+              "selector": "enumMember",
+              "format": [
+                "UPPER_CASE"
+              ]
+            }
+          ]
+        }
+      }
     ]
   },
-  "repository": "https://github.com/dh-center/st-retrospect-frontend.git"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

@@ -1,5 +1,5 @@
 # Build stage
-FROM node:lts-alpine as build-stage
+FROM node:14-alpine as build-stage
 
 WORKDIR /app
 
@@ -11,13 +11,13 @@ RUN yarn install
 # Build project
 COPY . .
 
-RUN yarn build --prod
+RUN yarn build
 
 # production environment
 FROM nginx:1.17.3-alpine
 
 # Copy build result from previous stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build-stage /app/build /usr/share/nginx/html
 
 # Pass new nginx config
 RUN rm /etc/nginx/conf.d/default.conf

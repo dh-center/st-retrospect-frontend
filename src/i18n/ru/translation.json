@@ -1,0 +1,44 @@
+{
+  "search": {
+    "inputPlaceholder": "Введите запрос..."
+  },
+  "aboutProject": {
+    "title": "О проекте"
+  },
+  "howToGuide": {
+    "title": "Как пользоваться картой?"
+  },
+  "partners": {
+    "title": "Наши партнёры"
+  },
+  "thanks": {
+    "title": "Благодарности"
+  },
+  "customSelect": {
+    "placeholder": "Все категории",
+    "reset": "Сброс"
+  },
+  "customRange": {
+    "years": "Временной промежуток"
+  },
+  "aside": {
+    "searchBottomButton": "Поиск по карте"
+  },
+  "route": {
+    "startRoute": "Перейти к маршруту",
+    "endRoute": "Закончить маршрут"
+  },
+  "locationInstance": {
+    "architect": "Архитектор",
+    "dates": "Строительство",
+    "source": "Источник"
+  },
+  "person": {
+    "source": "Источник"
+  },
+  "routes": "Маршруты",
+  "author": "Автор",
+  "loadMore": "Загрузить ещё",
+  "yearsAbbreviated": "г.",
+  "wikipedia": "Материал из Википедии — свободной энциклопедии"
+}
