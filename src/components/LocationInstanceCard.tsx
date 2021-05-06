@@ -6,7 +6,10 @@ import { LocationInstanceCardQuery } from './__generated__/LocationInstanceCardQ
 import {
   CardWrapper, Description,
   GoingBackButton,
-  Image, InformationContent, InformationTitle, InformationWithTitle,
+  Image,
+  InformationContent,
+  InformationTitle,
+  InformationWithTitle,
   InformationWrapper,
   Name
 } from './cards';
@@ -142,7 +145,7 @@ export default function LocationInstanceCard(): ReactElement {
           }
         </RelatedPersonsWrapper>
         <Description>{data.locationInstance.description}</Description>
-        { data.locationInstance.architects?.length &&
+        { data.locationInstance.architects?.length > 0 &&
           <InformationWithTitle>
             <InformationTitle>
               {t('locationInstance.architect')}:
