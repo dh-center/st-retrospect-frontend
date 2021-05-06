@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { ReactComponent as ArrowLeftImage } from '../assets/arrow-left-second.svg';
-import { ReactComponent as ArrowRightImage } from '../assets/arrow-right-second.svg';
+import { ReactComponent as ArrowLeftImage } from '../../assets/arrow-left-second.svg';
+import { ReactComponent as ArrowRightImage } from '../../assets/arrow-right-second.svg';
 import { ComponentProps, ReactElement } from 'react';
 
 const Wrapper = styled.button`
