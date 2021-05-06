@@ -4,7 +4,6 @@ import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxContext } from '../contexts/MapboxContext';
 import styled from 'styled-components';
 import WithChildren from '../interfaces/WithChildren';
-import { createPortal } from 'react-dom';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -130,13 +129,11 @@ export default function Mapbox(props: WithChildren): React.ReactElement {
     changeMapLanguage(userLanguage);
   }, [ userLanguage ]);
 
-  const canvas = map.current?.getCanvasContainer();
-
   return (
     <MapboxContext.Provider value={{ map: map.current }}>
       <div>
         <MapContainer ref={mapContainer}>
-          {canvas && createPortal(props.children, canvas)}
+          {props.children}
         </MapContainer>
       </div>
     </MapboxContext.Provider>
