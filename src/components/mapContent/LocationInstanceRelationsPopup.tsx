@@ -134,7 +134,7 @@ export default function LocationInstanceRelationsPopup(props: RelationsPopupProp
           />
           <Title>{data.name}</Title>
           {
-            !data.relations.length && 'Нет связей('
+            (!data.relations || !data.relations.length) && 'Нет связей('
           }
           {
             data.relations.length && <RelationCard relation={data.relations[currentIndex]}/>
