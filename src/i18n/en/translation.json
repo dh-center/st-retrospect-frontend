@@ -36,6 +36,9 @@
   "person": {
     "source": "Source"
   },
+  "relations": {
+    "noRelations": "There is no information about persons associated with this location"
+  },
   "routes": "Routes",
   "author": "Author",
   "loadMore": "Load more",

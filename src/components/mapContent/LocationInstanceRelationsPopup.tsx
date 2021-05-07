@@ -13,6 +13,7 @@ import Marker from './Marker';
 import Popup from './Popup';
 import mapboxgl from 'mapbox-gl';
 import { sansSerifLight, sansSerifRegular } from '../../styles/FontStyles';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Props of component
@@ -61,9 +62,12 @@ const RightArrowButton = styled(LeftArrowButton)`
 `;
 
 /**
+ * Location instance popup with information about relations
+ *
  * @param props - props of component
  */
 export default function LocationInstanceRelationsPopup(props: LocationInstanceRelationsPopupProps): ReactElement {
+  const { t } = useTranslation();
   const { map } = useMapboxContext();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { currentLocations } = useCurrentMapContent();
@@ -151,12 +155,7 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
               </>
           }
           <Title>{data.name}</Title>
-          {
-            (!data.relations || !data.relations.length) && 'Нет связей('
-          }
-          {
-            data.relations.length && <RelationCard relation={data.relations[currentIndex]}/>
-          }
+          { data.relations && data.relations.length > 0 ? <RelationCard relation={data.relations[currentIndex]}/> : t('relations.noRelations') }
         </Wrapper>
       </Popup>
     </>
