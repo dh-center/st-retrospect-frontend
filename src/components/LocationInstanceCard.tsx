@@ -49,6 +49,7 @@ const RelatedPersonsWrapper = styled.div`
   flex-wrap: wrap;
 
   margin-top: -12px;
+  margin-right: -12px;
   margin-bottom: 14px;
 
   & ${StyledRelatedPersonBlock} {
