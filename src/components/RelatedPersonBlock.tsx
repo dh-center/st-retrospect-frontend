@@ -20,7 +20,7 @@ interface RelatedPersonBlockProps extends WithClassName {
 }
 
 const Wrapper = styled(Link)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
 
   padding-right: 12px;

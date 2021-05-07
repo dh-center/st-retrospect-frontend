@@ -59,6 +59,10 @@ const GlobalStyles = createGlobalStyle`
     box-shadow: none;
     padding: 0;
   }
+
+  .mapboxgl-marker {
+    cursor: pointer;
+  }
 `;
 
 export default GlobalStyles;
