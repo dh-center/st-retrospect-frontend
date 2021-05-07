@@ -12,8 +12,15 @@ import useCurrentMapContent from '../../contexts/CurrentMapContentContext';
 import Marker from './Marker';
 import Popup from './Popup';
 import mapboxgl from 'mapbox-gl';
+import { sansSerifLight, sansSerifRegular } from '../../styles/FontStyles';
 
-interface RelationsPopupProps {
+/**
+ * Props of component
+ */
+interface LocationInstanceRelationsPopupProps {
+  /**
+   * Location fragment ref
+   */
   location: LocationInstanceRelationsPopup_data$key;
 }
 
@@ -29,10 +36,14 @@ const Wrapper = styled.div`
   padding: 24px 16px;
 
   width: 372px;
+
+  font-size: 14px;
+  ${ sansSerifLight };
 `;
 
 const Title = styled.div`
   font-size: 16px;
+  ${ sansSerifRegular };
 `;
 
 const LeftArrowButton = styled(ArrowButton)`
@@ -52,7 +63,7 @@ const RightArrowButton = styled(LeftArrowButton)`
 /**
  * @param props - props of component
  */
-export default function LocationInstanceRelationsPopup(props: RelationsPopupProps): ReactElement {
+export default function LocationInstanceRelationsPopup(props: LocationInstanceRelationsPopupProps): ReactElement {
   const { map } = useMapboxContext();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { currentLocations } = useCurrentMapContent();
