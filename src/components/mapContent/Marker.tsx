@@ -36,8 +36,6 @@ export default function Marker(props: MarkerProps): React.ReactElement {
       return;
     }
 
-    markerContainer.current.style.cursor = 'pointer';
-
     const marker = new mapboxgl.Marker(markerContainer.current)
       .setLngLat(props.lngLat)
       .addTo(map);
