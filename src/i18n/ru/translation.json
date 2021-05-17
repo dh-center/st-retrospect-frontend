@@ -31,7 +31,8 @@
   "locationInstance": {
     "architect": "Архитектор",
     "dates": "Строительство",
-    "source": "Источник"
+    "source": "Источник",
+    "noAddress": "Нет информации об адресе"
   },
   "person": {
     "source": "Источник"

@@ -5,6 +5,7 @@ import MapPin from '../assets/map-pin.svg';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { LocationInstanceItem_locationInstance$key } from './__generated__/LocationInstanceItem_locationInstance.graphql';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Props of component
@@ -40,6 +41,7 @@ const Address = styled(SecondaryInformation)`
  * @param props - props of component
  */
 export default function LocationInstanceItem(props: LocationInstanceItemProps): ReactElement {
+  const { t } = useTranslation();
   const data = useFragment(
     graphql`
       fragment LocationInstanceItem_locationInstance on LocationInstance {
@@ -64,7 +66,7 @@ export default function LocationInstanceItem(props: LocationInstanceItemProps): 
         <Delimiter/>
         <Address>
           <AddressIcon/>
-          {data.location.addresses ? data.location.addresses[0].address : ''}
+          { !!data.location.addresses?.length ? data.location.addresses[0].address : t('locationInstance.noAddress') }
         </Address>
       </InformationWrapper>
     </Item>
