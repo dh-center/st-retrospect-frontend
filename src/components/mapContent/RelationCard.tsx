@@ -1,6 +1,5 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import Delimiter  from '../utils/Delimiter';
 import { sansSerifLight } from '../../styles/FontStyles';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -52,7 +51,6 @@ export default function RelationCard(props: RelationCardProps): ReactElement {
 
   return (
     <>
-      <Delimiter/>
       <RelatedPersonBlock person={data.person}/>
       <InformationAboutRelation>{`${data.startDate || '...'} — ${data.endDate || '...'} ${t('yearsAbbreviated')}`}</InformationAboutRelation>
       <Description>{data.quote}</Description>
