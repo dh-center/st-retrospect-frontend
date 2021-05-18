@@ -103,7 +103,7 @@ export default function LocationInstanceBlock(props: LocationInstanceBlockProps)
         <Title>
           {data.locationInstance.name}
         </Title>
-        {data.locationInstance.location.addresses &&
+        { !!data.locationInstance.location.addresses?.length &&
           <Address>
             {data.locationInstance.location.addresses[0].address}
           </Address>
