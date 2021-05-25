@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import CustomSelect from './CustomSelect';
+import CustomSelect, {Option} from './CustomSelect';
 import SearchLine from './SearchLine';
 import CustomRange from './CustomRange';
 import YearsInputs from './YearsInputs';
@@ -67,7 +67,7 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
   /**
    * Categories for search
    */
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Option[]>([]);
 
   /**
    * Years period for search
@@ -109,6 +109,28 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
         <CustomSelect
           selected={categories}
           onChange={values => setCategories(values)}
+          values={[
+            {
+              id: '123',
+              value: 'писатель',
+            },
+            {
+              id: '1',
+              value: 'фантаст',
+            },
+            {
+              id: '2',
+              value: 'Золотой век',
+            },
+            {
+              id: '3',
+              value: 'Не золотой век',
+            },
+            {
+              id: '4',
+              value: 'Рома',
+            },
+          ]}
         />
         <CustomRange
           onChange={values => setYears(values)}

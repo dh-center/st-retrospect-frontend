@@ -174,6 +174,28 @@ export default function MainAside(): ReactElement {
                 <Route path="/routes">
                   <CustomSelectWithMargin
                     selected={[]}
+                    values={[
+                      {
+                        id: '123',
+                        value: 'писатель',
+                      },
+                      {
+                        id: '1',
+                        value: 'фантаст',
+                      },
+                      {
+                        id: '2',
+                        value: 'Золотой век',
+                      },
+                      {
+                        id: '3',
+                        value: 'Не золотой век',
+                      },
+                      {
+                        id: '4',
+                        value: 'Рома',
+                      },
+                    ]}
                   />
                 </Route>
               </Route>
