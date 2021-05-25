@@ -18,7 +18,7 @@ export default function LocationInstancesList(): ReactElement {
     query: query.get('query') || '',
     startYear: Number.parseInt(query.get('startYear') || '1500'),
     endYear: Number.parseInt(query.get('endYear') || '2021'),
-    first: 20,
+    first: 30,
     skip: 0,
   };
 
