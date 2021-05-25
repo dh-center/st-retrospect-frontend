@@ -38,6 +38,10 @@ const Wrapper = styled(Link)`
     cursor: pointer;
     background: var(--color-light-blue);
   }
+
+  &:focus-visible {
+    outline: none;
+  }
 `;
 
 /**
