@@ -18,6 +18,8 @@ export default function LocationInstancesList(): ReactElement {
     query: query.get('query') || '',
     startYear: Number.parseInt(query.get('startYear') || '1500'),
     endYear: Number.parseInt(query.get('endYear') || '2021'),
+    first: 30,
+    skip: 0,
   };
 
   const data = useLazyLoadQuery<LocationInstancesListQuery>(
@@ -25,12 +27,10 @@ export default function LocationInstancesList(): ReactElement {
       query LocationInstancesListQuery(
         $input: SearchInput!
       ) {
-        locationInstancesSearch(input: $input) {
-          edges {
-            node {
-              ...LocationInstanceItem_locationInstance
-              ...LocationInstanceRelationsPopup_data
-            }
+        locationInstanceByPersonSearch(input: $input) {
+          nodes {
+            ...LocationInstanceItem_locationInstance
+            ...LocationInstanceRelationsPopup_data
           }
         }
       }
@@ -41,17 +41,17 @@ export default function LocationInstancesList(): ReactElement {
   );
 
   useEffect(() => {
-    if (!data.locationInstancesSearch) {
+    if (!data.locationInstanceByPersonSearch) {
       return;
     }
 
-    setCurrentLocations(data.locationInstancesSearch.edges.map(edge => edge.node));
-  }, [ data.locationInstancesSearch.edges ]);
+    setCurrentLocations(data.locationInstanceByPersonSearch.nodes);
+  }, [ data.locationInstanceByPersonSearch.nodes ]);
 
   return (
     <ListWrapper hasNext={false}>
       {
-        data.locationInstancesSearch.edges.map((edge, index) => <LocationInstanceItem key={index} locationInstance={edge.node}/>)
+        data.locationInstanceByPersonSearch.nodes.map((node, index) => <LocationInstanceItem key={index} locationInstance={node}/>)
       }
     </ListWrapper>
   );
