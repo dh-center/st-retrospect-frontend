@@ -18,8 +18,18 @@ interface CustomSelectElementProps {
   isOpen: boolean;
 }
 
+/**
+ * Type of options in custom select
+ */
 export interface Option {
+  /**
+   * Unique id of option
+   */
   id: string;
+
+  /**
+   * Displaying value of option
+   */
   value: string;
 }
 
