@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import AsideCloseButton from './AsideCloseButton';
 import AsideHeader from './AsideHeader';
 import MenuAside from './MenuAside';
-import CustomSelect from '../CustomSelect';
+import CustomSelect from '../customSelects/CustomSelect';
 import LeftPanel from '../LeftPanel';
 import AsideBottomButton from './AsideBottomButton';
 import MapIcon from '../../assets/map.svg';

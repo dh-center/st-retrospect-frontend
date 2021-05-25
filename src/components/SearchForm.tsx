@@ -1,12 +1,14 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState, Suspense } from 'react';
 import styled, { css } from 'styled-components';
-import CustomSelect, {Option} from './CustomSelect';
+import { Option, SelectPlaceholder } from './customSelects/CustomSelect';
 import SearchLine from './SearchLine';
 import CustomRange from './CustomRange';
 import YearsInputs from './YearsInputs';
 import { useTranslation } from 'react-i18next';
 import useDebounce from '../lib/useDebounce';
 import { useHistory } from 'react-router-dom';
+import TagsCustomSelect from './customSelects/TagsCustomSelect';
+import Loader from './Loader';
 
 /**
  * Props of component
@@ -96,7 +98,7 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
       onSubmit={(event) => {
         event.preventDefault();
         history.push({
-          search: `?query=${query}&startYear=${years.left}&endYear=${years.right}`,
+          search: `?query=${query}&startYear=${years.left}&endYear=${years.right}&categories=${categories.map(category => category.id).join(',')}`,
         });
       }}
     >
@@ -106,32 +108,16 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
         isSearchFormOpen={props.isSearchFormOpen}
       />
       <HideWrapper show={props.isSearchFormOpen}>
-        <CustomSelect
-          selected={categories}
-          onChange={values => setCategories(values)}
-          values={[
-            {
-              id: '123',
-              value: 'писатель',
-            },
-            {
-              id: '1',
-              value: 'фантаст',
-            },
-            {
-              id: '2',
-              value: 'Золотой век',
-            },
-            {
-              id: '3',
-              value: 'Не золотой век',
-            },
-            {
-              id: '4',
-              value: 'Рома',
-            },
-          ]}
-        />
+        <Suspense fallback={
+          <SelectPlaceholder>
+            <Loader/>
+          </SelectPlaceholder>
+        }>
+          <TagsCustomSelect
+            selected={categories}
+            onChange={values => setCategories(values)}
+          />
+        </Suspense>
         <CustomRange
           onChange={values => setYears(values)}
           min={YEARS_MIN_VALUE}

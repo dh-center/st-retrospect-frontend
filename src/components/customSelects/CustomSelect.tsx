@@ -1,12 +1,12 @@
 import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import { sansSerifLight } from '../styles/FontStyles';
-import LeftArrowIcon from '../assets/arrow-left.svg';
-import CheckboxIcon from '../assets/checkbox.svg';
-import CheckboxCheckedIcon from '../assets/checkbox-checked.svg';
-import CrossIcon from '../assets/cross.svg';
+import { sansSerifLight } from '../../styles/FontStyles';
+import LeftArrowIcon from '../../assets/arrow-left.svg';
+import CheckboxIcon from '../../assets/checkbox.svg';
+import CheckboxCheckedIcon from '../../assets/checkbox-checked.svg';
+import CrossIcon from '../../assets/cross.svg';
 import { useTranslation } from 'react-i18next';
-import WithClassName from '../interfaces/WithClassName';
+import WithClassName from '../../interfaces/WithClassName';
 
 /**
  * Props for custom select elements
@@ -42,7 +42,7 @@ interface CustomSelectInputProps extends WithClassName {
 /**
  * This element needs for displaying select over next elements
  */
-const SelectPlaceholder = styled.div`
+export const SelectPlaceholder = styled.div`
   position: relative;
 
   height: 34px;
@@ -61,6 +61,7 @@ const SelectWrapper = styled.div<CustomSelectElementProps>`
 
   box-shadow: var(${ props => props.isOpen ? '--shadow-medium' : '--shadow-base' });
   border-radius: 2px;
+  overflow: hidden;
   z-index: 1;
 `;
 
@@ -96,6 +97,8 @@ const SelectInputText = styled.div`
 
 const SelectDropdown = styled.ul<CustomSelectElementProps>`
   display: ${ props => props.isOpen ? 'block' : 'none' };
+  max-height: 376px;
+  overflow-y: auto;
 
   padding: 0;
   margin: 0;
