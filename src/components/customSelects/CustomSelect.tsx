@@ -46,6 +46,9 @@ interface CustomSelectInputProps extends WithClassName {
    */
   selected: Option[];
 
+  /**
+   * Array of values for displaying
+   */
   values: Option[];
 }
 
