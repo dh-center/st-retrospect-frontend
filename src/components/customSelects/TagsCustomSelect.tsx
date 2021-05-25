@@ -5,6 +5,9 @@ import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { TagsCustomSelectQuery } from './__generated__/TagsCustomSelectQuery.graphql';
 
+/**
+ * Props of component
+ */
 interface TagsCustomSelectProps extends WithClassName {
   /**
    * onChange event handler
