@@ -6,11 +6,6 @@ interface ArrayItem {
    * Unique id field for filtering by
    */
   id: string;
-
-  /**
-   * Unimportant fields
-   */
-  [key: string]: unknown;
 }
 
 /**
