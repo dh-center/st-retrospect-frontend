@@ -16,9 +16,12 @@ export type LocationInstancesListQueryVariables = {
     input: SearchInput;
 };
 export type LocationInstancesListQueryResponse = {
-    readonly locationInstanceByPersonSearch: {
+    readonly relationsByPersonSearch: {
         readonly nodes: ReadonlyArray<{
-            readonly " $fragmentRefs": FragmentRefs<"LocationInstanceItem_locationInstance" | "LocationInstanceRelationsPopup_data">;
+            readonly locationInstance: {
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"LocationInstanceItem_locationInstance" | "LocationInstanceRelationsPopup_data">;
+            };
         }>;
     };
 };
@@ -33,10 +36,13 @@ export type LocationInstancesListQuery = {
 query LocationInstancesListQuery(
   $input: SearchInput!
 ) {
-  locationInstanceByPersonSearch(input: $input) {
+  relationsByPersonSearch(input: $input) {
     nodes {
-      ...LocationInstanceItem_locationInstance
-      ...LocationInstanceRelationsPopup_data
+      locationInstance {
+        id
+        ...LocationInstanceItem_locationInstance
+        ...LocationInstanceRelationsPopup_data
+      }
       id
     }
   }
@@ -125,28 +131,40 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "LocationInstancesSearchResult",
+        "concreteType": "RelationsSearchResult",
         "kind": "LinkedField",
-        "name": "locationInstanceByPersonSearch",
+        "name": "relationsByPersonSearch",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "LocationInstance",
+            "concreteType": "Relation",
             "kind": "LinkedField",
             "name": "nodes",
             "plural": true,
             "selections": [
               {
+                "alias": null,
                 "args": null,
-                "kind": "FragmentSpread",
-                "name": "LocationInstanceItem_locationInstance"
-              },
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "LocationInstanceRelationsPopup_data"
+                "concreteType": "LocationInstance",
+                "kind": "LinkedField",
+                "name": "locationInstance",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "LocationInstanceItem_locationInstance"
+                  },
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "LocationInstanceRelationsPopup_data"
+                  }
+                ],
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -167,139 +185,151 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "LocationInstancesSearchResult",
+        "concreteType": "RelationsSearchResult",
         "kind": "LinkedField",
-        "name": "locationInstanceByPersonSearch",
+        "name": "relationsByPersonSearch",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "LocationInstance",
+            "concreteType": "Relation",
             "kind": "LinkedField",
             "name": "nodes",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Location",
+                "concreteType": "LocationInstance",
                 "kind": "LinkedField",
-                "name": "location",
+                "name": "locationInstance",
                 "plural": false,
                 "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Address",
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
                     "kind": "LinkedField",
-                    "name": "addresses",
-                    "plural": true,
+                    "name": "location",
+                    "plural": false,
                     "selections": [
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "address",
+                        "concreteType": "Address",
+                        "kind": "LinkedField",
+                        "name": "addresses",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "address",
+                            "storageKey": null
+                          }
+                        ],
                         "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  },
-                  (v2/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "longitude",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "latitude",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Relation",
-                "kind": "LinkedField",
-                "name": "relations",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Person",
-                    "kind": "LinkedField",
-                    "name": "person",
-                    "plural": false,
-                    "selections": [
+                      },
                       (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "lastName",
+                        "name": "longitude",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "firstName",
+                        "name": "latitude",
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "patronymic",
-                        "storageKey": null
-                      },
-                      (v3/*: any*/)
+                      }
                     ],
                     "storageKey": null
                   },
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "startDate",
+                    "concreteType": "Relation",
+                    "kind": "LinkedField",
+                    "name": "relations",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Person",
+                        "kind": "LinkedField",
+                        "name": "person",
+                        "plural": false,
+                        "selections": [
+                          (v2/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "lastName",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "firstName",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "patronymic",
+                            "storageKey": null
+                          },
+                          (v3/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "startDate",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "endDate",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "quote",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
                     "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endDate",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "quote",
-                    "storageKey": null
-                  },
-                  (v2/*: any*/)
+                  }
                 ],
                 "storageKey": null
-              }
+              },
+              (v2/*: any*/)
             ],
             "storageKey": null
           }
@@ -309,14 +339,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f0949104af8c7e69162fedbb2ac662de",
+    "cacheID": "9209ad1d1507e8497f4c8d7ea1aa9e87",
     "id": null,
     "metadata": {},
     "name": "LocationInstancesListQuery",
     "operationKind": "query",
-    "text": "query LocationInstancesListQuery(\n  $input: SearchInput!\n) {\n  locationInstanceByPersonSearch(input: $input) {\n    nodes {\n      ...LocationInstanceItem_locationInstance\n      ...LocationInstanceRelationsPopup_data\n      id\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
+    "text": "query LocationInstancesListQuery(\n  $input: SearchInput!\n) {\n  relationsByPersonSearch(input: $input) {\n    nodes {\n      locationInstance {\n        id\n        ...LocationInstanceItem_locationInstance\n        ...LocationInstanceRelationsPopup_data\n      }\n      id\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
   }
 };
 })();
-(node as any).hash = 'bb20687e0cdf8a875a1c43b8ad94ae20';
+(node as any).hash = '21810d95c0626ea11c5521f2bec8f1c8';
 export default node;

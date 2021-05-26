@@ -6,6 +6,7 @@ import graphql from 'babel-plugin-relay/macro';
 import { LocationInstancesListQuery, SearchInput } from './__generated__/LocationInstancesListQuery.graphql';
 import useQuery from '../lib/useQuery';
 import useCurrentMapContent from '../contexts/CurrentMapContentContext';
+import uniqueObjectsByIds from '../lib/uniqueObjectsByIds';
 
 /**
  * List of location instances
@@ -28,10 +29,13 @@ export default function LocationInstancesList(): ReactElement {
       query LocationInstancesListQuery(
         $input: SearchInput!
       ) {
-        locationInstanceByPersonSearch(input: $input) {
+        relationsByPersonSearch(input: $input) {
           nodes {
-            ...LocationInstanceItem_locationInstance
-            ...LocationInstanceRelationsPopup_data
+            locationInstance {
+              id
+              ...LocationInstanceItem_locationInstance
+              ...LocationInstanceRelationsPopup_data
+            }
           }
         }
       }
@@ -41,18 +45,20 @@ export default function LocationInstancesList(): ReactElement {
     }
   );
 
+  const uniqueLocationInstances = uniqueObjectsByIds(data.relationsByPersonSearch.nodes.map(node => node.locationInstance));
+
   useEffect(() => {
-    if (!data.locationInstanceByPersonSearch) {
+    if (!uniqueLocationInstances) {
       return;
     }
 
-    setCurrentLocations(data.locationInstanceByPersonSearch.nodes);
-  }, [ data.locationInstanceByPersonSearch.nodes ]);
+    setCurrentLocations(uniqueLocationInstances);
+  }, [ uniqueLocationInstances ]);
 
   return (
     <ListWrapper hasNext={false}>
       {
-        data.locationInstanceByPersonSearch.nodes.map((node, index) => <LocationInstanceItem key={index} locationInstance={node}/>)
+        uniqueLocationInstances.map((item, index) => <LocationInstanceItem key={index} locationInstance={item}/>)
       }
     </ListWrapper>
   );
