@@ -18,7 +18,7 @@ import SearchForm from '../SearchForm';
 import RouteCard from '../RouteCard';
 import Loader from '../Loader';
 import RoutePassingRenderer from '../RoutePassingRenderer';
-import LocationInstancesList from '../LocationInstancesList';
+import SearchResultList from '../SearchResultList';
 import LocationInstanceCard from '../LocationInstanceCard';
 import PersonCard from '../PersonCard';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
@@ -226,7 +226,7 @@ export default function MainAside(): ReactElement {
         <Switch>
           <Route exact path="/">
             <Suspense fallback={<Loader/>}>
-              <LocationInstancesList/>
+              <SearchResultList/>
             </Suspense>
           </Route>
           <Route path="/location-instance/:locationInstanceId">

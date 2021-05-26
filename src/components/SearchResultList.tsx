@@ -3,15 +3,16 @@ import LocationInstanceItem from './LocationInstanceItem';
 import { ListWrapper } from './lists';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import { LocationInstancesListQuery, SearchInput } from './__generated__/LocationInstancesListQuery.graphql';
+import { SearchResultListQuery, SearchInput } from './__generated__/SearchResultListQuery.graphql';
 import useQuery from '../lib/useQuery';
 import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 import uniqueObjectsByIds from '../lib/uniqueObjectsByIds';
+import PersonItem from './PersonItem';
 
 /**
- * List of location instances
+ * List of persons and location instances
  */
-export default function LocationInstancesList(): ReactElement {
+export default function SearchResultList(): ReactElement {
   const query = useQuery();
   const { setCurrentLocations } = useCurrentMapContent();
 
@@ -24,9 +25,9 @@ export default function LocationInstancesList(): ReactElement {
     skip: 0,
   };
 
-  const data = useLazyLoadQuery<LocationInstancesListQuery>(
+  const data = useLazyLoadQuery<SearchResultListQuery>(
     graphql`
-      query LocationInstancesListQuery(
+      query SearchResultListQuery(
         $input: SearchInput!
       ) {
         relationsByPersonSearch(input: $input) {
@@ -35,6 +36,10 @@ export default function LocationInstancesList(): ReactElement {
               id
               ...LocationInstanceItem_locationInstance
               ...LocationInstanceRelationsPopup_data
+            }
+            person {
+              id
+              ...PersonItem_person
             }
           }
         }
@@ -46,6 +51,7 @@ export default function LocationInstancesList(): ReactElement {
   );
 
   const uniqueLocationInstances = uniqueObjectsByIds(data.relationsByPersonSearch.nodes.map(node => node.locationInstance));
+  const uniquePersons = uniqueObjectsByIds(data.relationsByPersonSearch.nodes.map(node => node.person));
 
   useEffect(() => {
     if (!uniqueLocationInstances) {
@@ -58,7 +64,10 @@ export default function LocationInstancesList(): ReactElement {
   return (
     <ListWrapper hasNext={false}>
       {
-        uniqueLocationInstances.map((item, index) => <LocationInstanceItem key={index} locationInstance={item}/>)
+        uniquePersons.map((item) => <PersonItem key={item.id} person={item}/>)
+      }
+      {
+        uniqueLocationInstances.map((item) => <LocationInstanceItem key={item.id} locationInstance={item}/>)
       }
     </ListWrapper>
   );

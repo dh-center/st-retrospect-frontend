@@ -12,28 +12,32 @@ export type SearchInput = {
     skip: number;
     first: number;
 };
-export type LocationInstancesListQueryVariables = {
+export type SearchResultListQueryVariables = {
     input: SearchInput;
 };
-export type LocationInstancesListQueryResponse = {
+export type SearchResultListQueryResponse = {
     readonly relationsByPersonSearch: {
         readonly nodes: ReadonlyArray<{
             readonly locationInstance: {
                 readonly id: string;
                 readonly " $fragmentRefs": FragmentRefs<"LocationInstanceItem_locationInstance" | "LocationInstanceRelationsPopup_data">;
             };
+            readonly person: {
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"PersonItem_person">;
+            };
         }>;
     };
 };
-export type LocationInstancesListQuery = {
-    readonly response: LocationInstancesListQueryResponse;
-    readonly variables: LocationInstancesListQueryVariables;
+export type SearchResultListQuery = {
+    readonly response: SearchResultListQueryResponse;
+    readonly variables: SearchResultListQueryVariables;
 };
 
 
 
 /*
-query LocationInstancesListQuery(
+query SearchResultListQuery(
   $input: SearchInput!
 ) {
   relationsByPersonSearch(input: $input) {
@@ -42,6 +46,10 @@ query LocationInstancesListQuery(
         id
         ...LocationInstanceItem_locationInstance
         ...LocationInstanceRelationsPopup_data
+      }
+      person {
+        id
+        ...PersonItem_person
       }
       id
     }
@@ -71,6 +79,14 @@ fragment LocationInstanceRelationsPopup_data on LocationInstance {
     ...RelationCard_relation
     id
   }
+}
+
+fragment PersonItem_person on Person {
+  id
+  lastName
+  firstName
+  patronymic
+  mainPhotoLink
 }
 
 fragment RelatedPersonBlock_person on Person {
@@ -120,13 +136,47 @@ v3 = {
   "kind": "ScalarField",
   "name": "mainPhotoLink",
   "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Person",
+  "kind": "LinkedField",
+  "name": "person",
+  "plural": false,
+  "selections": [
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "lastName",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "firstName",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "patronymic",
+      "storageKey": null
+    },
+    (v3/*: any*/)
+  ],
+  "storageKey": null
 };
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "LocationInstancesListQuery",
+    "name": "SearchResultListQuery",
     "selections": [
       {
         "alias": null,
@@ -165,6 +215,23 @@ return {
                   }
                 ],
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Person",
+                "kind": "LinkedField",
+                "name": "person",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "PersonItem_person"
+                  }
+                ],
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -180,7 +247,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "LocationInstancesListQuery",
+    "name": "SearchResultListQuery",
     "selections": [
       {
         "alias": null,
@@ -267,40 +334,7 @@ return {
                     "name": "relations",
                     "plural": true,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Person",
-                        "kind": "LinkedField",
-                        "name": "person",
-                        "plural": false,
-                        "selections": [
-                          (v2/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "lastName",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "firstName",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "patronymic",
-                            "storageKey": null
-                          },
-                          (v3/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -329,6 +363,7 @@ return {
                 ],
                 "storageKey": null
               },
+              (v4/*: any*/),
               (v2/*: any*/)
             ],
             "storageKey": null
@@ -339,14 +374,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9209ad1d1507e8497f4c8d7ea1aa9e87",
+    "cacheID": "e5e7273ad31317961c00aee37072a695",
     "id": null,
     "metadata": {},
-    "name": "LocationInstancesListQuery",
+    "name": "SearchResultListQuery",
     "operationKind": "query",
-    "text": "query LocationInstancesListQuery(\n  $input: SearchInput!\n) {\n  relationsByPersonSearch(input: $input) {\n    nodes {\n      locationInstance {\n        id\n        ...LocationInstanceItem_locationInstance\n        ...LocationInstanceRelationsPopup_data\n      }\n      id\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
+    "text": "query SearchResultListQuery(\n  $input: SearchInput!\n) {\n  relationsByPersonSearch(input: $input) {\n    nodes {\n      locationInstance {\n        id\n        ...LocationInstanceItem_locationInstance\n        ...LocationInstanceRelationsPopup_data\n      }\n      person {\n        id\n        ...PersonItem_person\n      }\n      id\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment PersonItem_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
   }
 };
 })();
-(node as any).hash = '21810d95c0626ea11c5521f2bec8f1c8';
+(node as any).hash = 'de760abab13dd12cd9903b57018a4e12';
 export default node;
