@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import LocationInstanceItem from './LocationInstanceItem';
 import { ListWrapper } from './lists';
 import { useLazyLoadQuery } from 'react-relay';
@@ -50,8 +50,14 @@ export default function SearchResultList(): ReactElement {
     }
   );
 
-  const uniqueLocationInstances = uniqueObjectsByIds(data.relationsByPersonSearch.nodes.map(node => node.locationInstance));
-  const uniquePersons = uniqueObjectsByIds(data.relationsByPersonSearch.nodes.map(node => node.person));
+  const uniqueLocationInstances = useMemo(
+    () => uniqueObjectsByIds(data.relationsByPersonSearch.nodes.map(node => node.locationInstance)),
+    [ data.relationsByPersonSearch.nodes ]
+  );
+  const uniquePersons = useMemo(
+    () => uniqueObjectsByIds(data.relationsByPersonSearch.nodes.map(node => node.person)),
+    [ data.relationsByPersonSearch.nodes ]
+  );
 
   useEffect(() => {
     if (!uniqueLocationInstances) {
