@@ -1,5 +1,5 @@
 import WithClassName from '../../interfaces/WithClassName';
-import CustomSelect  from './CustomSelect';
+import CustomSelect from './CustomSelect';
 import { ReactElement } from 'react';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
