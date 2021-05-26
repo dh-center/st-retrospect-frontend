@@ -64,7 +64,10 @@ export default function SearchResultList(): ReactElement {
   return (
     <ListWrapper hasNext={false}>
       {
-        uniquePersons.map((item) => <PersonItem key={item.id} person={item}/>)
+        /**
+         * Displays maximum 3 first persons
+         */
+        uniquePersons.slice(0, 3).map((item) => <PersonItem key={item.id} person={item}/>)
       }
       {
         uniqueLocationInstances.map((item) => <LocationInstanceItem key={item.id} locationInstance={item}/>)
