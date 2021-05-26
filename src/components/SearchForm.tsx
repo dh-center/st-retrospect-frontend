@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState, Suspense } from 'react';
 import styled, { css } from 'styled-components';
-import { Option, SelectPlaceholder } from './customSelects/CustomSelect';
+import { SelectPlaceholder } from './customSelects/CustomSelect';
 import SearchLine from './SearchLine';
 import CustomRange from './CustomRange';
 import YearsInputs from './YearsInputs';
@@ -9,6 +9,7 @@ import useDebounce from '../lib/useDebounce';
 import { useHistory } from 'react-router-dom';
 import TagsCustomSelect from './customSelects/TagsCustomSelect';
 import Loader from './Loader';
+import useQuery from '../lib/useQuery';
 
 /**
  * Props of component
@@ -57,6 +58,7 @@ const HideWrapper = styled.div<HideWrapperProps>`
 export default function SearchForm(props: SearchFormProps): ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
+  const urlQuery = useQuery();
 
   const YEARS_MIN_VALUE = '1500';
   const YEARS_MAX_VALUE = '2021';
@@ -64,19 +66,19 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
   /**
    * Text query for search
    */
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(urlQuery.get('query') || '');
 
   /**
    * Categories for search
    */
-  const [categories, setCategories] = useState<Option[]>([]);
+  const [categoriesIds, setCategoriesIds] = useState<string[]>((urlQuery.get('categories') || '').split(','));
 
   /**
    * Years period for search
    */
   const [years, setYears] = useState({
-    left: YEARS_MIN_VALUE,
-    right: YEARS_MAX_VALUE,
+    left: urlQuery.get('startYear') || YEARS_MIN_VALUE,
+    right: urlQuery.get('endYear') || YEARS_MAX_VALUE,
   });
 
   const [yearsFromInputs, setYearsFromInputs] = useState(years);
@@ -98,7 +100,7 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
       onSubmit={(event) => {
         event.preventDefault();
         history.push({
-          search: `?query=${query}&startYear=${years.left}&endYear=${years.right}&categories=${categories.map(category => category.id).join(',')}`,
+          search: `?query=${query}&startYear=${years.left}&endYear=${years.right}&categories=${categoriesIds.join(',')}`,
         });
       }}
     >
@@ -114,8 +116,8 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
           </SelectPlaceholder>
         }>
           <TagsCustomSelect
-            selected={categories}
-            onChange={values => setCategories(values)}
+            selectedIds={categoriesIds}
+            onChange={values => setCategoriesIds(values)}
           />
         </Suspense>
         <CustomRange

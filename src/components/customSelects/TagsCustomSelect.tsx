@@ -1,5 +1,5 @@
 import WithClassName from '../../interfaces/WithClassName';
-import CustomSelect, { Option } from './CustomSelect';
+import CustomSelect from './CustomSelect';
 import { ReactElement } from 'react';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -12,14 +12,14 @@ interface TagsCustomSelectProps extends WithClassName {
   /**
    * onChange event handler
    *
-   * @param values - all selected values
+   * @param values - all selected values ids
    */
-  onChange?: (values: Option[]) => void;
+  onChange?: (values: string[]) => void;
 
   /**
    * Array of selected items
    */
-  selected: Option[];
+  selectedIds: string[];
 }
 
 /**

@@ -173,7 +173,7 @@ export default function MainAside(): ReactElement {
                 </LineWrapper>
                 <Route path="/routes">
                   <CustomSelectWithMargin
-                    selected={[]}
+                    selectedIds={[]}
                     values={[
                       {
                         id: '123',
