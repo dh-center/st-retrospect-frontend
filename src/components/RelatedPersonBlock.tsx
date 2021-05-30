@@ -7,7 +7,7 @@ import abbreviatePersonName from '../lib/abbreviatePersonName';
 import WithClassName from '../interfaces/WithClassName';
 import { sansSerifLight } from '../styles/FontStyles';
 import { Link } from 'react-router-dom';
-import { ReactComponent as NoPhoto } from '../assets/person-no-photo.svg';
+import Image from './lib/Image';
 
 /**
  * Props of component
@@ -44,30 +44,13 @@ const Wrapper = styled(Link)`
   }
 `;
 
-/**
- * Props of photo block
- */
-interface PhotoProps {
-  /**
-   * Source of photo
-   */
-  src: string;
-}
-
-const Photo = styled.div<PhotoProps>`
+const Photo = styled(Image)`
   width: 29px;
   height: 29px;
 
-  background-image: url("${ props => props.src }");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
   margin-right: 12px;
-`;
 
-const NoPhotoIcon = styled(NoPhoto)`
-  margin-right: 12px;
+  background-size: 18px 20px;
 `;
 
 /**
@@ -93,7 +76,7 @@ export default function RelatedPersonBlock(props: RelatedPersonBlockProps): Reac
 
   return (
     <Wrapper className={props.className} to={`/person/${data.id}`}>
-      {data.mainPhotoLink ? <Photo src={data.mainPhotoLink}/> : <NoPhotoIcon/>}
+      <Photo src={data.mainPhotoLink} type={'person'}/>
       {abbreviatedName}
     </Wrapper>
   );

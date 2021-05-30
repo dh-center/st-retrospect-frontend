@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
-import { Item, Image, Delimiter, InformationWrapper, SecondaryInformation } from './lists';
+import { Item, Delimiter, InformationWrapper, SecondaryInformation } from './lists';
+import { ImageInItem } from './lib/Image';
 import styled from 'styled-components';
 import MapPin from '../assets/map-pin.svg';
 import { useFragment } from 'react-relay';
@@ -60,7 +61,7 @@ export default function LocationInstanceItem(props: LocationInstanceItemProps): 
 
   return (
     <Item to={`/location-instance/${data.id}`}>
-      <Image src={data.mainPhotoLink ? data.mainPhotoLink : 'https://picsum.photos/seed/picsum/100/200'}/>
+      <ImageInItem src={data.mainPhotoLink} type={'location'}/>
       <InformationWrapper>
         {data.name}
         <Delimiter/>

@@ -13,6 +13,7 @@ import {
   InformationTitle,
   InformationWithTitle
 } from './cards';
+import Image from './lib/Image';
 import { sansSerifLight } from '../styles/FontStyles';
 import { Delimiter } from './lists';
 import { PersonRouteParameters } from '../interfaces/routeParameters';
@@ -24,16 +25,6 @@ const CardWrapperWithScroll = styled(CardWrapper)`
   overflow-y: auto;
 `;
 
-/**
- * Props of photo block
- */
-interface PhotoProps {
-  /**
-   * Source of photo
-   */
-  src: string;
-}
-
 const HeaderWrapper = styled.div`
   display: flex;
 
@@ -41,15 +32,11 @@ const HeaderWrapper = styled.div`
   font-size: 18px;
 `;
 
-const Photo = styled.div<PhotoProps>`
+const Photo = styled(Image)`
   width: 120px;
   height: 120px;
 
   border-radius: 2px;
-  background-image: url("${ props => props.src }");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 
   margin-right: 12px;
 `;
@@ -127,7 +114,8 @@ export default function PersonCard(): ReactElement {
       <GoingBackButton/>
       <HeaderWrapper>
         <Photo
-          src={data.person.mainPhotoLink || 'https://picsum.photos/seed/picsum/200/200'}
+          src={data.person.mainPhotoLink}
+          type={'person'}
         />
         <div>
           <LastName>{ data.person.lastName }</LastName>

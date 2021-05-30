@@ -9,11 +9,11 @@ import { useTranslation } from 'react-i18next';
 import {
   CardWrapper,
   GoingBackButton,
-  Image,
   InformationWrapper,
   Name,
   Description
 } from './cards';
+import { ImageInCard } from './lib/Image';
 import { QuestRouteParameters } from '../interfaces/routeParameters';
 import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 
@@ -93,7 +93,7 @@ export default function RouteCard(): ReactElement {
   return (
     <CardWrapper>
       <GoingBackButton onClick={() => history.push('/routes')}/>
-      <Image src={data.quest.photo ? data.quest.photo : 'https://picsum.photos/seed/picsum/200/100'}/>
+      <ImageInCard src={data.quest.photo} type={'route'}/>
       <InformationWrapper>
         <Name>{ data.quest.name }</Name>
         <Author>{ t('author') }: ИТМО</Author>

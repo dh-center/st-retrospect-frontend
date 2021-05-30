@@ -3,7 +3,8 @@ import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { useTranslation } from 'react-i18next';
 import { RouteItem_quest$key } from './__generated__/RouteItem_quest.graphql';
-import { Item, Image, Delimiter, InformationWrapper, SecondaryInformation } from './lists';
+import { Item, Delimiter, InformationWrapper, SecondaryInformation } from './lists';
+import { ImageInItem } from './lib/Image';
 
 /**
  * Props with route fragment
@@ -35,7 +36,7 @@ export default function RouteItem(props: RouteItemProps): ReactElement {
 
   return (
     <Item to={`/route/${ route.id }`}>
-      <Image src={route.photo ? route.photo : 'https://picsum.photos/seed/picsum/100/200'}/>
+      <ImageInItem src={route.photo} type={'route'}/>
       <InformationWrapper>
         {route.name}
         <Delimiter/>
