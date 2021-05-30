@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
 import { ReactElement } from 'react';
 import WithClassName from '../../interfaces/WithClassName';
-import LocationPlaceholder from '../../assets/location-no-photo.svg';
-import RoutePlaceholder from '../../assets/route-no-photo.svg';
-import PersonPlaceholder from '../../assets/person-no-photo.svg';
+import LocationPlaceholder from '../../assets/placeholders/location-no-photo.svg';
+import RoutePlaceholder from '../../assets/placeholders/route-no-photo.svg';
+import PersonPlaceholder from '../../assets/placeholders/person-no-photo.svg';
 
 /**
  * Props of component
