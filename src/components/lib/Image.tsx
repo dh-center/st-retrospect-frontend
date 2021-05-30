@@ -5,12 +5,28 @@ import LocationPlaceholder from '../../assets/location-no-photo.svg';
 import RoutePlaceholder from '../../assets/route-no-photo.svg';
 import PersonPlaceholder from '../../assets/person-no-photo.svg';
 
+/**
+ * Props of component
+ */
 interface ImageProps extends WithClassName {
+  /**
+   * Type of image for setting placeholder
+   */
   type: 'location' | 'person' | 'route';
+
+  /**
+   * Image source url
+   */
   src: string | null;
 }
 
+/**
+ * Props of wrapper
+ */
 interface WrapperProps {
+  /**
+   * Type of image for setting placeholder
+   */
   type: 'location' | 'person' | 'route';
 }
 
@@ -31,13 +47,18 @@ const Wrapper = styled.div<WrapperProps>`
         `;
     }
   }};
-  background-size: auto;
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--color-light-gray);
 `;
 
+/**
+ * Props of image block
+ */
 interface ImageBlockProps {
+  /**
+   * Image source url
+   */
   src: string | null;
 }
 
@@ -57,7 +78,9 @@ const ImageBlock = styled.div<ImageBlockProps>`
 `;
 
 /**
- * @param props
+ * Component displays image with placeholder
+ *
+ * @param props - props of component
  */
 export default function Image(props: ImageProps): ReactElement {
   return (
