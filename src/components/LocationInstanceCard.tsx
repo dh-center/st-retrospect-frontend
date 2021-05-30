@@ -6,13 +6,13 @@ import { LocationInstanceCardQuery } from './__generated__/LocationInstanceCardQ
 import {
   CardWrapper, Description,
   GoingBackButton,
-  Image,
   InformationContent,
   InformationTitle,
   InformationWithTitle,
   InformationWrapper,
   Name
 } from './cards';
+import { ImageInCard } from './lib/Image';
 import RelatedPersonBlock from './RelatedPersonBlock';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
@@ -134,7 +134,7 @@ export default function LocationInstanceCard(): ReactElement {
   return (
     <CardWrapper>
       <GoingBackButton/>
-      <Image src={data.locationInstance.mainPhotoLink ? data.locationInstance.mainPhotoLink : 'https://picsum.photos/seed/picsum/200/100'}/>
+      <ImageInCard src={data.locationInstance.mainPhotoLink} type={'location'}/>
       <InformationWrapper>
         <Name>{data.locationInstance.name}</Name>
         {data.locationInstance.location.addresses && <Address>{data.locationInstance.location.addresses[0].address}</Address>}

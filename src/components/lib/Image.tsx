@@ -31,6 +31,7 @@ const Wrapper = styled.div<WrapperProps>`
         `;
     }
   }};
+  background-size: auto;
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--color-light-gray);
@@ -69,4 +70,9 @@ export default function Image(props: ImageProps): ReactElement {
 export const ImageInItem = styled(Image)`
   min-width: 60px;
   min-height: 100%;
+`;
+
+export const ImageInCard = styled(Image)`
+  min-width: 100%;
+  min-height: 144px;
 `;

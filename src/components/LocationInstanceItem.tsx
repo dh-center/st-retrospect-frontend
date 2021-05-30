@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
-import { Item, ImageInItem, Delimiter, InformationWrapper, SecondaryInformation } from './lists';
+import { Item, Delimiter, InformationWrapper, SecondaryInformation } from './lists';
+import { ImageInItem } from './lib/Image';
 import styled from 'styled-components';
 import MapPin from '../assets/map-pin.svg';
 import { useFragment } from 'react-relay';

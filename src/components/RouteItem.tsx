@@ -3,7 +3,8 @@ import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { useTranslation } from 'react-i18next';
 import { RouteItem_quest$key } from './__generated__/RouteItem_quest.graphql';
-import { Item, ImageInItem, Delimiter, InformationWrapper, SecondaryInformation } from './lists';
+import { Item, Delimiter, InformationWrapper, SecondaryInformation } from './lists';
+import { ImageInItem } from './lib/Image';
 
 /**
  * Props with route fragment

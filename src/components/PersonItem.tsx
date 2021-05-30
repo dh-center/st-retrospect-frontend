@@ -2,7 +2,8 @@ import { ReactElement } from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import { useFragment } from 'react-relay';
 import { PersonItem_person$key } from './__generated__/PersonItem_person.graphql';
-import { Item, ImageInItem, InformationWrapper } from './lists';
+import { Item, InformationWrapper } from './lists';
+import { ImageInItem } from './lib/Image';
 import styled from 'styled-components';
 
 /**
