@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import { useFragment } from 'react-relay';
 import { PersonItem_person$key } from './__generated__/PersonItem_person.graphql';
-import { Item, Image, InformationWrapper } from './lists';
+import { Item, ImageInItem, InformationWrapper } from './lists';
 import styled from 'styled-components';
 
 /**
@@ -44,7 +44,7 @@ export default function PersonItem(props: PersonItemProps): ReactElement {
 
   return (
     <ItemWithBlueBorder to={`/person/${data.id}`}>
-      <Image src={data.mainPhotoLink ? data.mainPhotoLink : 'https://picsum.photos/seed/picsum/100/200'}/>
+      <ImageInItem src={data.mainPhotoLink} type={'person'}/>
       <StyledInformationWrapper>
         {`${data.lastName} ${data.firstName} ${data.patronymic}`}
       </StyledInformationWrapper>
