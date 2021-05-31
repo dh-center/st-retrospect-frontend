@@ -47,7 +47,7 @@ export default function Marker(props: MarkerProps): React.ReactElement {
     return () => {
       marker.remove();
     };
-  }, [map, markerContainer.current]);
+  }, [map, markerContainer.current, props.lngLat]);
 
   return createPortal(props.children, markerContainer.current);
 }
