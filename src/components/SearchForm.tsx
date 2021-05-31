@@ -100,6 +100,7 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
       onSubmit={(event) => {
         event.preventDefault();
         history.push({
+          pathname: '/',
           search: `?query=${query}&startYear=${years.left}&endYear=${years.right}&categories=${categoriesIds.join(',')}`,
         });
       }}
