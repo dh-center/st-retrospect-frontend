@@ -66,7 +66,6 @@ export default function LocationInstanceCard(): ReactElement {
   const { t } = useTranslation();
   const { setCurrentLocations } = useCurrentMapContent();
 
-
   const data = useLazyLoadQuery<LocationInstanceCardQuery>(
     graphql`
       query LocationInstanceCardQuery($id: GlobalId!) {
@@ -110,7 +109,6 @@ export default function LocationInstanceCard(): ReactElement {
     }
   }, [ data.locationInstance?.id ]);
 
-
   /**
    * Filter relations to get unique persons
    */
@@ -123,7 +121,6 @@ export default function LocationInstanceCard(): ReactElement {
       (element, index, arr) => index === arr.findIndex(e => e.person?.id === element.person?.id)
     );
   }, [ data ]);
-
 
   if (!data.locationInstance) {
     return (

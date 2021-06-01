@@ -18,4 +18,6 @@ export const InformationTitle = styled.div`
 
 export const InformationContent = styled.div`
   ${ sansSerifRegular };
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
