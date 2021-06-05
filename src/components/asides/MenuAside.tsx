@@ -13,6 +13,11 @@ import useBreakpoint from '../../lib/useBreakpoint';
 
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
+
+  @media(max-width: 768px) {
+    width: 272px;
+    left: ${props => props.show ? '0' : '-272px'};
+  }
 `;
 
 const CloseMenuButton = styled.button`

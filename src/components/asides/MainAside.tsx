@@ -27,6 +27,10 @@ const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
   top: 16px;
   right: -48px;
+
+  @media(max-width: 768px) {
+    display: none;
+  }
 `;
 
 const AsideHeaderWithMarginBottom = styled(AsideHeader)`
