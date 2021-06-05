@@ -5,7 +5,7 @@ import { RoutesList_questsConnection$key } from './__generated__/RoutesList_ques
 import graphql from 'babel-plugin-relay/macro';
 import { RoutesListQuery } from './__generated__/RoutesListQuery.graphql';
 import RouteItem from './RouteItem';
-import LoadMoreButton from './LoadMoreButton';
+import LoadMoreButton from './buttons/LoadMoreButton';
 import { useInView } from 'react-intersection-observer';
 import { ListWrapper } from './lists';
 

@@ -1,6 +1,6 @@
 {
   "name": "st-retrospect-frontend",
-  "version": "0.4.0",
+  "version": "1.4.3",
   "private": false,
   "scripts": {
     "start": "react-scripts start",
@@ -14,38 +14,38 @@
     "relay": "relay-compiler --src ./src --schema ./schema.graphql --language typescript --customScalars.Timestamp=Int --customScalars.MultilingualString=String --customScalars.ObjectId=String --customScalars.GlobalId=ID"
   },
   "dependencies": {
-    "@sentry/react": "^6.2.5",
-    "@types/mapbox-gl": "^2.1.1",
-    "@types/node": "^14.14.40",
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.3",
+    "@sentry/react": "^6.5.0",
+    "@types/mapbox-gl": "^2.1.2",
+    "@types/node": "^15.6.1",
+    "@types/react": "^17.0.8",
+    "@types/react-dom": "^17.0.5",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.9",
     "eslint-config-codex": "^1.6.1",
-    "i18next": "^20.2.1",
-    "mapbox-gl": "^2.2.0",
+    "i18next": "^20.3.1",
+    "mapbox-gl": "^2.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-i18next": "^11.8.13",
-    "react-intersection-observer": "^8.31.0",
-    "react-relay": "^11.0.1",
+    "react-i18next": "^11.10.0",
+    "react-intersection-observer": "^8.32.0",
+    "react-relay": "^11.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "relay-runtime": "^11.0.1",
-    "styled-components": "^5.2.3",
-    "typescript": "^4.2.4",
-    "web-vitals": "^1.1.1"
+    "relay-runtime": "^11.0.2",
+    "styled-components": "^5.3.0",
+    "typescript": "^4.3.2",
+    "web-vitals": "^1.1.2",
+    "worker-loader": "^3.0.8"
   },
   "devDependencies": {
     "@types/react-relay": "^11.0.1",
     "@types/relay-runtime": "^11.0.0",
-    "babel-plugin-relay": "^11.0.1",
-    "file-loader": "^6.2.0",
+    "babel-plugin-relay": "^11.0.2",
     "get-graphql-schema": "^2.1.2",
     "graphql": "^15.5.0",
-    "relay-compiler": "^11.0.1",
+    "relay-compiler": "^11.0.2",
     "relay-compiler-language-typescript": "^14.0.0",
-    "relay-config": "^11.0.1"
+    "relay-config": "^11.0.2"
   },
   "eslintConfig": {
     "extends": [
@@ -63,7 +63,16 @@
           "jsdoc/require-returns": "off",
           "jsdoc/require-param-type": "off",
           "react-hooks/exhaustive-deps": "off",
-          "@typescript-eslint/no-magic-numbers": "off"
+          "@typescript-eslint/no-magic-numbers": "off",
+          "@typescript-eslint/naming-convention": [
+            "error",
+            {
+              "selector": "enumMember",
+              "format": [
+                "UPPER_CASE"
+              ]
+            }
+          ]
         }
       }
     ]

@@ -1,5 +1,5 @@
-import { ReactElement } from 'react';
-import { useParams, Redirect, Link } from 'react-router-dom';
+import { ReactElement, useEffect } from 'react';
+import { useParams, Redirect, Link, useHistory } from 'react-router-dom';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { RouteCardQuery } from './__generated__/RouteCardQuery.graphql';
@@ -9,21 +9,13 @@ import { useTranslation } from 'react-i18next';
 import {
   CardWrapper,
   GoingBackButton,
-  Image,
   InformationWrapper,
   Name,
   Description
 } from './cards';
-
-/**
- * Parameters of '/route' route
- */
-interface RouteRouteParameters {
-  /**
-   * Id of current route
-   */
-  questId: string;
-}
+import { ImageInCard } from './lib/Image';
+import { QuestRouteParameters } from '../interfaces/routeParameters';
+import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 
 const Author = styled.div`
   ${ sansSerifLight };
@@ -62,7 +54,10 @@ const StartRouteButton = styled(Link)`
  */
 export default function RouteCard(): ReactElement {
   const { t } = useTranslation();
-  const { questId } = useParams<RouteRouteParameters>();
+  const { questId } = useParams<QuestRouteParameters>();
+  const { setCurrentLocations } = useCurrentMapContent();
+  const history = useHistory();
+
   const data = useLazyLoadQuery<RouteCardQuery>(
     graphql`
       query RouteCardQuery($id: GlobalId!) {
@@ -70,6 +65,9 @@ export default function RouteCard(): ReactElement {
           name
           description
           photo
+          locationInstances {
+            ...LocationInstanceRelationsPopup_data
+          }
         }
       }
     `,
@@ -77,6 +75,14 @@ export default function RouteCard(): ReactElement {
       id: questId,
     }
   );
+
+  useEffect(() => {
+    if (!data.quest) {
+      return;
+    }
+
+    setCurrentLocations(data.quest.locationInstances);
+  }, [ data.quest?.locationInstances ]);
 
   if (!data.quest) {
     return (
@@ -86,8 +92,8 @@ export default function RouteCard(): ReactElement {
 
   return (
     <CardWrapper>
-      <GoingBackButton to="/routes"/>
-      <Image src={data.quest.photo ? data.quest.photo : 'https://picsum.photos/seed/picsum/200/100'}/>
+      <GoingBackButton onClick={() => history.push('/routes')}/>
+      <ImageInCard src={data.quest.photo} type={'route'}/>
       <InformationWrapper>
         <Name>{ data.quest.name }</Name>
         <Author>{ t('author') }: ИТМО</Author>

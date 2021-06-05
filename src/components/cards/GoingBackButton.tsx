@@ -1,40 +1,24 @@
-import styled from 'styled-components';
-import { Link, LinkProps } from 'react-router-dom';
-import { ReactComponent as ArrowLeft } from '../../assets/arrow-left-second.svg';
+import { useHistory } from 'react-router-dom';
 import { ReactElement } from 'react';
+import ArrowButton from '../buttons/ArrowButton';
+import WithOnClick from '../../interfaces/WithOnClick';
 
-const Wrapper = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  position: absolute;
-  top: 6px;
-  left: 16px;
-
-  width: 24px;
-  height: 24px;
-
-  background: var(--color-white);
-  border-radius: 2px;
-  box-shadow: (--shadow-base);
-  color: var(--color-blue);
-`;
-
-const Arrow = styled(ArrowLeft)`
-  height: 10px;
-  width: 10px;
-`;
+interface GoingBackButtonProps extends WithOnClick {}
 
 /**
  * Going back button in top-left corner
  *
  * @param props - props of component
  */
-export default function GoingBackButton(props: LinkProps): ReactElement {
+export default function GoingBackButton(props: GoingBackButtonProps): ReactElement {
+  const history = useHistory();
+
+  /**
+   * Use onClick handler from props or default
+   */
+  const onClickHandler = props.onClick ? props.onClick : () => history.goBack();
+
   return (
-    <Wrapper {...props}>
-      <Arrow/>
-    </Wrapper>
+    <ArrowButton onClick={onClickHandler}/>
   );
 }

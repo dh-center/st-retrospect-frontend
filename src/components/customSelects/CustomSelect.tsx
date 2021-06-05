@@ -1,12 +1,12 @@
 import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import { sansSerifLight } from '../styles/FontStyles';
-import LeftArrowIcon from '../assets/arrow-left.svg';
-import CheckboxIcon from '../assets/checkbox.svg';
-import CheckboxCheckedIcon from '../assets/checkbox-checked.svg';
-import CrossIcon from '../assets/cross.svg';
+import { sansSerifLight } from '../../styles/FontStyles';
+import LeftArrowIcon from '../../assets/arrow-left.svg';
+import CheckboxIcon from '../../assets/checkbox.svg';
+import CheckboxCheckedIcon from '../../assets/checkbox-checked.svg';
+import CrossIcon from '../../assets/cross.svg';
 import { useTranslation } from 'react-i18next';
-import WithClassName from '../interfaces/WithClassName';
+import WithClassName from '../../interfaces/WithClassName';
 
 /**
  * Props for custom select elements
@@ -18,24 +18,44 @@ interface CustomSelectElementProps {
   isOpen: boolean;
 }
 
+/**
+ * Type of options in custom select
+ */
+export interface Option {
+  /**
+   * Unique id of option
+   */
+  id: string;
+
+  /**
+   * Displaying value of option
+   */
+  value: string;
+}
+
 interface CustomSelectInputProps extends WithClassName {
   /**
    * onChange event handler
    *
-   * @param values - all selected values
+   * @param values - all selected values ids
    */
   onChange?: (values: string[]) => void;
 
   /**
    * Array of selected items
    */
-  selected: string[];
+  selectedIds: string[];
+
+  /**
+   * Array of values for displaying
+   */
+  values: Option[];
 }
 
 /**
  * This element needs for displaying select over next elements
  */
-const SelectPlaceholder = styled.div`
+export const SelectPlaceholder = styled.div`
   position: relative;
 
   height: 34px;
@@ -54,6 +74,7 @@ const SelectWrapper = styled.div<CustomSelectElementProps>`
 
   box-shadow: var(${ props => props.isOpen ? '--shadow-medium' : '--shadow-base' });
   border-radius: 2px;
+  overflow: hidden;
   z-index: 1;
 `;
 
@@ -89,6 +110,8 @@ const SelectInputText = styled.div`
 
 const SelectDropdown = styled.ul<CustomSelectElementProps>`
   display: ${ props => props.isOpen ? 'block' : 'none' };
+  max-height: 376px;
+  overflow-y: auto;
 
   padding: 0;
   margin: 0;
@@ -169,27 +192,30 @@ const SelectResetText = styled.span`
 export default function CustomSelect(props: CustomSelectInputProps): ReactElement {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
-  const options = ['писатель', 'художник', 'скульптор', 'водитель', 'алкоголик', 'хто я?'];
 
-  const SelectItems = options.map((option, key) => {
+  const findOptionInSelected = (option: Option): boolean => !!props.selectedIds.find(id => id === option.id);
+  const findIndexOfOptionInSelected = (option: Option): number => props.selectedIds.findIndex(id => id === option.id);
+  const getOptionById = (id: string): Option | undefined => props.values.find(value => value.id === id);
+
+  const SelectItems = props.values.map((value, key) => {
     return (
       <SelectItem
-        selected={props.selected.includes(option)}
+        selected={findOptionInSelected(value)}
         onClick={() => {
           if (!props.onChange) {
             return;
           }
-          if (props.selected.includes(option)) {
-            const index = props.selected.indexOf(option);
+          if (findOptionInSelected(value)) {
+            const index = findIndexOfOptionInSelected(value);
 
-            props.onChange(props.selected.slice(0, index).concat(props.selected.slice(index + 1)));
+            props.onChange(props.selectedIds.slice(0, index).concat(props.selectedIds.slice(index + 1)));
           } else {
-            props.onChange(props.selected.concat(option));
+            props.onChange(props.selectedIds.concat(value.id));
           }
         }}
         key={key}
       >
-        <SelectItemText>{option}</SelectItemText>
+        <SelectItemText>{value.value}</SelectItemText>
       </SelectItem>
     );
   });
@@ -199,7 +225,12 @@ export default function CustomSelect(props: CustomSelectInputProps): ReactElemen
       <SelectWrapper isOpen={isOpen}>
         <SelectInput onClick={() => setOpen(!isOpen)} isOpen={isOpen}>
           <SelectInputText>{
-            props.selected.length ? props.selected.join(', ') : t('customSelect.placeholder')
+            props.selectedIds.length ?
+              props.selectedIds
+                .map(id => getOptionById(id)?.value)
+                .filter(value => value && value.length > 0)
+                .join(', ')
+              : t('customSelect.placeholder')
           }</SelectInputText>
         </SelectInput>
         <SelectDropdown isOpen={isOpen}>

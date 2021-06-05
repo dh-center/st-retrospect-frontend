@@ -1,8 +1,8 @@
 import { ForwardedRef, forwardRef, HTMLProps, ReactElement } from 'react';
 import styled from 'styled-components';
-import Loader from './Loader';
-import { sansSerifLight } from '../styles/FontStyles';
-import ArrowIcon from '../assets/arrow-left-second.svg';
+import Loader from '../Loader';
+import { sansSerifLight } from '../../styles/FontStyles';
+import ArrowIcon from '../../assets/arrow-left-second.svg';
 import { useTranslation } from 'react-i18next';
 
 /**

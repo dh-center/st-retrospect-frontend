@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { RelatedPersonBlock_person$key } from './__generated__/RelatedPersonBlock_person.graphql';
-import abbreviatedPersonName from '../lib/abbreviatedPersonName';
+import abbreviatePersonName from '../lib/abbreviatePersonName';
 import WithClassName from '../interfaces/WithClassName';
 import { sansSerifLight } from '../styles/FontStyles';
 import { Link } from 'react-router-dom';
-import { ReactComponent as NoPhoto } from '../assets/person-no-photo.svg';
+import Image from './lib/Image';
 
 /**
  * Props of component
@@ -20,7 +20,7 @@ interface RelatedPersonBlockProps extends WithClassName {
 }
 
 const Wrapper = styled(Link)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
 
   padding-right: 12px;
@@ -38,32 +38,19 @@ const Wrapper = styled(Link)`
     cursor: pointer;
     background: var(--color-light-blue);
   }
+
+  &:focus-visible {
+    outline: none;
+  }
 `;
 
-/**
- * Props of photo block
- */
-interface PhotoProps {
-  /**
-   * Source of photo
-   */
-  src: string;
-}
-
-const Photo = styled.div<PhotoProps>`
+const Photo = styled(Image)`
   width: 29px;
   height: 29px;
 
-  background-image: url("${ props => props.src }");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
   margin-right: 12px;
-`;
 
-const NoPhotoIcon = styled(NoPhoto)`
-  margin-right: 12px;
+  background-size: 18px 20px;
 `;
 
 /**
@@ -75,6 +62,7 @@ export default function RelatedPersonBlock(props: RelatedPersonBlockProps): Reac
   const data = useFragment(
     graphql`
       fragment RelatedPersonBlock_person on Person {
+        id
         lastName
         firstName
         patronymic
@@ -84,11 +72,11 @@ export default function RelatedPersonBlock(props: RelatedPersonBlockProps): Reac
     props.person
   );
 
-  const abbreviatedName = abbreviatedPersonName(data.lastName, data.firstName, data.patronymic);
+  const abbreviatedName = abbreviatePersonName(data.lastName, data.firstName, data.patronymic);
 
   return (
-    <Wrapper className={props.className} to="/">
-      {data.mainPhotoLink ? <Photo src={data.mainPhotoLink}/> : <NoPhotoIcon/>}
+    <Wrapper className={props.className} to={`/person/${data.id}`}>
+      <Photo src={data.mainPhotoLink} type={'person'}/>
       {abbreviatedName}
     </Wrapper>
   );

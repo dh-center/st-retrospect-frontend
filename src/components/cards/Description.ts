@@ -5,5 +5,5 @@ export default styled.div`
   ${ sansSerifLight };
   font-size: 16px;
 
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 `;

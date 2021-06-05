@@ -1,21 +1,64 @@
-import { ReactElement, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import CustomSelect from './CustomSelect';
+import { ReactElement, useEffect, useState, Suspense } from 'react';
+import styled, { css } from 'styled-components';
+import { SelectPlaceholder } from './customSelects/CustomSelect';
 import SearchLine from './SearchLine';
 import CustomRange from './CustomRange';
 import YearsInputs from './YearsInputs';
 import { useTranslation } from 'react-i18next';
 import useDebounce from '../lib/useDebounce';
+import { useHistory } from 'react-router-dom';
+import TagsCustomSelect from './customSelects/TagsCustomSelect';
+import Loader from './Loader';
+import useQuery from '../lib/useQuery';
 
-const SearchLineWithMarginBottom = styled(SearchLine)`
-  margin-bottom: 12px;
+/**
+ * Props of component
+ */
+interface SearchFormProps {
+  /**
+   * Is search form displaying all inputs
+   */
+  isSearchFormOpen: boolean;
+}
+
+const SearchLineWithMarginBottom = styled(SearchLine)<SearchFormProps>`
+  margin-bottom: ${ props => props.isSearchFormOpen ? '12px' : '0' };
+  transition: margin ease-in-out .2s;
+`;
+
+/**
+ * Props of element
+ */
+interface HideWrapperProps {
+  /**
+   * Is element displaying
+   */
+  show: boolean;
+}
+
+const HideWrapper = styled.div<HideWrapperProps>`
+  ${props => {
+    if (!props.show) {
+      return css`
+        height: 0;
+        visibility: hidden;
+        overflow: hidden;
+      `;
+    }
+  }};
+  opacity: ${ props => props.show ? '1' : '0' };
+  transition: all ease-in-out .2s;
 `;
 
 /**
  * Search form component
+ *
+ * @param props - props of component
  */
-export default function SearchForm(): ReactElement {
+export default function SearchForm(props: SearchFormProps): ReactElement {
   const { t } = useTranslation();
+  const history = useHistory();
+  const urlQuery = useQuery();
 
   const YEARS_MIN_VALUE = '1500';
   const YEARS_MAX_VALUE = '2021';
@@ -23,19 +66,19 @@ export default function SearchForm(): ReactElement {
   /**
    * Text query for search
    */
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(urlQuery.get('query') || '');
 
   /**
    * Categories for search
    */
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categoriesIds, setCategoriesIds] = useState<string[]>((urlQuery.get('categories') || '').split(','));
 
   /**
    * Years period for search
    */
   const [years, setYears] = useState({
-    left: YEARS_MIN_VALUE,
-    right: YEARS_MAX_VALUE,
+    left: urlQuery.get('startYear') || YEARS_MIN_VALUE,
+    right: urlQuery.get('endYear') || YEARS_MAX_VALUE,
   });
 
   const [yearsFromInputs, setYearsFromInputs] = useState(years);
@@ -56,34 +99,42 @@ export default function SearchForm(): ReactElement {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        alert(JSON.stringify({
-          query,
-          categories,
-          years,
-        }));
+        history.push({
+          pathname: '/',
+          search: `?query=${query}&startYear=${years.left}&endYear=${years.right}&categories=${categoriesIds.join(',')}`,
+        });
       }}
     >
       <SearchLineWithMarginBottom
         value={query}
         onChange={value => setQuery(value)}
+        isSearchFormOpen={props.isSearchFormOpen}
       />
-      <CustomSelect
-        selected={categories}
-        onChange={values => setCategories(values)}
-      />
-      <CustomRange
-        onChange={values => setYears(values)}
-        min={YEARS_MIN_VALUE}
-        max={YEARS_MAX_VALUE}
-        values={years}
-        label={t(`customRange.years`)}
-      />
-      <YearsInputs
-        onChange={values => setYearsFromInputs(values)}
-        min={YEARS_MIN_VALUE}
-        max={YEARS_MAX_VALUE}
-        values={yearsFromInputs}
-      />
+      <HideWrapper show={props.isSearchFormOpen}>
+        <Suspense fallback={
+          <SelectPlaceholder>
+            <Loader/>
+          </SelectPlaceholder>
+        }>
+          <TagsCustomSelect
+            selectedIds={categoriesIds}
+            onChange={values => setCategoriesIds(values)}
+          />
+        </Suspense>
+        <CustomRange
+          onChange={values => setYears(values)}
+          min={YEARS_MIN_VALUE}
+          max={YEARS_MAX_VALUE}
+          values={years}
+          label={t(`customRange.years`)}
+        />
+        <YearsInputs
+          onChange={values => setYearsFromInputs(values)}
+          min={YEARS_MIN_VALUE}
+          max={YEARS_MAX_VALUE}
+          values={yearsFromInputs}
+        />
+      </HideWrapper>
     </form>
   );
 }

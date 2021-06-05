@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useState } from 'react';
+import { ReactElement, ReactNode, useContext, useState } from 'react';
 import LeftPanel from '../LeftPanel';
 import AsideHeader from './AsideHeader';
 import styled from 'styled-components';
@@ -6,10 +6,9 @@ import MenuAsideContext from '../../contexts/MenuAsideContext';
 import DoubleArrowsIcon from '../../assets/double-arrows.svg';
 import Menu from '../Menu';
 import Overlay from '../Overlay';
-import MenuContent from './../MenuContent';
-import AboutProject from '../content/AboutProject';
-import OurPartners from '../content/OurPartners';
-import Thanks from '../content/Thanks';
+import AboutProject from '../menuContent/AboutProject';
+import OurPartners from '../menuContent/OurPartners';
+import Thanks from '../menuContent/Thanks';
 
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
@@ -34,26 +33,61 @@ const AsideHeaderWithMarginBottom = styled(AsideHeader)`
 `;
 
 /**
+ * Possible menu items in content
+ */
+export enum MenuItems {
+  THANKS='THANKS',
+  ABOUT_PROJECT='ABOUT_PROJECT',
+  OUR_PARTNERS='OUR_PARTNERS'
+}
+
+/**
+ * Props of MenuContentWrapper
+ */
+interface MenuContentWrapperProps {
+  /**
+   * Is menu content show
+   */
+  isMenuContentShow: boolean
+}
+
+const MenuContentWrapper = styled.div<MenuContentWrapperProps>`
+  position: fixed;
+  top: 0;
+  left: ${props => props.isMenuContentShow ? '372px' : '100vw'};
+
+  height: 100vh;
+  width: calc(100vw - 372px);
+
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-large);
+  transition: ease-out .35s;
+
+  overflow-y: auto;
+  z-index: 4;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+/**
  * Aside panel with menu
  */
-function MenuAside(): ReactElement {
+export default function MenuAside(): ReactElement {
   const { isMenuAsideShow, setMenuAsideShow } = useContext(MenuAsideContext);
-  const [selectedMenuItem, setSelectedMenuItem] = useState<number>(1);
-  const [isMenuContentShow, setMenuContentShow] = useState<boolean>(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItems>(MenuItems.ABOUT_PROJECT);
+  const [isMenuContentShow, setMenuContentShow] = useState(false);
 
-  const SelectedContent = (): ReactElement => {
+  const selectedMenuItemContent = (): ReactNode => {
     switch (selectedMenuItem) {
-      case 1:
-        return (<AboutProject/>);
-      case 2:
-        return (<></>);
-      case 3:
-        return (<OurPartners/>);
-      case 4:
-        return (<Thanks/>);
+      case MenuItems.ABOUT_PROJECT:
+        return <AboutProject/>;
+      case MenuItems.THANKS:
+        return <Thanks/>;
+      case MenuItems.OUR_PARTNERS:
+        return <OurPartners/>;
     }
-
-    return (<></>);
   };
 
   return (
@@ -66,21 +100,19 @@ function MenuAside(): ReactElement {
             setMenuContentShow(false);
           }}/>
         </AsideHeaderWithMarginBottom>
-        <Menu onChange={(item) => {
-          if (!isMenuContentShow) {
-            setSelectedMenuItem(item);
-            setMenuContentShow(true);
-          } else {
-            item === selectedMenuItem && setMenuContentShow(false);
-            item !== selectedMenuItem && setSelectedMenuItem(item);
+        <Menu onClick={item => {
+          if (item === selectedMenuItem && isMenuContentShow) {
+            setMenuContentShow(false);
+
+            return;
           }
+          setSelectedMenuItem(item);
+          setMenuContentShow(true);
         }}/>
       </LeftPanelWithLargeShadow>
-      <MenuContent isMenuContentShow={isMenuContentShow}>
-        <SelectedContent/>
-      </MenuContent>
+      <MenuContentWrapper isMenuContentShow={isMenuContentShow}>
+        {selectedMenuItemContent()}
+      </MenuContentWrapper>
     </>
   );
 }
-
-export default MenuAside;

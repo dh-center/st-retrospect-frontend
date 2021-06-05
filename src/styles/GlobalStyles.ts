@@ -15,6 +15,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   code {
@@ -46,6 +47,21 @@ const GlobalStyles = createGlobalStyle`
   .mapboxgl-ctrl-top-left,
   .mapboxgl-ctrl-top-right {
     z-index: 0;
+  }
+
+  .mapboxgl-popup-tip {
+    display: none;
+  }
+
+  .mapboxgl-popup-content {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .mapboxgl-marker {
+    cursor: pointer;
   }
 `;
 

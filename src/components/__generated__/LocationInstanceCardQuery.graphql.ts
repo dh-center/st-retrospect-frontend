@@ -9,6 +9,7 @@ export type LocationInstanceCardQueryVariables = {
 };
 export type LocationInstanceCardQueryResponse = {
     readonly locationInstance: {
+        readonly id: string;
         readonly mainPhotoLink: string | null;
         readonly name: string | null;
         readonly location: {
@@ -20,17 +21,19 @@ export type LocationInstanceCardQueryResponse = {
             readonly person: {
                 readonly id: string;
                 readonly " $fragmentRefs": FragmentRefs<"RelatedPersonBlock_person">;
-            } | null;
+            };
         }>;
         readonly description: string | null;
         readonly architects: ReadonlyArray<{
             readonly lastName: string | null;
             readonly firstName: string | null;
             readonly patronymic: string | null;
-        } | null> | null;
+        }>;
         readonly constructionDate: string | null;
         readonly demolitionDate: string | null;
         readonly wikiLink: string | null;
+        readonly source: string | null;
+        readonly " $fragmentRefs": FragmentRefs<"LocationInstanceRelationsPopup_data">;
     } | null;
 };
 export type LocationInstanceCardQuery = {
@@ -45,6 +48,7 @@ query LocationInstanceCardQuery(
   $id: GlobalId!
 ) {
   locationInstance(id: $id) {
+    id
     mainPhotoLink
     name
     location {
@@ -55,8 +59,8 @@ query LocationInstanceCardQuery(
     }
     relations {
       person {
-        ...RelatedPersonBlock_person
         id
+        ...RelatedPersonBlock_person
       }
       id
     }
@@ -70,15 +74,40 @@ query LocationInstanceCardQuery(
     constructionDate
     demolitionDate
     wikiLink
+    source
+    ...LocationInstanceRelationsPopup_data
+  }
+}
+
+fragment LocationInstanceRelationsPopup_data on LocationInstance {
+  location {
+    longitude
+    latitude
+    id
+  }
+  name
+  relations {
+    ...RelationCard_relation
     id
   }
 }
 
 fragment RelatedPersonBlock_person on Person {
+  id
   lastName
   firstName
   patronymic
   mainPhotoLink
+}
+
+fragment RelationCard_relation on Relation {
+  person {
+    ...RelatedPersonBlock_person
+    id
+  }
+  startDate
+  endDate
+  quote
 }
 */
 
@@ -101,17 +130,24 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "mainPhotoLink",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "mainPhotoLink",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "concreteType": "Address",
@@ -127,13 +163,6 @@ v4 = {
       "storageKey": null
     }
   ],
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
   "storageKey": null
 },
 v6 = {
@@ -184,6 +213,13 @@ v12 = {
   "kind": "ScalarField",
   "name": "wikiLink",
   "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "source",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -202,6 +238,7 @@ return {
         "selections": [
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -210,7 +247,7 @@ return {
             "name": "location",
             "plural": false,
             "selections": [
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -230,7 +267,7 @@ return {
                 "name": "person",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
+                  (v2/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
@@ -259,7 +296,13 @@ return {
           },
           (v10/*: any*/),
           (v11/*: any*/),
-          (v12/*: any*/)
+          (v12/*: any*/),
+          (v13/*: any*/),
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "LocationInstanceRelationsPopup_data"
+          }
         ],
         "storageKey": null
       }
@@ -283,6 +326,7 @@ return {
         "selections": [
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -291,8 +335,22 @@ return {
             "name": "location",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v5/*: any*/),
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "longitude",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "latitude",
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -312,15 +370,36 @@ return {
                 "name": "person",
                 "plural": false,
                 "selections": [
+                  (v2/*: any*/),
                   (v7/*: any*/),
                   (v8/*: any*/),
                   (v9/*: any*/),
-                  (v2/*: any*/),
-                  (v5/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startDate",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endDate",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "quote",
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -336,28 +415,28 @@ return {
               (v7/*: any*/),
               (v8/*: any*/),
               (v9/*: any*/),
-              (v5/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
           (v10/*: any*/),
           (v11/*: any*/),
           (v12/*: any*/),
-          (v5/*: any*/)
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "2f405f11dbfb900992f2cde08c519d9d",
+    "cacheID": "492be9228b167ca80c4820708025aee9",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceCardQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        ...RelatedPersonBlock_person\n        id\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n"
+    "text": "query LocationInstanceCardQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    id\n    mainPhotoLink\n    name\n    location {\n      addresses {\n        address\n      }\n      id\n    }\n    relations {\n      person {\n        id\n        ...RelatedPersonBlock_person\n      }\n      id\n    }\n    description\n    architects {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    constructionDate\n    demolitionDate\n    wikiLink\n    source\n    ...LocationInstanceRelationsPopup_data\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
   }
 };
 })();
-(node as any).hash = 'f4165adabaf906715126e29d567756ec';
+(node as any).hash = 'a71ec9a632f158c5c0dea2556c51f8c5';
 export default node;

@@ -115,6 +115,16 @@ export default function RoutePassingRenderer(): ReactElement {
     let locationBlockWithTexts: QuestBlock[] = [];
 
     questDataBlocks.forEach(currentBlock => {
+      /**
+       * Skip location instance block without id
+       */
+      if (
+        currentBlock.type === 'locationInstance' &&
+        (!currentBlock.data.locationInstanceId || currentBlock.data.locationInstanceId === '')
+      ) {
+        return;
+      }
+
       if (
         (currentBlock.type === 'locationInstance' && locationBlockWithTexts.length === 0) ||
         currentBlock.type !== 'locationInstance'

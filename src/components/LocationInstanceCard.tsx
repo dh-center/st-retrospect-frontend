@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -6,25 +6,20 @@ import { LocationInstanceCardQuery } from './__generated__/LocationInstanceCardQ
 import {
   CardWrapper, Description,
   GoingBackButton,
-  Image,
+  InformationContent,
+  InformationTitle,
+  InformationWithTitle,
   InformationWrapper,
   Name
 } from './cards';
+import { ImageInCard } from './lib/Image';
 import RelatedPersonBlock from './RelatedPersonBlock';
-import { FragmentRefs } from 'relay-runtime';
 import styled from 'styled-components';
 import { sansSerifLight } from '../styles/FontStyles';
 import MapPin from '../assets/map-pin.svg';
-
-/**
- * Parameters of '/location-instance' route
- */
-interface LocationInstanceRouteParameters {
-  /**
-   * Id of current location instance
-   */
-  locationInstanceId: string;
-}
+import { useTranslation } from 'react-i18next';
+import { LocationInstanceRouteParameters } from '../interfaces/routeParameters';
+import useCurrentMapContent from '../contexts/CurrentMapContentContext';
 
 const Address = styled.div`
   margin-bottom: 14px;
@@ -54,6 +49,7 @@ const RelatedPersonsWrapper = styled.div`
   flex-wrap: wrap;
 
   margin-top: -12px;
+  margin-right: -12px;
   margin-bottom: 14px;
 
   & ${StyledRelatedPersonBlock} {
@@ -67,10 +63,14 @@ const RelatedPersonsWrapper = styled.div`
  */
 export default function LocationInstanceCard(): ReactElement {
   const { locationInstanceId } = useParams<LocationInstanceRouteParameters>();
+  const { t } = useTranslation();
+  const { setCurrentLocations } = useCurrentMapContent();
+
   const data = useLazyLoadQuery<LocationInstanceCardQuery>(
     graphql`
       query LocationInstanceCardQuery($id: GlobalId!) {
         locationInstance(id: $id) {
+          id
           mainPhotoLink
           name
           location {
@@ -80,8 +80,8 @@ export default function LocationInstanceCard(): ReactElement {
           }
           relations {
             person {
-              ...RelatedPersonBlock_person
               id
+              ...RelatedPersonBlock_person
             }
           }
           description
@@ -93,6 +93,8 @@ export default function LocationInstanceCard(): ReactElement {
           constructionDate
           demolitionDate
           wikiLink
+          source
+          ...LocationInstanceRelationsPopup_data
         }
       }
     `,
@@ -101,42 +103,74 @@ export default function LocationInstanceCard(): ReactElement {
     }
   );
 
+  useEffect(() => {
+    if (data.locationInstance) {
+      setCurrentLocations([ data.locationInstance ]);
+    }
+  }, [ data.locationInstance?.id ]);
+
+  /**
+   * Filter relations to get unique persons
+   */
+  const uniquePersons = useMemo(() => {
+    if(!data.locationInstance) {
+      return [];
+    }
+
+    return data.locationInstance.relations.filter(
+      (element, index, arr) => index === arr.findIndex(e => e.person?.id === element.person?.id)
+    );
+  }, [ data ]);
+
   if (!data.locationInstance) {
     return (
       <Redirect to="/"/>
     );
   }
 
-  /**
-   * Get object of unique relation persons
-   * Key is an ID of person
-   * Value is a person object
-   */
-  const uniquePersons = data.locationInstance.relations.reduce((acc, value) => {
-    if (value.person) {
-      acc[value.person.id] = value.person;
-    }
-
-    return acc;
-  }, {} as {[key: string]: {
-      id: string,
-      ' $fragmentRefs': FragmentRefs<'RelatedPersonBlock_person'>
-    }}
-  );
-
   return (
     <CardWrapper>
-      <GoingBackButton to="/"/>
-      <Image src={data.locationInstance.mainPhotoLink ? data.locationInstance.mainPhotoLink : 'https://picsum.photos/seed/picsum/200/100'}/>
+      <GoingBackButton/>
+      <ImageInCard src={data.locationInstance.mainPhotoLink} type={'location'}/>
       <InformationWrapper>
         <Name>{data.locationInstance.name}</Name>
         {data.locationInstance.location.addresses && <Address>{data.locationInstance.location.addresses[0].address}</Address>}
         <RelatedPersonsWrapper>
-          {Object.values(uniquePersons).map((person, index) => {
-            return person && <StyledRelatedPersonBlock key={index} person={person}/>;
-          })}
+          {
+            uniquePersons.map((relation, index) =>
+              relation.person && <StyledRelatedPersonBlock key={index} person={relation.person}/>
+            )
+          }
         </RelatedPersonsWrapper>
         <Description>{data.locationInstance.description}</Description>
+        { data.locationInstance.architects?.length > 0 &&
+          <InformationWithTitle>
+            <InformationTitle>
+              {t('locationInstance.architect')}:
+            </InformationTitle>
+            <InformationContent>
+              {`${data.locationInstance.architects[0]?.lastName} ${data.locationInstance.architects[0]?.firstName} ${data.locationInstance.architects[0]?.patronymic}`}
+            </InformationContent>
+          </InformationWithTitle>
+        }
+        <InformationWithTitle>
+          <InformationTitle>
+            {t('locationInstance.dates')}:
+          </InformationTitle>
+          <InformationContent>
+            {`${data.locationInstance.constructionDate || '...'} — ${data.locationInstance.demolitionDate || '...'} ${t('yearsAbbreviated')}`}
+          </InformationContent>
+        </InformationWithTitle>
+        { data.locationInstance.source &&
+          <InformationWithTitle>
+            <InformationTitle>
+              {t('locationInstance.source')}:
+            </InformationTitle>
+            <InformationContent>
+              {data.locationInstance.source}
+            </InformationContent>
+          </InformationWithTitle>
+        }
       </InformationWrapper>
     </CardWrapper>
   );

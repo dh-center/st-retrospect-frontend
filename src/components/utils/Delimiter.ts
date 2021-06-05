@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 /**
- * Delimiter in item
+ * Delimiter
  */
 export default styled.div`
   width: 60px;

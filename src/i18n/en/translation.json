@@ -28,7 +28,21 @@
     "startRoute": "Start route",
     "endRoute": "End route"
   },
+  "locationInstance": {
+    "architect": "Architect",
+    "dates": "Construction dates",
+    "source": "Source",
+    "noAddress": "No address information"
+  },
+  "person": {
+    "source": "Source"
+  },
+  "relations": {
+    "noRelations": "There is no information about persons associated with this location"
+  },
   "routes": "Routes",
   "author": "Author",
-  "loadMore": "Load more"
+  "loadMore": "Load more",
+  "yearsAbbreviated": "y.",
+  "wikipedia": "From Wikipedia, the free encyclopedia"
 }

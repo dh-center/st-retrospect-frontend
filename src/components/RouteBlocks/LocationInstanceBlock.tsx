@@ -6,6 +6,7 @@ import { LocationInstanceBlockQuery } from './__generated__/LocationInstanceBloc
 import { Redirect } from 'react-router-dom';
 import { sansSerifLight } from '../../styles/FontStyles';
 import MapPin from '../../assets/map-pin.svg';
+import { ImageInCard } from '../lib/Image';
 
 /**
  * Props of component
@@ -16,26 +17,6 @@ interface LocationInstanceBlockProps {
    */
   locationInstanceId: string;
 }
-
-/**
- * Props of image block in location instance block
- */
-interface ImageProps {
-  /**
-   * Source of image
-   */
-  src: string;
-}
-
-const Image = styled.div<ImageProps>`
-  min-width: 100%;
-  min-height: 144px;
-
-  background-image: url("${ props => props.src }");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-`;
 
 const InformationWrapper = styled.div`
   padding: 16px;
@@ -98,12 +79,12 @@ export default function LocationInstanceBlock(props: LocationInstanceBlockProps)
 
   return (
     <>
-      <Image src={data.locationInstance.mainPhotoLink ? data.locationInstance.mainPhotoLink : 'https://picsum.photos/seed/picsum/200/100'}/>
+      <ImageInCard src={data.locationInstance.mainPhotoLink} type={'location'}/>
       <InformationWrapper>
         <Title>
           {data.locationInstance.name}
         </Title>
-        {data.locationInstance.location.addresses &&
+        { !!data.locationInstance.location.addresses?.length &&
           <Address>
             {data.locationInstance.location.addresses[0].address}
           </Address>

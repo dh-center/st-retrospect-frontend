@@ -172,6 +172,9 @@ input CreateLocationInstanceInput {
 
   """Source of information about location instance"""
   source: MultilingualString!
+
+  """Location instance tags"""
+  tagIds: [GlobalId!]!
 }
 
 type CreateLocationInstancePayload {
@@ -239,7 +242,7 @@ input CreatePersonInput {
   wikiLink: String
 
   """Person tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]!
 }
 
 type CreatePersonPayload {
@@ -276,7 +279,7 @@ input CreateQuestInput {
   credits: EditorDataInput!
 
   """Quest tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]!
 }
 
 type CreateQuestPayload {
@@ -470,6 +473,9 @@ type LocationEdge {
 
   """Location info"""
   node: Location!
+
+  """How much the location matches the search term"""
+  searchScore: Float
 }
 
 """
@@ -492,7 +498,7 @@ type LocationInstance implements Node {
   wikiLink: String
 
   """Array of location's types"""
-  locationTypes: [LocationType]
+  locationTypes: [LocationType!]
 
   """Location style"""
   locationStyle: LocationStyle
@@ -519,13 +525,34 @@ type LocationInstance implements Node {
   relations: [Relation!]!
 
   """Array of architects"""
-  architects: [Person]
+  architects: [Person!]!
 
   """Source of information about location instance"""
   source: MultilingualString
 
   """Location instance tags"""
   tags: [Tag!]!
+}
+
+"""Model for representing list of locations instances"""
+type LocationInstanceConnection {
+  """List of location instances edges"""
+  edges: [LocationInstanceEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific location instance in connection"""
+type LocationInstanceEdge {
+  """Cursor of this location"""
+  cursor: Cursor!
+
+  """Location instance info"""
+  node: LocationInstance!
 }
 
 input LocationInstanceInput {
@@ -557,7 +584,7 @@ input LocationInstanceInput {
   endDate: String
 
   """Location instance tags"""
-  tagIds: [String!]
+  tagIds: [GlobalId!]
 }
 
 type LocationInstanceMutations {
@@ -586,6 +613,21 @@ type LocationMutations {
 
   """Delete location"""
   delete(id: GlobalId!): DeleteLocationPayload!
+}
+
+"""Model for representing result of locations search query"""
+type LocationsSearchResult {
+  """List of finded locations"""
+  nodes: [Location!]!
+
+  """Number of available result items"""
+  totalCount: Int!
+
+  """Proposed query if user made a typo"""
+  suggest: String
+
+  """Proposed query if user made a typo with indication of the place of it"""
+  highlightedSuggest: String
 }
 
 """Location style"""
@@ -692,7 +734,7 @@ type Person implements Node {
   pseudonym: MultilingualString
 
   """Person's professions"""
-  professions: [String]
+  professions: [String!]
 
   """Person's description"""
   description: MultilingualString
@@ -713,7 +755,7 @@ type Person implements Node {
   mainPhotoLink: String
 
   """Person's photos links"""
-  photoLinks: [String]
+  photoLinks: [String!]
 
   """Person tags"""
   tags: [Tag!]!
@@ -813,12 +855,6 @@ type Query {
 
   """Get all locationInstances"""
   locationInstances: [LocationInstance!]!
-
-  """Get relations on user request"""
-  search(
-    """The string on the basis of which the request will be made"""
-    searchString: String!
-  ): [Relation!]!
 
   """Returns list of all location types"""
   locationTypes: [LocationType!]!
@@ -929,6 +965,12 @@ type Query {
     last: Int
   ): QuestConnection!
 
+  """Query for search over the locations"""
+  locationsSearch(input: SearchInput!): LocationsSearchResult!
+
+  """Query for searching location instances related with some person"""
+  relationsByPersonSearch(input: SearchInput!): RelationsSearchResult!
+
   """Get specific tag"""
   tag(
     """Tag id"""
@@ -994,6 +1036,9 @@ type Quest implements Node {
 
   """Quest tags"""
   tags: [Tag!]!
+
+  """Location instances that are present in the quest"""
+  locationInstances: [LocationInstance!]!
 }
 
 """Model for representing list of quests"""
@@ -1061,13 +1106,13 @@ type Relation implements Node {
   id: ID!
 
   """Person in relation"""
-  person: Person
+  person: Person!
 
   """Location in relation"""
-  locationInstance: LocationInstance
+  locationInstance: LocationInstance!
 
   """Relation type"""
-  relationType: RelationType
+  relationType: RelationType!
 
   """Relation's quote"""
   quote: MultilingualString
@@ -1112,6 +1157,21 @@ type RelationMutations {
 
   """Delete relation"""
   delete(id: GlobalId!): DeleteRelationPayload!
+}
+
+"""Model for representing result of location instances search query"""
+type RelationsSearchResult {
+  """List of finded locations"""
+  nodes: [Relation!]!
+
+  """Number of available result items"""
+  totalCount: Int!
+
+  """Proposed query if user made a typo"""
+  suggest: String
+
+  """Proposed query if user made a typo with indication of the place of it"""
+  highlightedSuggest: String
 }
 
 """Represents one of the relations types"""
@@ -1169,6 +1229,27 @@ input RemoveArchitectInput {
 type RemoveArchitectPayload {
   """Deleted relation id"""
   recordId: GlobalId!
+}
+
+"""Search query input"""
+input SearchInput {
+  """Query string"""
+  query: String!
+
+  """Start of search range"""
+  startYear: Int
+
+  """End of search range"""
+  endYear: Int
+
+  """Entity category"""
+  category: [String!]
+
+  """How many documents in the selection to skip"""
+  skip: Int! = 0
+
+  """How many documents to fetch"""
+  first: Int! = 20
 }
 
 """Tag of person or location instance"""
@@ -1303,6 +1384,9 @@ input UpdateLocationInstanceInput {
 
   """Source of information about location instance"""
   source: MultilingualString!
+
+  """Location instance tags"""
+  tagIds: [GlobalId!]!
 }
 
 type UpdateLocationInstancePayload {
@@ -1377,7 +1461,7 @@ input UpdatePersonInput {
   wikiLink: String
 
   """Person tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]!
 }
 
 type UpdatePersonPayload {
@@ -1417,7 +1501,7 @@ input UpdateQuestInput {
   credits: EditorDataInput
 
   """Quest tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]
 }
 
 type UpdateQuestPayload {
