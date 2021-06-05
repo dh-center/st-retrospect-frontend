@@ -160,7 +160,9 @@ export default function MainAside(): ReactElement {
             <HideSearchFormButton isOpen={isSearchFormOpen} onClick={() => setSearchFormOpen(!isSearchFormOpen)}/>
           </Route>
           <AsideParametersWrapper>
-            <AsideHeaderWithMarginBottom/>
+            <AsideHeaderWithMarginBottom
+              isLanguageSwitchShow={true}
+            />
             <Switch>
               <Route exact path={['/', '/location-instance/:locationInstanceId', '/person/:personId']}>
                 <SearchForm isSearchFormOpen={isSearchFormOpen}/>

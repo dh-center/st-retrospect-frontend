@@ -8,7 +8,9 @@ import WithChildren from '../../interfaces/WithChildren';
 /**
  * AsideHeader component props
  */
-interface AsideHeaderProps extends WithClassName, WithChildren {}
+interface AsideHeaderProps extends WithClassName, WithChildren {
+  isLanguageSwitchShow: boolean;
+}
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -36,7 +38,7 @@ function AsideHeader(props: AsideHeaderProps): ReactElement {
   return (
     <HeaderWrapper className={props.className}>
       <ApplicationLogoWithFlex/>
-      <LanguageSwitch/>
+      { props.isLanguageSwitchShow && <LanguageSwitch/> }
       {props.children}
     </HeaderWrapper>
   );
