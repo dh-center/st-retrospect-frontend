@@ -23,6 +23,7 @@
     "@types/styled-components": "^5.1.9",
     "eslint-config-codex": "^1.6.1",
     "i18next": "^20.3.1",
+    "lodash.throttle": "^4.1.1",
     "mapbox-gl": "^2.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -38,6 +39,7 @@
     "worker-loader": "^3.0.8"
   },
   "devDependencies": {
+    "@types/lodash.throttle": "^4.1.6",
     "@types/react-relay": "^11.0.1",
     "@types/relay-runtime": "^11.0.0",
     "babel-plugin-relay": "^11.0.2",
