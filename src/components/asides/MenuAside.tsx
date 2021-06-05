@@ -9,6 +9,7 @@ import Overlay from '../Overlay';
 import AboutProject from '../menuContent/AboutProject';
 import OurPartners from '../menuContent/OurPartners';
 import Thanks from '../menuContent/Thanks';
+import useBreakpoint from '../../lib/useBreakpoint';
 
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
@@ -78,6 +79,7 @@ export default function MenuAside(): ReactElement {
   const { isMenuAsideShow, setMenuAsideShow } = useContext(MenuAsideContext);
   const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItems>(MenuItems.ABOUT_PROJECT);
   const [isMenuContentShow, setMenuContentShow] = useState(false);
+  const breakpoint = useBreakpoint();
 
   const selectedMenuItemContent = (): ReactNode => {
     switch (selectedMenuItem) {
@@ -94,7 +96,9 @@ export default function MenuAside(): ReactElement {
     <>
       <Overlay show={isMenuAsideShow}/>
       <LeftPanelWithLargeShadow show={isMenuAsideShow}>
-        <AsideHeaderWithMarginBottom>
+        <AsideHeaderWithMarginBottom
+          isLanguageSwitchShow={!breakpoint.isSm}
+        >
           <CloseMenuButton onClick={() => {
             setMenuAsideShow(!isMenuAsideShow);
             setMenuContentShow(false);
