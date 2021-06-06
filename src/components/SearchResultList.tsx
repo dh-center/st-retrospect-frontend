@@ -20,7 +20,7 @@ export default function SearchResultList(): ReactElement {
     query: query.get('query') || '',
     startYear: Number.parseInt(query.get('startYear') || '1500'),
     endYear: Number.parseInt(query.get('endYear') || '2021'),
-    category: (query.get('categories') || '').split(','),
+    tagIds: (query.get('categories') || '').split(','),
     first: 30,
     skip: 0,
   };

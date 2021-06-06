@@ -8,7 +8,7 @@ export type SearchInput = {
     query: string;
     startYear?: number | null;
     endYear?: number | null;
-    category?: Array<string> | null;
+    tagIds?: Array<string> | null;
     skip: number;
     first: number;
 };
