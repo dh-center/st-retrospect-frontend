@@ -31,10 +31,6 @@ const Wrapper = styled.div`
   border-radius: 2px;
   box-shadow: var(--shadow-medium);
 
-  position: relative;
-  top: -55px;
-  left: 25px;
-
   padding: 24px 16px;
 
   width: 372px;
