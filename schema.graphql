@@ -1242,8 +1242,8 @@ input SearchInput {
   """End of search range"""
   endYear: Int
 
-  """Entity category"""
-  category: [String!]
+  """Tag ids for filtering"""
+  tagIds: [String!]
 
   """How many documents in the selection to skip"""
   skip: Int! = 0
