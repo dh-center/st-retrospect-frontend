@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { sansSerifLight } from '../../styles/FontStyles';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
@@ -7,6 +7,7 @@ import CheckboxCheckedIcon from '../../assets/checkbox-checked.svg';
 import CrossIcon from '../../assets/cross.svg';
 import { useTranslation } from 'react-i18next';
 import WithClassName from '../../interfaces/WithClassName';
+import useOnClickOutside from '../../lib/useOnClickOutside';
 
 /**
  * Props for custom select elements
@@ -192,6 +193,9 @@ const SelectResetText = styled.span`
 export default function CustomSelect(props: CustomSelectInputProps): ReactElement {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
+  const ref = useRef(document.createElement('div'));
+
+  useOnClickOutside(ref, () => setOpen(false));
 
   const findOptionInSelected = (option: Option): boolean => !!props.selectedIds.find(id => id === option.id);
   const findIndexOfOptionInSelected = (option: Option): number => props.selectedIds.findIndex(id => id === option.id);
@@ -222,7 +226,7 @@ export default function CustomSelect(props: CustomSelectInputProps): ReactElemen
 
   return (
     <SelectPlaceholder className={props.className}>
-      <SelectWrapper isOpen={isOpen}>
+      <SelectWrapper isOpen={isOpen} ref={ref}>
         <SelectInput onClick={() => setOpen(!isOpen)} isOpen={isOpen}>
           <SelectInputText>{
             props.selectedIds.length ?
