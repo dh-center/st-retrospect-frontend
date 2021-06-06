@@ -71,8 +71,7 @@ export default function SearchForm(props: SearchFormProps): ReactElement {
   /**
    * Categories for search
    */
-  const [categoriesIds, setCategoriesIds] = useState<string[]>((urlQuery.get('categories') || '').split(','));
-
+  const [categoriesIds, setCategoriesIds] = useState<string[]>((urlQuery.get('categories') || '')[1] === '' ? (urlQuery.get('categories') || '').split(',') : []);
   /**
    * Years period for search
    */

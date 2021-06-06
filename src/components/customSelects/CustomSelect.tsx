@@ -58,8 +58,12 @@ interface CustomSelectInputProps extends WithClassName {
 export const SelectPlaceholder = styled.div`
   position: relative;
 
-  height: 34px;
+  height: 36px;
   width: 100%;
+
+  @media(max-width: 768px) {
+    width: 222px;
+  }
 `;
 
 const SelectWrapper = styled.div<CustomSelectElementProps>`
