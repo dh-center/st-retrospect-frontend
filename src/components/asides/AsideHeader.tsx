@@ -35,9 +35,20 @@ const ApplicationLogoWithFlex = styled(ApplicationLogo)`
  * @param props - props of component
  */
 function AsideHeader(props: AsideHeaderProps): ReactElement {
+  const breakpoint = useBreakpoint();
+  const history = useHistory();
+
   return (
     <HeaderWrapper className={props.className}>
       <ApplicationLogoWithFlex/>
+      { (props.isLanguageSwitchShow && breakpoint.isSm) && <Switch>
+        <Route exact path="/">
+          <MapButtonIcon onClick={() => history.push('/routes')}/>
+        </Route>
+        <Route path="/routes">
+          <SearchButtonIcon onClick={() => history.push('/')}/>
+        </Route>
+      </Switch> }
       { props.isLanguageSwitchShow && <LanguageSwitch/> }
       {props.children}
     </HeaderWrapper>
