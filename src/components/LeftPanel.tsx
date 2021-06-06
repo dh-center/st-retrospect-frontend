@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { forwardRef, ReactElement } from 'react';
 import styled from 'styled-components';
 import WithClassName from '../interfaces/WithClassName';
 import WithChildren from '../interfaces/WithChildren';
@@ -38,13 +38,13 @@ interface LeftPanelProps extends WithClassName, WithChildren {
  *
  * @param props - component props
  */
-function LeftPanel(props: LeftPanelProps): ReactElement {
+const LeftPanel = forwardRef<HTMLDivElement, LeftPanelProps>((props, ref): ReactElement => {
   return (
-    <LeftPanelWrapper show={props.show} className={props.className}>
+    <LeftPanelWrapper show={props.show} className={props.className} ref={ref}>
       { props.children }
     </LeftPanelWrapper>
   );
-}
+});
 
 LeftPanel.defaultProps = {
   show: true,
