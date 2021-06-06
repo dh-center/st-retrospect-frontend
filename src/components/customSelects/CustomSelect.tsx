@@ -193,7 +193,7 @@ const SelectResetText = styled.span`
 export default function CustomSelect(props: CustomSelectInputProps): ReactElement {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
-  const ref = useRef(document.createElement('div'));
+  const ref = useRef<HTMLDivElement>(null);
 
   useOnClickOutside(ref, () => setOpen(false));
 

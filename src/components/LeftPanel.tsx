@@ -38,7 +38,7 @@ interface LeftPanelProps extends WithClassName, WithChildren {
  *
  * @param props - component props
  */
-const LeftPanel = forwardRef<HTMLDivElement, LeftPanelProps>((props, ref): ReactElement => {
+const LeftPanel = forwardRef<HTMLDivElement | null, LeftPanelProps>((props, ref): ReactElement => {
   return (
     <LeftPanelWrapper show={props.show} className={props.className} ref={ref}>
       { props.children }

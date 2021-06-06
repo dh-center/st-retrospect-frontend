@@ -80,7 +80,7 @@ export default function MenuAside(): ReactElement {
   const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItems>(MenuItems.ABOUT_PROJECT);
   const [isMenuContentShow, setMenuContentShow] = useState(false);
 
-  const ref = useRef(document.createElement('div'));
+  const ref = useRef<HTMLDivElement>(null);
 
   useOnClickOutside(ref, () => {
     /**
