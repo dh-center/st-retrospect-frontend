@@ -9,10 +9,16 @@ import Overlay from '../Overlay';
 import AboutProject from '../menuContent/AboutProject';
 import OurPartners from '../menuContent/OurPartners';
 import Thanks from '../menuContent/Thanks';
+import useBreakpoint from '../../lib/useBreakpoint';
 import useOnClickOutside from '../../lib/useOnClickOutside';
 
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
+
+  @media(max-width: 768px) {
+    width: 272px;
+    left: ${props => props.show ? '0' : '-272px'};
+  }
 `;
 
 const CloseMenuButton = styled.button`
@@ -27,6 +33,29 @@ const CloseMenuButton = styled.button`
   background-size: cover;
 
   cursor: pointer;
+`;
+
+const CloseMenuContentButton = styled(CloseMenuButton)`
+  position: fixed;
+
+  top: 41px;
+  left: 16px;
+
+  margin-left: 0;
+
+  animation: appearing 1s;
+
+  @keyframes appearing {
+    0% {
+      height: 0;
+    }
+    35% {
+      height: 0;
+    }
+    100% {
+      height: 24px;
+    }
+  }
 `;
 
 const AsideHeaderWithMarginBottom = styled(AsideHeader)`
@@ -70,6 +99,11 @@ const MenuContentWrapper = styled.div<MenuContentWrapperProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media(max-width: 768px) {
+    left: ${props => props.isMenuContentShow ? '0' : '100vw'};
+    width: 100vw;
+  }
 `;
 
 /**
@@ -79,6 +113,7 @@ export default function MenuAside(): ReactElement {
   const { isMenuAsideShow, setMenuAsideShow } = useContext(MenuAsideContext);
   const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItems>(MenuItems.ABOUT_PROJECT);
   const [isMenuContentShow, setMenuContentShow] = useState(false);
+  const breakpoint = useBreakpoint();
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -107,7 +142,9 @@ export default function MenuAside(): ReactElement {
     <>
       <Overlay show={isMenuAsideShow}/>
       <LeftPanelWithLargeShadow show={isMenuAsideShow} ref={ref}>
-        <AsideHeaderWithMarginBottom>
+        <AsideHeaderWithMarginBottom
+          isLanguageSwitchShow={!breakpoint.isPocket}
+        >
           <CloseMenuButton onClick={() => {
             setMenuAsideShow(!isMenuAsideShow);
             setMenuContentShow(false);
@@ -124,6 +161,11 @@ export default function MenuAside(): ReactElement {
         }}/>
       </LeftPanelWithLargeShadow>
       <MenuContentWrapper isMenuContentShow={isMenuContentShow}>
+        { (breakpoint.isPocket && isMenuContentShow) &&
+          <CloseMenuContentButton onClick={() => {
+            setMenuContentShow(false);
+          }}/>
+        }
         {selectedMenuItemContent()}
       </MenuContentWrapper>
     </>

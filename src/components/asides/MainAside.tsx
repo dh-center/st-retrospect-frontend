@@ -22,11 +22,16 @@ import SearchResultList from '../SearchResultList';
 import LocationInstanceCard from '../LocationInstanceCard';
 import PersonCard from '../PersonCard';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
+import useBreakpoint from '../../lib/useBreakpoint';
 
 const AsideCloseButtonPositioned = styled(AsideCloseButton)`
   position: absolute;
   top: 16px;
   right: -48px;
+
+  @media(max-width: 768px) {
+    display: none;
+  }
 `;
 
 const AsideHeaderWithMarginBottom = styled(AsideHeader)`
@@ -142,6 +147,7 @@ export default function MainAside(): ReactElement {
   const [isMenuAsideShow, setMenuAsideShow] = useState(false);
   const [isSearchFormOpen, setSearchFormOpen] = useState(false);
   const history = useHistory();
+  const breakpoint = useBreakpoint();
 
   return (
     <LeftPanel show={showAside}>
@@ -160,7 +166,9 @@ export default function MainAside(): ReactElement {
             <HideSearchFormButton isOpen={isSearchFormOpen} onClick={() => setSearchFormOpen(!isSearchFormOpen)}/>
           </Route>
           <AsideParametersWrapper>
-            <AsideHeaderWithMarginBottom/>
+            <AsideHeaderWithMarginBottom
+              isLanguageSwitchShow={true}
+            />
             <Switch>
               <Route exact path={['/', '/location-instance/:locationInstanceId', '/person/:personId']}>
                 <SearchForm isSearchFormOpen={isSearchFormOpen}/>
@@ -246,7 +254,7 @@ export default function MainAside(): ReactElement {
         </Switch>
 
         {/* Bottom buttons */}
-        <Switch>
+        { (breakpoint.isLg || breakpoint.isMd) && <Switch>
           <Route exact path="/">
             <BottomButton onClick={() => history.push('/routes')}>
               <MapBottomButtonIcon/>
@@ -259,7 +267,7 @@ export default function MainAside(): ReactElement {
               {t('aside.searchBottomButton')}
             </BottomButton>
           </Route>
-        </Switch>
+        </Switch> }
       </MenuAsideContext.Provider>
     </LeftPanel>
   );
