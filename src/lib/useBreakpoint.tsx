@@ -6,13 +6,16 @@ interface MediaConfig {
   isSm?: boolean;
   isMd?: boolean;
   isLg?: boolean;
+  isPocket?: boolean;
 }
 
 const getDeviceConfig = (width: number): MediaConfig => {
   if (width < 375) {
-    return { isXs: true };
+    return { isXs: true,
+      isPocket: true };
   } else if (width >= 375 && width < 768) {
-    return { isSm: true };
+    return { isSm: true,
+      isPocket: true };
   } else if (width >= 768 && width < 880) {
     return { isMd: true };
   } else {

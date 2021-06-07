@@ -73,7 +73,7 @@ function AsideHeader(props: AsideHeaderProps): ReactElement {
   return (
     <HeaderWrapper className={props.className}>
       <ApplicationLogoWithFlex/>
-      { (props.isLanguageSwitchShow && breakpoint.isSm) && <Switch>
+      { (props.isLanguageSwitchShow && breakpoint.isPocket) && <Switch>
         <Route exact path="/">
           <MapButtonIcon onClick={() => history.push('/routes')}/>
         </Route>

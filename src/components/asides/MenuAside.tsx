@@ -143,7 +143,7 @@ export default function MenuAside(): ReactElement {
       <Overlay show={isMenuAsideShow}/>
       <LeftPanelWithLargeShadow show={isMenuAsideShow} ref={ref}>
         <AsideHeaderWithMarginBottom
-          isLanguageSwitchShow={!(breakpoint.isSm || breakpoint.isXs)}
+          isLanguageSwitchShow={!breakpoint.isPocket}
         >
           <CloseMenuButton onClick={() => {
             setMenuAsideShow(!isMenuAsideShow);
