@@ -977,6 +977,9 @@ type Query {
     id: GlobalId!
   ): Tag
 
+  """Returns array of tags which belong to quests"""
+  questTags: [Tag!]!
+
   """List of available tags"""
   tags(
     """The cursor after which we take the data"""
@@ -1242,8 +1245,8 @@ input SearchInput {
   """End of search range"""
   endYear: Int
 
-  """Entity category"""
-  category: [String!]
+  """Tag ids for filtering"""
+  tagIds: [GlobalId!]
 
   """How many documents in the selection to skip"""
   skip: Int! = 0

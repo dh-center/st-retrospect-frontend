@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useContext, useState } from 'react';
+import { ReactElement, ReactNode, useContext, useRef, useState } from 'react';
 import LeftPanel from '../LeftPanel';
 import AsideHeader from './AsideHeader';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import AboutProject from '../menuContent/AboutProject';
 import OurPartners from '../menuContent/OurPartners';
 import Thanks from '../menuContent/Thanks';
 import useBreakpoint from '../../lib/useBreakpoint';
+import useOnClickOutside from '../../lib/useOnClickOutside';
 
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
@@ -91,6 +92,18 @@ export default function MenuAside(): ReactElement {
   const [isMenuContentShow, setMenuContentShow] = useState(false);
   const breakpoint = useBreakpoint();
 
+  const ref = useRef<HTMLDivElement>(null);
+
+  useOnClickOutside(ref, () => {
+    /**
+     * Don't close menu if content showing
+     */
+    if (isMenuContentShow) {
+      return;
+    }
+    setMenuAsideShow(false);
+  });
+
   const selectedMenuItemContent = (): ReactNode => {
     switch (selectedMenuItem) {
       case MenuItems.ABOUT_PROJECT:
@@ -105,7 +118,7 @@ export default function MenuAside(): ReactElement {
   return (
     <>
       <Overlay show={isMenuAsideShow}/>
-      <LeftPanelWithLargeShadow show={isMenuAsideShow}>
+      <LeftPanelWithLargeShadow show={isMenuAsideShow} ref={ref}>
         <AsideHeaderWithMarginBottom
           isLanguageSwitchShow={!(breakpoint.isSm || breakpoint.isXs)}
         >

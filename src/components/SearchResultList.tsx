@@ -16,11 +16,12 @@ export default function SearchResultList(): ReactElement {
   const query = useQuery();
   const { setCurrentLocations } = useCurrentMapContent();
 
+  const categoriesFromQuery = query.get('categories');
   const input: SearchInput = {
     query: query.get('query') || '',
     startYear: Number.parseInt(query.get('startYear') || '1500'),
     endYear: Number.parseInt(query.get('endYear') || '2021'),
-    category: (query.get('categories') || '').split(','),
+    tagIds: categoriesFromQuery ? categoriesFromQuery.split(',') : null,
     first: 30,
     skip: 0,
   };
