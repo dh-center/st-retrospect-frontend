@@ -75,6 +75,11 @@ const MenuContentWrapper = styled.div<MenuContentWrapperProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media(max-width: 768px) {
+    left: ${props => props.isMenuContentShow ? '0' : '100vw'};
+    width: 100vw;
+  }
 `;
 
 /**
@@ -102,7 +107,7 @@ export default function MenuAside(): ReactElement {
       <Overlay show={isMenuAsideShow}/>
       <LeftPanelWithLargeShadow show={isMenuAsideShow}>
         <AsideHeaderWithMarginBottom
-          isLanguageSwitchShow={!breakpoint.isSm}
+          isLanguageSwitchShow={!(breakpoint.isSm || breakpoint.isXs)}
         >
           <CloseMenuButton onClick={() => {
             setMenuAsideShow(!isMenuAsideShow);
@@ -120,6 +125,11 @@ export default function MenuAside(): ReactElement {
         }}/>
       </LeftPanelWithLargeShadow>
       <MenuContentWrapper isMenuContentShow={isMenuContentShow}>
+        {/* { (breakpoint.isSm || breakpoint.isXs) && */}
+        {/*  <CloseMenuButton onClick={() => {*/}
+        {/*    setMenuContentShow(false);*/}
+        {/*  }}/>*/}
+        {/* } */}
         {selectedMenuItemContent()}
       </MenuContentWrapper>
     </>
