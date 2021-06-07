@@ -35,6 +35,29 @@ const CloseMenuButton = styled.button`
   cursor: pointer;
 `;
 
+const CloseMenuContentButton = styled(CloseMenuButton)`
+  position: fixed;
+
+  top: 41px;
+  left: 16px;
+
+  margin-left: 0;
+
+  animation: appearing 1s;
+
+  @keyframes appearing {
+    0% {
+      height: 0;
+    }
+    35% {
+      height: 0;
+    }
+    100% {
+      height: 24px;
+    }
+  }
+`;
+
 const AsideHeaderWithMarginBottom = styled(AsideHeader)`
   margin-bottom: 12px;
 `;
@@ -138,11 +161,11 @@ export default function MenuAside(): ReactElement {
         }}/>
       </LeftPanelWithLargeShadow>
       <MenuContentWrapper isMenuContentShow={isMenuContentShow}>
-        {/* { (breakpoint.isSm || breakpoint.isXs) && */}
-        {/*  <CloseMenuButton onClick={() => {*/}
-        {/*    setMenuContentShow(false);*/}
-        {/*  }}/>*/}
-        {/* } */}
+        { (breakpoint.isPocket && isMenuContentShow) &&
+          <CloseMenuContentButton onClick={() => {
+            setMenuContentShow(false);
+          }}/>
+        }
         {selectedMenuItemContent()}
       </MenuContentWrapper>
     </>
