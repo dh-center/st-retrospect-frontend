@@ -19,6 +19,18 @@ interface CurrentMapContentContextValue {
    * @param ref - array of new coordinates
    */
   setCurrentLocations(ref: readonly LocationInstanceRelationsPopup_data$key[]): void;
+
+  /**
+   * Current relations that will be displaying by default
+   */
+  currentRelationIds: string[];
+
+  /**
+   * Sets current relations
+   *
+   * @param ids - new relation ids
+   */
+  setCurrentRelationIds(ids: string[]): void;
 }
 
 /**
@@ -33,12 +45,15 @@ const CurrentMapContentContext = createContext<CurrentMapContentContextValue | u
  */
 export function CurrentMapContentProvider(props: WithChildren): ReactElement {
   const [locationsRef, setLocations] = useState<readonly LocationInstanceRelationsPopup_data$key[]>([]);
+  const [currentRelationIds, setCurrentRelationIds] = useState<string[]>([]);
 
   return (
     <CurrentMapContentContext.Provider
       value={{
         currentLocations: locationsRef,
         setCurrentLocations: setLocations,
+        currentRelationIds,
+        setCurrentRelationIds,
       }}
     >
       {props.children}

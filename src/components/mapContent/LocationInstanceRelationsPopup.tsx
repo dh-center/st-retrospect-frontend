@@ -71,7 +71,7 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
   const { t } = useTranslation();
   const { map } = useMapboxContext();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { currentLocations } = useCurrentMapContent();
+  const { currentLocations, currentRelationIds } = useCurrentMapContent();
   const routePassingMatch = useRouteMatch<QuestPassingRouteParameters>('/route/:questId/:currentLocationIndex');
   const popupRef = useRef<mapboxgl.Popup>();
   const markerRef = useRef<mapboxgl.Marker>();
@@ -85,6 +85,7 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
         }
         name
         relations {
+          id
           ...RelationCard_relation
         }
       }
@@ -116,6 +117,16 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
       zoom: 14,
     });
   }, [ routePassingMatch?.params ]);
+
+  useEffect(() => {
+    const defaultRelationIndex = data.relations.findIndex(
+      relation => currentRelationIds.find(
+        currentRelationId => currentRelationId === relation.id
+      )
+    );
+
+    setCurrentIndex(defaultRelationIndex === -1 ? 0 : defaultRelationIndex);
+  }, [ currentRelationIds ]);
 
   return (
     <>

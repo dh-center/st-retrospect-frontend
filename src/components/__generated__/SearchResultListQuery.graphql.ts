@@ -18,6 +18,7 @@ export type SearchResultListQueryVariables = {
 export type SearchResultListQueryResponse = {
     readonly relationsByPersonSearch: {
         readonly nodes: ReadonlyArray<{
+            readonly id: string;
             readonly locationInstance: {
                 readonly id: string;
                 readonly " $fragmentRefs": FragmentRefs<"LocationInstanceItem_locationInstance" | "LocationInstanceRelationsPopup_data">;
@@ -42,6 +43,7 @@ query SearchResultListQuery(
 ) {
   relationsByPersonSearch(input: $input) {
     nodes {
+      id
       locationInstance {
         id
         ...LocationInstanceItem_locationInstance
@@ -51,7 +53,6 @@ query SearchResultListQuery(
         id
         ...PersonItem_person
       }
-      id
     }
   }
 }
@@ -76,8 +77,8 @@ fragment LocationInstanceRelationsPopup_data on LocationInstance {
   }
   name
   relations {
-    ...RelationCard_relation
     id
+    ...RelationCard_relation
   }
 }
 
@@ -205,6 +206,7 @@ return {
             "name": "nodes",
             "plural": true,
             "selections": [
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -276,6 +278,7 @@ return {
             "name": "nodes",
             "plural": true,
             "selections": [
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -339,6 +342,7 @@ return {
                     "name": "relations",
                     "plural": true,
                     "selections": [
+                      (v2/*: any*/),
                       (v5/*: any*/),
                       {
                         "alias": null,
@@ -373,16 +377,14 @@ return {
                           (v4/*: any*/)
                         ],
                         "storageKey": null
-                      },
-                      (v2/*: any*/)
+                      }
                     ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/),
-              (v2/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -392,14 +394,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0cb9b79639effcb5c2cb8af2cfb4df91",
+    "cacheID": "b912f29cffa6ffd2cfe89bc715cd4e2d",
     "id": null,
     "metadata": {},
     "name": "SearchResultListQuery",
     "operationKind": "query",
-    "text": "query SearchResultListQuery(\n  $input: SearchInput!\n) {\n  relationsByPersonSearch(input: $input) {\n    nodes {\n      locationInstance {\n        id\n        ...LocationInstanceItem_locationInstance\n        ...LocationInstanceRelationsPopup_data\n      }\n      person {\n        id\n        ...PersonItem_person\n      }\n      id\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment PersonItem_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n  relationType {\n    id\n    name\n  }\n}\n"
+    "text": "query SearchResultListQuery(\n  $input: SearchInput!\n) {\n  relationsByPersonSearch(input: $input) {\n    nodes {\n      id\n      locationInstance {\n        id\n        ...LocationInstanceItem_locationInstance\n        ...LocationInstanceRelationsPopup_data\n      }\n      person {\n        id\n        ...PersonItem_person\n      }\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    id\n    ...RelationCard_relation\n  }\n}\n\nfragment PersonItem_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n  relationType {\n    id\n    name\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'de760abab13dd12cd9903b57018a4e12';
+(node as any).hash = 'c6b2035882f5bc4acd2a6bd5b535f2b3';
 export default node;
