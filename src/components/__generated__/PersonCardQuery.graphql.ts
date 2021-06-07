@@ -84,6 +84,10 @@ fragment RelationCard_relation on Relation {
   startDate
   endDate
   quote
+  relationType {
+    id
+    name
+  }
 }
 */
 
@@ -163,6 +167,13 @@ v10 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
@@ -286,13 +297,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "name",
-                    "storageKey": null
-                  },
+                  (v11/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -338,6 +343,19 @@ return {
                         "name": "quote",
                         "storageKey": null
                       },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "RelationType",
+                        "kind": "LinkedField",
+                        "name": "relationType",
+                        "plural": false,
+                        "selections": [
+                          (v10/*: any*/),
+                          (v11/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
                       (v10/*: any*/)
                     ],
                     "storageKey": null
@@ -357,12 +375,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7065766e7698666f548643f77128dcbe",
+    "cacheID": "a943defed401087bff2ed77a14a334b5",
     "id": null,
     "metadata": {},
     "name": "PersonCardQuery",
     "operationKind": "query",
-    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      locationInstance {\n        ...LocationInstanceRelationsPopup_data\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
+    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      locationInstance {\n        ...LocationInstanceRelationsPopup_data\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n  relationType {\n    id\n    name\n  }\n}\n"
   }
 };
 })();

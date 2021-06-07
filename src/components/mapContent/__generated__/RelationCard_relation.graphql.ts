@@ -11,6 +11,10 @@ export type RelationCard_relation = {
     readonly startDate: string | null;
     readonly endDate: string | null;
     readonly quote: string | null;
+    readonly relationType: {
+        readonly id: string;
+        readonly name: string;
+    };
     readonly " $refType": "RelationCard_relation";
 };
 export type RelationCard_relation$data = RelationCard_relation;
@@ -63,10 +67,35 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "quote",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "RelationType",
+      "kind": "LinkedField",
+      "name": "relationType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Relation",
   "abstractKey": null
 };
-(node as any).hash = '031510e703237f165c64c396cb90d5bd';
+(node as any).hash = '63fd310d9bf38c98d337fb8bb4bcf7fb';
 export default node;

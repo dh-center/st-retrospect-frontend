@@ -1,0 +1,20 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="36" cy="36" r="36" fill="#63C924"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="62" height="62">
+<circle cx="36" cy="36" r="31" fill="white"/>
+</mask>
+<g mask="url(#mask0)">
+<path d="M66 53H8V55H66V53Z" fill="white"/>
+<path d="M4.5 51H18C18 43.668 16 39 16 39C30 39 36 19 36 19H4.5V51Z" fill="white"/>
+<path d="M58 39C58 39 56 43.668 56 51H67.5V19H38C38 19 44 39 58 39Z" fill="white"/>
+<path d="M66 3H8V17H66V3Z" fill="white"/>
+<path d="M13.5 57C11.292 57 9.5 58.792 9.5 61V65H17.5V61C17.5 58.792 15.708 57 13.5 57Z" fill="white"/>
+<path d="M22.5 57C20.292 57 18.5 58.792 18.5 61V66H26.5V61C26.5 58.792 24.708 57 22.5 57Z" fill="white"/>
+<path d="M31.5 57C29.292 57 27.5 58.792 27.5 61V68H35.5V61C35.5 58.792 33.708 57 31.5 57Z" fill="white"/>
+<path d="M40.5 57C38.292 57 36.5 58.792 36.5 61V68H44.5V61C44.5 58.792 42.708 57 40.5 57Z" fill="white"/>
+<path d="M49.5 57C47.292 57 45.5 58.792 45.5 61V66H53.5V61C53.5 58.792 51.708 57 49.5 57Z" fill="white"/>
+<path d="M58.5 57C56.292 57 54.5 58.792 54.5 61V65H62.5V61C62.5 58.792 60.708 57 58.5 57Z" fill="white"/>
+<rect x="34" y="44" width="6" height="7" fill="white"/>
+<rect x="32" y="42" width="10" height="2" fill="white"/>
+</g>
+</svg>
