@@ -65,6 +65,10 @@ fragment LocationInstanceRelationsPopup_data on LocationInstance {
   name
   relations {
     id
+    relationType {
+      id
+      name
+    }
     ...RelationCard_relation
   }
 }
@@ -313,6 +317,19 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "concreteType": "RelationType",
+                        "kind": "LinkedField",
+                        "name": "relationType",
+                        "plural": false,
+                        "selections": [
+                          (v10/*: any*/),
+                          (v11/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "Person",
                         "kind": "LinkedField",
                         "name": "person",
@@ -346,19 +363,6 @@ return {
                         "kind": "ScalarField",
                         "name": "quote",
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "RelationType",
-                        "kind": "LinkedField",
-                        "name": "relationType",
-                        "plural": false,
-                        "selections": [
-                          (v10/*: any*/),
-                          (v11/*: any*/)
-                        ],
-                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -377,12 +381,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bb5f9047cdae533876dfcb1b1098de7c",
+    "cacheID": "0f2d9de1920a93eb9e69d80c728c141c",
     "id": null,
     "metadata": {},
     "name": "PersonCardQuery",
     "operationKind": "query",
-    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      id\n      locationInstance {\n        ...LocationInstanceRelationsPopup_data\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    id\n    ...RelationCard_relation\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n  relationType {\n    id\n    name\n  }\n}\n"
+    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      id\n      locationInstance {\n        ...LocationInstanceRelationsPopup_data\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    id\n    relationType {\n      id\n      name\n    }\n    ...RelationCard_relation\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n  relationType {\n    id\n    name\n  }\n}\n"
   }
 };
 })();

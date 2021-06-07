@@ -78,6 +78,10 @@ fragment LocationInstanceRelationsPopup_data on LocationInstance {
   name
   relations {
     id
+    relationType {
+      id
+      name
+    }
     ...RelationCard_relation
   }
 }
@@ -343,6 +347,19 @@ return {
                     "plural": true,
                     "selections": [
                       (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "RelationType",
+                        "kind": "LinkedField",
+                        "name": "relationType",
+                        "plural": false,
+                        "selections": [
+                          (v2/*: any*/),
+                          (v4/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
                       (v5/*: any*/),
                       {
                         "alias": null,
@@ -364,19 +381,6 @@ return {
                         "kind": "ScalarField",
                         "name": "quote",
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "RelationType",
-                        "kind": "LinkedField",
-                        "name": "relationType",
-                        "plural": false,
-                        "selections": [
-                          (v2/*: any*/),
-                          (v4/*: any*/)
-                        ],
-                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -394,12 +398,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b912f29cffa6ffd2cfe89bc715cd4e2d",
+    "cacheID": "b37322eba164901e638bb3b805c421f7",
     "id": null,
     "metadata": {},
     "name": "SearchResultListQuery",
     "operationKind": "query",
-    "text": "query SearchResultListQuery(\n  $input: SearchInput!\n) {\n  relationsByPersonSearch(input: $input) {\n    nodes {\n      id\n      locationInstance {\n        id\n        ...LocationInstanceItem_locationInstance\n        ...LocationInstanceRelationsPopup_data\n      }\n      person {\n        id\n        ...PersonItem_person\n      }\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    id\n    ...RelationCard_relation\n  }\n}\n\nfragment PersonItem_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n  relationType {\n    id\n    name\n  }\n}\n"
+    "text": "query SearchResultListQuery(\n  $input: SearchInput!\n) {\n  relationsByPersonSearch(input: $input) {\n    nodes {\n      id\n      locationInstance {\n        id\n        ...LocationInstanceItem_locationInstance\n        ...LocationInstanceRelationsPopup_data\n      }\n      person {\n        id\n        ...PersonItem_person\n      }\n    }\n  }\n}\n\nfragment LocationInstanceItem_locationInstance on LocationInstance {\n  id\n  mainPhotoLink\n  name\n  location {\n    addresses {\n      address\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    id\n    relationType {\n      id\n      name\n    }\n    ...RelationCard_relation\n  }\n}\n\nfragment PersonItem_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n  relationType {\n    id\n    name\n  }\n}\n"
   }
 };
 })();

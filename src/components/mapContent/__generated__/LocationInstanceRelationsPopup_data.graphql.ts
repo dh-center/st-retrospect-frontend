@@ -12,6 +12,10 @@ export type LocationInstanceRelationsPopup_data = {
     readonly name: string | null;
     readonly relations: ReadonlyArray<{
         readonly id: string;
+        readonly relationType: {
+            readonly id: string;
+            readonly name: string;
+        };
         readonly " $fragmentRefs": FragmentRefs<"RelationCard_relation">;
     }>;
     readonly " $refType": "LocationInstanceRelationsPopup_data";
@@ -24,7 +28,22 @@ export type LocationInstanceRelationsPopup_data$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -55,13 +74,7 @@ const node: ReaderFragment = {
       ],
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -70,11 +83,18 @@ const node: ReaderFragment = {
       "name": "relations",
       "plural": true,
       "selections": [
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "id",
+          "concreteType": "RelationType",
+          "kind": "LinkedField",
+          "name": "relationType",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/),
+            (v0/*: any*/)
+          ],
           "storageKey": null
         },
         {
@@ -89,5 +109,6 @@ const node: ReaderFragment = {
   "type": "LocationInstance",
   "abstractKey": null
 };
-(node as any).hash = 'ff53b0bb3e5c571d43995b1a91dd57f4';
+})();
+(node as any).hash = '5448744d34f4da86909b03c0670c01a4';
 export default node;
