@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactElement, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import RelationCard from './RelationCard';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -88,6 +88,7 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
   const routePassingMatch = useRouteMatch<QuestPassingRouteParameters>('/route/:questId/:currentLocationIndex');
   const popupRef = useRef<mapboxgl.Popup>();
   const markerRef = useRef<mapboxgl.Marker>();
+  const [relationCards, setRelationCards] = useState<ReactNode[]>([]);
 
   const data = useFragment(
     graphql`
@@ -98,12 +99,12 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
         }
         name
         relations {
+          ...RelationCard_relation
           id
           relationType {
             id
             name
           }
-          ...RelationCard_relation
         }
       }
     `,
@@ -158,6 +159,20 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
     setCurrentIndex(defaultRelationIndex === -1 ? 0 : defaultRelationIndex);
   }, [ currentRelationIds ]);
 
+  useEffect(() => {
+    if (!data.relations) {
+      return;
+    }
+
+    setRelationCards(
+      data.relations.map(
+        relation => {
+          return <RelationCard relation={relation} key={relation.id}/>;
+        }
+      )
+    );
+  }, [ data.relations ]);
+
   return (
     <>
       <Marker
@@ -197,7 +212,7 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
           }
           <Title>{data.name}</Title>
           <Delimiter/>
-          { data.relations && data.relations.length > 0 ? <RelationCard relation={data.relations[currentIndex]}/> : t('relations.noRelations') }
+          { relationCards && relationCards.length > 0 ? relationCards[currentIndex] : t('relations.noRelations') }
         </Wrapper>
       </Popup>
     </>
