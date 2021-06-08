@@ -14,7 +14,7 @@ import PersonItem from './PersonItem';
  */
 export default function SearchResultList(): ReactElement {
   const query = useQuery();
-  const { setCurrentLocations } = useCurrentMapContent();
+  const { setCurrentLocations, setCurrentRelationIds } = useCurrentMapContent();
 
   const categoriesFromQuery = query.get('categories');
   const input: SearchInput = {
@@ -33,6 +33,7 @@ export default function SearchResultList(): ReactElement {
       ) {
         relationsByPersonSearch(input: $input) {
           nodes {
+            id
             locationInstance {
               id
               ...LocationInstanceItem_locationInstance
@@ -67,6 +68,15 @@ export default function SearchResultList(): ReactElement {
 
     setCurrentLocations(uniqueLocationInstances);
   }, [ uniqueLocationInstances ]);
+
+  const relationIds = useMemo(
+    () => data.relationsByPersonSearch.nodes.map(node => node.id),
+    [ data.relationsByPersonSearch.nodes ]
+  );
+
+  useEffect(() => {
+    setCurrentRelationIds(relationIds);
+  }, [ relationIds ]);
 
   return (
     <ListWrapper hasNext={false}>
