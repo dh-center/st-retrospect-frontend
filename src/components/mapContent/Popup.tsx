@@ -26,6 +26,7 @@ export default function Popup(props: PopupProps): React.ReactElement {
   useEffect(() => {
     const popup = new mapboxgl
       .Popup({
+        offset: [25, -55],
         maxWidth: 'none',
         closeButton: false,
         anchor: 'top-left',
