@@ -32,7 +32,7 @@ export default function Popup(props: PopupProps): React.ReactElement {
       })
       .setDOMContent(popupContainer.current);
 
-    if(props.popupRef) {
+    if (props.popupRef) {
       props.popupRef(popup);
     }
 
