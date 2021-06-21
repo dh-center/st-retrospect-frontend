@@ -20,11 +20,6 @@ const LeftPanelWrapper = styled.aside<LeftPanelProps>`
   background: var(--color-white);
   box-shadow: var(--shadow-base);
   transition: left ease-out .3s;
-
-  @media(max-width: 768px) {
-    width: 100vw;
-    left: ${props => props.show ? '0' : '-100vw'};
-  }
 `;
 
 /**
