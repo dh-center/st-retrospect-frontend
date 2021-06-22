@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useRef, useState } from 'react';
+import { ReactElement, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import RelationCard from './RelationCard';
 import { useFragment } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -15,6 +15,7 @@ import mapboxgl from 'mapbox-gl';
 import { sansSerifLight, sansSerifRegular } from '../../styles/FontStyles';
 import { useTranslation } from 'react-i18next';
 import Delimiter from '../utils/Delimiter';
+import getRelationTypeMarkerById from '../../lib/getRelationTypeMarkerById';
 
 /**
  * Props of component
@@ -31,10 +32,6 @@ const Wrapper = styled.div`
   border-radius: 2px;
   box-shadow: var(--shadow-medium);
 
-  position: relative;
-  top: -55px;
-  left: 25px;
-
   padding: 24px 16px;
 
   width: 372px;
@@ -46,6 +43,18 @@ const Wrapper = styled.div`
 const Title = styled.div`
   font-size: 16px;
   ${ sansSerifRegular };
+`;
+
+const MarkerWrapper = styled.div`
+  width: 24.5px;
+  height: 30px;
+
+  transform: translateY(-50%);
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const LeftArrowButton = styled(ArrowButton)`
@@ -71,10 +80,11 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
   const { t } = useTranslation();
   const { map } = useMapboxContext();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { currentLocations } = useCurrentMapContent();
+  const { currentLocations, currentRelationIds } = useCurrentMapContent();
   const routePassingMatch = useRouteMatch<QuestPassingRouteParameters>('/route/:questId/:currentLocationIndex');
   const popupRef = useRef<mapboxgl.Popup>();
   const markerRef = useRef<mapboxgl.Marker>();
+  const [relationCards, setRelationCards] = useState<ReactNode[]>([]);
 
   const data = useFragment(
     graphql`
@@ -86,6 +96,11 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
         name
         relations {
           ...RelationCard_relation
+          id
+          relationType {
+            id
+            name
+          }
         }
       }
     `,
@@ -97,7 +112,6 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
       markerRef.current.setPopup(popupRef.current);
     }
   }, [popupRef.current, markerRef.current]);
-
 
   /**
    * Fly to point on route passing
@@ -117,16 +131,53 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
     });
   }, [ routePassingMatch?.params ]);
 
+  const defaultRelationIndex = useMemo(
+    () => data.relations.findIndex(
+      relation => currentRelationIds.find(
+        currentRelationId => currentRelationId === relation.id
+      )
+    ),
+    [data.relations, currentRelationIds]
+  );
+
+  const defaultRelation = useMemo(
+    () => data.relations.find(
+      relation => currentRelationIds.find(
+        currentRelationId => currentRelationId === relation.id
+      )
+    ),
+    [data.relations, currentRelationIds]
+  );
+
+  const RelationTypeMarker = getRelationTypeMarkerById(defaultRelation?.relationType.id || '');
+
+  useEffect(() => {
+    setCurrentIndex(defaultRelationIndex === -1 ? 0 : defaultRelationIndex);
+  }, [ currentRelationIds ]);
+
+  useEffect(() => {
+    if (!data.relations) {
+      return;
+    }
+
+    setRelationCards(
+      data.relations.map(
+        relation => {
+          return <RelationCard relation={relation} key={relation.id}/>;
+        }
+      )
+    );
+  }, [ data.relations ]);
+
   return (
     <>
       <Marker
         lngLat={[data.location.longitude || 0, data.location.latitude || 0]}
         markerRef={(ref) => markerRef.current = ref}
       >
-        <svg style={{ transform: 'translateY(-50%)' }} width="24.5" height="30" viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M72 36C72 64 36 88 36 88C36 88 0 64 0 36C1.42273e-07 26.4522 3.79285 17.2955 10.5442 10.5442C17.2955 3.79285 26.4522 0 36 0C45.5478 0 54.7045 3.79285 61.4558 10.5442C68.2072 17.2955 72 26.4522 72 36Z" fill="#2F80ED"/>
-          <path d="M35.9995 48.0003C42.6269 48.0003 47.9995 42.6277 47.9995 36.0003C47.9995 29.3729 42.6269 24.0003 35.9995 24.0003C29.3721 24.0003 23.9995 29.3729 23.9995 36.0003C23.9995 42.6277 29.3721 48.0003 35.9995 48.0003Z" fill="white"/>
-        </svg>
+        <MarkerWrapper title={defaultRelation?.relationType.name || 'Что-то тут забыл'}>
+          <RelationTypeMarker/>
+        </MarkerWrapper>
       </Marker>
       <Popup
         popupRef={(ref) => popupRef.current = ref}
@@ -157,7 +208,7 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
           }
           <Title>{data.name}</Title>
           <Delimiter/>
-          { data.relations && data.relations.length > 0 ? <RelationCard relation={data.relations[currentIndex]}/> : t('relations.noRelations') }
+          { relationCards && relationCards.length > 0 ? relationCards[currentIndex] : t('relations.noRelations') }
         </Wrapper>
       </Popup>
     </>

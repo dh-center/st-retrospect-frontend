@@ -64,7 +64,7 @@ const RelatedPersonsWrapper = styled.div`
 export default function LocationInstanceCard(): ReactElement {
   const { locationInstanceId } = useParams<LocationInstanceRouteParameters>();
   const { t } = useTranslation();
-  const { setCurrentLocations } = useCurrentMapContent();
+  const { setCurrentLocations, setCurrentRelationIds } = useCurrentMapContent();
 
   const data = useLazyLoadQuery<LocationInstanceCardQuery>(
     graphql`
@@ -106,6 +106,7 @@ export default function LocationInstanceCard(): ReactElement {
   useEffect(() => {
     if (data.locationInstance) {
       setCurrentLocations([ data.locationInstance ]);
+      setCurrentRelationIds([]);
     }
   }, [ data.locationInstance?.id ]);
 
