@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLazyLoadQuery } from 'react-relay';
@@ -68,7 +68,7 @@ const WikiLink = styled.a`
 export default function PersonCard(): ReactElement {
   const { personId } = useParams<PersonRouteParameters>();
   const { t } = useTranslation();
-  const { setCurrentLocations } = useCurrentMapContent();
+  const { setCurrentLocations, setCurrentRelationIds } = useCurrentMapContent();
 
   const data = useLazyLoadQuery<PersonCardQuery>(
     graphql`
@@ -83,6 +83,7 @@ export default function PersonCard(): ReactElement {
           description
           wikiLink
           relations {
+            id
             locationInstance {
               ...LocationInstanceRelationsPopup_data
             }
@@ -102,6 +103,15 @@ export default function PersonCard(): ReactElement {
 
     setCurrentLocations(data.person.relations.map(rel => rel.locationInstance));
   }, [ data.person?.relations ]);
+
+  const relationIds = useMemo(
+    () => data.person?.relations.map(relation => relation.id),
+    [ data.person?.relations ]
+  );
+
+  useEffect(() => {
+    setCurrentRelationIds(relationIds || []);
+  }, [ relationIds ]);
 
   if (!data.person) {
     return (

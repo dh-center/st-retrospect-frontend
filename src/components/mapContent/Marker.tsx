@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import WithChildren from '../../interfaces/WithChildren';
 import useMapboxContext from '../../contexts/MapboxContext';
@@ -30,6 +30,7 @@ export default function Marker(props: MarkerProps): React.ReactElement {
   const markerContainer = useRef(document.createElement('div'));
   const { map } = useMapboxContext();
 
+  const lngLat = useMemo(() => mapboxgl.LngLat.convert(props.lngLat), [ props.lngLat ]);
 
   useEffect(() => {
     if (!map || !markerContainer.current) {
@@ -37,7 +38,7 @@ export default function Marker(props: MarkerProps): React.ReactElement {
     }
 
     const marker = new mapboxgl.Marker(markerContainer.current)
-      .setLngLat(props.lngLat)
+      .setLngLat(lngLat)
       .addTo(map);
 
     if (props.markerRef) {
@@ -47,7 +48,7 @@ export default function Marker(props: MarkerProps): React.ReactElement {
     return () => {
       marker.remove();
     };
-  }, [map, markerContainer.current, props.lngLat]);
+  }, [map, markerContainer, ...lngLat.toArray()]);
 
   return createPortal(props.children, markerContainer.current);
 }

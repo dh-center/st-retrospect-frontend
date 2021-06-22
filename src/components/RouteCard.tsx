@@ -55,7 +55,7 @@ const StartRouteButton = styled(Link)`
 export default function RouteCard(): ReactElement {
   const { t } = useTranslation();
   const { questId } = useParams<QuestRouteParameters>();
-  const { setCurrentLocations } = useCurrentMapContent();
+  const { setCurrentLocations, setCurrentRelationIds } = useCurrentMapContent();
   const history = useHistory();
 
   const data = useLazyLoadQuery<RouteCardQuery>(
@@ -82,6 +82,7 @@ export default function RouteCard(): ReactElement {
     }
 
     setCurrentLocations(data.quest.locationInstances);
+    setCurrentRelationIds([]);
   }, [ data.quest?.locationInstances ]);
 
   if (!data.quest) {

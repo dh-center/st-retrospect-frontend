@@ -18,6 +18,7 @@ export type PersonCardQueryResponse = {
         readonly description: string | null;
         readonly wikiLink: string | null;
         readonly relations: ReadonlyArray<{
+            readonly id: string;
             readonly locationInstance: {
                 readonly " $fragmentRefs": FragmentRefs<"LocationInstanceRelationsPopup_data">;
             };
@@ -45,11 +46,11 @@ query PersonCardQuery(
     description
     wikiLink
     relations {
+      id
       locationInstance {
         ...LocationInstanceRelationsPopup_data
         id
       }
-      id
     }
     id
   }
@@ -65,6 +66,10 @@ fragment LocationInstanceRelationsPopup_data on LocationInstance {
   relations {
     ...RelationCard_relation
     id
+    relationType {
+      id
+      name
+    }
   }
 }
 
@@ -84,6 +89,10 @@ fragment RelationCard_relation on Relation {
   startDate
   endDate
   quote
+  relationType {
+    id
+    name
+  }
 }
 */
 
@@ -164,6 +173,13 @@ v10 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -196,6 +212,7 @@ return {
             "name": "relations",
             "plural": true,
             "selections": [
+              (v10/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -252,6 +269,7 @@ return {
             "name": "relations",
             "plural": true,
             "selections": [
+              (v10/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -286,13 +304,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "name",
-                    "storageKey": null
-                  },
+                  (v11/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -338,6 +350,19 @@ return {
                         "name": "quote",
                         "storageKey": null
                       },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "RelationType",
+                        "kind": "LinkedField",
+                        "name": "relationType",
+                        "plural": false,
+                        "selections": [
+                          (v10/*: any*/),
+                          (v11/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
                       (v10/*: any*/)
                     ],
                     "storageKey": null
@@ -345,8 +370,7 @@ return {
                   (v10/*: any*/)
                 ],
                 "storageKey": null
-              },
-              (v10/*: any*/)
+              }
             ],
             "storageKey": null
           },
@@ -357,14 +381,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7065766e7698666f548643f77128dcbe",
+    "cacheID": "96c7590ef58ddad08f790fd72c5b6dbe",
     "id": null,
     "metadata": {},
     "name": "PersonCardQuery",
     "operationKind": "query",
-    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      locationInstance {\n        ...LocationInstanceRelationsPopup_data\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n}\n"
+    "text": "query PersonCardQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    lastName\n    firstName\n    patronymic\n    mainPhotoLink\n    birthDate\n    deathDate\n    description\n    wikiLink\n    relations {\n      id\n      locationInstance {\n        ...LocationInstanceRelationsPopup_data\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment LocationInstanceRelationsPopup_data on LocationInstance {\n  location {\n    longitude\n    latitude\n    id\n  }\n  name\n  relations {\n    ...RelationCard_relation\n    id\n    relationType {\n      id\n      name\n    }\n  }\n}\n\nfragment RelatedPersonBlock_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  mainPhotoLink\n}\n\nfragment RelationCard_relation on Relation {\n  person {\n    ...RelatedPersonBlock_person\n    id\n  }\n  startDate\n  endDate\n  quote\n  relationType {\n    id\n    name\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b3d5566eea6146a22c133082dcabcc48';
+(node as any).hash = '993bd67315e0d3e355d658cb5478b213';
 export default node;
