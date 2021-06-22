@@ -22,7 +22,7 @@ export default styled.div<ListWrapperProps>`
 
   overflow-y: auto;
 
-  @media(max-width: 768px) {
+  @media(max-width: 834px) {
     padding: 0 4px ${ props => props.hasNext ? 0 : '12px' } 16px;
   }
 `;

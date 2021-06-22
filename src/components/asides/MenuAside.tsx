@@ -15,7 +15,7 @@ import useOnClickOutside from '../../lib/useOnClickOutside';
 const LeftPanelWithLargeShadow = styled(LeftPanel)`
   box-shadow: var(--shadow-large);
 
-  @media(max-width: 768px) {
+  @media(max-width: 834px) {
     width: 272px;
     left: ${props => props.show ? '0' : '-272px'};
   }
@@ -100,7 +100,7 @@ const MenuContentWrapper = styled.div<MenuContentWrapperProps>`
   flex-direction: column;
   align-items: center;
 
-  @media(max-width: 768px) {
+  @media(max-width: 834px) {
     left: ${props => props.isMenuContentShow ? '0' : '100vw'};
     width: 100vw;
   }

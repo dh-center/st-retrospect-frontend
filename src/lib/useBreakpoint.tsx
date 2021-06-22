@@ -13,10 +13,10 @@ const getDeviceConfig = (width: number): MediaConfig => {
   if (width < 375) {
     return { isXs: true,
       isPocket: true };
-  } else if (width >= 375 && width < 768) {
+  } else if (width >= 375 && width < 834) {
     return { isSm: true,
       isPocket: true };
-  } else if (width >= 768 && width < 880) {
+  } else if (width >= 834 && width < 880) {
     return { isMd: true };
   } else {
     return { isLg: true };

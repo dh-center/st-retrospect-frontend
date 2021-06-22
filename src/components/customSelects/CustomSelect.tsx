@@ -62,7 +62,7 @@ export const SelectPlaceholder = styled.div`
   height: 36px;
   width: 100%;
 
-  @media(max-width: 768px) {
+  @media(max-width: 834px) {
     width: 222px;
   }
 `;
