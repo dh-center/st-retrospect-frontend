@@ -30,11 +30,11 @@ const LeftPanelPositioned = styled(LeftPanel)`
   position: absolute;
   top: 0;
   left: ${props => props.show ? '0' : '-100vw'};
-  overflow-y: hidden;
 `;
 
 const BottomSheetWrapper = styled.div`
-  height: 300px;
+  height: 250px;
+  width: 100%;
   padding: 44px 16px 0;
 
   background-color: #fff;
@@ -43,6 +43,10 @@ const BottomSheetWrapper = styled.div`
   position: absolute;
   bottom: 0;
   overflow-y: auto;
+
+  &::-webkit-scrollbar-thumb {
+    height: 20px;
+  }
 `;
 
 const AsideHeaderWithMarginBottom = styled(AsideHeader)`
