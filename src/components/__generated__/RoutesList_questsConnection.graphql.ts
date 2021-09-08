@@ -4,10 +4,12 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type Application = "MOBILE" | "WEB" | "%future added value";
 export type RoutesList_questsConnection = {
     readonly quests: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly whereDisplays: ReadonlyArray<Application>;
                 readonly " $fragmentRefs": FragmentRefs<"RouteItem_quest">;
             };
         }>;
@@ -92,6 +94,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "whereDisplays",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 },
@@ -146,5 +155,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '7b775500e8a2d73cac2ef9f4f72d8958';
+(node as any).hash = 'acfddda6f2244c68b58c8588b6dbf59c';
 export default node;

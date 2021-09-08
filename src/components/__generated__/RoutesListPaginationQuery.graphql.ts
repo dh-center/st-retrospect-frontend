@@ -36,6 +36,7 @@ fragment RoutesList_questsConnection_2QE1um on Query {
   quests(first: $count, after: $after) {
     edges {
       node {
+        whereDisplays
         ...RouteItem_quest
         id
         __typename
@@ -133,6 +134,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "whereDisplays",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "id",
                     "storageKey": null
                   },
@@ -210,14 +218,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "48ff461197b4433f804ce7abefdf9fb6",
+    "cacheID": "c41f30292e927958ba10183ec88ebcd9",
     "id": null,
     "metadata": {},
     "name": "RoutesListPaginationQuery",
     "operationKind": "query",
-    "text": "query RoutesListPaginationQuery(\n  $after: Cursor\n  $count: Int = 10\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RouteItem_quest on Quest {\n  id\n  name\n  photo\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        ...RouteItem_quest\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query RoutesListPaginationQuery(\n  $after: Cursor\n  $count: Int = 10\n) {\n  ...RoutesList_questsConnection_2QE1um\n}\n\nfragment RouteItem_quest on Quest {\n  id\n  name\n  photo\n}\n\nfragment RoutesList_questsConnection_2QE1um on Query {\n  quests(first: $count, after: $after) {\n    edges {\n      node {\n        whereDisplays\n        ...RouteItem_quest\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '7b775500e8a2d73cac2ef9f4f72d8958';
+(node as any).hash = 'acfddda6f2244c68b58c8588b6dbf59c';
 export default node;
