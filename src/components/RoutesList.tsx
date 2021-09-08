@@ -43,6 +43,7 @@ export default function RoutesList(): ReactElement {
       @connection(key: "RoutesList_questsConnection_quests") {
         edges {
           node {
+            whereDisplays
             ...RouteItem_quest
           }
         }
@@ -68,7 +69,11 @@ export default function RoutesList(): ReactElement {
       {
         data.quests.edges.map(
           (edge, index) => {
-            return <RouteItem key={index} route={edge.node}/>;
+            if (edge.node.whereDisplays.includes('WEB')) {
+              return <RouteItem key={index} route={edge.node}/>;
+            } else  {
+              return <></>;
+            }
           }
         )
       }
