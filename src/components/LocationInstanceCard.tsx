@@ -114,7 +114,7 @@ export default function LocationInstanceCard(): ReactElement {
    * Filter relations to get unique persons
    */
   const uniquePersons = useMemo(() => {
-    if(!data.locationInstance) {
+    if (!data.locationInstance) {
       return [];
     }
 

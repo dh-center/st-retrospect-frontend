@@ -146,7 +146,7 @@ export default function RoutePassingRenderer(): ReactElement {
     return <Redirect to={`/route/${questId}/${locationBlocksWithTexts.length-1}`}/>;
   }
 
-  if(+currentLocationIndex < 0) {
+  if (+currentLocationIndex < 0) {
     return <Redirect to={`/route/${questId}/0`}/>;
   }
 

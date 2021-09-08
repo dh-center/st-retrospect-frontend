@@ -188,7 +188,7 @@ export default function LocationInstanceRelationsPopup(props: LocationInstanceRe
               <>
                 <LeftArrowButton
                   onClick={() => {
-                    if(currentIndex - 1 < 0) {
+                    if (currentIndex - 1 < 0) {
                       setCurrentIndex(data.relations.length - 1);
                     } else {
                       setCurrentIndex(currentIndex - 1);
